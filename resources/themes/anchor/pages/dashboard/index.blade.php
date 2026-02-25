@@ -1,6 +1,8 @@
 <?php
 use function Laravel\Folio\{middleware, name};
 use App\Models\Pedido;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 middleware('auth');
@@ -202,6 +204,74 @@ $rolesConfig = [
 
 $config = $rolesConfig[$rolActual] ?? $rolesConfig['vendedora'];
 $clases = $config['clases'];
+
+$filtroAdmin = request()->string('filtro')->toString() ?: 'mes';
+$mesAdmin = request()->string('mes')->toString() ?: now()->format('Y-m');
+$fechaInicioAdmin = request()->string('fecha_inicio')->toString() ?: null;
+$fechaFinAdmin = request()->string('fecha_fin')->toString() ?: null;
+
+$pedidosAdminFiltrados = Pedido::query();
+
+if ($filtroAdmin === 'rango') {
+    if (! blank($fechaInicioAdmin)) {
+        $pedidosAdminFiltrados->whereDate('fecha', '>=', $fechaInicioAdmin);
+    }
+
+    if (! blank($fechaFinAdmin)) {
+        $pedidosAdminFiltrados->whereDate('fecha', '<=', $fechaFinAdmin);
+    }
+} elseif (preg_match('/^\d{4}-\d{2}$/', $mesAdmin) === 1) {
+    $mes = Carbon::createFromFormat('Y-m', $mesAdmin)->startOfMonth();
+
+    $pedidosAdminFiltrados->whereBetween('fecha', [
+        $mes->toDateString(),
+        $mes->copy()->endOfMonth()->toDateString(),
+    ]);
+}
+
+$resumenAdmin = [
+    'unidades_vendidas' => (int) (clone $pedidosAdminFiltrados)->sum('cantidad_unidades'),
+    'total_catalogo_vendido' => (float) (clone $pedidosAdminFiltrados)->sum('total_precio_catalogo'),
+    'total_facturado' => (float) (clone $pedidosAdminFiltrados)->sum('total_a_pagar'),
+];
+
+$ultimosPedidosAdmin = (clone $pedidosAdminFiltrados)
+    ->with(['vendedora:id,name', 'lider:id,name'])
+    ->latest('fecha')
+    ->latest('created_at')
+    ->limit(10)
+    ->get();
+
+$ultimosRegistrosAdmin = User::query()
+    ->latest('created_at')
+    ->limit(10)
+    ->get(['id', 'name', 'email', 'created_at']);
+
+$topVendedorasAdmin = User::query()
+    ->select('users.id', 'users.name')
+    ->selectSub(
+        (clone $pedidosAdminFiltrados)
+            ->selectRaw('COALESCE(SUM(total_a_pagar), 0)')
+            ->whereColumn('pedidos.vendedora_id', 'users.id'),
+        'total_ventas'
+    )
+    ->role('vendedora')
+    ->orderByDesc('total_ventas')
+    ->limit(5)
+    ->get();
+
+$topLideresAdmin = User::query()
+    ->select('users.id', 'users.name')
+    ->selectSub(
+        (clone $pedidosAdminFiltrados)
+            ->selectRaw('COALESCE(SUM(total_a_pagar), 0)')
+            ->whereColumn('pedidos.lider_id', 'users.id'),
+        'total_ventas'
+    )
+    ->role('lider')
+    ->orderByDesc('total_ventas')
+    ->limit(5)
+    ->get();
 ?>
 
 <x-layouts.app>
@@ -367,6 +437,225 @@ $clases = $config['clases'];
                 </div>
             </div>
         </section>
+
+        @if($rolActual === 'admin')
+            <section class="space-y-6 rounded-2xl border border-indigo-100 bg-white p-6 shadow-sm">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                    <div>
+                        <h2 class="text-xl font-semibold text-[#1f2758]">Panel comercial de administración</h2>
+                        <p class="text-sm text-[#3d4c7c]">Indicadores globales de ventas con filtros por período.</p>
+                    </div>
+
+                    <form method="GET" action="{{ route('dashboard') }}" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                        <label class="flex flex-col gap-1 text-xs font-medium text-slate-600">
+                            Tipo de filtro
+                            <select name="filtro" class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700">
+                                <option value="mes" @selected($filtroAdmin === 'mes')>Por mes</option>
+                                <option value="rango" @selected($filtroAdmin === 'rango')>Rango personalizado</option>
+                            </select>
+                        </label>
+
+                        <label class="flex flex-col gap-1 text-xs font-medium text-slate-600">
+                            Mes
+                            <input name="mes" type="month" value="{{ $mesAdmin }}" class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700" />
+                        </label>
+
+                        <label class="flex flex-col gap-1 text-xs font-medium text-slate-600">
+                            Desde
+                            <input name="fecha_inicio" type="date" value="{{ $fechaInicioAdmin }}" class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700" />
+                        </label>
+
+                        <div class="flex items-end gap-2">
+                            <label class="flex w-full flex-col gap-1 text-xs font-medium text-slate-600">
+                                Hasta
+                                <input name="fecha_fin" type="date" value="{{ $fechaFinAdmin }}" class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700" />
+                            </label>
+                            <button type="submit" class="h-10 rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-700">Aplicar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="grid gap-4 md:grid-cols-3">
+                    <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                        <p class="text-xs font-semibold uppercase text-slate-500">Unidades vendidas</p>
+                        <p class="mt-2 text-2xl font-bold text-slate-900">{{ number_format($resumenAdmin['unidades_vendidas'], 0, ',', '.') }}</p>
+                    </div>
+                    <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                        <p class="text-xs font-semibold uppercase text-slate-500">Total catálogo vendido</p>
+                        <p class="mt-2 text-2xl font-bold text-slate-900">${{ number_format($resumenAdmin['total_catalogo_vendido'], 2, ',', '.') }}</p>
+                    </div>
+                    <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                        <p class="text-xs font-semibold uppercase text-slate-500">Total facturado</p>
+                        <p class="mt-2 text-2xl font-bold text-slate-900">${{ number_format($resumenAdmin['total_facturado'], 2, ',', '.') }}</p>
+                    </div>
+                </div>
+
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="rounded-2xl border border-slate-100 p-4">
+                        <h3 class="mb-3 text-sm font-semibold text-slate-900">Últimos pedidos</h3>
+                        <div class="overflow-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="text-xs uppercase text-slate-500">
+                                    <tr>
+                                        <th class="pb-2">Código</th>
+                                        <th class="pb-2">Fecha</th>
+                                        <th class="pb-2">Vendedora</th>
+                                        <th class="pb-2 text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    @forelse($ultimosPedidosAdmin as $pedido)
+                                        <tr>
+                                            <td class="py-2 font-medium text-slate-900">{{ $pedido->codigo_pedido }}</td>
+                                            <td class="py-2 text-slate-600">{{ $pedido->fecha ? Carbon::parse($pedido->fecha)->format('d/m/Y') : 'Sin fecha' }}</td>
+                                            <td class="py-2 text-slate-600">{{ $pedido->vendedora?->name ?? 'Sin vendedora' }}</td>
+                                            <td class="py-2 text-right font-semibold text-slate-900">${{ number_format((float) $pedido->total_a_pagar, 2, ',', '.') }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="py-4 text-center text-sm text-slate-500">No hay pedidos para el filtro seleccionado.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-100 p-4">
+                        <h3 class="mb-3 text-sm font-semibold text-slate-900">Últimos registros</h3>
+                        <div class="overflow-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="text-xs uppercase text-slate-500">
+                                    <tr>
+                                        <th class="pb-2">Nombre</th>
+                                        <th class="pb-2">Correo</th>
+                                        <th class="pb-2">Alta</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    @forelse($ultimosRegistrosAdmin as $registro)
+                                        <tr>
+                                            <td class="py-2 font-medium text-slate-900">{{ $registro->name }}</td>
+                                            <td class="py-2 text-slate-600">{{ $registro->email }}</td>
+                                            <td class="py-2 text-slate-600">{{ $registro->created_at?->format('d/m/Y H:i') }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="py-4 text-center text-sm text-slate-500">No hay registros recientes.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="rounded-2xl border border-slate-100 p-4">
+                        <h3 class="mb-3 text-sm font-semibold text-slate-900">Top 5 vendedoras (por ventas)</h3>
+                        <ol class="space-y-2 text-sm">
+                            @forelse($topVendedorasAdmin as $vendedora)
+                                <li class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                                    <span class="font-medium text-slate-900">{{ $vendedora->name }}</span>
+                                    <span class="text-slate-600">${{ number_format((float) $vendedora->total_ventas, 2, ',', '.') }}</span>
+                                </li>
+                            @empty
+                                <li class="text-slate-500">Sin datos para el período seleccionado.</li>
+                            @endforelse
+                        </ol>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-100 p-4">
+                        <h3 class="mb-3 text-sm font-semibold text-slate-900">Top 5 líderes (por ventas)</h3>
+                        <ol class="space-y-2 text-sm">
+                            @forelse($topLideresAdmin as $lider)
+                                <li class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                                    <span class="font-medium text-slate-900">{{ $lider->name }}</span>
+                                    <span class="text-slate-600">${{ number_format((float) $lider->total_ventas, 2, ',', '.') }}</span>
+                                </li>
+                            @empty
+                                <li class="text-slate-500">Sin datos para el período seleccionado.</li>
+                            @endforelse
+                        </ol>
+                    </div>
+                </div>
+
+                <div
+                    x-data="dashboardAccesosRapidos()"
+                    x-init="init()"
+                    class="space-y-3"
+                >
+                    <div>
+                        <h3 class="text-sm font-semibold text-slate-900">Accesos rápidos arrastrables</h3>
+                        <p class="text-xs text-slate-500">Accedé al mismo menú del sidebar y ordená los accesos según tu uso.</p>
+                    </div>
+
+                    <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                        <template x-for="(item, index) in items" :key="item.href + index">
+                            <a
+                                :href="item.href"
+                                draggable="true"
+                                @dragstart="dragStart(index)"
+                                @dragover.prevent
+                                @drop="drop(index)"
+                                class="cursor-move rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-indigo-500 hover:text-indigo-600"
+                                x-text="item.label"
+                            ></a>
+                        </template>
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        <script>
+            function dashboardAccesosRapidos() {
+                return {
+                    items: [],
+                    dragIndex: null,
+                    storageKey: 'dashboard-accesos-rapidos-anchor',
+                    init() {
+                        const links = Array.from(document.querySelectorAll('aside a[href], nav a[href]'))
+                            .map((link) => ({
+                                href: link.getAttribute('href'),
+                                label: (link.textContent || '').trim(),
+                            }))
+                            .filter((item) => item.href && item.label && !item.href.startsWith('#'))
+                            .filter((item, index, arr) => arr.findIndex((el) => el.href === item.href) === index)
+                            .slice(0, 12);
+
+                        const guardado = localStorage.getItem(this.storageKey);
+
+                        if (!guardado) {
+                            this.items = links;
+                            return;
+                        }
+
+                        try {
+                            const guardados = JSON.parse(guardado);
+                            const porHref = new Map(links.map((item) => [item.href, item]));
+                            const restaurados = guardados.map((item) => porHref.get(item.href)).filter(Boolean);
+                            const nuevos = links.filter((item) => !restaurados.some((r) => r.href === item.href));
+                            this.items = [...restaurados, ...nuevos];
+                        } catch (error) {
+                            this.items = links;
+                        }
+                    },
+                    dragStart(index) {
+                        this.dragIndex = index;
+                    },
+                    drop(index) {
+                        if (this.dragIndex === null || this.dragIndex === index) {
+                            return;
+                        }
+
+                        const movido = this.items.splice(this.dragIndex, 1)[0];
+                        this.items.splice(index, 0, movido);
+                        this.dragIndex = null;
+                        localStorage.setItem(this.storageKey, JSON.stringify(this.items));
+                    },
+                };
+            }
+        </script>
 
     </x-app.container>
 </x-layouts.app>

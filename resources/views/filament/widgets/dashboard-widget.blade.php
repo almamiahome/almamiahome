@@ -1,88 +1,234 @@
 <x-filament-widgets::widget class="gap-5 fi-filament-info-widget">
-    <section class="flex flex-col gap-5 mb-5 space-x-5 w-full xl:flex-row">
-        <x-filament::section class="w-full">
-            <div class="flex gap-x-3 items-center w-full">
-                <div class="flex-1">
-                    <a href="/" rel="noopener noreferrer" target="_blank"><x-logo class="w-auto h-6"></x-logo></a>
-                    <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ wave_version() }}</p>
-                </div>
-                <div class="flex flex-col gap-y-1 items-end">
-                    <x-filament::link color="gray" href="https://wave.devdojo.com/docs" icon="heroicon-m-book-open" icon-alias="panels::widgets.filament-info.open-documentation-button" rel="noopener noreferrer" target="_blank">
-                        {{ __('filament-panels::widgets/filament-info-widget.actions.open_documentation.label') }}
-                    </x-filament::link>
-                    <x-filament::link color="gray" href="https://github.com/thedevdojo/wave" icon-alias="panels::widgets.filament-info.open-github-button" rel="noopener noreferrer" target="_blank">
-                        <x-slot name="icon"><svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" fill="currentColor" fill-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" /></svg></x-slot>
-                        {{ __('filament-panels::widgets/filament-info-widget.actions.open_github.label') }}
-                    </x-filament::link>
-                </div>
-            </div>
-        </x-filament::section>
-        <x-filament::section class="w-full">
-            <div class="flex gap-x-3 items-center w-full">
-                <div class="flex-1">
-                    <h2 class="grid flex-1 text-base font-semibold leading-6 text-gray-950 dark:text-white">Welcome to the Wave Admin</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-medium text-blue-600">Active Theme: </span>{{ \Wave\Theme::where('active', 1)->first()->name }}</p>
-                </div>
-                <x-filament::button color="gray" icon="heroicon-m-arrow-top-right-on-square" icon-alias="panels::widgets.account.logout-button" labeled-from="sm" tag="a" type="submit" href="/" target="_blank">
-                    Visit your Site
-                </x-filament::button>
-            </div>
-        </x-filament::section>
-    </section>
-    <section class="flex gap-5 mb-5">
-        <section class="flex flex-col gap-5 items-center w-full xl:flex-row">
-            <x-filament::section class="w-full">
-                <div class="flex gap-x-5 items-center">
-                    <div class="flex-">
-                        <x-phosphor-users-duotone class="h-10 text-blue-600 fill-current" />
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <div class="mt-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">{{ \Wave\User::count() }}</div>
-                    </div>
-                </div>
-                <div class="mt-2 text-xs font-medium text-gray-500 truncate">User Accounts</div>
-            </x-filament::section>
-            <x-filament::section class="w-full">
-                <div class="flex gap-x-5 items-center">
-                    <div class="flex-">
-                        <x-phosphor-credit-card-duotone class="h-10 text-blue-600 fill-current" />
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <div class="mt-1 text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">{{ \Wave\User::count() }}</div>
-                    </div>
-                </div>
-                <div class="mt-2 text-xs font-medium text-gray-500 truncate">Subscribers</div>
-            </x-filament::section>
-        </section>
-        <section class="flex flex-col gap-5 items-center w-full xl:flex-row">
-            <x-filament::section class="w-full">
-                <div class="flex gap-x-5 items-center">
-                    <div class="hidden lg:inline">
-                        <x-phosphor-pencil-line-duotone class="h-10 text-blue-600 fill-current" />
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <div class="mt-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">{{ \Wave\Post::count() }}</div>
-                    </div>
-                </div>
-                <div class="mt-2 text-xs font-medium text-gray-500 truncate">Total Post Articles</div>
-            </x-filament::section>
-            <x-filament::section class="w-full">
-                <div class="flex gap-x-5 items-center">
-                    <div class="flex-">
-                        <x-phosphor-file-text-duotone class="h-10 text-blue-600 fill-current" />
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <div class="mt-1 text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">{{ \Wave\Page::count() }}</div>
-                    </div>
-                </div>
-                <div class="mt-2 text-xs font-medium text-gray-500 truncate">Total Pages</div>
-            </x-filament::section>
-        </section>
-    </section>
     <x-filament::section>
-        <div class="flex flex-col relative gap-x-3 justify-center space-y-2 items-center min-h-[400px] w-full ">
-            <p class="text-center text-gray-400 dark:text-gray-500">Welcome to your Admin Dashboard. Modify this page at:</p> 
-            <code class="px-2 py-1 text-xs text-center text-gray-500 rounded-lg dark:text-gray-400 bg-stone-200 dark:bg-stone-800">resources/views/filament/widgets/dashboard-placeholder-widget.blade.php</code>
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-950 dark:text-white">Panel administrativo</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Resumen comercial con filtros por mes o rango de fechas.</p>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <label class="flex flex-col gap-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+                    Tipo de filtro
+                    <select wire:model.live="filtro" class="fi-input block w-full rounded-lg border-gray-300 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white">
+                        <option value="mes">Por mes</option>
+                        <option value="rango">Rango personalizado</option>
+                    </select>
+                </label>
+
+                @if ($filtro === 'mes')
+                    <label class="flex flex-col gap-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+                        Mes
+                        <input wire:model.live="mes" type="month" class="fi-input block w-full rounded-lg border-gray-300 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white" />
+                    </label>
+                @else
+                    <label class="flex flex-col gap-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+                        Desde
+                        <input wire:model.live="fechaInicio" type="date" class="fi-input block w-full rounded-lg border-gray-300 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white" />
+                    </label>
+
+                    <label class="flex flex-col gap-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+                        Hasta
+                        <input wire:model.live="fechaFin" type="date" class="fi-input block w-full rounded-lg border-gray-300 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white" />
+                    </label>
+
+                    <div class="flex items-end">
+                        <x-filament::button wire:click="limpiarRango" color="gray" icon="heroicon-m-x-mark" size="sm">
+                            Limpiar fechas
+                        </x-filament::button>
+                    </div>
+                @endif
+            </div>
         </div>
     </x-filament::section>
+
+    <section class="mt-5 grid gap-5 md:grid-cols-3">
+        <x-filament::section>
+            <p class="text-xs font-medium uppercase tracking-wide text-gray-500">Unidades vendidas</p>
+            <p class="mt-2 text-2xl font-semibold text-gray-950 dark:text-white">{{ number_format($resumen['unidades_vendidas'], 0, ',', '.') }}</p>
+        </x-filament::section>
+
+        <x-filament::section>
+            <p class="text-xs font-medium uppercase tracking-wide text-gray-500">Total catálogo vendido</p>
+            <p class="mt-2 text-2xl font-semibold text-gray-950 dark:text-white">${{ number_format($resumen['total_catalogo_vendido'], 2, ',', '.') }}</p>
+        </x-filament::section>
+
+        <x-filament::section>
+            <p class="text-xs font-medium uppercase tracking-wide text-gray-500">Total facturado</p>
+            <p class="mt-2 text-2xl font-semibold text-gray-950 dark:text-white">${{ number_format($resumen['total_facturado'], 2, ',', '.') }}</p>
+        </x-filament::section>
+    </section>
+
+    <section class="mt-5 grid gap-5 lg:grid-cols-2">
+        <x-filament::section>
+            <div class="mb-3 flex items-center justify-between">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Últimos pedidos</h3>
+            </div>
+
+            <div class="overflow-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="text-xs uppercase text-gray-500">
+                        <tr>
+                            <th class="pb-2">Código</th>
+                            <th class="pb-2">Fecha</th>
+                            <th class="pb-2">Vendedora</th>
+                            <th class="pb-2 text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                        @forelse($ultimosPedidos as $pedido)
+                            <tr>
+                                <td class="py-2 font-medium text-gray-900 dark:text-white">{{ $pedido->codigo_pedido }}</td>
+                                <td class="py-2 text-gray-600 dark:text-gray-300">{{ $pedido->fecha ? \Carbon\Carbon::parse($pedido->fecha)->format('d/m/Y') : 'Sin fecha' }}</td>
+                                <td class="py-2 text-gray-600 dark:text-gray-300">{{ $pedido->vendedora?->name ?? 'Sin vendedora' }}</td>
+                                <td class="py-2 text-right font-medium text-gray-900 dark:text-white">${{ number_format((float) $pedido->total_a_pagar, 2, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="py-4 text-center text-sm text-gray-500">No hay pedidos para el filtro seleccionado.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </x-filament::section>
+
+        <x-filament::section>
+            <div class="mb-3 flex items-center justify-between">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Últimos registros</h3>
+            </div>
+
+            <div class="overflow-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="text-xs uppercase text-gray-500">
+                        <tr>
+                            <th class="pb-2">Nombre</th>
+                            <th class="pb-2">Correo</th>
+                            <th class="pb-2">Alta</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                        @forelse($ultimosRegistros as $registro)
+                            <tr>
+                                <td class="py-2 font-medium text-gray-900 dark:text-white">{{ $registro->name }}</td>
+                                <td class="py-2 text-gray-600 dark:text-gray-300">{{ $registro->email }}</td>
+                                <td class="py-2 text-gray-600 dark:text-gray-300">{{ $registro->created_at?->format('d/m/Y H:i') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="py-4 text-center text-sm text-gray-500">No hay registros recientes.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </x-filament::section>
+    </section>
+
+    <section class="mt-5 grid gap-5 lg:grid-cols-2">
+        <x-filament::section>
+            <h3 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Top 5 vendedoras (por ventas)</h3>
+            <ol class="space-y-2 text-sm">
+                @forelse($topVendedoras as $item)
+                    <li class="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 dark:bg-gray-900/40">
+                        <span class="font-medium text-gray-900 dark:text-white">{{ $item['nombre'] }}</span>
+                        <span class="text-gray-600 dark:text-gray-300">${{ number_format($item['total_ventas'], 2, ',', '.') }}</span>
+                    </li>
+                @empty
+                    <li class="text-gray-500">Sin datos para el período seleccionado.</li>
+                @endforelse
+            </ol>
+        </x-filament::section>
+
+        <x-filament::section>
+            <h3 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Top 5 líderes (por ventas)</h3>
+            <ol class="space-y-2 text-sm">
+                @forelse($topLideres as $item)
+                    <li class="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 dark:bg-gray-900/40">
+                        <span class="font-medium text-gray-900 dark:text-white">{{ $item['nombre'] }}</span>
+                        <span class="text-gray-600 dark:text-gray-300">${{ number_format($item['total_ventas'], 2, ',', '.') }}</span>
+                    </li>
+                @empty
+                    <li class="text-gray-500">Sin datos para el período seleccionado.</li>
+                @endforelse
+            </ol>
+        </x-filament::section>
+    </section>
+
+    <x-filament::section class="mt-5">
+        <div
+            x-data="dashboardAccesosRapidos()"
+            x-init="init()"
+            class="space-y-3"
+        >
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Accesos rápidos (arrastrables)</h3>
+                <p class="text-xs text-gray-500">Podés reordenarlos arrastrando cada botón. Se guardan en este navegador.</p>
+            </div>
+
+            <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                <template x-for="(item, index) in items" :key="item.href + index">
+                    <a
+                        :href="item.href"
+                        draggable="true"
+                        @dragstart="dragStart(index)"
+                        @dragover.prevent
+                        @drop="drop(index)"
+                        class="cursor-move rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-primary-500 hover:text-primary-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+                        x-text="item.label"
+                    ></a>
+                </template>
+            </div>
+        </div>
+    </x-filament::section>
+
+    <script>
+        function dashboardAccesosRapidos() {
+            return {
+                items: [],
+                dragIndex: null,
+                storageKey: 'dashboard-accesos-rapidos-admin',
+                init() {
+                    const links = Array.from(document.querySelectorAll('aside .fi-sidebar-nav a[href]'))
+                        .map((link) => ({
+                            href: link.getAttribute('href'),
+                            label: (link.textContent || '').trim(),
+                        }))
+                        .filter((item) => item.href && item.label)
+                        .slice(0, 12);
+
+                    const saved = localStorage.getItem(this.storageKey);
+
+                    if (!saved) {
+                        this.items = links;
+                        return;
+                    }
+
+                    try {
+                        const savedItems = JSON.parse(saved);
+                        const byHref = new Map(links.map((item) => [item.href, item]));
+                        const restored = savedItems
+                            .map((item) => byHref.get(item.href))
+                            .filter(Boolean);
+                        const nuevos = links.filter((item) => !restored.some((r) => r.href === item.href));
+                        this.items = [...restored, ...nuevos];
+                    } catch (e) {
+                        this.items = links;
+                    }
+                },
+                dragStart(index) {
+                    this.dragIndex = index;
+                },
+                drop(index) {
+                    if (this.dragIndex === null || this.dragIndex === index) {
+                        return;
+                    }
+
+                    const moved = this.items.splice(this.dragIndex, 1)[0];
+                    this.items.splice(index, 0, moved);
+                    this.dragIndex = null;
+                    localStorage.setItem(this.storageKey, JSON.stringify(this.items));
+                },
+            }
+        }
+    </script>
 </x-filament-widgets::widget>
