@@ -50,14 +50,31 @@ name('pedidos.factura');
         .border-brand-pink { border-color: #e91e63; }
 
         @media print {
-            .no-print { display: none !important; }
-            body { background-color: white !important; }
-            .invoice-card { 
-                box-shadow: none !important; 
-                border: 1px solid #e2e8f0 !important;
-                margin: 0 !important;
-                width: 100% !important;
+            body * {
+                visibility: hidden !important;
             }
+
+            #factura-print-area,
+            #factura-print-area * {
+                visibility: visible !important;
+            }
+
+            #factura-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
             @page { size: A4; margin: 10mm; }
         }
 
@@ -110,7 +127,7 @@ name('pedidos.factura');
 
 
      <div class="flex justify-center overflow-auto pb-10">
-        <div class="invoice-print-area invoice-a4 relative bg-white px-8 py-10 text-sm text-slate-800 shadow-2xl  rounded-2xl border border-slate-200 w-full max-w-[210mm] min-h-[297mm]">
+        <div id="factura-print-area" class="invoice-print-area invoice-a4 relative bg-white px-8 py-10 text-sm text-slate-800 shadow-2xl rounded-2xl border border-slate-200 w-full max-w-[210mm] min-h-[297mm]">
 
             <div class="relative z-10">
             
@@ -194,7 +211,7 @@ name('pedidos.factura');
                         <tbody class="divide-y divide-slate-100">
                             @forelse($pedido->articulos as $item)
                                 <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="px-3 py-3 font-bold text-slate-900 text-[12px]">{{ $item->sku }}</td>
+                                    <td class="px-3 py-3 font-bold text-slate-900 text-[12px]">{{ $item->sku ?? "—" }}</td>
                                     <td class="px-3 py-3 font-bold text-slate-900 text-[12px]">{{ $item->producto }}</td>
                                     <td class="px-3 py-3 text-slate-600 text-[11px] leading-tight">{{ $item->descripcion }}</td>
                                     <td class="px-3 py-3 text-right font-medium text-[12px]">{{ $formatNumber($item->cantidad) }}</td>
@@ -205,7 +222,7 @@ name('pedidos.factura');
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-2 py-12 text-center text-slate-400 italic">
+                                    <td colspan="8" class="px-2 py-12 text-center text-slate-400 italic">
                                         No hay artículos registrados en este pedido.
                                     </td>
                                 </tr>

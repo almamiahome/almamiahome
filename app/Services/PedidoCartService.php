@@ -246,6 +246,7 @@ class PedidoCartService
             'codigo_pedido'                    => ['required', 'string', 'max:255', Rule::unique('pedidos', 'codigo_pedido')],
             'cart'                             => ['required', 'array', 'min:1'],
             'cart.*.producto_id'               => ['required', 'integer', 'exists:productos,id'],
+            'cart.*.sku'                       => ['nullable', 'string', 'max:255'],
             'cart.*.nombre'                    => ['required', 'string', 'max:255'],
             'cart.*.cantidad'                  => ['required', 'integer', 'min:1'],
             'cart.*.precio_unitario'           => ['required', 'numeric', 'min:0'],
@@ -315,6 +316,7 @@ class PedidoCartService
             $totalUnidades     += $cantidad;
 
             $cartItems[] = [
+                'sku'                  => $producto->sku,
                 'producto'             => $producto->nombre,
                 'descripcion'          => $categoriaNombre,
                 'cantidad'             => $cantidad,

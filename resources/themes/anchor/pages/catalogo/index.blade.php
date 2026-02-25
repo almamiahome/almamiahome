@@ -305,6 +305,9 @@ new class extends Component {
                         <div>
                             <p class="text-sm uppercase tracking-wide text-slate-500 font-semibold">Catálogo</p>
                             <h2 class="text-2xl font-bold text-slate-800">Agregá productos al carrito</h2>
+                            <a href="{{ url('/crearpedido') }}" class="mt-2 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition">
+                                Ir a Crear pedido
+                            </a>
                         </div>
                         <div class="flex items-center gap-2">
                             <button
@@ -534,6 +537,7 @@ new class extends Component {
                                     <div class="min-w-0">
                                         <p class="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">Producto</p>
                                         <p class="text-base font-semibold text-slate-900 dark:text-white leading-snug" x-text="item.nombre"></p>
+                                        <p class="mt-1 text-xs text-slate-500">SKU: <span class="font-semibold" x-text="item.sku ?? '—'"></span></p>
                                     </div>
                                     <button
                                         @click="removeItem(index)"
@@ -598,6 +602,7 @@ new class extends Component {
                         <table class="w-full text-sm min-w-max">
                             <thead class="bg-gray-100 text-gray-700 dark:bg-slate-900 dark:text-slate-200">
                                 <tr>
+                                    <th class="px-3 py-2 text-left">SKU</th>
                                     <th class="px-3 py-2 text-left">Producto</th>
                                     <th class="px-3 py-2 text-left">Cantidad</th>
                                     <th class="px-3 py-2 text-left">Precio catálogo</th>
@@ -611,6 +616,7 @@ new class extends Component {
                             <tbody>
                                 <template x-for="(item,index) in cart" :key="item.producto_id">
                                     <tr class="border-t hover:bg-gray-50 dark:hover:bg-slate-800/60">
+                                        <td class="px-3 py-2 text-gray-700 dark:text-slate-200 font-semibold" x-text="item.sku ?? '—'"></td>
                                         <td class="px-3 py-2 text-gray-800 dark:text-slate-100" x-text="item.nombre"></td>
                                         <td class="px-3 py-2">
                                             <div class="flex items-center gap-1">
@@ -649,40 +655,71 @@ new class extends Component {
                 </div>
 
                 <!-- Cards de resumen -->
-                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" x-show="cart.length > 0">
-                    <div class="resumen-card">
-                        <p class="resumen-title">Subtotal (con descuento)</p>
-                        <p class="resumen-value">$ <span x-text="formatMoney(subtotal)"></span></p>
-                    </div>
+                <div class="mt-8 space-y-6" x-show="cart.length > 0">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col">
+                            <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.15em]">Resumen de Negocio</h3>
+                            </div>
 
-                    <div class="resumen-card">
-                        <p class="resumen-title">Ganancias</p>
-                        <p class="resumen-value">$ <span x-text="formatMoney(totalGanancias)"></span></p>
-                    </div>
-
-                    <div class="resumen-card">
-                        <p class="resumen-title">Total unidades</p>
-                        <p class="resumen-value" x-text="totalUnidades"></p>
-                        <p class="resumen-title mt-4">Total puntos</p>
-                        <p class="resumen-value" style="font-size:1.2rem" x-text="totalPuntos"></p>
-                    </div>
-
-                    <div class="resumen-card">
-                        <p class="resumen-title">Gastos administrativos</p>
-                        <p class="resumen-value">$ <span x-text="formatMoney(totalGastos)"></span></p>
-
-                        <div class="mt-3 space-y-2 max-h-32 overflow-y-auto pr-1">
-                            <template x-for="gasto in gastosDisponibles" :key="gasto.id">
-                                <div class="gasto-item">
-                                    <div>
-                                        <p class="gasto-title" x-text="gasto.concepto"></p>
-                                        <p class="gasto-subtitle" x-text="gasto.tipo ?? 'Sin tipo'"></p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="gasto-monto">$ <span x-text="formatMoney(gasto.monto)"></span></p>
+                            <div class="p-6 flex-1 grid grid-cols-1 gap-6">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Subtotal de Venta</p>
+                                    <div class="flex items-baseline mt-1">
+                                        <span class="text-xl font-medium text-gray-400 mr-1">$</span>
+                                        <span class="text-4xl font-black text-gray-900 tracking-tight" x-text="formatMoney(subtotal)"></span>
                                     </div>
                                 </div>
-                            </template>
+
+                                <div class="relative overflow-hidden bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+                                    <div class="absolute -right-4 -top-4 text-emerald-100">
+                                        <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"></path></svg>
+                                    </div>
+
+                                    <div class="relative">
+                                        <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Tu Ganancia Estimada</p>
+                                        <div class="flex items-baseline mt-1 text-emerald-700">
+                                            <span class="text-xl font-bold mr-1">$</span>
+                                            <span class="text-4xl font-black" x-text="formatMoney(totalGanancias)"></span>
+                                        </div>
+                                        <p class="mt-2 text-xs text-emerald-600/80 font-medium">Este monto representa tu beneficio neto por la venta.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col">
+                            <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.15em]">Detalle Operativo</h3>
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-bold uppercase" x-text="totalUnidades + ' Unidades'"></span>
+                                    <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-full text-[10px] font-bold uppercase" x-text="totalPuntos + ' Puntos'"></span>
+                                </div>
+                            </div>
+
+                            <div class="p-6">
+                                <div class="flex justify-between items-end mb-4">
+                                    <p class="text-sm font-semibold text-gray-700">Gastos Administrativos</p>
+                                    <p class="text-sm font-bold text-gray-500">$ <span x-text="formatMoney(totalGastos)"></span></p>
+                                </div>
+
+                                <div class="space-y-3 max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
+                                    <template x-for="gasto in gastosDisponibles" :key="gasto.id">
+                                        <div class="group flex items-center justify-between p-3 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-indigo-200 hover:shadow-sm transition-all duration-200">
+                                            <div class="flex items-center">
+                                                <div class="w-8 h-8 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-400 group-hover:text-indigo-500 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                                </div>
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-bold text-gray-800 leading-none" x-text="gasto.concepto"></p>
+                                                    <p class="text-[10px] text-gray-400 mt-1 uppercase font-medium" x-text="gasto.tipo ?? 'Cargo'"></p>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm font-bold text-gray-700">$<span x-text="formatMoney(gasto.monto)"></span></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
