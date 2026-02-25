@@ -1,0 +1,59 @@
+[
+  {
+    "id": "automatizacion-whatsapp",
+    "titulo": "Automatización de seguimiento por WhatsApp",
+    "subtitulo": "Recordatorios de campañas y cobranza inteligente",
+    "estado": "en implementación",
+    "etiquetas": ["whatsapp", "automatización", "campañas"],
+    "categorias": ["comunicación", "ventas"],
+    "descripcion": "Implementa flujos automáticos de mensajes para avisar cierre de campaña, pagos pendientes y novedades del catálogo.",
+    "ejemplos_html": [
+      "<h4>Ejemplo de uso</h4><p>Mensaje automático 48 horas antes del cierre: <strong>\"Recordá cargar tus pedidos antes del viernes 18:00\"</strong>.</p>",
+      "<h4>Impacto esperado</h4><ul><li>Menos mora de pagos.</li><li>Mayor cumplimiento de fechas de cierre.</li></ul>"
+    ],
+    "precios": [
+      {
+        "concepto": "Servicio mensual",
+        "monto": "$65.000 ARS",
+        "periodicidad": "Por mes",
+        "detalle": "Incluye hasta 4 flujos y ajustes mensuales."
+      },
+      {
+        "concepto": "Instalación inicial",
+        "monto": "$120.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Configuración técnica y plantillas base."
+      }
+    ],
+    "licencia": "Licencia de uso interno no transferible",
+    "gastos_externos": "Meta API de WhatsApp y proveedor BSP se pagan por separado."
+  },
+  {
+    "id": "modulo-facturacion-electronica",
+    "titulo": "Módulo de facturación electrónica",
+    "subtitulo": "Integración para comprobantes automáticos",
+    "estado": "propuesta validada",
+    "etiquetas": ["facturación", "afip", "administración"],
+    "categorias": ["finanzas", "operaciones"],
+    "descripcion": "Genera comprobantes electrónicos desde pedidos confirmados y los vincula con cobranza.",
+    "ejemplos_html": [
+      "<p><strong>Escenario:</strong> al pasar un pedido a estado facturado, se emite comprobante y se envía por correo.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Desarrollo",
+        "monto": "$980.000 ARS",
+        "periodicidad": "Pago por desarrollo",
+        "detalle": "Entrega en 5 semanas con 2 rondas de ajustes."
+      },
+      {
+        "concepto": "Mantenimiento",
+        "monto": "$38.000 ARS",
+        "periodicidad": "Por mes",
+        "detalle": "Soporte técnico y mejoras menores."
+      }
+    ],
+    "licencia": "Licencia perpetua para Alma Mia",
+    "gastos_externos": "Certificados fiscales y proveedor de firma digital."
+  }
+]
