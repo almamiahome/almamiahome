@@ -8,6 +8,7 @@ class PedidoArticulo extends Model
 {
     protected $fillable = [
         'pedido_id',
+        'sku',
         'producto',
         'descripcion',
         'cantidad',

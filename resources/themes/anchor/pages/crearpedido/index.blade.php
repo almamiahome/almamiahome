@@ -79,7 +79,12 @@ new class extends Component {
             x-init="init()"
         >
 
-            <h1 class="text-xl font-bold mb-4">Crear Pedido</h1>
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <h1 class="text-xl font-bold">Crear Pedido</h1>
+            <a href="{{ url('/catalogo') }}" class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition">
+                Ir a Catálogo
+            </a>
+            </div>
 
             <template x-if="messages.success">
                 <div class="p-3 mt-4 text-green-700 bg-green-100 border border-green-300 rounded" x-text="messages.success"></div>
@@ -197,6 +202,7 @@ new class extends Component {
                 <table class="w-full text-sm" x-show="cart.length > 0">
                     <thead class="bg-gray-100 text-gray-700">
                         <tr>
+                            <th class="px-3 py-2 text-left">SKU</th>
                             <th class="px-3 py-2 text-left">Producto</th>
                             <th class="px-3 py-2 text-left">Cantidad</th>
                             <th class="px-3 py-2 text-left">Precio catálogo</th>
@@ -209,6 +215,7 @@ new class extends Component {
                     <tbody>
                         <template x-for="(item,index) in cart" :key="item.producto_id">
                             <tr class="border-t hover:bg-gray-50">
+                                <td class="px-3 py-2 text-gray-700 font-semibold" x-text="item.sku ?? '—'"></td>
                                 <td class="px-3 py-2 text-gray-800" x-text="item.nombre"></td>
                                 <td class="px-3 py-2 flex items-center gap-1">
                                     <button @click="decreaseQty(index)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 text-gray-700">-</button>

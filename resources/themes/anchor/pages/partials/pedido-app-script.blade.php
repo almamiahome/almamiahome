@@ -198,6 +198,7 @@
                     const precioUnitario = Number(prod.precio);
                     this.cart.push({
                         producto_id: prod.id,
+                        sku: prod.sku ?? null,
                         nombre: prod.nombre,
                         cantidad: 1,
                         precio_unitario_catalogo: precioUnitario,
@@ -322,6 +323,7 @@
                 let res = await this.$wire.storePedido(
                     this.cart.map(i => ({
                         producto_id: i.producto_id,
+                        sku: i.sku,
                         nombre: i.nombre,
                         cantidad: i.cantidad,
                         precio_unitario: i.precio_unitario_catalogo,
