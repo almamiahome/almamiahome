@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Catalogo extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'nombre',
+        'imagen_portada',
+        'descripcion',
+    ];
+
+    public function paginas()
+    {
+        return $this->hasMany(CatalogoPagina::class);
+    }
+}

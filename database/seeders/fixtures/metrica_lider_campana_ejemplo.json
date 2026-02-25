@@ -1,0 +1,50 @@
+{
+  "lider_id": 1,
+  "revendedora_id": null,
+  "cierre_campana_id": 1,
+  "rango_lider_id": 1,
+  "actividad_ok": true,
+  "altas_ok": true,
+  "unidades_ok": true,
+  "cobranzas_ok": true,
+  "crecimiento_ok": true,
+  "altas_pagadas_en_cierre": [
+    {
+      "cierre_codigo": "CAMP-101",
+      "altas": 3,
+      "cuota": 1,
+      "monto_pagado": 2200
+    },
+    {
+      "cierre_codigo": "CAMP-102",
+      "altas": 3,
+      "cuota": 2,
+      "monto_pagado": 2200
+    },
+    {
+      "cierre_codigo": "CAMP-103",
+      "altas": 3,
+      "cuota": 3,
+      "monto_pagado": 2200
+    }
+  ],
+  "cantidad_1c": 4,
+  "cantidad_2c": 2,
+  "cantidad_3c": 1,
+  "monto_reparto_total": 4400,
+  "premio_actividad": 6000,
+  "premio_unidades": 5000,
+  "premio_cobranzas": 4000,
+  "premio_altas": 6600,
+  "premio_crecimiento": 25000,
+  "premio_total": 51000,
+  "fecha_pago_equipo": "2025-11-05T00:00:00Z",
+  "datos": {
+    "nota": "Fixture de referencia para probar cálculos de métricas y repartos reales.",
+    "repartos_aplicados": {
+      "1c": 2000,
+      "2c": 1400,
+      "3c": 1000
+    }
+  }
+}

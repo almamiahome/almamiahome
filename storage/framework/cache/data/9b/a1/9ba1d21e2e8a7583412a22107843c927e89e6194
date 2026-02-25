@@ -1,0 +1,39 @@
+9999999999a:20:{s:10:"site.title";s:7:"ALMAMIA";s:16:"site.description";s:16:"PANEL DE CONTROL";s:33:"site.google_analytics_tracking_id";N;s:19:"almamia.info.mision";s:100:"Inspirar a la red de embajadoras con fragancias artesanales y oportunidades de negocio sustentables.";s:19:"almamia.info.vision";s:69:"Ser la comunidad de cosmética mendocina más confiable de Argentina.";s:20:"almamia.info.valores";s:96:"["transparencia","cuidado del ambiente","innovación en fragancias","acompañamiento comercial"]";s:23:"almamia.contacto.correo";s:19:"hola@almamia.com.ar";s:25:"almamia.contacto.whatsapp";s:18:"+54 9 261 555 4321";s:26:"almamia.logistica.horarios";s:129:"{"lunes":"09:00 - 18:00","martes":"09:00 - 18:00","miercoles":"09:00 - 18:00","jueves":"09:00 - 18:00","viernes":"09:00 - 18:00"}";s:35:"almamia.logistica.tiempos_estimados";s:76:"{"mendoza":"24 a 48 hs","cuyo":"3 a 5 días","resto_del_pais":"5 a 7 días"}";s:25:"almamia.campanias.vigente";s:29:"Campaña Primavera Aromática";s:27:"almamia.campanias.objetivos";s:149:"{"capacitaciones_virtuales":"2 sesiones mensuales para nuevas embajadoras","ventas_minimas":"12 unidades promedio por embajadora","nuevas_lideres":5}";s:20:"almamia.zona.mendoza";s:402:"["Ciudad de Mendoza","Godoy Cruz","Guaymallén","Las Heras","Luján de Cuyo","Maipú","San Martín","Rivadavia","Junín","Santa Rosa","La Paz","Lavalle","Tunuyán","Tupungato","San Carlos","General Alvear","San Rafael","Malargüe","Uspallata","Potrerillos","Chacras de Coria","Vista Flores","La Consulta","Bowen","Monte Comán","El Nihuil","Real del Padre","La Dormida","Las Catitas","Costa de Araujo"]";s:29:"almamia.departamentos.mendoza";s:221:"["Capital","Godoy Cruz","Guaymallén","Las Heras","Lavalle","Maipú","Luján de Cuyo","Tunuyán","Tupungato","San Carlos","San Martín","Rivadavia","Junín","Santa Rosa","La Paz","San Rafael","General Alvear","Malargüe"]";s:26:"almamia.soporte.documentos";s:220:"{"politica_de_cambios":"https://almamia.com.ar/politica-de-cambios.pdf","condiciones_comerciales":"https://almamia.com.ar/condiciones-comerciales.pdf","manual_embajadoras":"https://almamia.com.ar/manual-embajadoras.pdf"}";s:23:"almamia.soporte.canales";s:88:"{"email":"soporte@almamia.com.ar","telefono":"0800-123-4567","slack":"#almamia-soporte"}";s:27:"almamia.eventos.recurrentes";s:133:"{"lanzamiento_catalogo":"Primer lunes de cada mes","cierres_pedidos":"Viernes 12:00 hs","capacitacion_lideres":"Miércoles 18:30 hs"}";s:22:"almamia.cantidad.bulto";s:1:"9";s:10:"custom.css";s:761:"   
+ 
+
+
+fi-no-notification {
+    color: #fff;
+    background-color: #d7539a;
+}
+
+.fi-btn.fi-color-primary {
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing)*3);
+    background-color: #d7539a;;
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    color: #fff;
+    --tw-duration: .2s;
+    transition-duration: .2s;
+    display: inline-flex;
+}
+
+
+.fi-btn.fi-color-secondary {
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing)*3);
+    background-color: #294395;
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    color: #fff;
+    --tw-duration: .2s;
+    transition-duration: .2s;
+    display: inline-flex;
+}
+
+
+";s:9:"custom.js";s:103:"// Confirmación en consola
+console.log("🚀 Función posicionFlotante inyectada en el scope global");";}
