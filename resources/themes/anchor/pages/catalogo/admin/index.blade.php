@@ -464,7 +464,24 @@ new class extends Component {
                                 </div>
 
                                 @if($pagina->imagen)
-                                    <img src="{{ asset('storage/'.$pagina->imagen) }}" alt="Página {{ $pagina->numero }}" class="w-full rounded-lg border">
+                                    <div class="relative inline-block">
+                                        <img src="{{ asset('storage/'.$pagina->imagen) }}" alt="Página {{ $pagina->numero }}" class="w-full rounded-lg border">
+
+                                        @foreach($pagina->productos as $pivot)
+                                            <span
+                                                class="absolute h-3 w-3 rounded-full bg-indigo-600 border-2 border-white shadow"
+                                                style="left: {{ $pivot->pos_x }}%; top: {{ $pivot->pos_y }}%; transform: translate(-50%, -50%);"
+                                                title="{{ $pivot->producto?->sku ?? 'Sin SKU' }} - {{ $pivot->producto?->nombre ?? 'Producto eliminado' }}"
+                                            ></span>
+
+                                            <span
+                                                class="absolute text-[10px] bg-black/70 text-white px-1.5 py-0.5 rounded"
+                                                style="left: {{ $pivot->pos_x }}%; top: {{ $pivot->pos_y }}%; transform: translate(-50%, calc(-100% - 8px));"
+                                            >
+                                                {{ $pivot->producto?->sku ?? ($pivot->producto?->nombre ?? 'Sin producto') }}
+                                            </span>
+                                        @endforeach
+                                    </div>
                                 @endif
 
                                 @if($pagina->productos->isNotEmpty())
@@ -550,6 +567,44 @@ new class extends Component {
                         @endif
                     </div>
                 </form>
+
+                @php
+                    $paginaSeleccionada = $paginas->firstWhere('id', (int) ($mapForm['catalogo_pagina_id'] ?? 0));
+                @endphp
+
+                @if($paginaSeleccionada)
+                    <div class="mt-4 p-3 border rounded-lg bg-gray-50">
+                        <p class="text-sm font-medium text-gray-700 mb-2">
+                            Previsualización de la página {{ $paginaSeleccionada->numero }}
+                        </p>
+
+                        @if($paginaSeleccionada->imagen)
+                            <div class="relative inline-block max-w-md">
+                                <img
+                                    src="{{ asset('storage/'.$paginaSeleccionada->imagen) }}"
+                                    alt="Previsualización de página {{ $paginaSeleccionada->numero }}"
+                                    class="w-full rounded-lg border"
+                                >
+
+                                @foreach($paginaSeleccionada->productos as $pivot)
+                                    <span
+                                        class="absolute h-3 w-3 rounded-full bg-indigo-600 border-2 border-white shadow"
+                                        style="left: {{ $pivot->pos_x }}%; top: {{ $pivot->pos_y }}%; transform: translate(-50%, -50%);"
+                                        title="{{ $pivot->producto?->sku ?? 'Sin SKU' }} - {{ $pivot->producto?->nombre ?? 'Producto eliminado' }}"
+                                    ></span>
+                                @endforeach
+
+                                <span
+                                    class="absolute h-4 w-4 rounded-full bg-emerald-500/90 border-2 border-white ring-2 ring-emerald-300"
+                                    style="left: {{ $mapForm['pos_x'] }}%; top: {{ $mapForm['pos_y'] }}%; transform: translate(-50%, -50%);"
+                                    title="Posición actual del formulario ({{ $mapForm['pos_x'] }}%, {{ $mapForm['pos_y'] }}%)"
+                                ></span>
+                            </div>
+                        @else
+                            <p class="text-sm text-gray-500">La página seleccionada no tiene imagen para previsualizar.</p>
+                        @endif
+                    </div>
+                @endif
 
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
                     @foreach($paginas as $pagina)
