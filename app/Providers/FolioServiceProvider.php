@@ -17,5 +17,8 @@ class FolioServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void {}
+    public function boot(): void
+    {
+        // El montaje de páginas Folio se define en bootstrap/app.php
+    }
 }

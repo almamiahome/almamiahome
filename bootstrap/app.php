@@ -5,6 +5,19 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+$themeName = 'anchor';
+$themeJsonPath = dirname(__DIR__).'/theme.json';
+
+if (is_file($themeJsonPath)) {
+    $themeJson = json_decode((string) file_get_contents($themeJsonPath), true);
+
+    if (is_array($themeJson) && isset($themeJson['name']) && is_string($themeJson['name']) && $themeJson['name'] !== '') {
+        $themeName = $themeJson['name'];
+    }
+}
+
+$folioPagesPath = dirname(__DIR__)."/resources/themes/{$themeName}/pages";
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
         \Lab404\Impersonate\ImpersonateServiceProvider::class,
@@ -16,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__.'/../routes/web.php',
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
+        pages: is_dir($folioPagesPath) ? $folioPagesPath : null,
         // channels: __DIR__.'/../routes/channels.php',
         health: '/up',
     )
