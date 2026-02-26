@@ -1,7 +1,7 @@
 <?php
-use function Laravel\Folio\{middleware, name};
+use function Laravel\Folio\name;
 // Si quieres que sea público, quita el middleware 'auth'
-middleware('auth'); 
+\Laravel\Folio\middleware('auth'); 
 name('marketplace');
 
 use Livewire\Volt\Component;

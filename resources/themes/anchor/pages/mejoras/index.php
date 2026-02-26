@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use function Laravel\Folio\{middleware, name};
+use function Laravel\Folio\name;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Livewire\Volt\Component;
 
-middleware('auth');
+\Laravel\Folio\middleware('auth');
 name('mejoras');
 
 new class extends Component {

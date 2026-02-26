@@ -203,3 +203,34 @@ fix: corrige cálculo de puntos por categoría
 docs: actualiza README con nueva estructura de pedidos
 refactor: mejora relaciones entre coordinadoras y líderes
 ```
+
+---
+
+# 📌 9. Diagnóstico de páginas Folio/Volt (referencia operativa)
+
+## ✅ Páginas que sí funcionan y por qué
+
+Funcionan correctamente cuando respetan este patrón:
+
+1. Importar solo lo necesario de Folio (`name` y/o `middleware`) sin colisiones de nombres.
+2. Declarar `name('...')` y `middleware('auth')` (si aplica) antes del bloque de vista.
+3. Mantener la estructura de página en archivos de `resources/themes/anchor/pages/*`.
+4. Usar layout coherente (`<x-layouts.app>` para panel autenticado y `<x-layouts.marketing>` para público).
+
+## ⚠️ Error detectado y corrección aplicada
+
+Error identificado en producción:
+
+- `Cannot use function Laravel\Folio\middleware as middleware because the name is already in use`
+
+Causa raíz:
+
+- Colisión del helper `middleware` al importarlo en páginas Volt con contexto de compilación que ya define `middleware`.
+
+Corrección aplicada:
+
+- En páginas con riesgo de colisión (`pages/mejoras/index.php` y `pages/marketplace/index.php`) se dejó solo `use function Laravel\Folio\name;` y se reemplazó la llamada por nombre totalmente calificado: `\Laravel\Folio\middleware('auth');`.
+
+Regla práctica:
+
+- Si una página Volt/Folio arroja colisión de `middleware`, usar llamada totalmente calificada en lugar de importar `middleware`.
