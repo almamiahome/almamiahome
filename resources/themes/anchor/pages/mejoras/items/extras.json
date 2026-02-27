@@ -5,8 +5,14 @@
     "subtitulo": "Optimización de rutas y estados de envío",
     "icono": "truck",
     "estado": "en diseño",
-    "etiquetas": ["operaciones", "logística", "entregas"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "operaciones",
+      "logística",
+      "entregas"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Gestión avanzada de paquetería que permite agrupar pedidos por zona geográfica para optimizar el flete y asignar transportistas internos o externos.",
     "ejemplos_html": [
       "<h4>Eficiencia Logística</h4><p>Estado automático: <strong>\"Tu pedido está en la camioneta de Reparto Zona Norte\"</strong>.</p>",
@@ -21,7 +27,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "API de Google Maps (según consumo) o similar."
+    "gastos_externos": "API de Google Maps (según consumo) o similar.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "academia-capacitacion-e-learning",
@@ -29,8 +38,15 @@
     "subtitulo": "E-learning para revendedoras y líderes",
     "icono": "graduation-cap",
     "estado": "propuesta",
-    "etiquetas": ["capacitación", "rrhh", "crecimiento"],
-    "categorias": ["estrategia", "recursos humanos"],
+    "etiquetas": [
+      "capacitación",
+      "rrhh",
+      "crecimiento"
+    ],
+    "categorias": [
+      "estrategia",
+      "recursos humanos"
+    ],
     "descripcion": "Repositorio de cursos, videos de producto y técnicas de venta con sistema de niveles para desbloquear beneficios.",
     "ejemplos_html": [
       "<p><strong>Gamificación:</strong> Al completar el curso 'Venta Efectiva', la revendedora obtiene un 5% extra en su próximo pedido.</p>"
@@ -44,7 +60,10 @@
       }
     ],
     "licencia": "Licencia de uso exclusivo",
-    "gastos_externos": "Almacenamiento de video (Vimeo o AWS S3)."
+    "gastos_externos": "Almacenamiento de video (Vimeo o AWS S3).",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "asistente-whatsapp-ia",
@@ -52,8 +71,15 @@
     "subtitulo": "Atención 24/7 vía Chatbot Inteligente",
     "icono": "message-circle",
     "estado": "validando",
-    "etiquetas": ["ia", "atención al cliente", "automatización"],
-    "categorias": ["ventas", "operaciones"],
+    "etiquetas": [
+      "ia",
+      "atención al cliente",
+      "automatización"
+    ],
+    "categorias": [
+      "ventas",
+      "operaciones"
+    ],
     "descripcion": "Agente de IA conectado a la base de datos que responde dudas sobre stock, deudas y estados de pedido por WhatsApp.",
     "ejemplos_html": [
       "<h4>Consulta Típica</h4><p>Revendedora: <em>'¿Cuánto debo de mi última campaña?'</em><br>IA: <strong>'Tu saldo actual es $12.450 con vencimiento el viernes.'</strong></p>"
@@ -73,7 +99,10 @@
       }
     ],
     "licencia": "SaaS",
-    "gastos_externos": "Costo por mensaje (API Oficial de WhatsApp/Meta)."
+    "gastos_externos": "Costo por mensaje (API Oficial de WhatsApp/Meta).",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "marketing-automation-mailing",
@@ -81,8 +110,15 @@
     "subtitulo": "Campañas de Email y Notificaciones Push",
     "icono": "mail",
     "estado": "en diseño",
-    "etiquetas": ["marketing", "comunicación", "retención"],
-    "categorias": ["ventas", "estrategia"],
+    "etiquetas": [
+      "marketing",
+      "comunicación",
+      "retención"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
     "descripcion": "Envío automatizado de recordatorios de cierre de campaña, ofertas relámpago y saludos de cumpleaños.",
     "ejemplos_html": [
       "<p><strong>Flujo Automático:</strong> Si una revendedora no pasa pedido hace 15 días, el sistema envía un cupón de reactivación.</p>"
@@ -96,7 +132,10 @@
       }
     ],
     "licencia": "Licencia de uso interno",
-    "gastos_externos": "Proveedor de Mailing (SendGrid, Mailchimp o similar)."
+    "gastos_externos": "Proveedor de Mailing (SendGrid, Mailchimp o similar).",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "auditoria-control-fraude",
@@ -104,8 +143,15 @@
     "subtitulo": "Validación de perfiles y seguridad",
     "icono": "shield-check",
     "estado": "propuesta",
-    "etiquetas": ["seguridad", "finanzas", "auditoría"],
-    "categorias": ["finanzas", "operaciones"],
+    "etiquetas": [
+      "seguridad",
+      "finanzas",
+      "auditoría"
+    ],
+    "categorias": [
+      "finanzas",
+      "operaciones"
+    ],
     "descripcion": "Módulo que analiza comportamientos inusuales en pedidos y verifica identidades para evitar cuentas duplicadas o morosidad.",
     "ejemplos_html": [
       "<h4>Alerta de Riesgo</h4><p>El sistema bloquea pedidos de usuarias con múltiples DNI asociados a la misma dirección IP.</p>"
@@ -119,7 +165,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "conciliacion-bancaria-automatica",
@@ -127,8 +176,14 @@
     "subtitulo": "Sincronización automática de cobranzas",
     "icono": "credit-card",
     "estado": "validando",
-    "etiquetas": ["finanzas", "contabilidad", "pagos"],
-    "categorias": ["finanzas"],
+    "etiquetas": [
+      "finanzas",
+      "contabilidad",
+      "pagos"
+    ],
+    "categorias": [
+      "finanzas"
+    ],
     "descripcion": "Vinculación con extractos bancarios o pasarelas de pago para dar por pagados los pedidos sin carga manual.",
     "ejemplos_html": [
       "<h4>Proceso Automático</h4><p>El sistema identifica el CBU/Alias y acredita el pago al pedido #10452 instantáneamente.</p>"
@@ -142,7 +197,10 @@
       }
     ],
     "licencia": "Licencia de uso interno",
-    "gastos_externos": "Comisiones de pasarelas de pago (si aplica)."
+    "gastos_externos": "Comisiones de pasarelas de pago (si aplica).",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "planificador-metas-lideres",
@@ -150,8 +208,14 @@
     "subtitulo": "Herramienta de proyección para Líderes",
     "icono": "target",
     "estado": "en diseño",
-    "etiquetas": ["estrategia", "liderazgo", "ventas"],
-    "categorias": ["estrategia"],
+    "etiquetas": [
+      "estrategia",
+      "liderazgo",
+      "ventas"
+    ],
+    "categorias": [
+      "estrategia"
+    ],
     "descripcion": "Simulador donde las líderes cargan sus objetivos mensuales y ven cuántas vendedoras nuevas necesitan incorporar para alcanzarlos.",
     "ejemplos_html": [
       "<p><strong>Simulación:</strong> 'Si cada una de tus 10 vendedoras aumenta su ticket un 10%, alcanzarás el nivel Platino este mes'.</p>"
@@ -165,7 +229,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "gestion-de-devoluciones-rma",
@@ -173,8 +240,14 @@
     "subtitulo": "Control de fallas y logística inversa",
     "icono": "refresh-ccw",
     "estado": "propuesta",
-    "etiquetas": ["operaciones", "calidad", "clientes"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "operaciones",
+      "calidad",
+      "clientes"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Digitalización del proceso de reclamos por fallas, cambios de talle o productos faltantes con aprobación de administración.",
     "ejemplos_html": [
       "<h4>Ticket de Cambio</h4><p>Adjunto de foto de la falla -> Aprobación central -> Generación de nota de crédito automática.</p>"
@@ -188,7 +261,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "catalogo-interactivo-pdf",
@@ -196,8 +272,14 @@
     "subtitulo": "PDFs personalizados con stock real",
     "icono": "file-text",
     "estado": "validando",
-    "etiquetas": ["marketing", "ventas", "diseño"],
-    "categorias": ["ventas"],
+    "etiquetas": [
+      "marketing",
+      "ventas",
+      "diseño"
+    ],
+    "categorias": [
+      "ventas"
+    ],
     "descripcion": "Herramienta que genera un catálogo en PDF o link web que solo muestra los productos que tienen stock en el momento.",
     "ejemplos_html": [
       "<p>Evita vender lo que no hay: <strong>\"Generar catálogo de hoy (Excluir productos sin stock)\"</strong>.</p>"
@@ -211,7 +293,10 @@
       }
     ],
     "licencia": "Licencia de uso exclusivo",
-    "gastos_externos": "Servidor de renderizado de archivos."
+    "gastos_externos": "Servidor de renderizado de archivos.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "encuestas-satisfaccion-nps",
@@ -219,8 +304,14 @@
     "subtitulo": "Medición de satisfacción de la red",
     "icono": "star",
     "estado": "en diseño",
-    "etiquetas": ["calidad", "recursos humanos", "datos"],
-    "categorias": ["estrategia"],
+    "etiquetas": [
+      "calidad",
+      "recursos humanos",
+      "datos"
+    ],
+    "categorias": [
+      "estrategia"
+    ],
     "descripcion": "Sistema de encuestas breves post-pedido para medir la salud de la relación con las revendedoras.",
     "ejemplos_html": [
       "<h4>Métrica Clave</h4><p>Puntaje NPS: <strong>72 (Excelente)</strong>. Principales quejas: Demora en zona sur.</p>"
@@ -234,7 +325,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "app-movil-repartidores",
@@ -242,8 +336,14 @@
     "subtitulo": "Gestión de entregas en campo",
     "icono": "map-pin",
     "estado": "propuesta",
-    "etiquetas": ["logística", "mobile", "operaciones"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "logística",
+      "mobile",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Aplicación simplificada para que los choferes marquen entregas, cobren en efectivo y tomen fotos del remito firmado.",
     "ejemplos_html": [
       "<p><strong>Funcionalidad:</strong> Sincronización automática al recuperar señal de internet.</p>"
@@ -257,7 +357,10 @@
       }
     ],
     "licencia": "Licencia de uso para Alma Mia",
-    "gastos_externos": "Cuentas de desarrollador Apple/Google."
+    "gastos_externos": "Cuentas de desarrollador Apple/Google.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "integracion-facturacion-afip",
@@ -265,8 +368,14 @@
     "subtitulo": "Automatización legal de comprobantes",
     "icono": "file-check",
     "estado": "validando",
-    "etiquetas": ["finanzas", "legal", "automatización"],
-    "categorias": ["finanzas"],
+    "etiquetas": [
+      "finanzas",
+      "legal",
+      "automatización"
+    ],
+    "categorias": [
+      "finanzas"
+    ],
     "descripcion": "Conexión directa con Web Services de AFIP para emitir Facturas A, B o C automáticamente al confirmar un pago.",
     "ejemplos_html": [
       "<h4>Cumplimiento Fiscal</h4><p>El sistema envía el PDF de la factura al email de la vendedora apenas el pedido se marca como 'Pagado'.</p>"
@@ -280,7 +389,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Certificado digital (gratuito vía AFIP)."
+    "gastos_externos": "Certificado digital (gratuito vía AFIP).",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "ranking-social-gamificacion",
@@ -288,8 +400,15 @@
     "subtitulo": "Gamificación y comunidad",
     "icono": "award",
     "estado": "en diseño",
-    "etiquetas": ["comunidad", "marketing", "incentivos"],
-    "categorias": ["estrategia", "ventas"],
+    "etiquetas": [
+      "comunidad",
+      "marketing",
+      "incentivos"
+    ],
+    "categorias": [
+      "estrategia",
+      "ventas"
+    ],
     "descripcion": "Un 'muro' social interno donde se destacan las mejores vendedoras de la semana, fomentando la competencia sana.",
     "ejemplos_html": [
       "<p><strong>Social:</strong> '¡Felicidades a María por ser la Top Seller de Córdoba este mes!' 🏆</p>"
@@ -303,7 +422,10 @@
       }
     ],
     "licencia": "Licencia de uso interno",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "prediccion-stock-ia",
@@ -311,8 +433,15 @@
     "subtitulo": "IA para evitar quiebres de stock",
     "icono": "database",
     "estado": "propuesta",
-    "etiquetas": ["ia", "operaciones", "compras"],
-    "categorias": ["operaciones", "finanzas"],
+    "etiquetas": [
+      "ia",
+      "operaciones",
+      "compras"
+    ],
+    "categorias": [
+      "operaciones",
+      "finanzas"
+    ],
     "descripcion": "Analiza el historial de ventas para sugerir qué productos comprar al fabricante antes de que se agoten.",
     "ejemplos_html": [
       "<h4>Sugerencia de Compra</h4><p>'Basado en la tendencia actual, el Producto X se agotará en 5 días. Deberías pedir 200 unidades hoy'.</p>"
@@ -326,7 +455,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Cómputo en la nube para procesamiento de datos."
+    "gastos_externos": "Cómputo en la nube para procesamiento de datos.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "centro-ayuda-tickets",
@@ -334,8 +466,13 @@
     "subtitulo": "Ticketing para resolución de problemas",
     "icono": "help-circle",
     "estado": "validando",
-    "etiquetas": ["atención al cliente", "operaciones"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "atención al cliente",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Sistema de tickets para que líderes y coordinadoras reporten incidencias técnicas o administrativas con tiempos de respuesta (SLA).",
     "ejemplos_html": [
       "<p><strong>Orden Operativo:</strong> Cada reclamo tiene un número de seguimiento y un responsable asignado.</p>"
@@ -349,6 +486,9 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   }
 ]
