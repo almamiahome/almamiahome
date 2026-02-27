@@ -1,0 +1,354 @@
+[
+  {
+    "id": "logistica-despacho-smart",
+    "titulo": "Logística & Despacho Smart",
+    "subtitulo": "Optimización de rutas y estados de envío",
+    "icono": "truck",
+    "estado": "en diseño",
+    "etiquetas": ["operaciones", "logística", "entregas"],
+    "categorias": ["operaciones"],
+    "descripcion": "Gestión avanzada de paquetería que permite agrupar pedidos por zona geográfica para optimizar el flete y asignar transportistas internos o externos.",
+    "ejemplos_html": [
+      "<h4>Eficiencia Logística</h4><p>Estado automático: <strong>\"Tu pedido está en la camioneta de Reparto Zona Norte\"</strong>.</p>",
+      "<h4>Impacto esperado</h4><ul><li>Reducción de costos de envío en un 20%.</li><li>Trazabilidad total para la revendedora.</li></ul>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Despacho",
+        "monto": "$450.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Integración con mapas y hoja de ruta para repartidores."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "API de Google Maps (según consumo) o similar."
+  },
+  {
+    "id": "academia-capacitacion-e-learning",
+    "titulo": "Academia de Capacitación",
+    "subtitulo": "E-learning para revendedoras y líderes",
+    "icono": "graduation-cap",
+    "estado": "propuesta",
+    "etiquetas": ["capacitación", "rrhh", "crecimiento"],
+    "categorias": ["estrategia", "recursos humanos"],
+    "descripcion": "Repositorio de cursos, videos de producto y técnicas de venta con sistema de niveles para desbloquear beneficios.",
+    "ejemplos_html": [
+      "<p><strong>Gamificación:</strong> Al completar el curso 'Venta Efectiva', la revendedora obtiene un 5% extra en su próximo pedido.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Plataforma LMS",
+        "monto": "$680.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Estructura de cursos, lecciones y tracking de progreso."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo",
+    "gastos_externos": "Almacenamiento de video (Vimeo o AWS S3)."
+  },
+  {
+    "id": "asistente-whatsapp-ia",
+    "titulo": "Asistente AI WhatsApp",
+    "subtitulo": "Atención 24/7 vía Chatbot Inteligente",
+    "icono": "message-circle",
+    "estado": "validando",
+    "etiquetas": ["ia", "atención al cliente", "automatización"],
+    "categorias": ["ventas", "operaciones"],
+    "descripcion": "Agente de IA conectado a la base de datos que responde dudas sobre stock, deudas y estados de pedido por WhatsApp.",
+    "ejemplos_html": [
+      "<h4>Consulta Típica</h4><p>Revendedora: <em>'¿Cuánto debo de mi última campaña?'</em><br>IA: <strong>'Tu saldo actual es $12.450 con vencimiento el viernes.'</strong></p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Entrenamiento IA",
+        "monto": "$310.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Conexión de la IA con las reglas de negocio de la empresa."
+      },
+      {
+        "concepto": "Fee Mensual IA",
+        "monto": "$25.000 ARS",
+        "periodicidad": "Por mes",
+        "detalle": "Mantenimiento del modelo de lenguaje."
+      }
+    ],
+    "licencia": "SaaS",
+    "gastos_externos": "Costo por mensaje (API Oficial de WhatsApp/Meta)."
+  },
+  {
+    "id": "marketing-automation-mailing",
+    "titulo": "Marketing Automation",
+    "subtitulo": "Campañas de Email y Notificaciones Push",
+    "icono": "mail",
+    "estado": "en diseño",
+    "etiquetas": ["marketing", "comunicación", "retención"],
+    "categorias": ["ventas", "estrategia"],
+    "descripcion": "Envío automatizado de recordatorios de cierre de campaña, ofertas relámpago y saludos de cumpleaños.",
+    "ejemplos_html": [
+      "<p><strong>Flujo Automático:</strong> Si una revendedora no pasa pedido hace 15 días, el sistema envía un cupón de reactivación.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Configuración de Flujos",
+        "monto": "$190.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Diseño de 5 flujos de automatización principales."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Proveedor de Mailing (SendGrid, Mailchimp o similar)."
+  },
+  {
+    "id": "auditoria-control-fraude",
+    "titulo": "Auditoría & Control de Fraude",
+    "subtitulo": "Validación de perfiles y seguridad",
+    "icono": "shield-check",
+    "estado": "propuesta",
+    "etiquetas": ["seguridad", "finanzas", "auditoría"],
+    "categorias": ["finanzas", "operaciones"],
+    "descripcion": "Módulo que analiza comportamientos inusuales en pedidos y verifica identidades para evitar cuentas duplicadas o morosidad.",
+    "ejemplos_html": [
+      "<h4>Alerta de Riesgo</h4><p>El sistema bloquea pedidos de usuarias con múltiples DNI asociados a la misma dirección IP.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Seguridad",
+        "monto": "$420.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Algoritmos de detección de anomalías."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "conciliacion-bancaria-automatica",
+    "titulo": "Conciliación Bancaria",
+    "subtitulo": "Sincronización automática de cobranzas",
+    "icono": "credit-card",
+    "estado": "validando",
+    "etiquetas": ["finanzas", "contabilidad", "pagos"],
+    "categorias": ["finanzas"],
+    "descripcion": "Vinculación con extractos bancarios o pasarelas de pago para dar por pagados los pedidos sin carga manual.",
+    "ejemplos_html": [
+      "<h4>Proceso Automático</h4><p>El sistema identifica el CBU/Alias y acredita el pago al pedido #10452 instantáneamente.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Integración Bancaria",
+        "monto": "$380.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Desarrollo de parsers de extractos o Webhooks."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Comisiones de pasarelas de pago (si aplica)."
+  },
+  {
+    "id": "planificador-metas-lideres",
+    "titulo": "Planificador de Metas",
+    "subtitulo": "Herramienta de proyección para Líderes",
+    "icono": "target",
+    "estado": "en diseño",
+    "etiquetas": ["estrategia", "liderazgo", "ventas"],
+    "categorias": ["estrategia"],
+    "descripcion": "Simulador donde las líderes cargan sus objetivos mensuales y ven cuántas vendedoras nuevas necesitan incorporar para alcanzarlos.",
+    "ejemplos_html": [
+      "<p><strong>Simulación:</strong> 'Si cada una de tus 10 vendedoras aumenta su ticket un 10%, alcanzarás el nivel Platino este mes'.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Calculadora de Proyección",
+        "monto": "$220.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Interfaz de simulación y metas visuales."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "gestion-de-devoluciones-rma",
+    "titulo": "Gestión de Cambios & Devoluciones",
+    "subtitulo": "Control de fallas y logística inversa",
+    "icono": "refresh-ccw",
+    "estado": "propuesta",
+    "etiquetas": ["operaciones", "calidad", "clientes"],
+    "categorias": ["operaciones"],
+    "descripcion": "Digitalización del proceso de reclamos por fallas, cambios de talle o productos faltantes con aprobación de administración.",
+    "ejemplos_html": [
+      "<h4>Ticket de Cambio</h4><p>Adjunto de foto de la falla -> Aprobación central -> Generación de nota de crédito automática.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo RMA",
+        "monto": "$290.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Workflow de aprobación y gestión de stock dañado."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "catalogo-interactivo-pdf",
+    "titulo": "Generador de Catálogos Dinámicos",
+    "subtitulo": "PDFs personalizados con stock real",
+    "icono": "file-text",
+    "estado": "validando",
+    "etiquetas": ["marketing", "ventas", "diseño"],
+    "categorias": ["ventas"],
+    "descripcion": "Herramienta que genera un catálogo en PDF o link web que solo muestra los productos que tienen stock en el momento.",
+    "ejemplos_html": [
+      "<p>Evita vender lo que no hay: <strong>\"Generar catálogo de hoy (Excluir productos sin stock)\"</strong>.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor de PDF Dinámico",
+        "monto": "$260.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Generación automática basada en plantillas de diseño."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo",
+    "gastos_externos": "Servidor de renderizado de archivos."
+  },
+  {
+    "id": "encuestas-satisfaccion-nps",
+    "titulo": "Módulo de Feedback & NPS",
+    "subtitulo": "Medición de satisfacción de la red",
+    "icono": "star",
+    "estado": "en diseño",
+    "etiquetas": ["calidad", "recursos humanos", "datos"],
+    "categorias": ["estrategia"],
+    "descripcion": "Sistema de encuestas breves post-pedido para medir la salud de la relación con las revendedoras.",
+    "ejemplos_html": [
+      "<h4>Métrica Clave</h4><p>Puntaje NPS: <strong>72 (Excelente)</strong>. Principales quejas: Demora en zona sur.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Encuestas",
+        "monto": "$140.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Formularios integrados y reportes de satisfacción."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "app-movil-repartidores",
+    "titulo": "App de Reparto Offline",
+    "subtitulo": "Gestión de entregas en campo",
+    "icono": "map-pin",
+    "estado": "propuesta",
+    "etiquetas": ["logística", "mobile", "operaciones"],
+    "categorias": ["operaciones"],
+    "descripcion": "Aplicación simplificada para que los choferes marquen entregas, cobren en efectivo y tomen fotos del remito firmado.",
+    "ejemplos_html": [
+      "<p><strong>Funcionalidad:</strong> Sincronización automática al recuperar señal de internet.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Desarrollo App Mobile",
+        "monto": "$950.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "App para Android/iOS con funcionalidad offline."
+      }
+    ],
+    "licencia": "Licencia de uso para Alma Mia",
+    "gastos_externos": "Cuentas de desarrollador Apple/Google."
+  },
+  {
+    "id": "integracion-facturacion-afip",
+    "titulo": "Facturación Electrónica AFIP",
+    "subtitulo": "Automatización legal de comprobantes",
+    "icono": "file-check",
+    "estado": "validando",
+    "etiquetas": ["finanzas", "legal", "automatización"],
+    "categorias": ["finanzas"],
+    "descripcion": "Conexión directa con Web Services de AFIP para emitir Facturas A, B o C automáticamente al confirmar un pago.",
+    "ejemplos_html": [
+      "<h4>Cumplimiento Fiscal</h4><p>El sistema envía el PDF de la factura al email de la vendedora apenas el pedido se marca como 'Pagado'.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Integración Fiscal",
+        "monto": "$340.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Homologación ante AFIP y manejo de CAE."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Certificado digital (gratuito vía AFIP)."
+  },
+  {
+    "id": "ranking-social-gamificacion",
+    "titulo": "Muro de Reconocimientos",
+    "subtitulo": "Gamificación y comunidad",
+    "icono": "award",
+    "estado": "en diseño",
+    "etiquetas": ["comunidad", "marketing", "incentivos"],
+    "categorias": ["estrategia", "ventas"],
+    "descripcion": "Un 'muro' social interno donde se destacan las mejores vendedoras de la semana, fomentando la competencia sana.",
+    "ejemplos_html": [
+      "<p><strong>Social:</strong> '¡Felicidades a María por ser la Top Seller de Córdoba este mes!' 🏆</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo Social",
+        "monto": "$210.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Feed de noticias dinámico y rankings automáticos."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "prediccion-stock-ia",
+    "titulo": "Predictor de Compras (IA)",
+    "subtitulo": "IA para evitar quiebres de stock",
+    "icono": "database",
+    "estado": "propuesta",
+    "etiquetas": ["ia", "operaciones", "compras"],
+    "categorias": ["operaciones", "finanzas"],
+    "descripcion": "Analiza el historial de ventas para sugerir qué productos comprar al fabricante antes de que se agoten.",
+    "ejemplos_html": [
+      "<h4>Sugerencia de Compra</h4><p>'Basado en la tendencia actual, el Producto X se agotará en 5 días. Deberías pedir 200 unidades hoy'.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor Predictivo",
+        "monto": "$550.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Entrenamiento con datos históricos de la empresa."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Cómputo en la nube para procesamiento de datos."
+  },
+  {
+    "id": "centro-ayuda-tickets",
+    "titulo": "Centro de Soporte Interno",
+    "subtitulo": "Ticketing para resolución de problemas",
+    "icono": "help-circle",
+    "estado": "validando",
+    "etiquetas": ["atención al cliente", "operaciones"],
+    "categorias": ["operaciones"],
+    "descripcion": "Sistema de tickets para que líderes y coordinadoras reporten incidencias técnicas o administrativas con tiempos de respuesta (SLA).",
+    "ejemplos_html": [
+      "<p><strong>Orden Operativo:</strong> Cada reclamo tiene un número de seguimiento y un responsable asignado.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Soporte",
+        "monto": "$180.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Gestión de estados, categorías de consulta y alertas."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  }
+]
