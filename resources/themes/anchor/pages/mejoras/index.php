@@ -201,7 +201,7 @@ new class extends Component {
 };
 ?>
 
-<x-layouts.app>
+<x-layouts.empty>
  @volt('mejoras')
 <x-app.container class="py-4 max-w-[1600px] antialiased">
     {{-- Estilos de Sistema Operativo de Alto Nivel --}}
@@ -506,4 +506,4 @@ new class extends Component {
     @endif
 </x-app.container>
 @endvolt
-</x-layouts.app>
+</x-layouts.empty>
