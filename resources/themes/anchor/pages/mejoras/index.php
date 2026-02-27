@@ -370,7 +370,7 @@ new class extends Component {
  @volt('mejoras')
 <x-app.container class="py-4 max-w-[1600px] antialiased">
     @php
-        $estiloFondo = $fondoActivo ? "background-image: url('".e($fondoActivo)."');" : '';
+        $estiloFondo = $this->fondoActivo ? "background-image: url('".e($this->fondoActivo)."');" : '';
     @endphp
     {{-- Estilos de Sistema Operativo de Alto Nivel --}}
     <style>
