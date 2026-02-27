@@ -404,7 +404,7 @@ new class extends Component {
         class="relative overflow-hidden rounded-[2rem] bg-cover bg-center p-4 md:p-6"
         style="{{ $estiloFondo }}"
     >
-        @if($this->fondoActivo)
+        @if($fondoActivo)
             <div class="absolute inset-0 bg-white/82 dark:bg-slate-950/82"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/70 dark:from-slate-950/50 dark:via-slate-950/30 dark:to-slate-950/75"></div>
         @else
@@ -600,7 +600,7 @@ new class extends Component {
     </div>
     </div>
 
-    @if($this->mostrarAjustesFondo)
+    @if($mostrarAjustesFondo)
         <div class="fixed inset-0 z-[99098] flex items-center justify-center p-4 md:p-8">
             <div class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm" wire:click="cerrarAjustesFondo"></div>
             <div class="relative w-full max-w-4xl rounded-[2rem] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 shadow-2xl overflow-hidden">
@@ -616,11 +616,11 @@ new class extends Component {
 
                 <div class="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        @forelse($this->fondosDisponibles as $fondo)
+                        @forelse($fondosDisponibles as $fondo)
                             <button
                                 type="button"
                                 wire:click="seleccionarFondo('{{ $fondo['url'] }}')"
-                                class="group text-left rounded-2xl overflow-hidden border {{ $this->fondoActivo === $fondo['url'] ? 'border-indigo-600 ring-2 ring-indigo-500/30' : 'border-slate-200 dark:border-zinc-700' }}"
+                                class="group text-left rounded-2xl overflow-hidden border {{ $fondoActivo === $fondo['url'] ? 'border-indigo-600 ring-2 ring-indigo-500/30' : 'border-slate-200 dark:border-zinc-700' }}"
                             >
                                 <div class="h-28 bg-cover bg-center" style="background-image: url('{{ $fondo['url'] }}');"></div>
                                 <div class="p-3 bg-white dark:bg-zinc-900">
