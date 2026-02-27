@@ -18,6 +18,14 @@ new class extends Component {
 
     public ?string $mejoraSeleccionada = null;
 
+    public bool $mostrarAjustesFondo = false;
+
+    public ?string $fondoActivo = null;
+
+    public string $fondoManual = '';
+
+    public array $fondosDisponibles = [];
+
     public array $modulosActivos = [
     [
         'titulo' => 'Gestión de pedidos multinivel',
@@ -96,6 +104,12 @@ new class extends Component {
     ],
 ];
 
+    public function mount(): void
+    {
+        $this->fondosDisponibles = $this->cargarFondosDisponibles();
+        $this->fondoActivo = $this->fondosDisponibles[0]['url'] ?? null;
+    }
+
     public function getMejorasProperty(): Collection
     {
         $files = File::glob(resource_path('themes/anchor/pages/mejoras/items/*.json')) ?: [];
@@ -137,6 +151,71 @@ new class extends Component {
     public function cerrarModal(): void
     {
         $this->mejoraSeleccionada = null;
+    }
+
+    public function abrirAjustesFondo(): void
+    {
+        $this->mostrarAjustesFondo = true;
+    }
+
+    public function cerrarAjustesFondo(): void
+    {
+        $this->mostrarAjustesFondo = false;
+    }
+
+    public function seleccionarFondo(string $url): void
+    {
+        $this->fondoActivo = trim($url) !== '' ? trim($url) : null;
+        $this->fondoManual = '';
+        $this->mostrarAjustesFondo = false;
+    }
+
+    public function aplicarFondoManual(): void
+    {
+        $url = trim($this->fondoManual);
+
+        if ($url === '') {
+            return;
+        }
+
+        $this->fondoActivo = $url;
+        $this->fondoManual = '';
+        $this->mostrarAjustesFondo = false;
+    }
+
+    public function usarFondoDegradado(): void
+    {
+        $this->fondoActivo = null;
+        $this->fondoManual = '';
+        $this->mostrarAjustesFondo = false;
+    }
+
+    protected function cargarFondosDisponibles(): array
+    {
+        $path = resource_path('themes/anchor/pages/mejoras/fondos/fondos-libres.json');
+
+        if (! File::exists($path)) {
+            return [];
+        }
+
+        $decoded = json_decode(File::get($path), true);
+
+        if (! is_array($decoded)) {
+            return [];
+        }
+
+        return collect($decoded)
+            ->filter(fn ($item): bool => is_array($item) && filled($item['url'] ?? null))
+            ->map(function (array $item, int $index): array {
+                return [
+                    'id' => (string) ($item['id'] ?? 'fondo-'.($index + 1)),
+                    'nombre' => (string) ($item['nombre'] ?? 'Fondo '.($index + 1)),
+                    'url' => (string) $item['url'],
+                    'fuente' => (string) ($item['fuente'] ?? 'Repositorio libre'),
+                ];
+            })
+            ->values()
+            ->all();
     }
 
     public function getDetalleMejoraProperty(): ?array
@@ -290,6 +369,9 @@ new class extends Component {
 <x-layouts.empty>
  @volt('mejoras')
 <x-app.container class="py-4 max-w-[1600px] antialiased">
+    @php
+        $estiloFondo = $this->fondoActivo ? "background-image: url('".e($this->fondoActivo)."');" : '';
+    @endphp
     {{-- Estilos de Sistema Operativo de Alto Nivel --}}
     <style>
         .os-glass {
@@ -313,9 +395,23 @@ new class extends Component {
             color: white;
             box-shadow: 0 4px 10px -2px rgba(79, 70, 229, 0.4);
         }
+        .texto-contraste {
+            text-shadow: 0 2px 20px rgba(15, 23, 42, 0.35);
+        }
     </style>
 
-    <div class="flex flex-col gap-4">
+    <div
+        class="relative overflow-hidden rounded-[2rem] bg-cover bg-center p-4 md:p-6"
+        style="{{ $estiloFondo }}"
+    >
+        @if($this->fondoActivo)
+            <div class="absolute inset-0 bg-white/82 dark:bg-slate-950/82"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/70 dark:from-slate-950/50 dark:via-slate-950/30 dark:to-slate-950/75"></div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-100 via-sky-50 to-violet-100 dark:from-slate-950 dark:via-indigo-950/60 dark:to-slate-900"></div>
+        @endif
+
+    <div class="relative z-10 flex flex-col gap-4">
         {{-- BARRA SUPERIOR DE SISTEMA --}}
         <div class="os-glass rounded-3xl p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div class="flex items-center gap-4">
@@ -323,8 +419,8 @@ new class extends Component {
                     <x-heroicon-s-cpu-chip class="h-7 w-7 text-white" />
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-slate-900 dark:text-white tracking-tight leading-none">Administrador de Extensiones</h1>
-                    <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-tighter opacity-70">Sistema Operativo Central • Alma Mía</p>
+                    <h1 class="text-xl font-black text-slate-900 dark:text-white tracking-tight leading-none texto-contraste">Administrador de Extensiones</h1>
+                    <p class="text-xs font-bold text-slate-700 dark:text-slate-200 mt-1 uppercase tracking-tighter opacity-90">Sistema Operativo Central • Alma Mía</p>
                 </div>
             </div>
 
@@ -339,6 +435,10 @@ new class extends Component {
                 <button class="flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-colors">
                     <x-heroicon-o-arrow-down-tray class="h-4 w-4" />
                     Reporte Técnico
+                </button>
+                <button wire:click="abrirAjustesFondo" class="flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-100 bg-white/70 dark:bg-zinc-900/80 hover:bg-white dark:hover:bg-zinc-800 rounded-xl transition-colors border border-slate-200/80 dark:border-zinc-700">
+                    <x-heroicon-o-cog-6-tooth class="h-4 w-4" />
+                    Ajustes de fondo
                 </button>
             </div>
         </div>
@@ -366,7 +466,7 @@ new class extends Component {
                 {{-- Filtros por Categoría (Solo visible en Catálogo) --}}
                 @if($tabActiva === 'mejoras')
                 <div class="px-2">
-                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 ml-2">Filtrar por Categoría</h3>
+                    <h3 class="text-[10px] font-black text-slate-500 dark:text-slate-300 uppercase tracking-widest mb-4 ml-2">Filtrar por Categoría</h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach(['Ventas', 'Finanzas', 'Logística', 'IA', 'Marketing', 'Estrategia'] as $cat)
                             <button class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-zinc-800 text-[11px] font-bold text-slate-600 dark:text-zinc-400 hover:border-indigo-500 transition-all">
@@ -394,8 +494,8 @@ new class extends Component {
                                         @endif
                                     </div>
                                     <div class="flex flex-col items-end">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">Versión 1.0</span>
-                                        <span class="mt-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-[9px] font-bold text-slate-500 uppercase">{{ $mejora['estado'] }}</span>
+                                        <span class="text-[9px] font-black text-slate-500 dark:text-slate-300 uppercase tracking-tighter">Versión 1.0</span>
+                                        <span class="mt-1 px-2 py-0.5 rounded-md bg-slate-100/90 dark:bg-zinc-800 text-[9px] font-black text-slate-700 dark:text-slate-100 uppercase">{{ $mejora['estado'] }}</span>
                                     </div>
                                 </div>
                                 
@@ -428,10 +528,10 @@ new class extends Component {
                 @if($tabActiva === 'modulos-activos')
                     <div class="os-glass rounded-[2.5rem] overflow-hidden">
                         <table class="w-full text-left">
-                            <thead class="bg-slate-50/50 dark:bg-zinc-900/50">
+                            <thead class="bg-slate-100/80 dark:bg-zinc-900/80">
                                 <tr>
-                                    <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">Identificador de Sistema</th>
-                                    <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">Estado Operativo</th>
+                                    <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-600 dark:text-slate-200 tracking-widest">Identificador de Sistema</th>
+                                    <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-600 dark:text-slate-200 tracking-widest">Estado Operativo</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
@@ -444,7 +544,7 @@ new class extends Component {
                                                 </div>
                                                 <div>
                                                     <p class="font-black text-slate-900 dark:text-white">{{ $modulo['titulo'] }}</p>
-                                                    <p class="text-xs text-slate-500 font-medium">{{ Str::limit($modulo['descripcion'], 60) }}</p>
+                                                    <p class="text-xs text-slate-600 dark:text-slate-300 font-semibold">{{ Str::limit($modulo['descripcion'], 60) }}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -454,7 +554,7 @@ new class extends Component {
                                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                                                 </span>
-                                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-tighter">Activo y Seguro</span>
+                                                <span class="text-xs font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-tighter">Activo y Seguro</span>
                                             </div>
                                         </td>
                                         
@@ -475,10 +575,10 @@ new class extends Component {
                                         <h3 class="text-xl font-black text-slate-900 dark:text-white tracking-tight">{{ $mejora['titulo'] }}</h3>
                                         <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest">Compilando Módulo</span>
                                     </div>
-                                    <p class="text-sm text-slate-500 font-medium mb-6 leading-relaxed">{{ $mejora['descripcion'] }}</p>
+                                    <p class="text-sm text-slate-700 dark:text-slate-200 font-semibold mb-6 leading-relaxed">{{ $mejora['descripcion'] }}</p>
                                     
                                     <div class="space-y-2">
-                                        <div class="flex justify-between text-[10px] font-black text-slate-400 uppercase mb-1">
+                                        <div class="flex justify-between text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase mb-1">
                                             <span>Progreso de implementación</span>
                                             <span>45%</span>
                                         </div>
@@ -488,7 +588,7 @@ new class extends Component {
                                     </div>
                                 </div>
                                 <div class="hidden lg:block w-48 text-center border-l border-slate-100 dark:border-zinc-800 pl-8">
-                                    <p class="text-[10px] font-black text-slate-400 uppercase mb-1">Entrega estimada</p>
+                                    <p class="text-[10px] font-black text-slate-500 dark:text-slate-300 uppercase mb-1">Entrega estimada</p>
                                     <p class="text-lg font-black text-slate-900 dark:text-white">Marzo 2024</p>
                                 </div>
                             </div>
@@ -498,6 +598,56 @@ new class extends Component {
             </main>
         </div>
     </div>
+    </div>
+
+    @if($this->mostrarAjustesFondo)
+        <div class="fixed inset-0 z-[99098] flex items-center justify-center p-4 md:p-8">
+            <div class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm" wire:click="cerrarAjustesFondo"></div>
+            <div class="relative w-full max-w-4xl rounded-[2rem] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 shadow-2xl overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-900/80">
+                    <div>
+                        <h2 class="text-lg font-black text-slate-900 dark:text-white">Ajustes de imagen de fondo</h2>
+                        <p class="text-xs font-semibold text-slate-600 dark:text-slate-300">Selecciona una imagen libre o define una URL/ruta manual.</p>
+                    </div>
+                    <button wire:click="cerrarAjustesFondo" class="p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 text-slate-500 dark:text-slate-300">
+                        <x-heroicon-o-x-mark class="h-5 w-5" />
+                    </button>
+                </div>
+
+                <div class="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @forelse($this->fondosDisponibles as $fondo)
+                            <button
+                                type="button"
+                                wire:click="seleccionarFondo('{{ $fondo['url'] }}')"
+                                class="group text-left rounded-2xl overflow-hidden border {{ $this->fondoActivo === $fondo['url'] ? 'border-indigo-600 ring-2 ring-indigo-500/30' : 'border-slate-200 dark:border-zinc-700' }}"
+                            >
+                                <div class="h-28 bg-cover bg-center" style="background-image: url('{{ $fondo['url'] }}');"></div>
+                                <div class="p-3 bg-white dark:bg-zinc-900">
+                                    <p class="text-xs font-black text-slate-900 dark:text-slate-100">{{ $fondo['nombre'] }}</p>
+                                    <p class="text-[10px] font-semibold text-slate-500 dark:text-slate-300">{{ $fondo['fuente'] }}</p>
+                                </div>
+                            </button>
+                        @empty
+                            <p class="text-sm text-slate-600 dark:text-slate-300">No se encontraron fondos disponibles en el catálogo local.</p>
+                        @endforelse
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 dark:border-zinc-700 p-4 bg-slate-50 dark:bg-zinc-950/40 space-y-3">
+                        <label for="fondo_manual" class="text-xs font-black text-slate-700 dark:text-slate-100 uppercase tracking-wide">URL o ruta de fondo personalizada</label>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input id="fondo_manual" type="text" wire:model="fondoManual" placeholder="https://... o /img/fondos/mi-fondo.jpg" class="flex-1 rounded-xl border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                            <button wire:click="aplicarFondoManual" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-wide">Aplicar</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
+                        <button wire:click="usarFondoDegradado" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-zinc-700 text-xs font-black text-slate-700 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-zinc-800 uppercase tracking-wide">Usar degradado por defecto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     {{-- MODAL SYSTEM OVERLAY (Z-INDEX SUPERIOR) --}}
     @if($this->detalleMejora)
