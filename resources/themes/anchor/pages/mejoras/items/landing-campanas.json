@@ -2,6 +2,7 @@
   "id": "landing-campanas-premium",
   "titulo": "Landing de campañas premium",
   "subtitulo": "Página promocional para lanzamientos",
+  "icono": "rocket",
   "estado": "no instalado",
   "etiquetas": ["marketing", "landing", "conversion"],
   "categorias": ["comercial", "branding"],
