@@ -4,8 +4,15 @@
   "subtitulo": "Página promocional para lanzamientos",
   "icono": "rocket",
   "estado": "no instalado",
-  "etiquetas": ["marketing", "landing", "conversion"],
-  "categorias": ["comercial", "branding"],
+  "etiquetas": [
+    "marketing",
+    "landing",
+    "conversion"
+  ],
+  "categorias": [
+    "comercial",
+    "branding"
+  ],
   "descripcion": "Diseño y desarrollo de landing enfocada en captar nuevas revendedoras para campañas especiales.",
   "ejemplos_html": [
     "<section><h4>Bloque Hero</h4><p>Título de campaña, CTA a WhatsApp y testimonios de coordinadoras.</p></section>",
@@ -26,5 +33,8 @@
     }
   ],
   "licencia": "Licencia de uso comercial en dominio principal",
-  "gastos_externos": "Si se incluye pauta paga, el presupuesto de anuncios es aparte."
+  "gastos_externos": "Si se incluye pauta paga, el presupuesto de anuncios es aparte.",
+  "icono_respaldo": "heroicon-o-puzzle-piece",
+  "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+  "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
 }

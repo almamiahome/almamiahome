@@ -7,6 +7,7 @@ use function Laravel\Folio\name;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Volt\Component;
 
 \Laravel\Folio\middleware('auth');
@@ -147,6 +148,8 @@ new class extends Component {
     protected function normalizarMejora(array $item, string $origen): array
     {
         $titulo = (string) ($item['titulo'] ?? 'Mejora sin título');
+        $icono = (string) ($item['icono'] ?? '');
+        $iconoRespaldo = (string) ($item['icono_respaldo'] ?? 'heroicon-o-puzzle-piece');
 
         return [
             'id' => (string) ($item['id'] ?? Str::slug($titulo.'-'.$origen)),
@@ -160,7 +163,90 @@ new class extends Component {
             'precios' => $this->normalizarPrecios($item['precios'] ?? []),
             'gastos_externos' => $item['gastos_externos'] ?? null,
             'licencia' => (string) ($item['licencia'] ?? 'Definir tipo de licencia'),
+            'icono' => $icono,
+            'icono_respaldo' => $iconoRespaldo,
+            'icono_resuelto' => $this->resolverIconoConRespaldo($icono, $iconoRespaldo),
         ];
+    }
+
+    protected function resolverIcono(string $icono): string
+    {
+        $iconoNormalizado = Str::of($icono)
+            ->trim()
+            ->lower()
+            ->replace('_', '-')
+            ->replace('.', '-')
+            ->value();
+
+        if ($iconoNormalizado === '') {
+            return 'heroicon-o-puzzle-piece';
+        }
+
+        if ($this->esIconoFontAwesome($iconoNormalizado)) {
+            return preg_replace('/\s+/', ' ', $iconoNormalizado) ?: 'fa-solid fa-puzzle-piece';
+        }
+
+        $alias = [
+            'chart-pie' => 'heroicon-o-chart-pie',
+            'truck' => 'heroicon-o-truck',
+            'shopping-bag' => 'heroicon-o-shopping-bag',
+            'gift' => 'heroicon-o-gift',
+            'rocket' => 'heroicon-o-rocket-launch',
+            'graduation-cap' => 'heroicon-o-academic-cap',
+            'message-circle' => 'heroicon-o-chat-bubble-left-right',
+            'mail' => 'heroicon-o-envelope',
+            'shield-check' => 'heroicon-o-shield-check',
+            'credit-card' => 'heroicon-o-credit-card',
+            'target' => 'heroicon-o-cursor-arrow-rays',
+            'refresh-ccw' => 'heroicon-o-arrow-path',
+            'file-text' => 'heroicon-o-document-text',
+            'star' => 'heroicon-o-star',
+            'map-pin' => 'heroicon-o-map-pin',
+            'file-check' => 'heroicon-o-document-check',
+            'award' => 'heroicon-o-trophy',
+            'database' => 'heroicon-o-circle-stack',
+            'help-circle' => 'heroicon-o-question-mark-circle',
+            'user' => 'heroicon-o-user',
+        ];
+
+        $candidato = $alias[$iconoNormalizado] ?? $iconoNormalizado;
+
+        if (! Str::startsWith($candidato, 'heroicon-')) {
+            $candidato = 'heroicon-o-'.$candidato;
+        }
+
+        return $this->existeComponenteBlade($candidato)
+            ? $candidato
+            : 'heroicon-o-puzzle-piece';
+    }
+
+    protected function resolverIconoConRespaldo(?string $icono, ?string $iconoRespaldo): array
+    {
+        $iconoPrincipal = $this->resolverIcono((string) $icono);
+        $iconoAlternativo = $this->resolverIcono((string) $iconoRespaldo);
+
+        if ($iconoPrincipal === 'heroicon-o-puzzle-piece' && $iconoAlternativo !== 'heroicon-o-puzzle-piece') {
+            $iconoPrincipal = $iconoAlternativo;
+        }
+
+        if ($this->esIconoFontAwesome($iconoPrincipal)) {
+            return ['tipo' => 'fa', 'valor' => $iconoPrincipal];
+        }
+
+        return ['tipo' => 'blade', 'valor' => $iconoPrincipal];
+    }
+
+    protected function esIconoFontAwesome(string $icono): bool
+    {
+        return (bool) preg_match('/^fa([\s-]|$)/', $icono);
+    }
+
+    protected function existeComponenteBlade(string $componente): bool
+    {
+        /** @var BladeCompiler $blade */
+        $blade = app('blade.compiler');
+
+        return $blade->componentExists($componente);
     }
 
     protected function normalizarTextoLista(mixed $valor): array
@@ -301,7 +387,11 @@ new class extends Component {
                             <div class="os-glass os-card rounded-[2rem] p-6 flex flex-col border-transparent hover:border-indigo-500/30">
                                 <div class="flex justify-between items-start mb-6">
                                     <div class="p-3.5 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600">
-                                        <x-dynamic-component :component="$mejora['icono'] ?? 'heroicon-o-puzzle-piece'" class="h-7 w-7" />
+                                        @if(($mejora['icono_resuelto']['tipo'] ?? 'blade') === 'fa')
+                                            <i class="{{ $mejora['icono_resuelto']['valor'] }} h-7 w-7"></i>
+                                        @else
+                                            <x-dynamic-component :component="$mejora['icono_resuelto']['valor'] ?? 'heroicon-o-puzzle-piece'" class="h-7 w-7" />
+                                        @endif
                                     </div>
                                     <div class="flex flex-col items-end">
                                         <span class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">Versión 1.0</span>
@@ -422,7 +512,11 @@ new class extends Component {
                 <div class="flex items-center justify-between p-8 bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-100 dark:border-zinc-800">
                     <div class="flex items-center gap-6">
                         <div class="h-16 w-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center shadow-xl shadow-indigo-500/30">
-                            <x-dynamic-component :component="$this->detalleMejora['icono'] ?? 'heroicon-o-cpu-chip'" class="h-9 w-9 text-white" />
+                            @if(($this->detalleMejora['icono_resuelto']['tipo'] ?? 'blade') === 'fa')
+                                <i class="{{ $this->detalleMejora['icono_resuelto']['valor'] }} h-9 w-9 text-white"></i>
+                            @else
+                                <x-dynamic-component :component="$this->detalleMejora['icono_resuelto']['valor'] ?? 'heroicon-o-cpu-chip'" class="h-9 w-9 text-white" />
+                            @endif
                         </div>
                         <div>
                             <div class="flex items-center gap-3">

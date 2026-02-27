@@ -5,8 +5,15 @@
     "subtitulo": "Visualización de ventas y rendimiento en tiempo real",
     "icono": "chart-pie",
     "estado": "en diseño",
-    "etiquetas": ["datos", "business intelligence", "reportes"],
-    "categorias": ["estrategia", "ventas"],
+    "etiquetas": [
+      "datos",
+      "business intelligence",
+      "reportes"
+    ],
+    "categorias": [
+      "estrategia",
+      "ventas"
+    ],
     "descripcion": "Un dashboard interactivo que centraliza el desempeño de vendedoras, productos más pedidos y zonas con mayor crecimiento.",
     "ejemplos_html": [
       "<h4>Reporte Clave</h4><p>Comparativa interanual: <strong>\"Tus ventas subieron un 15% respecto al mes pasado\"</strong>.</p>",
@@ -27,7 +34,10 @@
       }
     ],
     "licencia": "Licencia perpetua",
-    "gastos_externos": "Suscripción a herramienta de visualización (PowerBI o Looker Studio Pro si aplica)."
+    "gastos_externos": "Suscripción a herramienta de visualización (PowerBI o Looker Studio Pro si aplica).",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "ecommerce-b2b-revendedoras",
@@ -35,8 +45,15 @@
     "subtitulo": "Autogestión para revendedoras",
     "icono": "shopping-bag",
     "estado": "propuesta",
-    "etiquetas": ["ecommerce", "b2b", "autoservicio"],
-    "categorias": ["ventas", "operaciones"],
+    "etiquetas": [
+      "ecommerce",
+      "b2b",
+      "autoservicio"
+    ],
+    "categorias": [
+      "ventas",
+      "operaciones"
+    ],
     "descripcion": "Plataforma web donde cada revendedora puede armar su carrito, ver stock disponible y descargar el catálogo actualizado.",
     "ejemplos_html": [
       "<p><strong>Escenario:</strong> La revendedora carga su pedido a las 23:00hs sin necesidad de que alguien la atienda por mensaje.</p>"
@@ -56,7 +73,10 @@
       }
     ],
     "licencia": "Licencia de uso exclusivo para Alma Mia",
-    "gastos_externos": "Dominio .com.ar y certificado SSL."
+    "gastos_externos": "Dominio .com.ar y certificado SSL.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   },
   {
     "id": "gestion-comisiones-incentivos",
@@ -64,8 +84,15 @@
     "subtitulo": "Cálculo automático de incentivos",
     "icono": "gift",
     "estado": "validando",
-    "etiquetas": ["finanzas", "recursos humanos", "incentivos"],
-    "categorias": ["finanzas", "estrategia"],
+    "etiquetas": [
+      "finanzas",
+      "recursos humanos",
+      "incentivos"
+    ],
+    "categorias": [
+      "finanzas",
+      "estrategia"
+    ],
     "descripcion": "Automatiza el cálculo de ganancias para líderes y revendedoras basándose en objetivos alcanzados y escalas de ventas.",
     "ejemplos_html": [
       "<h4>Ejemplo de uso</h4><p>Cálculo automático: <strong>\"Líder X alcanzó el nivel Oro: Bono de $20.000 acreditado\"</strong>.</p>",
@@ -80,6 +107,9 @@
       }
     ],
     "licencia": "Licencia de uso interno",
-    "gastos_externos": "Ninguno."
+    "gastos_externos": "Ninguno.",
+    "icono_respaldo": "heroicon-o-puzzle-piece",
+    "formato_icono": "Acepta alias simples (ej: chart-pie, truck), Heroicons (heroicon-o-*/heroicon-s-*) o clases Font Awesome (ej: fa-solid fa-user).",
+    "formato_icono_respaldo": "Mismo formato que icono; se usa cuando icono no existe o no se puede resolver."
   }
 ]
