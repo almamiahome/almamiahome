@@ -2,6 +2,7 @@
 
 use function Laravel\Folio\{middleware, name};
 use App\Models\Pedido;
+use App\Models\User;
 use Livewire\Volt\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -14,6 +15,8 @@ new class extends Component {
     public $anio;
     public $rotulos = [];
     public $limiteBulto;
+    public $lider_id = '';
+    public $lideres = [];
 
     public function mount(): void
     {
@@ -25,6 +28,7 @@ new class extends Component {
 
         // Límite de bulto desde settings o 9 por defecto
         $this->limiteBulto = (float) (setting('almamia.cantidad.bulto') ?? 9);
+        $this->lideres = User::role('lider')->orderBy('name')->get();
 
         $this->loadRotulos();
     }
@@ -39,6 +43,11 @@ new class extends Component {
         $this->loadRotulos();
     }
 
+    public function updatedLiderId(): void
+    {
+        $this->loadRotulos();
+    }
+
     /**
      * Carga todos los pedidos filtrados por mes/año y genera los rótulos
      */
@@ -46,11 +55,15 @@ new class extends Component {
     {
         $this->rotulos = [];
 
-        $pedidos = Pedido::with(['vendedora', 'lider', 'articulos'])
+        $query = Pedido::with(['vendedora', 'lider', 'articulos'])
             ->whereYear('fecha', $this->anio)
-            ->whereMonth('fecha', $this->mes)
-            ->orderBy('fecha')
-            ->get();
+            ->whereMonth('fecha', $this->mes);
+
+        if (! empty($this->lider_id)) {
+            $query->where('lider_id', (int) $this->lider_id);
+        }
+
+        $pedidos = $query->orderBy('fecha')->get();
 
         foreach ($pedidos as $pedido) {
 
@@ -132,6 +145,19 @@ new class extends Component {
                     @for ($y = now()->year - 3; $y <= now()->year + 1; $y++)
                         <option value="{{ $y }}">{{ $y }}</option>
                     @endfor
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Líder</label>
+                <select
+                    wire:model.live="lider_id"
+                    class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                    <option value="">Todas</option>
+                    @foreach($lideres as $lider)
+                        <option value="{{ $lider->id }}">{{ $lider->name }}</option>
+                    @endforeach
                 </select>
             </div>
 
