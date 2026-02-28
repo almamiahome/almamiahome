@@ -146,8 +146,14 @@ new class extends Component {
             'id' => (string) ($modulo['id'] ?? Str::slug((string) ($modulo['titulo'] ?? 'modulo'))),
             'titulo' => (string) ($modulo['titulo'] ?? ''),
             'subtitulo' => (string) ($modulo['subtitulo'] ?? ''),
+            'descripcion' => (string) ($modulo['descripcion'] ?? 'Sin descripción'),
             'estado' => (string) ($modulo['estado'] ?? 'pendiente'),
             'icono' => (string) ($modulo['icono'] ?? ''),
+            'precio' => (string) ($modulo['precio'] ?? ($modulo['precios'][0]['monto'] ?? 'A definir')),
+            'moneda' => (string) ($modulo['moneda'] ?? 'A definir'),
+            'portada_html' => (string) ($modulo['portada_html'] ?? ''),
+            'degradado' => (string) ($modulo['degradado'] ?? 'from-indigo-600 via-fuchsia-500 to-cyan-400'),
+            'meta_json' => json_encode($modulo['meta'] ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '{}',
             'tipos_planes' => $this->normalizarListaTexto($modulo['tipos_planes'] ?? []),
             'etiquetas' => $this->normalizarListaTexto($modulo['etiquetas'] ?? []),
             'categorias' => $this->normalizarListaTexto($modulo['categorias'] ?? []),
@@ -304,6 +310,32 @@ new class extends Component {
                 return;
             }
         }
+
+        if (trim((string) ($this->form['descripcion'] ?? '')) === '') {
+            $this->form['descripcion'] = 'Sin descripción';
+        }
+
+        if (trim((string) ($this->form['precio'] ?? '')) === '') {
+            $this->form['precio'] = 'A definir';
+        }
+
+        if (trim((string) ($this->form['moneda'] ?? '')) === '') {
+            $this->form['moneda'] = 'A definir';
+        }
+
+        $metaJson = trim((string) ($this->form['meta_json'] ?? '{}'));
+
+        if ($metaJson === '') {
+            $this->form['meta_json'] = '{}';
+
+            return;
+        }
+
+        $meta = json_decode($metaJson, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || ! is_array($meta)) {
+            $this->mensajeError = 'El campo Meta debe contener un JSON válido.';
+        }
     }
 
     protected function plantillaEstructurada(string $campo): array
@@ -410,6 +442,13 @@ new class extends Component {
         $form['tipos_planes'] = $this->normalizarListaTexto($form['tipos_planes'] ?? []);
         $form['etiquetas'] = $this->normalizarListaTexto($form['etiquetas'] ?? []);
         $form['categorias'] = $this->normalizarListaTexto($form['categorias'] ?? []);
+        $form['descripcion'] = trim((string) ($form['descripcion'] ?? '')) ?: 'Sin descripción';
+        $form['precio'] = trim((string) ($form['precio'] ?? '')) ?: 'A definir';
+        $form['moneda'] = trim((string) ($form['moneda'] ?? '')) ?: 'A definir';
+        $form['degradado'] = trim((string) ($form['degradado'] ?? '')) ?: 'from-indigo-600 via-fuchsia-500 to-cyan-400';
+        $form['meta'] = json_decode((string) ($form['meta_json'] ?? '{}'), true) ?: [];
+
+        unset($form['meta_json']);
 
         return $form;
     }
@@ -430,6 +469,8 @@ new class extends Component {
 <x-layouts.empty>
     @volt('mejoras.items')
     <x-app.container class="max-w-[1800px] py-8">
+        <div class="fixed-wallpaper rounded-[2rem] p-2">
+            <div class="rounded-[2rem] p-4 bg-white/50 dark:bg-zinc-950/50">
         {{-- Refinamiento Estético Liquid Glass --}}
         <style>
             .liquid-glass {
@@ -463,27 +504,14 @@ new class extends Component {
             .custom-scroll::-webkit-scrollbar-track { background: transparent; }
             .custom-scroll::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 10px; }
             
-            /* Añade esto a tu sección de estilos existente */
-body {
-    background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
+            .fixed-wallpaper {
+    background-image: url('{{ asset('storage/bg.jpg') }}');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Crucial para el efecto glass al hacer scroll */
+    background-attachment: fixed;
     background-repeat: no-repeat;
 }
 
-/* Ajuste opcional: añade una capa de tinte para mejorar el contraste */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.1); /* Tinte claro para modo luz */
-    z-index: -1;
-}
-
-.dark body::before {
-    background: rgba(15, 23, 42, 0.4); /* Tinte oscuro para modo noche */
-}
         </style>
 
         <div class="space-y-6">
@@ -579,6 +607,10 @@ body::before {
                                         <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Subtítulo / Lead</label>
                                         <input wire:model.live="form.subtitulo" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-bold" />
                                     </div>
+                                    <div class="md:col-span-2 space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Descripción</label>
+                                        <textarea wire:model.live="form.descripcion" rows="3" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-medium"></textarea>
+                                    </div>
                                     <div class="space-y-2">
                                         <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Estado de Implementación</label>
                                         <select wire:model.live="form.estado" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-bold">
@@ -594,6 +626,26 @@ body::before {
                                             <input wire:model.live="form.icono" class="glass-input flex-1 rounded-2xl px-4 py-3 text-sm font-mono" />
                                             <button wire:click="abrirModalIcono" class="px-4 rounded-2xl bg-indigo-500/10 text-indigo-600 text-xs font-black uppercase hover:bg-indigo-500 hover:text-white transition-all">Explorar</button>
                                         </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Precio</label>
+                                        <input wire:model.live="form.precio" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-bold" />
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Moneda</label>
+                                        <input wire:model.live="form.moneda" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-bold" />
+                                    </div>
+                                    <div class="md:col-span-2 space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Portada HTML (opcional)</label>
+                                        <textarea wire:model.live="form.portada_html" rows="3" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-mono"></textarea>
+                                    </div>
+                                    <div class="md:col-span-2 space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Degradado Tailwind</label>
+                                        <input wire:model.live="form.degradado" class="glass-input w-full rounded-2xl px-4 py-3 text-sm font-mono" placeholder="from-indigo-600 via-fuchsia-500 to-cyan-400" />
+                                    </div>
+                                    <div class="md:col-span-2 space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Meta (JSON)</label>
+                                        <textarea wire:model.live="form.meta_json" rows="4" class="glass-input w-full rounded-2xl px-4 py-3 text-xs font-mono"></textarea>
                                     </div>
                                 </div>
 
@@ -746,6 +798,8 @@ body::before {
             </div>
         @endif
 
+            </div>
+        </div>
     </x-app.container>
     @endvolt
 </x-layouts.empty>

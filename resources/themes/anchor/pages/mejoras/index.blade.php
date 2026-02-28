@@ -98,6 +98,7 @@ new class extends Component {
     public function getMejorasProperty(): Collection
     {
         $files = File::glob(resource_path('themes/anchor/pages/mejoras/items/*.json')) ?: [];
+        $files = array_values(array_filter($files, fn (string $file): bool => basename($file) !== 'activos.json'));
 
         return collect($files)
             ->flatMap(function (string $path): array {
@@ -114,6 +115,28 @@ new class extends Component {
                     ->map(fn (array $item) => $this->normalizarMejora($item, basename($path)))
                     ->all();
             })
+            ->values();
+    }
+
+    public function getActivosProperty(): Collection
+    {
+        $path = resource_path('themes/anchor/pages/mejoras/items/activos.json');
+
+        if (! File::exists($path)) {
+            return collect();
+        }
+
+        $decoded = json_decode(File::get($path), true);
+
+        if (! is_array($decoded)) {
+            return collect();
+        }
+
+        $items = array_is_list($decoded) ? $decoded : [$decoded];
+
+        return collect($items)
+            ->filter(fn (mixed $item): bool => is_array($item))
+            ->map(fn (array $item): array => $this->normalizarActivo($item, basename($path)))
             ->values();
     }
 
@@ -152,7 +175,7 @@ new class extends Component {
             'id' => (string) ($item['id'] ?? Str::slug($titulo.'-'.$origen)),
             'titulo' => $titulo,
             'subtitulo' => (string) ($item['subtitulo'] ?? ''),
-            'descripcion' => (string) ($item['descripcion'] ?? ''),
+            'descripcion' => (string) ($item['descripcion'] ?? 'Sin descripción'),
             'estado' => (string) ($item['estado'] ?? 'no instalado'),
             'etiquetas' => $this->normalizarTextoLista($item['etiquetas'] ?? []),
             'categorias' => $this->normalizarTextoLista($item['categorias'] ?? []),
@@ -160,7 +183,56 @@ new class extends Component {
             'precios' => $this->normalizarPrecios($item['precios'] ?? []),
             'gastos_externos' => $item['gastos_externos'] ?? null,
             'licencia' => (string) ($item['licencia'] ?? 'Definir tipo de licencia'),
+            'degradado' => trim((string) ($item['degradado'] ?? '')) ?: 'from-indigo-600 via-fuchsia-500 to-cyan-400',
+            'portada_html' => (string) ($item['portada_html'] ?? ''),
+            'icono' => $this->resolverIcono((string) ($item['icono'] ?? '')),
         ];
+    }
+
+    protected function normalizarActivo(array $item, string $origen): array
+    {
+        $titulo = trim((string) ($item['titulo'] ?? 'Activo sin título')) ?: 'Activo sin título';
+
+        return [
+            'id' => (string) ($item['id'] ?? Str::slug($titulo.'-'.$origen)),
+            'titulo' => $titulo,
+            'descripcion' => trim((string) ($item['descripcion'] ?? '')) ?: 'Sin descripción',
+            'precio' => trim((string) ($item['precio'] ?? '')) ?: 'A definir',
+            'moneda' => trim((string) ($item['moneda'] ?? '')) ?: 'A definir',
+            'estado' => trim((string) ($item['estado'] ?? 'pendiente')) ?: 'pendiente',
+            'meta' => is_array($item['meta'] ?? null) ? $item['meta'] : [],
+            'degradado' => trim((string) ($item['degradado'] ?? '')) ?: 'from-indigo-600 via-fuchsia-500 to-cyan-400',
+            'portada_html' => (string) ($item['portada_html'] ?? ''),
+            'icono' => $this->resolverIcono((string) ($item['icono'] ?? '')),
+        ];
+    }
+
+    protected function resolverIcono(string $icono): string
+    {
+        $icono = trim($icono);
+
+        if ($icono === '') {
+            return 'heroicon-o-puzzle-piece';
+        }
+
+        if (str_starts_with($icono, 'heroicon-')) {
+            return $icono;
+        }
+
+        $normalizado = Str::of($icono)->trim()->replace('_', '-')->lower()->toString();
+        $candidatos = [
+            'heroicon-o-'.$normalizado,
+            'heroicon-s-'.$normalizado,
+            'heroicon-m-'.$normalizado,
+        ];
+
+        foreach ($candidatos as $candidato) {
+            if (view()->exists('components.'.$candidato)) {
+                return $candidato;
+            }
+        }
+
+        return 'heroicon-o-puzzle-piece';
     }
 
     protected function normalizarTextoLista(mixed $valor): array
@@ -228,32 +300,26 @@ new class extends Component {
             box-shadow: 0 4px 10px -2px rgba(79, 70, 229, 0.4);
         }
         
-        /* Añade esto a tu sección de estilos existente */
-body {
-    background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
+        .fixed-wallpaper {
+    background-image: url('{{ asset('storage/bg.jpg') }}');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Crucial para el efecto glass al hacer scroll */
+    background-attachment: fixed;
     background-repeat: no-repeat;
 }
-
-/* Ajuste opcional: añade una capa de tinte para mejorar el contraste */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.1); /* Tinte claro para modo luz */
-    z-index: -1;
+.overlay-wallpaper {
+    background: rgba(255, 255, 255, 0.5);
+}
+.dark .overlay-wallpaper {
+    background: rgba(9, 9, 11, 0.5);
 }
 
-.dark body::before {
-    background: rgba(15, 23, 42, 0.4); /* Tinte oscuro para modo noche */
-}
     </style>
     
     
 
-    <div class="flex flex-col gap-4">
+    <div class="fixed-wallpaper rounded-[2rem] p-2">
+        <div class="rounded-[2rem] p-4 flex flex-col gap-4 bg-white/50 dark:bg-zinc-950/50">
         {{-- BARRA SUPERIOR DE SISTEMA --}}
         <div class="os-glass rounded-3xl p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div class="flex items-center gap-4">
@@ -289,7 +355,8 @@ body::before {
                     @foreach([
                         'mejoras' => ['nombre' => 'Explorar Catálogo', 'icon' => 'heroicon-o-rectangle-group'],
                         'modulos-activos' => ['nombre' => 'Sistemas Activos', 'icon' => 'heroicon-o-check-badge'],
-                        'en-curso' => ['nombre' => 'En Desarrollo', 'icon' => 'heroicon-o-beaker']
+                        'en-curso' => ['nombre' => 'En Desarrollo', 'icon' => 'heroicon-o-beaker'],
+                        'activos' => ['nombre' => 'Activos', 'icon' => 'heroicon-o-cube']
                     ] as $id => $item)
                         <button wire:click="$set('tabActiva', '{{ $id }}')"
                             class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all {{ $tabActiva === $id 
@@ -354,6 +421,27 @@ body::before {
                             </div>
                         @empty
                             {{-- Empty state --}}
+                        @endforelse
+                    </div>
+                @endif
+
+
+                @if($tabActiva === 'activos')
+                    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                        @forelse($this->activos as $activo)
+                            <div class="os-glass os-card rounded-[2rem] p-6 border border-transparent hover:border-indigo-500/30">
+                                <div class="flex items-center justify-between mb-5">
+                                    <div class="h-12 w-12 rounded-2xl flex items-center justify-center bg-gradient-to-br {{ $activo['degradado'] }} text-white">
+                                        <x-dynamic-component :component="$activo['icono']" class="h-6 w-6" />
+                                    </div>
+                                    <span class="text-[10px] font-black uppercase text-slate-500">{{ $activo['estado'] }}</span>
+                                </div>
+                                <h3 class="text-lg font-black text-slate-900 dark:text-white">{{ $activo['titulo'] }}</h3>
+                                <p class="mt-2 text-sm text-slate-600 dark:text-zinc-300">{{ $activo['descripcion'] }}</p>
+                                <div class="mt-4 text-xs font-black uppercase text-indigo-600">{{ $activo['precio'] }} · {{ $activo['moneda'] }}</div>
+                            </div>
+                        @empty
+                            <div class="os-glass rounded-3xl p-8 text-sm font-bold text-slate-500">No hay activos cargados.</div>
                         @endforelse
                     </div>
                 @endif
@@ -454,6 +542,11 @@ body::before {
                                 <span class="px-3 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-[10px] font-black uppercase">Core v1.0</span>
                             </div>
                             <p class="text-sm font-bold text-indigo-600/70 uppercase mt-1 tracking-widest">{{ $this->detalleMejora['subtitulo'] }}</p>
+                            @if(!empty($this->detalleMejora['portada_html']))
+                                <div class="mt-4 rounded-2xl p-4 bg-gradient-to-r {{ $this->detalleMejora['degradado'] ?? 'from-indigo-600 via-fuchsia-500 to-cyan-400' }} text-white">
+                                    {!! $this->detalleMejora['portada_html'] !!}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <button wire:click="cerrarModal" class="p-4 rounded-full hover:bg-slate-200 dark:hover:bg-zinc-800 transition-all text-slate-400 active:scale-90">
@@ -528,6 +621,8 @@ body::before {
             </div>
         </div>
     @endif
+        </div>
+    </div>
 </x-app.container>
 @endvolt
 </x-layouts.empty>
