@@ -104,6 +104,7 @@ class PedidoCartService
     public function obtenerContextoUsuarios(?User $usuario): array
     {
         $esLiderAutenticado     = $usuario?->hasRole('lider') ?? false;
+        $esCoordinadoraAutenticada = $usuario?->hasRole('coordinadora') ?? false;
         $esVendedoraAutenticada = ($usuario?->hasRole('vendedora') ?? false) && ! $esLiderAutenticado;
 
         $vendedoras = [];
@@ -130,6 +131,31 @@ class PedidoCartService
                         $query->orWhere('id', $usuario->id);
                     }
                 })
+                ->orderBy('name')
+                ->get()
+                ->map(fn (User $user) => $this->userProfileData($user))
+                ->toArray();
+
+            if ($usuario && ! collect($vendedoras)->contains(fn ($vendedora) => (int) ($vendedora['id'] ?? 0) === (int) $usuario->id)) {
+                $vendedoras[] = $this->userProfileData($usuario);
+            }
+        } elseif ($esCoordinadoraAutenticada) {
+            $vendedoras = User::role('vendedora')
+                ->orderBy('name')
+                ->get()
+                ->map(fn (User $user) => $this->userProfileData($user))
+                ->toArray();
+
+            $vendedoras[] = $this->userProfileData($usuario);
+
+            $vendedoras = collect($vendedoras)
+                ->unique('id')
+                ->sortBy('name')
+                ->values()
+                ->toArray();
+
+            $lideres = User::role('lider')
+                ->whereIn('id', $usuario?->lideres()->pluck('users.id')->toArray() ?? [])
                 ->orderBy('name')
                 ->get()
                 ->map(fn (User $user) => $this->userProfileData($user))
@@ -254,7 +280,9 @@ class PedidoCartService
                     }
                 });
 
-            if ($vendedora_id && ! $vendedorasPermitidas->where('id', $vendedora_id)->exists()) {
+            $esAutopedidoLider = $usuarioActual && (int) $vendedora_id === (int) $usuarioActual->id;
+
+            if ($vendedora_id && ! $esAutopedidoLider && ! $vendedorasPermitidas->where('id', $vendedora_id)->exists()) {
                 return ['error' => 'La vendedora seleccionada no pertenece a tu red.'];
             }
         }
@@ -369,7 +397,12 @@ class PedidoCartService
         $vendedora = $data['vendedora_id'] ? User::find($data['vendedora_id']) : null;
         $lider     = $data['lider_id'] ? User::find($data['lider_id']) : null;
 
-        if ($vendedora && ! $vendedora->hasRole('vendedora')) {
+        $autopedidoRolesPermitidos = $usuarioActual
+            && $vendedora
+            && (int) $vendedora->id === (int) $usuarioActual->id
+            && $usuarioActual->hasAnyRole(['lider', 'coordinadora']);
+
+        if ($vendedora && ! $vendedora->hasRole('vendedora') && ! $autopedidoRolesPermitidos) {
             return ['error' => 'El usuario seleccionado no tiene rol vendedora.'];
         }
 

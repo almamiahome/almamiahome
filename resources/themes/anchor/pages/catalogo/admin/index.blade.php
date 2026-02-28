@@ -44,6 +44,7 @@ new class extends Component {
         'catalogo_id' => null,
         'numero'      => 1,
         'imagen'      => null,
+        'imagenes'    => [],
     ];
 
     public $paginaEditingId = null;
@@ -178,6 +179,7 @@ new class extends Component {
         $this->paginaForm['catalogo_id'] = $pagina->catalogo_id;
         $this->paginaForm['numero']     = $pagina->numero;
         $this->paginaForm['imagen']     = null;
+        $this->paginaForm['imagenes']   = [];
     }
 
     public function savePagina(): void
@@ -186,9 +188,31 @@ new class extends Component {
             'paginaForm.catalogo_id' => 'required|exists:catalogos,id',
             'paginaForm.numero'      => 'required|integer|min:1',
             'paginaForm.imagen'      => 'nullable|image|max:8192',
+            'paginaForm.imagenes'    => 'nullable|array',
+            'paginaForm.imagenes.*'  => 'image|max:8192',
         ];
 
         $this->validate($rules);
+
+        $imagenesMultiples = collect($this->paginaForm['imagenes'] ?? [])->filter();
+
+        if ($imagenesMultiples->isNotEmpty() && ! $this->paginaEditingId) {
+            $numeroInicial = (int) $this->paginaForm['numero'];
+
+            $imagenesMultiples->values()->each(function ($imagen, int $indice) use ($numeroInicial) {
+                CatalogoPagina::create([
+                    'catalogo_id' => $this->paginaForm['catalogo_id'],
+                    'numero' => $numeroInicial + $indice,
+                    'imagen' => $imagen->store('catalogo/paginas', 'public'),
+                ]);
+            });
+
+            $this->resetPaginaForm();
+            $this->refreshPaginas();
+            $this->loadCatalogos();
+
+            return;
+        }
 
         $pagina = $this->paginaEditingId
             ? CatalogoPagina::findOrFail($this->paginaEditingId)
@@ -343,6 +367,7 @@ new class extends Component {
         $this->paginaEditingId             = null;
         $this->paginaForm['numero']        = 1;
         $this->paginaForm['imagen']        = null;
+        $this->paginaForm['imagenes']      = [];
         $this->paginaForm['catalogo_id']   = $this->selectedCatalogoId;
     }
 
@@ -454,11 +479,21 @@ new class extends Component {
                                 <input type="number" wire:model="paginaForm.numero" class="w-full h-10 bg-white border-slate-200 rounded-xl font-bold text-sm" placeholder="Nº">
                             </div>
                             <div class="w-40">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Imagen de página</label>
                                 <input type="file" wire:model="paginaForm.imagen" class="w-full text-[10px]">
                             </div>
+                            @if(!$this->paginaEditingId)
+                                <div class="w-52">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Carga múltiple</label>
+                                    <input type="file" multiple wire:model="paginaForm.imagenes" class="w-full text-[10px]">
+                                </div>
+                            @endif
                             <button type="submit" class="h-10 px-6 bg-violet-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest">
                                 @if($this->paginaEditingId) Actualizar @else Añadir @endif
                             </button>
+                            @if(!$this->paginaEditingId)
+                                <p class="text-[10px] font-bold text-slate-400">Si seleccionás varias imágenes, se crean páginas consecutivas desde el número indicado.</p>
+                            @endif
                         </form>
                     </div>
 
