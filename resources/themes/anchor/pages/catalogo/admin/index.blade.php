@@ -51,6 +51,8 @@ new class extends Component {
     public $mapForm = [
         'catalogo_pagina_id' => null,
         'producto_id'        => null,
+        'producto_ids'       => [],
+        'es_grupo'           => false,
         'pos_x'              => 50,
         'pos_y'              => 50,
     ];
@@ -70,7 +72,7 @@ new class extends Component {
 
     public function loadCatalogos(): void
     {
-        $this->catalogos = Catalogo::with(['paginas.productos.producto'])
+        $this->catalogos = Catalogo::with(['paginas.productos.producto', 'paginas.productos.productosGrupo'])
             ->orderByDesc('id')
             ->get();
 
@@ -95,7 +97,7 @@ new class extends Component {
 
     public function refreshPaginas(): void
     {
-        $catalogo = Catalogo::with(['paginas.productos.producto'])
+        $catalogo = Catalogo::with(['paginas.productos.producto', 'paginas.productos.productosGrupo'])
             ->find($this->selectedCatalogoId);
 
         $this->paginas = $catalogo
@@ -237,13 +239,27 @@ new class extends Component {
 
     public function editMap(int $mapId): void
     {
-        $pivot                           = CatalogoPaginaProducto::findOrFail($mapId);
+        $pivot                           = CatalogoPaginaProducto::with('productosGrupo')->findOrFail($mapId);
         $this->mapEditingId              = $pivot->id;
         $this->mapForm['catalogo_pagina_id'] = $pivot->catalogo_pagina_id;
+        $this->mapForm['es_grupo']       = (bool) $pivot->es_grupo;
         $this->mapForm['producto_id']    = $pivot->producto_id;
+        $this->mapForm['producto_ids']   = $pivot->productosGrupo->pluck('id')->map(fn ($id) => (string) $id)->toArray();
         $this->mapForm['pos_x']          = $pivot->pos_x;
         $this->mapForm['pos_y']          = $pivot->pos_y;
         $this->mapPositionSaved          = false;
+    }
+
+
+    public function updatedMapFormEsGrupo($value): void
+    {
+        $esGrupo = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+
+        if ($esGrupo) {
+            $this->mapForm['producto_id'] = null;
+        } else {
+            $this->mapForm['producto_ids'] = [];
+        }
     }
 
     public function saveMap(): void
@@ -259,24 +275,39 @@ new class extends Component {
 
     protected function persistMap(bool $resetAfterSave = true): void
     {
+        $esGrupo = (bool) ($this->mapForm['es_grupo'] ?? false);
+
         $rules = [
             'mapForm.catalogo_pagina_id' => 'required|exists:catalogo_paginas,id',
-            'mapForm.producto_id'        => 'required|exists:productos,id',
             'mapForm.pos_x'              => 'required|numeric|min:0|max:100',
             'mapForm.pos_y'              => 'required|numeric|min:0|max:100',
         ];
 
+        if ($esGrupo) {
+            $rules['mapForm.producto_ids'] = 'required|array|min:1';
+            $rules['mapForm.producto_ids.*'] = 'required|exists:productos,id';
+        } else {
+            $rules['mapForm.producto_id'] = 'required|exists:productos,id';
+        }
+
         $this->validate($rules);
 
         $pivot = $this->mapEditingId
-            ? CatalogoPaginaProducto::findOrFail($this->mapEditingId)
+            ? CatalogoPaginaProducto::with('productosGrupo')->findOrFail($this->mapEditingId)
             : new CatalogoPaginaProducto();
 
         $pivot->catalogo_pagina_id = $this->mapForm['catalogo_pagina_id'];
-        $pivot->producto_id        = $this->mapForm['producto_id'];
+        $pivot->es_grupo           = $esGrupo;
+        $pivot->producto_id        = $esGrupo ? null : $this->mapForm['producto_id'];
         $pivot->pos_x              = $this->mapForm['pos_x'];
         $pivot->pos_y              = $this->mapForm['pos_y'];
         $pivot->save();
+
+        if ($esGrupo) {
+            $pivot->productosGrupo()->sync($this->mapForm['producto_ids']);
+        } else {
+            $pivot->productosGrupo()->sync([]);
+        }
 
         if ($resetAfterSave) {
             $this->resetMapForm();
@@ -321,6 +352,8 @@ new class extends Component {
         $this->mapForm      = [
             'catalogo_pagina_id' => $this->paginas->first()->id ?? null,
             'producto_id'        => null,
+            'producto_ids'       => [],
+            'es_grupo'           => false,
             'pos_x'              => 50,
             'pos_y'              => 50,
         ];
@@ -503,14 +536,49 @@ new class extends Component {
 
                         <div class="space-y-6">
                             <form wire:submit.prevent="saveMap" class="space-y-4">
-                                <div class="space-y-1">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Producto</label>
-                                    <select wire:model="mapForm.producto_id" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
-                                        <option value="">Seleccionar...</option>
-                                        @foreach($productos as $prod)
-                                            <option value="{{ $prod->id }}">{{ $prod->nombre }} ({{ $prod->sku }})</option>
-                                        @endforeach
-                                    </select>
+                                <div class="space-y-3" x-data="{ modalGrupoAbierto: false }">
+                                    <label class="inline-flex items-center gap-3 text-xs font-black text-slate-700">
+                                        <input type="checkbox" wire:model.live="mapForm.es_grupo" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                                        Grupo de productos
+                                    </label>
+
+                                    @if($mapForm['es_grupo'])
+                                        <button type="button" @click="modalGrupoAbierto = true" class="w-full h-12 px-4 bg-white border border-slate-200 rounded-2xl font-bold text-left text-slate-700">
+                                            Seleccionar productos del grupo
+                                        </button>
+
+                                        <p class="text-[11px] font-semibold text-slate-500">
+                                            Seleccionados: {{ count($mapForm['producto_ids'] ?? []) }}
+                                        </p>
+
+                                        <div x-show="modalGrupoAbierto" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4" @click.self="modalGrupoAbierto = false">
+                                            <div class="w-full max-w-xl rounded-3xl bg-white p-6 shadow-2xl space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <h4 class="text-sm font-black text-slate-800 uppercase tracking-widest">Seleccionar productos</h4>
+                                                    <button type="button" @click="modalGrupoAbierto = false" class="text-slate-500 font-bold">Cerrar</button>
+                                                </div>
+
+                                                <div class="max-h-80 overflow-y-auto space-y-2 pr-2">
+                                                    @foreach($productos as $prod)
+                                                        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 hover:bg-slate-50">
+                                                            <input type="checkbox" value="{{ $prod->id }}" wire:model="mapForm.producto_ids" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                                                            <span class="text-xs font-bold text-slate-700">{{ $prod->nombre }} ({{ $prod->sku }})</span>
+                                                        </label>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="space-y-1">
+                                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Producto</label>
+                                            <select wire:model="mapForm.producto_id" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
+                                                <option value="">Seleccionar...</option>
+                                                @foreach($productos as $prod)
+                                                    <option value="{{ $prod->id }}">{{ $prod->nombre }} ({{ $prod->sku }})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
@@ -533,7 +601,7 @@ new class extends Component {
                                 @endif
 
                                 <button type="submit" class="w-full h-14 bg-emerald-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-emerald-100">
-                                    @if($this->mapEditingId) Actualizar Punto @else Vincular Producto @endif
+                                    @if($this->mapEditingId) Actualizar Hotspot @else Crear Hotspot @endif
                                 </button>
                             </form>
 
@@ -542,7 +610,7 @@ new class extends Component {
                                     <p class="text-[10px] font-black uppercase text-slate-400">Vínculos en esta página:</p>
                                     @foreach($paginaActiva->productos as $p)
                                         <div class="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-2xl shadow-sm">
-                                            <span class="text-xs font-black text-slate-700">{{ $p->producto?->nombre }}</span>
+                                            <span class="text-xs font-black text-slate-700">{{ $p->es_grupo ? 'Grupo: '. $p->productosGrupo->pluck('nombre')->implode(', ') : $p->producto?->nombre }}</span>
                                             <div class="flex gap-1">
                                                 <button wire:click="editMap({{ $p->id }})" class="p-1 text-indigo-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
                                                 <button wire:click="deleteMap({{ $p->id }})" class="p-1 text-red-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>

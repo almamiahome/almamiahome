@@ -12,11 +12,13 @@ class CatalogoPaginaProducto extends Model
     protected $fillable = [
         'catalogo_pagina_id',
         'producto_id',
+        'es_grupo',
         'pos_x',
         'pos_y',
     ];
 
     protected $casts = [
+        'es_grupo' => 'boolean',
         'pos_x' => 'float',
         'pos_y' => 'float',
     ];
@@ -33,5 +35,15 @@ class CatalogoPaginaProducto extends Model
     public function producto()
     {
         return $this->belongsTo(Producto::class);
+    }
+
+    public function productosGrupo()
+    {
+        return $this->belongsToMany(
+            Producto::class,
+            'catalogo_hotspot_producto',
+            'catalogo_pagina_producto_id',
+            'producto_id'
+        )->withTimestamps();
     }
 }

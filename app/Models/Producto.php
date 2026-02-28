@@ -28,4 +28,14 @@ class Producto extends Model
     {
         return $this->belongsToMany(Categoria::class, 'categoria_producto');
     }
+
+    public function hotspotsGrupo()
+    {
+        return $this->belongsToMany(
+            CatalogoPaginaProducto::class,
+            'catalogo_hotspot_producto',
+            'producto_id',
+            'catalogo_pagina_producto_id'
+        )->withTimestamps();
+    }
 }

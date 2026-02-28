@@ -31,6 +31,9 @@
             openCategorias: {},
             estadoBotonCatalogo: {},
             temporizadoresBotonCatalogo: {},
+            modalHotspotGrupoAbierto: false,
+            hotspotGrupoActivo: null,
+            seleccionHotspotGrupo: [],
             datosPedido: {
                 lider:       { nombre: null, direccion: null, zona: null },
                 vendedora:   { nombre: null, direccion: null, zona: null },
@@ -177,6 +180,77 @@
                     return;
                 }
                 this.addToCart(prod);
+            },
+
+            obtenerProductosHotspot(productoCatalogo){
+                if (productoCatalogo?.es_grupo) {
+                    return (productoCatalogo?.productos_grupo ?? [])
+                        .map((productoGrupo) => this.getProductoById(productoGrupo?.id) ?? productoGrupo)
+                        .filter(Boolean);
+                }
+
+                const productoId = productoCatalogo?.producto_id ?? productoCatalogo?.id;
+                const prod = (productoId ? this.getProductoById(productoId) : null) ?? productoCatalogo?.producto ?? null;
+                return prod ? [prod] : [];
+            },
+
+            estadoHotspot(productoCatalogo){
+                const productos = this.obtenerProductosHotspot(productoCatalogo);
+                if (!productos.length) {
+                    return null;
+                }
+
+                const hayAgregado = productos.some((producto) => this.estadoBotonCatalogo[producto.id] === 'agregado');
+                return hayAgregado ? 'agregado' : null;
+            },
+
+            manejarClickHotspot(productoCatalogo){
+                if (productoCatalogo?.es_grupo) {
+                    const productos = this.obtenerProductosHotspot(productoCatalogo);
+                    if (!productos.length) {
+                        this.messages.error = 'No hay productos asignados a este hotspot grupal.';
+                        return;
+                    }
+
+                    this.hotspotGrupoActivo = {
+                        ...productoCatalogo,
+                        productos,
+                    };
+                    this.seleccionHotspotGrupo = productos.map((producto) => String(producto.id));
+                    this.modalHotspotGrupoAbierto = true;
+                    return;
+                }
+
+                this.addProductoDesdePagina(productoCatalogo);
+            },
+
+            toggleProductoHotspotGrupo(productoId){
+                const idTexto = String(productoId);
+                if (this.seleccionHotspotGrupo.includes(idTexto)) {
+                    this.seleccionHotspotGrupo = this.seleccionHotspotGrupo.filter((id) => id !== idTexto);
+                    return;
+                }
+
+                this.seleccionHotspotGrupo = [...this.seleccionHotspotGrupo, idTexto];
+            },
+
+            confirmarHotspotGrupo(){
+                const productos = this.hotspotGrupoActivo?.productos ?? [];
+                const seleccionados = productos.filter((producto) => this.seleccionHotspotGrupo.includes(String(producto.id)));
+
+                if (!seleccionados.length) {
+                    this.messages.error = 'Seleccioná al menos un producto para agregar al carrito.';
+                    return;
+                }
+
+                seleccionados.forEach((producto) => this.addToCart(producto));
+                this.cerrarHotspotGrupo();
+            },
+
+            cerrarHotspotGrupo(){
+                this.modalHotspotGrupoAbierto = false;
+                this.hotspotGrupoActivo = null;
+                this.seleccionHotspotGrupo = [];
             },
 
             // ==== CARRITO Y ACCIONES ====
