@@ -93,6 +93,7 @@ new class extends Component {
                 <div class="p-3 mt-4 text-red-700 bg-red-100 border border-red-300 rounded" x-text="messages.error"></div>
             </template>
 
+            <section id="seccion-productos">
             <!-- Filtros categorías y busqueda -->
             <div class="mt-8 mb-6">
     <div class="flex items-center justify-between mb-3">
@@ -231,9 +232,10 @@ new class extends Component {
         </div>
     </template>
 </div>
+            </section>
 
             <!-- Carrito -->
-            <div class="bg-white shadow rounded-2xl p-4 mb-4">
+            <div id="seccion-carrito" class="bg-white shadow rounded-2xl p-4 mb-4">
                 <div class="bg-white dark:bg-slate-950 shadow-sm rounded-3xl p-6 mb-6 border border-slate-200 dark:border-slate-800 transition-all">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
@@ -588,9 +590,9 @@ new class extends Component {
                 class="w-full bg-white border-0 ring-1 ring-slate-200 rounded-2xl px-4 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all focus:ring-2 focus:ring-[#e91e63] appearance-none"
             >
                 <option value="">Seleccionar vendedora</option>
-                @foreach($this->vendedoras as $v)
-                    <option value="{{ $v['id'] }}">{{ $v['name'] }}</option>
-                @endforeach
+                <template x-for="v in vendedorasDisponibles" :key="v.id">
+                    <option :value="v.id" x-text="v.name"></option>
+                </template>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
@@ -688,6 +690,28 @@ new class extends Component {
     </div>
 </div>
 
+
+            <div class="fixed right-4 z-[6] flex flex-col gap-3 bottom-24 md:bottom-6">
+                <button
+                    x-show="!estaEnCarrito"
+                    x-cloak
+                    @click="irAlCarrito()"
+                    class="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-indigo-300 hover:bg-indigo-700 transition"
+                >
+                    <x-phosphor-shopping-cart class="w-4 h-4" />
+                    <span>Ir al carrito</span>
+                </button>
+
+                <button
+                    x-show="estaEnCarrito"
+                    x-cloak
+                    @click="volverAProductos()"
+                    class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-3 text-xs font-bold text-white shadow-lg hover:bg-black transition"
+                >
+                    <x-phosphor-arrow-u-up-left class="w-4 h-4" />
+                    <span>Volver a productos</span>
+                </button>
+            </div>
 
             <!-- MODAL ÉXITO PEDIDO NUEVO -->
             <div

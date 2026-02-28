@@ -11,6 +11,7 @@
             paginaActiva: 0,
             vendedorasPerfil: @json($vendedoras ?? []),
             lideresPerfil: @json($lideres ?? []),
+            vendedorasDisponibles: [],
             responsablePerfil: @json($responsable ?? []),
             esVendedoraAutenticada: @json($esVendedoraAutenticada ?? false),
             esLiderAutenticado: @json($esLiderAutenticado ?? false),
@@ -41,6 +42,7 @@
             },
             successModalOpen: false,
             successModalMessage: '',
+            estaEnCarrito: false,
 
             // ==== INICIALIZACIÓN ====
             init(){
@@ -56,11 +58,20 @@
                     this.openCategorias[cat] = true;
                 });
 
+                this.sincronizarSeleccionInicial();
                 this.updateDatosPedido();
                 this.calculateTotalGastos();
+                this.observarSeccionesPedido();
 
-                this.$watch('vendedora_id', () => this.updateDatosPedido());
-                this.$watch('lider_id', () => this.updateDatosPedido());
+                this.$watch('lider_id', () => {
+                    this.sincronizarRelacionLiderVendedora('lider');
+                    this.updateDatosPedido();
+                });
+
+                this.$watch('vendedora_id', () => {
+                    this.sincronizarRelacionLiderVendedora('vendedora');
+                    this.updateDatosPedido();
+                });
             },
 
             // ==== HELPERS FORMATO ====
@@ -372,6 +383,60 @@
             },
 
             // ==== PERFILES Y ENVÍO ====
+            sincronizarSeleccionInicial(){
+                this.vendedorasDisponibles = [...this.vendedorasPerfil];
+
+                if (this.vendedora_id && !this.lider_id) {
+                    const vendedora = this.vendedorasPerfil.find(v => String(v.id) === String(this.vendedora_id));
+                    if (vendedora?.lider_id) {
+                        this.lider_id = vendedora.lider_id;
+                    }
+                }
+
+                this.sincronizarRelacionLiderVendedora('lider');
+            },
+
+            sincronizarRelacionLiderVendedora(origen = null){
+                if (origen === 'vendedora') {
+                    const vendedora = this.vendedorasPerfil.find(v => String(v.id) === String(this.vendedora_id));
+                    if (vendedora?.lider_id && String(this.lider_id) !== String(vendedora.lider_id)) {
+                        this.lider_id = vendedora.lider_id;
+                    }
+                }
+
+                if (this.lider_id) {
+                    this.vendedorasDisponibles = this.vendedorasPerfil.filter(v => String(v.lider_id ?? '') === String(this.lider_id));
+                } else {
+                    this.vendedorasDisponibles = [...this.vendedorasPerfil];
+                }
+
+                const vendedoraValida = this.vendedorasDisponibles.some(v => String(v.id) === String(this.vendedora_id));
+                if (!vendedoraValida && !this.esVendedoraAutenticada) {
+                    this.vendedora_id = null;
+                }
+            },
+
+            observarSeccionesPedido(){
+                const seccionCarrito = document.getElementById('seccion-carrito');
+                if (!seccionCarrito || typeof IntersectionObserver === 'undefined') {
+                    return;
+                }
+
+                const observer = new IntersectionObserver((entries) => {
+                    this.estaEnCarrito = entries.some((entry) => entry.isIntersecting);
+                }, { threshold: 0.25 });
+
+                observer.observe(seccionCarrito);
+            },
+
+            irAlCarrito(){
+                document.getElementById('seccion-carrito')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            },
+
+            volverAProductos(){
+                document.getElementById('seccion-productos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            },
+
             updateDatosPedido(){
                 let vendedora = this.vendedorasPerfil.find(v => String(v.id) === String(this.vendedora_id));
                 this.datosPedido.vendedora = {

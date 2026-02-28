@@ -691,9 +691,9 @@ new class extends Component {
                 class="w-full bg-white border-0 ring-1 ring-slate-200 rounded-2xl px-4 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all focus:ring-2 focus:ring-[#e91e63] appearance-none"
             >
                 <option value="">Seleccionar vendedora</option>
-                @foreach($this->vendedoras as $v)
-                    <option value="{{ $v['id'] }}">{{ $v['name'] }}</option>
-                @endforeach
+                <template x-for="v in vendedorasDisponibles" :key="v.id">
+                    <option :value="v.id" x-text="v.name"></option>
+                </template>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
