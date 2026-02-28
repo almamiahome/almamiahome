@@ -29,3 +29,21 @@ Este módulo incorpora un registro explícito para pagos a vendedoras asociados 
 ## Integración con el modelo de datos
 - `Pedido` expone relaciones `pagos()` y `cobros()` para ver la liquidación asociada.
 - `User` incluye `pagosRegistrados()` (como vendedora), `cobrosComoLider()` y `cobrosComoCoordinadora()` para navegar los bonos.
+
+## Flujo de comprobante de pago en pedidos
+- Se agregan en `pedidos` los campos `estado_pago`, `comprobante_pago_path` y `comprobante_pago_subido_en`.
+- Estados disponibles para verificación por líder:
+  - `sin_pago`: pedido todavía sin comprobante.
+  - `pendiente_verificacion_lider`: la vendedora adjuntó comprobante y queda pendiente revisión.
+  - `verificado`: líder validó el pago.
+  - `rechazado`: líder observó o rechazó el comprobante.
+- Cuando se adjunta un nuevo comprobante, el sistema mueve automáticamente el pedido a `pendiente_verificacion_lider` para que la líder lo revise.
+
+### Ejemplo práctico
+1. La vendedora abre un pedido sin pago y carga un archivo JPG/PDF como comprobante.
+2. El pedido cambia a `pendiente_verificacion_lider` y queda visible para control.
+3. La líder revisa y actualiza el `estado_pago` a `verificado` o `rechazado`.
+
+### Impacto en BD y modelos
+- **BD**: migración `2026_02_28_120000_add_comprobante_pago_to_pedidos_table.php` añade campos de estado y trazabilidad del comprobante.
+- **Modelo `Pedido`**: se actualizan `fillable` y `casts` para persistir correctamente los nuevos datos.

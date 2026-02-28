@@ -3,12 +3,15 @@
 use function Laravel\Folio\{middleware, name};
 use App\Models\Pedido;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\Volt\Component;
 
 middleware('auth');
 name('pedidos');
 
 new class extends Component {
+    use WithFileUploads;
     public $pedidos = [];
     public $lideres = [];
     public $editing = false;
@@ -19,6 +22,8 @@ new class extends Component {
     public $estado;
     public $codigo_pedido;
     public $observaciones;
+    public $comprobante_pago;
+    public $estado_pago;
 
     public function mount() {
         $this->lideres = User::role('lider')->orderBy('name')->get();
@@ -53,6 +58,8 @@ new class extends Component {
         $this->codigo_pedido = $pedido->codigo_pedido;
         $this->estado = $pedido->estado;
         $this->observaciones = $pedido->observaciones;
+        $this->estado_pago = $pedido->estado_pago ?? 'sin_pago';
+        $this->comprobante_pago = null;
         $this->editing = true;
     }
 
@@ -60,11 +67,29 @@ new class extends Component {
         $this->validate([
             'estado' => 'required',
             'observaciones' => 'nullable|string|max:500',
+            'comprobante_pago' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+            'estado_pago' => 'required|in:sin_pago,pendiente_verificacion_lider,verificado,rechazado',
         ]);
-        Pedido::findOrFail($this->pedido_id)->update([
+
+        $pedido = Pedido::findOrFail($this->pedido_id);
+
+        $datosActualizar = [
             'estado' => $this->estado,
             'observaciones' => $this->observaciones,
-        ]);
+            'estado_pago' => $this->estado_pago,
+        ];
+
+        if ($this->comprobante_pago) {
+            if (filled($pedido->comprobante_pago_path)) {
+                Storage::disk('public')->delete($pedido->comprobante_pago_path);
+            }
+
+            $datosActualizar['comprobante_pago_path'] = $this->comprobante_pago->store('comprobantes/pedidos', 'public');
+            $datosActualizar['comprobante_pago_subido_en'] = now();
+            $datosActualizar['estado_pago'] = 'pendiente_verificacion_lider';
+        }
+
+        $pedido->update($datosActualizar);
         session()->flash('message', 'Pedido actualizado.');
         $this->editing = false;
         $this->loadPedidos();
@@ -148,6 +173,7 @@ new class extends Component {
                             <th class="px-6 py-5 text-left">Código</th>
                             <th class="px-6 py-5 text-left">Vendedora</th>
                             <th class="px-6 py-5 text-left">Estado</th>
+                            <th class="px-6 py-5 text-left">Pago</th>
                             <th class="px-6 py-5 text-right">Total</th>
                             <th class="px-6 py-5 text-right">Acciones</th>
                         </tr>
@@ -160,6 +186,12 @@ new class extends Component {
                             <td class="px-6 py-4">
                                 <span class="px-3 py-1 text-[10px] font-black uppercase border rounded-full bg-white/50 dark:bg-black/20">
                                     {{ $pedido->estado }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                @php($estadoPago = $pedido->estado_pago ?? 'sin_pago')
+                                <span class="px-3 py-1 text-[10px] font-black uppercase border rounded-full {{ $estadoPago === 'verificado' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : ($estadoPago === 'pendiente_verificacion_lider' ? 'bg-amber-100 text-amber-700 border-amber-200' : ($estadoPago === 'rechazado' ? 'bg-rose-100 text-rose-700 border-rose-200' : 'bg-zinc-100 text-zinc-600 border-zinc-200')) }}">
+                                    {{ str_replace('_', ' ', $estadoPago) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right font-black text-indigo-600 dark:text-indigo-400">${{ number_format($pedido->total_a_pagar, 0, ',', '.') }}</td>
@@ -226,6 +258,26 @@ new class extends Component {
                                 <option value="{{ $opt }}">{{ $opt }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">Estado de pago</label>
+                        <select wire:model="estado_pago" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-2xl py-3 px-4 font-bold">
+                            <option value="sin_pago">Sin pago</option>
+                            <option value="pendiente_verificacion_lider">Pendiente verificación líder</option>
+                            <option value="verificado">Verificado</option>
+                            <option value="rechazado">Rechazado</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">Comprobante de pago</label>
+                        <input type="file" wire:model="comprobante_pago" accept=".jpg,.jpeg,.png,.pdf" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-2xl py-3 px-4 font-medium">
+                        @error('comprobante_pago') <p class="mt-2 text-xs text-rose-500">{{ $message }}</p> @enderror
+                        @if($pedido_id)
+                            @php($pedidoEditando = $pedidos->firstWhere('id', $pedido_id))
+                            @if(optional($pedidoEditando)->comprobante_pago_path)
+                                <a href="{{ Storage::disk('public')->url($pedidoEditando->comprobante_pago_path) }}" target="_blank" class="inline-flex mt-2 text-xs font-bold text-indigo-600 hover:text-indigo-500">Ver comprobante actual</a>
+                            @endif
+                        @endif
                     </div>
                     <div class="col-span-2">
                         <label class="block text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">Observaciones</label>
