@@ -56,6 +56,7 @@ new class extends Component {
     ];
 
     public $mapEditingId = null;
+    public $mapPositionSaved = false;
 
     public function mount(): void
     {
@@ -242,9 +243,21 @@ new class extends Component {
         $this->mapForm['producto_id']    = $pivot->producto_id;
         $this->mapForm['pos_x']          = $pivot->pos_x;
         $this->mapForm['pos_y']          = $pivot->pos_y;
+        $this->mapPositionSaved          = false;
     }
 
     public function saveMap(): void
+    {
+        $this->persistMap(true);
+    }
+
+    public function saveDraggedMap(): void
+    {
+        $this->persistMap(false);
+        $this->mapPositionSaved = true;
+    }
+
+    protected function persistMap(bool $resetAfterSave = true): void
     {
         $rules = [
             'mapForm.catalogo_pagina_id' => 'required|exists:catalogo_paginas,id',
@@ -265,7 +278,12 @@ new class extends Component {
         $pivot->pos_y              = $this->mapForm['pos_y'];
         $pivot->save();
 
-        $this->resetMapForm();
+        if ($resetAfterSave) {
+            $this->resetMapForm();
+        } else {
+            $this->mapEditingId = $pivot->id;
+        }
+
         $this->refreshPaginas();
     }
 
@@ -273,6 +291,7 @@ new class extends Component {
     {
         $pivot = CatalogoPaginaProducto::findOrFail($mapId);
         $pivot->delete();
+        $this->mapPositionSaved = false;
         $this->refreshPaginas();
     }
 
@@ -305,6 +324,7 @@ new class extends Component {
             'pos_x'              => 50,
             'pos_y'              => 50,
         ];
+        $this->mapPositionSaved = false;
     }
 };
 
@@ -411,13 +431,21 @@ new class extends Component {
 
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-h-[300px] overflow-y-auto pr-2">
                         @forelse($paginas as $pagina)
-                            <div class="relative aspect-[3/4] rounded-2xl overflow-hidden border-2 border-white shadow-sm cursor-pointer hover:scale-[1.02] transition-transform" 
+                            <div class="group relative aspect-[3/4] rounded-2xl overflow-hidden border-2 border-white shadow-sm cursor-pointer hover:scale-[1.02] transition-transform" 
                                  wire:click="$set('mapForm.catalogo_pagina_id', {{ $pagina->id }})">
                                 @if($pagina->imagen)
                                     <img src="{{ asset('storage/'.$pagina->imagen) }}" class="w-full h-full object-cover">
                                 @endif
                                 <div class="absolute bottom-2 left-2 bg-black/50 backdrop-blur-md px-2 py-1 rounded-lg text-white text-[10px] font-black">
                                     Pág {{ $pagina->numero }}
+                                </div>
+                                <div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button type="button" wire:click.stop="editPagina({{ $pagina->id }})" class="p-1.5 rounded-lg bg-white/90 text-indigo-600 shadow">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                    </button>
+                                    <button type="button" wire:click.stop="deletePagina({{ $pagina->id }})" class="p-1.5 rounded-lg bg-white/90 text-red-500 shadow">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
                                 </div>
                             </div>
                         @empty
@@ -437,23 +465,35 @@ new class extends Component {
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                        <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-100 min-h-[400px] flex items-center justify-center">
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-100 min-h-[400px] flex items-center justify-center"
+                             x-data="mapaPuntosInteractivo({
+                                posX: $wire.entangle('mapForm.pos_x').live,
+                                posY: $wire.entangle('mapForm.pos_y').live,
+                                mapaId: $wire.entangle('mapEditingId').live
+                             })">
                             @php 
                                 $paginaActiva = $paginas->firstWhere('id', (int)($mapForm['catalogo_pagina_id'] ?? 0));
                             @endphp
 
                             @if($paginaActiva && $paginaActiva->imagen)
-                                <div class="relative w-full">
-                                    <img src="{{ asset('storage/'.$paginaActiva->imagen) }}" class="w-full">
+                                <div class="relative w-full" x-ref="mapa">
+                                    <img src="{{ asset('storage/'.$paginaActiva->imagen) }}" class="w-full pointer-events-none select-none">
                                     
                                     @foreach($paginaActiva->productos as $p)
-                                        <div class="absolute h-4 w-4 bg-indigo-600 rounded-full border-2 border-white shadow-lg"
-                                             style="left: {{ $p->pos_x }}%; top: {{ $p->pos_y }}%; transform: translate(-50%, -50%);">
+                                        <div class="absolute h-4 w-4 rounded-full border-2 border-white shadow-lg cursor-move"
+                                             :class="Number(mapaId) === {{ $p->id }} ? 'bg-emerald-500 ring-4 ring-emerald-200' : 'bg-indigo-600'"
+                                             @pointerdown.prevent="iniciarArrastreExistente($event, {{ $p->id }})"
+                                             style="transform: translate(-50%, -50%);"
+                                             :style="Number(mapaId) === {{ $p->id }}
+                                                ? `left: ${normalizar(posX)}%; top: ${normalizar(posY)}%; transform: translate(-50%, -50%);`
+                                                : 'left: {{ $p->pos_x }}%; top: {{ $p->pos_y }}%; transform: translate(-50%, -50%);'">
                                         </div>
                                     @endforeach
 
-                                    <div class="absolute h-6 w-6 bg-emerald-500 rounded-full border-4 border-white shadow-xl animate-pulse"
-                                         style="left: {{ $mapForm['pos_x'] }}%; top: {{ $mapForm['pos_y'] }}%; transform: translate(-50%, -50%);">
+                                    <div class="absolute h-6 w-6 bg-emerald-500 rounded-full border-4 border-white shadow-xl animate-pulse cursor-move"
+                                         @pointerdown.prevent="iniciarArrastreNuevo($event)"
+                                         style="transform: translate(-50%, -50%);"
+                                         :style="`left: ${normalizar(posX)}%; top: ${normalizar(posY)}%; transform: translate(-50%, -50%);`">
                                     </div>
                                 </div>
                             @else
@@ -484,6 +524,14 @@ new class extends Component {
                                     </div>
                                 </div>
 
+                                <button type="button" wire:click="saveDraggedMap" class="w-full h-11 bg-emerald-50 text-emerald-700 rounded-2xl font-black text-[10px] uppercase tracking-widest border border-emerald-200">
+                                    Guardar nueva posición
+                                </button>
+
+                                @if($mapPositionSaved)
+                                    <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 text-center">Posición guardada correctamente.</p>
+                                @endif
+
                                 <button type="submit" class="w-full h-14 bg-emerald-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-emerald-100">
                                     @if($this->mapEditingId) Actualizar Punto @else Vincular Producto @endif
                                 </button>
@@ -511,3 +559,58 @@ new class extends Component {
     </x-app.container>
     @endvolt
 </x-layouts.app>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('mapaPuntosInteractivo', ({ posX, posY, mapaId }) => ({
+            posX,
+            posY,
+            mapaId,
+            arrastrando: false,
+            normalizar(valor) {
+                const numero = Number(valor ?? 0);
+                return Math.min(100, Math.max(0, Number.isFinite(numero) ? numero : 0)).toFixed(1);
+            },
+            iniciarArrastreExistente(evento, idMapa) {
+                this.mapaId = idMapa;
+                this.$wire.editMap(idMapa);
+                this.iniciarArrastre(evento);
+            },
+            iniciarArrastreNuevo(evento) {
+                this.iniciarArrastre(evento);
+            },
+            iniciarArrastre(evento) {
+                this.arrastrando = true;
+                this.actualizarPosicion(evento);
+
+                const mover = (ev) => this.actualizarPosicion(ev);
+                const finalizar = () => {
+                    this.arrastrando = false;
+                    window.removeEventListener('pointermove', mover);
+                    window.removeEventListener('pointerup', finalizar);
+                };
+
+                window.addEventListener('pointermove', mover);
+                window.addEventListener('pointerup', finalizar, { once: true });
+            },
+            actualizarPosicion(evento) {
+                const mapa = this.$refs.mapa;
+
+                if (!mapa) {
+                    return;
+                }
+
+                const rect = mapa.getBoundingClientRect();
+                if (!rect.width || !rect.height) {
+                    return;
+                }
+
+                const x = ((evento.clientX - rect.left) / rect.width) * 100;
+                const y = ((evento.clientY - rect.top) / rect.height) * 100;
+
+                this.posX = this.normalizar(x);
+                this.posY = this.normalizar(y);
+            },
+        }));
+    });
+</script>
