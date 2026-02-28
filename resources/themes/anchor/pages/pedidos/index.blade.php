@@ -2,6 +2,7 @@
 
 use function Laravel\Folio\{middleware, name};
 use App\Models\Pedido;
+use App\Models\User;
 use Livewire\Volt\Component;
 
 middleware('auth');
@@ -9,20 +10,33 @@ name('pedidos');
 
 new class extends Component {
     public $pedidos = [];
+    public $lideres = [];
     public $editing = false;
     public $pedido_id;
     public $activeTab = 'lista'; // 'lista' o 'kanban'
+    public $liderFilter = '';
 
     public $estado;
     public $codigo_pedido;
     public $observaciones;
 
-    public function mount() { $this->loadPedidos(); }
+    public function mount() {
+        $this->lideres = User::role('lider')->orderBy('name')->get();
+        $this->loadPedidos();
+    }
+
+    public function updatedLiderFilter() {
+        $this->loadPedidos();
+    }
 
     public function loadPedidos() {
-        $this->pedidos = Pedido::with(['vendedora', 'lider', 'responsable'])
-            ->latest()
-            ->get();
+        $query = Pedido::with(['vendedora', 'lider', 'responsable'])->latest();
+
+        if (! empty($this->liderFilter)) {
+            $query->where('lider_id', (int) $this->liderFilter);
+        }
+
+        $this->pedidos = $query->get();
     }
 
     public function setTab($tab) { $this->activeTab = $tab; }
@@ -93,7 +107,8 @@ new class extends Component {
     </div>
 
     {{-- SISTEMA DE TABS --}}
-    <div class="flex p-1.5 mb-6 space-x-2 bg-white/30 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-[2rem] w-fit shadow-inner backdrop-blur-sm">
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+        <div class="flex p-1.5 space-x-2 bg-white/30 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-[2rem] w-fit shadow-inner backdrop-blur-sm">
         <button wire:click="setTab('lista')" 
             class="flex items-center px-6 py-2.5 rounded-full text-sm font-bold transition-all {{ $activeTab == 'lista' ? 'bg-white dark:bg-zinc-800 shadow-md text-indigo-600' : 'text-zinc-600 dark:text-zinc-400 hover:bg-white/40' }}">
             <x-phosphor-list-bullets-bold class="w-4 h-4 mr-2" /> Lista
@@ -102,6 +117,16 @@ new class extends Component {
             class="flex items-center px-6 py-2.5 rounded-full text-sm font-bold transition-all {{ $activeTab == 'kanban' ? 'bg-white dark:bg-zinc-800 shadow-md text-indigo-600' : 'text-zinc-600 dark:text-zinc-400 hover:bg-white/40' }}">
             <x-phosphor-columns-bold class="w-4 h-4 mr-2" /> Kanban
         </button>
+        </div>
+
+        <div class="min-w-[230px]">
+            <select wire:model.live="liderFilter" class="w-full rounded-2xl border border-white/40 bg-white/70 px-4 py-2.5 text-sm font-semibold text-zinc-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-white/10 dark:bg-zinc-900/70 dark:text-zinc-200">
+                <option value="">Todas las líderes</option>
+                @foreach($lideres as $lider)
+                    <option value="{{ $lider->id }}">{{ $lider->name }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     @if(session()->has('message'))

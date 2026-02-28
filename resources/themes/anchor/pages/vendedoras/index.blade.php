@@ -23,11 +23,18 @@ new class extends Component {
 
     protected function loadData(): void
     {
+        $user = auth()->user();
+
         // Usuarios con rol vendedora
-        $this->vendedoras = User::role('vendedora')
+        $vendedorasQuery = User::role('vendedora')
             ->with('roles')
-            ->orderBy('name')
-            ->get();
+            ->orderBy('name');
+
+        if ($user?->hasRole('lider')) {
+            $vendedorasQuery->where('lider_id', $user->id);
+        }
+
+        $this->vendedoras = $vendedorasQuery->get();
 
         // Usuarios que NO tienen rol vendedora (para asignar)
         $this->usuariosDisponibles = User::whereDoesntHave('roles', function ($q) {

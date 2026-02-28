@@ -58,38 +58,38 @@
                     
                     {{-- Links Principales --}}
                     <x-app.sidebar-link href="/dashboard" icon="phosphor-house" :active="Request::is('dashboard')">Escritorio</x-app.sidebar-link>
-                    <x-app.sidebar-link href="/crearpedido" icon="phosphor-plus-circle">Crear Pedido</x-app.sidebar-link>
-                    <x-app.sidebar-link href="/catalogo" icon="phosphor-book">Catálogo</x-app.sidebar-link>
-                    <x-app.sidebar-link href="/mis-pedidos" icon="phosphor-list-checks">Mis Pedidos</x-app.sidebar-link>
+                    <x-app.sidebar-link href="/crearpedido" icon="phosphor-plus-circle" :active="Request::is('crearpedido*')">Crear Pedido</x-app.sidebar-link>
+                    <x-app.sidebar-link href="/catalogo" icon="phosphor-book" :active="Request::is('catalogo')">Catálogo</x-app.sidebar-link>
+                    <x-app.sidebar-link href="/mis-pedidos" icon="phosphor-list-checks" :active="Request::is('mis-pedidos*')">Mis Pedidos</x-app.sidebar-link>
 
                     @hasanyrole('lider|admin')
-                        <x-app.sidebar-link href="/vendedoras" icon="phosphor-handshake">Vendedoras</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/vendedoras" icon="phosphor-handshake" :active="Request::is('vendedoras*')">Vendedoras</x-app.sidebar-link>
                     @endhasanyrole
 
                     @role('admin')
-                        <x-app.sidebar-link href="/pedidos" icon="phosphor-shopping-cart">Pedidos</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/pedidos" icon="phosphor-shopping-cart" :active="Request::is('pedidos*')">Pedidos</x-app.sidebar-link>
                     @endrole
 
                     @hasanyrole('coordinadora|admin')
-                        <x-app.sidebar-link href="/lideres" icon="phosphor-user-circle">Líderes</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/lideres" icon="phosphor-user-circle" :active="Request::is('lideres*')">Líderes</x-app.sidebar-link>
                     @endhasanyrole
 
                     @role('admin')
-                        <x-app.sidebar-link href="/coordinadoras" icon="phosphor-user-switch">Coordinadoras</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/coordinadoras" icon="phosphor-user-switch" :active="Request::is('coordinadoras*')">Coordinadoras</x-app.sidebar-link>
                     @endrole
 
                     @role('lider')
-                        <x-app.sidebar-link href="/zona-lider" icon="phosphor-crown">Zona Líder</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/zona-lider" icon="phosphor-crown" :active="Request::is('zona-lider*')">Zona Líder</x-app.sidebar-link>
                     @endrole
 
                     @role('coordinadora')
-                        <x-app.sidebar-link href="/zona-coordinadora" icon="phosphor-users-three">Zona Coordinadora</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/zona-coordinadora" icon="phosphor-users-three" :active="Request::is('zona-coordinadora*')">Zona Coordinadora</x-app.sidebar-link>
                     @endrole
 
                     <x-app.sidebar-link href="/perfil" icon="phosphor-user" :active="Request::is('perfil')">Perfil</x-app.sidebar-link>
 
                     @hasanyrole('lider|coordinadora|admin')
-                        <x-app.sidebar-link href="/incorporar" icon="phosphor-user-plus">Incorporar</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/incorporar" icon="phosphor-user-plus" :active="Request::is('incorporar*')">Incorporar</x-app.sidebar-link>
                     @endhasanyrole
 
                     @role('admin')
@@ -99,36 +99,36 @@
                             :open="Request::is('categorias*') || Request::is('productos*') || Request::is('stock*') || Request::is('envios*') || Request::is('rotulos*') ? '1' : '0'">
                             
                             <x-app.sidebar-link href="/catalogo/admin" icon="phosphor-wrench" :active="Request::is('catalogo/admin*')">Editar Catálogo</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/productos" icon="phosphor-tag">Productos</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/categorias" icon="phosphor-folders">Categorías</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/rotulos" icon="phosphor-ticket">Rótulos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/productos" icon="phosphor-tag" :active="Request::is('productos*')">Productos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/categorias" icon="phosphor-folders" :active="Request::is('categorias*')">Categorías</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/rotulos" icon="phosphor-ticket" :active="Request::is('rotulos*')">Rótulos</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
 
                         {{-- Dropdown Finanzas --}}
                         <x-app.sidebar-dropdown text="Finanzas" icon="phosphor-currency-circle-dollar" id="finanzas_dropdown"
                             :active="Request::is('facturas*') || Request::is('gastos*') || Request::is('pagos*') || Request::is('cobros*')"
                             :open="Request::is('facturas*') || Request::is('gastos*') || Request::is('pagos*') || Request::is('cobros*') ? '1' : '0'">
-                            <x-app.sidebar-link href="/gastos" icon="phosphor-coins">Gastos Administrativos</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/pagos" icon="phosphor-credit-card">Pagos</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/cobros" icon="phosphor-bank">Cobros</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/gastos" icon="phosphor-coins" :active="Request::is('gastos*')">Gastos Administrativos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/pagos" icon="phosphor-credit-card" :active="Request::is('pagos*')">Pagos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/cobros" icon="phosphor-bank" :active="Request::is('cobros*')">Cobros</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
 
                         {{-- Dropdown Crecimiento --}}
                         <x-app.sidebar-dropdown text="Crecimiento" icon="phosphor-trend-up" id="crecimiento_dropdown"
                             :active="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*')"
                             :open="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*') ? '1' : '0'">
-                            <x-app.sidebar-link href="/puntaje-reglas" icon="phosphor-trophy">Puntaje Reglas</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/rangos" icon="phosphor-medal">Rangos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/puntaje-reglas" icon="phosphor-trophy" :active="Request::is('puntaje-reglas*')">Puntaje Reglas</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/rangos" icon="phosphor-medal" :active="Request::is('rangos*')">Rangos</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
 
                         {{-- Dropdown Cierre --}}
                         <x-app.sidebar-dropdown text="Cierre General" icon="phosphor-chart-pie" id="cierre_dropdown"
                             :active="Request::is('resumen-lideres*') || Request::is('resumen-coordinadoras*') || Request::is('resumen-revendedoras*')"
                             :open="Request::is('resumen-lideres*') || Request::is('resumen-coordinadoras*') || Request::is('resumen-revendedoras*') ? '1' : '0'">
-                            <x-app.sidebar-link href="/crecimiento-cierre-general" icon="phosphor-chart-bar">Cierre General</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/resumen-lideres" icon="phosphor-crown">Resumen Líderes</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/resumen-coordinadoras" icon="phosphor-users-three">Resumen Coordinadoras</x-app.sidebar-link>
-                            <x-app.sidebar-link href="/resumen-revendedoras" icon="phosphor-user-list">Resumen Revendedoras</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/crecimiento-cierre-general" icon="phosphor-chart-bar" :active="Request::is('crecimiento-cierre-general*')">Cierre General</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/resumen-lideres" icon="phosphor-crown" :active="Request::is('resumen-lideres*')">Resumen Líderes</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/resumen-coordinadoras" icon="phosphor-users-three" :active="Request::is('resumen-coordinadoras*')">Resumen Coordinadoras</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/resumen-revendedoras" icon="phosphor-user-list" :active="Request::is('resumen-revendedoras*')">Resumen Revendedoras</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
                     @endrole
 

@@ -185,7 +185,7 @@ new class extends Component {
                             
                             <div class="relative aspect-square w-full mb-4 rounded-xl bg-slate-100 dark:bg-slate-800 overflow-hidden">
                                 <template x-if="producto.imagen">
-                                    <img :src="producto.imagen" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    <img :src="producto.imagen" loading="lazy" class="w-full h-full object-contain bg-white p-2 transition-transform duration-500 group-hover:scale-105">
                                 </template>
                                 <template x-if="!producto.imagen">
                                     <div class="w-full h-full flex flex-col items-center justify-center text-slate-400">

@@ -227,7 +227,7 @@ new class extends Component {
                                     <div class="flex items-center">
                                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 mr-3 flex items-center justify-center overflow-hidden border border-white/50 shadow-sm">
                                             @if($producto->imagen)
-                                                <img src="{{ asset('storage/' . $producto->imagen) }}" class="w-full h-full object-cover">
+                                                <img src="{{ asset('storage/' . $producto->imagen) }}" class="w-full h-full object-contain bg-white p-1">
                                             @else
                                                 <x-phosphor-package class="w-5 h-5 text-indigo-400" />
                                             @endif
