@@ -1,0 +1,30 @@
+{
+  "id": "landing-campanas-premium",
+  "titulo": "Landing de campañas premium",
+  "subtitulo": "Página promocional para lanzamientos",
+  "icono": "rocket",
+  "estado": "no instalado",
+  "etiquetas": ["marketing", "landing", "conversion"],
+  "categorias": ["comercial", "branding"],
+  "descripcion": "Diseño y desarrollo de landing enfocada en captar nuevas revendedoras para campañas especiales.",
+  "ejemplos_html": [
+    "<section><h4>Bloque Hero</h4><p>Título de campaña, CTA a WhatsApp y testimonios de coordinadoras.</p></section>",
+    "<section><h4>Bloque de beneficios</h4><p>Comparativa de ingresos estimados por nivel (vendedora/líder).</p></section>"
+  ],
+  "precios": [
+    {
+      "concepto": "Diseño + desarrollo",
+      "monto": "$320.000 ARS",
+      "periodicidad": "Pago único",
+      "detalle": "Incluye responsive, copy base y formulario de contacto."
+    },
+    {
+      "concepto": "Hosting de activos",
+      "monto": "$12.000 ARS",
+      "periodicidad": "Por mes",
+      "detalle": "Opcional, puede usarse infraestructura propia."
+    }
+  ],
+  "licencia": "Licencia de uso comercial en dominio principal",
+  "gastos_externos": "Si se incluye pauta paga, el presupuesto de anuncios es aparte."
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "fondo-01",
+    "nombre": "Bruma floral rosa",
+    "url": "https://images.pexels.com/photos/931177/pexels-photo-931177.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-02",
+    "nombre": "Atardecer violeta",
+    "url": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-03",
+    "nombre": "Jardín natural",
+    "url": "https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-04",
+    "nombre": "Luz de amanecer",
+    "url": "https://images.pexels.com/photos/355465/pexels-photo-355465.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-05",
+    "nombre": "Textura de hojas",
+    "url": "https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-06",
+    "nombre": "Neblina suave",
+    "url": "https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-07",
+    "nombre": "Montaña serena",
+    "url": "https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-08",
+    "nombre": "Nubes pastel",
+    "url": "https://images.pexels.com/photos/912110/pexels-photo-912110.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-09",
+    "nombre": "Agua turquesa",
+    "url": "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  },
+  {
+    "id": "fondo-10",
+    "nombre": "Flor minimalista",
+    "url": "https://images.pexels.com/photos/1022923/pexels-photo-1022923.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "fuente": "Pexels · Licencia de uso libre"
+  }
+]

@@ -1,0 +1,1 @@
+<p class="text-white"><strong>Admin</strong></p><?php /**PATH /home/unquxtyh/public_html/wave/src/../resources/views/admin/logo-dark.blade.php ENDPATH**/ ?>

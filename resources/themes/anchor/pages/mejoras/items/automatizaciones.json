@@ -1,0 +1,85 @@
+[
+  {
+    "id": "tablero-metricas-bi",
+    "titulo": "Tablero de Métricas & BI",
+    "subtitulo": "Visualización de ventas y rendimiento en tiempo real",
+    "icono": "chart-pie",
+    "estado": "en diseño",
+    "etiquetas": ["datos", "business intelligence", "reportes"],
+    "categorias": ["estrategia", "ventas"],
+    "descripcion": "Un dashboard interactivo que centraliza el desempeño de vendedoras, productos más pedidos y zonas con mayor crecimiento.",
+    "ejemplos_html": [
+      "<h4>Reporte Clave</h4><p>Comparativa interanual: <strong>\"Tus ventas subieron un 15% respecto al mes pasado\"</strong>.</p>",
+      "<h4>Impacto esperado</h4><ul><li>Identificación de zonas calientes.</li><li>Detección temprana de bajas de rendimiento.</li></ul>"
+    ],
+    "precios": [
+      {
+        "concepto": "Implementación",
+        "monto": "$250.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Configuración de fuentes de datos y 3 paneles principales."
+      },
+      {
+        "concepto": "Servicio Data-Update",
+        "monto": "$15.000 ARS",
+        "periodicidad": "Por mes",
+        "detalle": "Mantenimiento de la integridad de los datos."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Suscripción a herramienta de visualización (PowerBI o Looker Studio Pro si aplica)."
+  },
+  {
+    "id": "ecommerce-b2b-revendedoras",
+    "titulo": "Portal de Pedidos B2B",
+    "subtitulo": "Autogestión para revendedoras",
+    "icono": "shopping-bag",
+    "estado": "propuesta",
+    "etiquetas": ["ecommerce", "b2b", "autoservicio"],
+    "categorias": ["ventas", "operaciones"],
+    "descripcion": "Plataforma web donde cada revendedora puede armar su carrito, ver stock disponible y descargar el catálogo actualizado.",
+    "ejemplos_html": [
+      "<p><strong>Escenario:</strong> La revendedora carga su pedido a las 23:00hs sin necesidad de que alguien la atienda por mensaje.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Desarrollo a medida",
+        "monto": "$1.450.000 ARS",
+        "periodicidad": "Pago por desarrollo",
+        "detalle": "Diseño UX/UI responsive y sincronización con base de datos."
+      },
+      {
+        "concepto": "Hosting y Soporte",
+        "monto": "$45.000 ARS",
+        "periodicidad": "Por mes",
+        "detalle": "Servidor dedicado y actualizaciones de seguridad."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo para Alma Mia",
+    "gastos_externos": "Dominio .com.ar y certificado SSL."
+  },
+  {
+    "id": "gestion-comisiones-incentivos",
+    "titulo": "Módulo de Comisiones & Premios",
+    "subtitulo": "Cálculo automático de incentivos",
+    "icono": "gift",
+    "estado": "validando",
+    "etiquetas": ["finanzas", "recursos humanos", "incentivos"],
+    "categorias": ["finanzas", "estrategia"],
+    "descripcion": "Automatiza el cálculo de ganancias para líderes y revendedoras basándose en objetivos alcanzados y escalas de ventas.",
+    "ejemplos_html": [
+      "<h4>Ejemplo de uso</h4><p>Cálculo automático: <strong>\"Líder X alcanzó el nivel Oro: Bono de $20.000 acreditado\"</strong>.</p>",
+      "<h4>Impacto esperado</h4><ul><li>Eliminación de errores en liquidaciones.</li><li>Aumento de la motivación por objetivos visibles.</li></ul>"
+    ],
+    "precios": [
+      {
+        "concepto": "Configuración lógica",
+        "monto": "$320.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Parametrización de reglas de negocio y niveles."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Ninguno."
+  }
+]

@@ -1,0 +1,1 @@
+<p class="mt-0.5"><strong>Admin</strong></p><?php /**PATH /home/unquxtyh/public_html/wave/src/../resources/views/admin/logo.blade.php ENDPATH**/ ?>
