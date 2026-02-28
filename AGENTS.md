@@ -203,3 +203,15 @@ fix: corrige cálculo de puntos por categoría
 docs: actualiza README con nueva estructura de pedidos
 refactor: mejora relaciones entre coordinadoras y líderes
 ```
+
+
+# 📌 9. Lineamiento visual base del tema
+
+Para mantener consistencia visual en pantallas actuales y futuras del tema `anchor`:
+
+* El fondo global debe usar la imagen local `asset('storage/bg.jpg')` desde `.fixed-wallpaper`.
+* El archivo fuente debe estar en `storage/app/public/bg.jpg` y accesible públicamente en `public/storage/bg.jpg` mediante `php artisan storage:link`.
+* Se debe conservar la superposición (overlay) `bg-white/50 dark:bg-zinc-950/50` para garantizar legibilidad en modo claro/oscuro.
+
+---
+
