@@ -433,6 +433,7 @@ class PedidoCartService
         return [
             'id'        => $user?->id,
             'name'      => $this->nullableString($user?->name),
+            'lider_id'  => $user?->lider_id,
             'zona'      => $this->profileValue($user, 'zona'),
             'direccion' => $this->profileValue($user, 'direccion'),
         ];
