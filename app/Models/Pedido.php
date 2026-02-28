@@ -22,6 +22,9 @@ class Pedido extends Model
         'total_puntos',
         'cantidad_unidades',
         'estado',
+        'estado_pago',
+        'comprobante_pago_path',
+        'comprobante_pago_subido_en',
         'observaciones',
         'datos_pedido'
     ];
@@ -29,6 +32,7 @@ class Pedido extends Model
     protected $casts = [
         'datos_pedido' => 'array',
         'coordinadora_id' => 'integer',
+        'comprobante_pago_subido_en' => 'datetime',
     ];
 
     public function articulos()

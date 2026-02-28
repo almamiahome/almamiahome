@@ -197,6 +197,7 @@ Incluye:
 * Totales monetarios.
 * Totales de puntos.
 * Estados del pedido.
+* Flujo de pago por pedido con carga de comprobante (`comprobante_pago_path`) y estado de pago (`sin_pago`, `pendiente_verificacion_lider`, `verificado`, `rechazado`).
 * Campos relacionales:
 
   * `vendedora_id`

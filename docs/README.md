@@ -15,3 +15,7 @@ Se normalizó la estructura para que exista un índice principal (`README.md`) y
 
 - Cualquier cambio de lógica comercial debe reflejarse aquí.
 - Mantener siempre redacción en español neutro.
+
+## Notas de versión internas
+
+- 2026-02-28: en pedidos se habilitó la carga de comprobante de pago para casos sin pago y se añadió el estado `pendiente_verificacion_lider` para revisión de la líder.
