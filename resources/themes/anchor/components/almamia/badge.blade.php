@@ -2,12 +2,12 @@
 
 @php
     $bgColor = match($color) {
-        'primary' => 'bg-primary-100 text-primary-800',
-        'secondary' => 'bg-gray-100 text-gray-800 dark:bg-zinc-700 dark:text-gray-200',
-        'success' => 'bg-emerald-100 text-emerald-800',
-        'warning' => 'bg-amber-100 text-amber-800',
-        'danger' => 'bg-red-100 text-red-800',
-        default => 'bg-primary-100 text-primary-800',
+        'primary' => 'liquid-glass-chip',
+        'secondary' => 'bg-white/70 text-slate-700 dark:bg-slate-900/70 dark:text-slate-200 border border-white/60 dark:border-slate-200/10 backdrop-blur-lg',
+        'success' => 'bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 backdrop-blur-lg',
+        'warning' => 'bg-amber-100/90 text-amber-800 border border-amber-200/80 backdrop-blur-lg',
+        'danger' => 'bg-red-100/90 text-red-800 border border-red-200/80 backdrop-blur-lg',
+        default => 'liquid-glass-chip',
     };
 @endphp
 

@@ -1,7 +1,7 @@
 @props(['filters' => []])
 
-<div {{ $attributes->twMerge('flex flex-wrap items-center bg-white dark:bg-zinc-800 border border-primary-100 dark:border-zinc-700 p-4 rounded-lg gap-4') }}>
-    <h3 class="text-lg font-semibold text-primary-800 mr-4">Filtrar:</h3>
+<div {{ $attributes->twMerge('flex flex-wrap items-center liquid-glass-panel p-4 gap-4') }}>
+    <h3 class="text-lg font-semibold text-primary-900 dark:text-slate-100 mr-4">Filtrar:</h3>
     <div class="flex flex-wrap items-center gap-4">
         @foreach($filters as $filter)
             <label class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">

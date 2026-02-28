@@ -25,18 +25,18 @@
     x-show="alert_{{ $id }}"
     x-data="{ alert_{{ $id }}: $persist(true) }"
     {{ $attributes->class([
-        'relative pl-5 pr-10 py-4 w-full rounded-md border',
-        'bg-gray-100 dark:bg-zinc-700 dark:border-zinc-600 text-gray-900 dark:text-gray-300 border-gray-200 dark:border-zinc-800' => $type == 'gray',
-		'bg-blue-50 text-blue-600 border-blue-200' => $type == 'info',
-		'bg-green-100 text-green-600 border-green-200' => $type == 'success',
-		'bg-yellow-50 text-yellow-600 border-yellow-200' => $type == 'warning',
-		'bg-red-50 text-red-600 border-red-200' => $type == 'danger'
+        'relative pl-5 pr-10 py-4 w-full rounded-xl border backdrop-blur-xl',
+        'bg-white/70 dark:bg-slate-900/70 text-slate-700 dark:text-slate-200 border-white/60 dark:border-sky-300/15' => $type == 'gray',
+		'bg-blue-100/70 dark:bg-blue-500/15 text-blue-700 dark:text-blue-200 border-blue-200/80 dark:border-blue-300/20' => $type == 'info',
+		'bg-emerald-100/75 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 border-emerald-200/80 dark:border-emerald-300/20' => $type == 'success',
+		'bg-amber-100/75 dark:bg-amber-500/15 text-amber-700 dark:text-amber-200 border-amber-200/80 dark:border-amber-300/20' => $type == 'warning',
+		'bg-red-100/75 dark:bg-red-500/15 text-red-700 dark:text-red-200 border-red-200/80 dark:border-red-300/20' => $type == 'danger'
     ]) }}
     x-collapse
     x-cloak
 >
     @if($dismissable)
-        <button @click="alert_{{ $id }}=false" class="absolute right-0 top-0 z-50 p-1.5 mr-3 rounded-full opacity-70 mt-3.5 cursor-pointer hover:opacity-100 hover:bg-zinc-200 hover:dark:bg-zinc-700 hover:dark:text-zinc-300 text-zinc-500 dark:text-zinc-400"><x-phosphor-x-bold class="w-3.5 h-3.5" /></button>
+        <button @click="alert_{{ $id }}=false" class="absolute right-0 top-0 z-50 p-1.5 mr-3 rounded-full opacity-70 mt-3.5 cursor-pointer hover:opacity-100 hover:bg-white/60 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-300"><x-phosphor-x-bold class="w-3.5 h-3.5" /></button>
     @endif
     @if($title ?? false)
         <div class="flex items-start space-x-2">

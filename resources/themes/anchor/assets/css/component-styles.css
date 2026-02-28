@@ -1,5 +1,5 @@
 .fi-btn{
-    @apply text-sm rounded-md;
+    @apply text-sm rounded-xl;
 }
 
 .fi-btn.fi-size-lg{
@@ -14,9 +14,8 @@
     @apply px-3 py-1.5;
 }
 
-
 .fi-btn.fi-color-secondary{
-    @apply inline-flex gap-3 justify-center items-center font-medium bg-gray-100 duration-200 text-zinc-800 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-zinc-200;
+    @apply inline-flex gap-3 justify-center items-center font-medium bg-white/60 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 hover:bg-white/80 dark:hover:bg-slate-900/80 border border-white/50 dark:border-sky-300/15 backdrop-blur-xl shadow-[0_8px_30px_rgba(41,67,149,0.12)] duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary-300;
 }
 
 label{
@@ -32,9 +31,27 @@ label{
 }
 
 .fi-btn.fi-color-primary{
-    color:#294395;
+    @apply text-secondary-700 bg-white/70 dark:bg-slate-900/60 border border-primary-200/70 dark:border-sky-300/20 backdrop-blur-xl shadow-[0_8px_30px_rgba(213,71,148,0.18)] hover:bg-primary-100/70 dark:hover:bg-slate-800/80;
 }
 
 .fi-modal-close-overlay + div{
     z-index:101 !important;
+}
+
+@layer components {
+    .liquid-glass-panel {
+        @apply bg-gradient-to-br from-pink-100/70 via-white/70 to-blue-100/70 dark:from-pink-500/15 dark:via-slate-900/70 dark:to-blue-500/15 border border-white/60 dark:border-sky-300/15 backdrop-blur-2xl shadow-[0_16px_40px_rgba(41,67,149,0.14)] rounded-2xl;
+    }
+
+    .liquid-glass-muted {
+        @apply bg-white/45 dark:bg-slate-900/45 border border-white/60 dark:border-slate-200/10 backdrop-blur-xl;
+    }
+
+    .liquid-glass-input {
+        @apply bg-white/70 dark:bg-slate-900/60 border border-primary-200/70 dark:border-sky-200/20 text-slate-700 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 rounded-xl backdrop-blur-lg focus:border-primary-400 focus:ring-primary-300/60 dark:focus:border-sky-300 dark:focus:ring-sky-300/50;
+    }
+
+    .liquid-glass-chip {
+        @apply bg-primary-100/80 text-primary-800 dark:bg-sky-500/20 dark:text-sky-100 border border-primary-200/80 dark:border-sky-300/20 backdrop-blur-lg;
+    }
 }
