@@ -5,8 +5,14 @@
     "subtitulo": "Optimización de rutas y estados de envío",
     "icono": "truck",
     "estado": "en diseño",
-    "etiquetas": ["operaciones", "logística", "entregas"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "operaciones",
+      "logística",
+      "entregas"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Gestión avanzada de paquetería que permite agrupar pedidos por zona geográfica para optimizar el flete y asignar transportistas internos o externos.",
     "ejemplos_html": [
       "<h4>Eficiencia Logística</h4><p>Estado automático: <strong>\"Tu pedido está en la camioneta de Reparto Zona Norte\"</strong>.</p>",
@@ -29,8 +35,15 @@
     "subtitulo": "E-learning para revendedoras y líderes",
     "icono": "graduation-cap",
     "estado": "propuesta",
-    "etiquetas": ["capacitación", "rrhh", "crecimiento"],
-    "categorias": ["estrategia", "recursos humanos"],
+    "etiquetas": [
+      "capacitación",
+      "rrhh",
+      "crecimiento"
+    ],
+    "categorias": [
+      "estrategia",
+      "recursos humanos"
+    ],
     "descripcion": "Repositorio de cursos, videos de producto y técnicas de venta con sistema de niveles para desbloquear beneficios.",
     "ejemplos_html": [
       "<p><strong>Gamificación:</strong> Al completar el curso 'Venta Efectiva', la revendedora obtiene un 5% extra en su próximo pedido.</p>"
@@ -52,8 +65,15 @@
     "subtitulo": "Atención 24/7 vía Chatbot Inteligente",
     "icono": "message-circle",
     "estado": "validando",
-    "etiquetas": ["ia", "atención al cliente", "automatización"],
-    "categorias": ["ventas", "operaciones"],
+    "etiquetas": [
+      "ia",
+      "atención al cliente",
+      "automatización"
+    ],
+    "categorias": [
+      "ventas",
+      "operaciones"
+    ],
     "descripcion": "Agente de IA conectado a la base de datos que responde dudas sobre stock, deudas y estados de pedido por WhatsApp.",
     "ejemplos_html": [
       "<h4>Consulta Típica</h4><p>Revendedora: <em>'¿Cuánto debo de mi última campaña?'</em><br>IA: <strong>'Tu saldo actual es $12.450 con vencimiento el viernes.'</strong></p>"
@@ -81,8 +101,15 @@
     "subtitulo": "Campañas de Email y Notificaciones Push",
     "icono": "mail",
     "estado": "en diseño",
-    "etiquetas": ["marketing", "comunicación", "retención"],
-    "categorias": ["ventas", "estrategia"],
+    "etiquetas": [
+      "marketing",
+      "comunicación",
+      "retención"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
     "descripcion": "Envío automatizado de recordatorios de cierre de campaña, ofertas relámpago y saludos de cumpleaños.",
     "ejemplos_html": [
       "<p><strong>Flujo Automático:</strong> Si una revendedora no pasa pedido hace 15 días, el sistema envía un cupón de reactivación.</p>"
@@ -104,8 +131,15 @@
     "subtitulo": "Validación de perfiles y seguridad",
     "icono": "shield-check",
     "estado": "propuesta",
-    "etiquetas": ["seguridad", "finanzas", "auditoría"],
-    "categorias": ["finanzas", "operaciones"],
+    "etiquetas": [
+      "seguridad",
+      "finanzas",
+      "auditoría"
+    ],
+    "categorias": [
+      "finanzas",
+      "operaciones"
+    ],
     "descripcion": "Módulo que analiza comportamientos inusuales en pedidos y verifica identidades para evitar cuentas duplicadas o morosidad.",
     "ejemplos_html": [
       "<h4>Alerta de Riesgo</h4><p>El sistema bloquea pedidos de usuarias con múltiples DNI asociados a la misma dirección IP.</p>"
@@ -127,8 +161,14 @@
     "subtitulo": "Sincronización automática de cobranzas",
     "icono": "credit-card",
     "estado": "validando",
-    "etiquetas": ["finanzas", "contabilidad", "pagos"],
-    "categorias": ["finanzas"],
+    "etiquetas": [
+      "finanzas",
+      "contabilidad",
+      "pagos"
+    ],
+    "categorias": [
+      "finanzas"
+    ],
     "descripcion": "Vinculación con extractos bancarios o pasarelas de pago para dar por pagados los pedidos sin carga manual.",
     "ejemplos_html": [
       "<h4>Proceso Automático</h4><p>El sistema identifica el CBU/Alias y acredita el pago al pedido #10452 instantáneamente.</p>"
@@ -150,8 +190,14 @@
     "subtitulo": "Herramienta de proyección para Líderes",
     "icono": "target",
     "estado": "en diseño",
-    "etiquetas": ["estrategia", "liderazgo", "ventas"],
-    "categorias": ["estrategia"],
+    "etiquetas": [
+      "estrategia",
+      "liderazgo",
+      "ventas"
+    ],
+    "categorias": [
+      "estrategia"
+    ],
     "descripcion": "Simulador donde las líderes cargan sus objetivos mensuales y ven cuántas vendedoras nuevas necesitan incorporar para alcanzarlos.",
     "ejemplos_html": [
       "<p><strong>Simulación:</strong> 'Si cada una de tus 10 vendedoras aumenta su ticket un 10%, alcanzarás el nivel Platino este mes'.</p>"
@@ -173,8 +219,14 @@
     "subtitulo": "Control de fallas y logística inversa",
     "icono": "refresh-ccw",
     "estado": "propuesta",
-    "etiquetas": ["operaciones", "calidad", "clientes"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "operaciones",
+      "calidad",
+      "clientes"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Digitalización del proceso de reclamos por fallas, cambios de talle o productos faltantes con aprobación de administración.",
     "ejemplos_html": [
       "<h4>Ticket de Cambio</h4><p>Adjunto de foto de la falla -> Aprobación central -> Generación de nota de crédito automática.</p>"
@@ -196,8 +248,14 @@
     "subtitulo": "PDFs personalizados con stock real",
     "icono": "file-text",
     "estado": "validando",
-    "etiquetas": ["marketing", "ventas", "diseño"],
-    "categorias": ["ventas"],
+    "etiquetas": [
+      "marketing",
+      "ventas",
+      "diseño"
+    ],
+    "categorias": [
+      "ventas"
+    ],
     "descripcion": "Herramienta que genera un catálogo en PDF o link web que solo muestra los productos que tienen stock en el momento.",
     "ejemplos_html": [
       "<p>Evita vender lo que no hay: <strong>\"Generar catálogo de hoy (Excluir productos sin stock)\"</strong>.</p>"
@@ -219,8 +277,14 @@
     "subtitulo": "Medición de satisfacción de la red",
     "icono": "star",
     "estado": "en diseño",
-    "etiquetas": ["calidad", "recursos humanos", "datos"],
-    "categorias": ["estrategia"],
+    "etiquetas": [
+      "calidad",
+      "recursos humanos",
+      "datos"
+    ],
+    "categorias": [
+      "estrategia"
+    ],
     "descripcion": "Sistema de encuestas breves post-pedido para medir la salud de la relación con las revendedoras.",
     "ejemplos_html": [
       "<h4>Métrica Clave</h4><p>Puntaje NPS: <strong>72 (Excelente)</strong>. Principales quejas: Demora en zona sur.</p>"
@@ -242,8 +306,14 @@
     "subtitulo": "Gestión de entregas en campo",
     "icono": "map-pin",
     "estado": "propuesta",
-    "etiquetas": ["logística", "mobile", "operaciones"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "logística",
+      "mobile",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Aplicación simplificada para que los choferes marquen entregas, cobren en efectivo y tomen fotos del remito firmado.",
     "ejemplos_html": [
       "<p><strong>Funcionalidad:</strong> Sincronización automática al recuperar señal de internet.</p>"
@@ -265,8 +335,14 @@
     "subtitulo": "Automatización legal de comprobantes",
     "icono": "file-check",
     "estado": "validando",
-    "etiquetas": ["finanzas", "legal", "automatización"],
-    "categorias": ["finanzas"],
+    "etiquetas": [
+      "finanzas",
+      "legal",
+      "automatización"
+    ],
+    "categorias": [
+      "finanzas"
+    ],
     "descripcion": "Conexión directa con Web Services de AFIP para emitir Facturas A, B o C automáticamente al confirmar un pago.",
     "ejemplos_html": [
       "<h4>Cumplimiento Fiscal</h4><p>El sistema envía el PDF de la factura al email de la vendedora apenas el pedido se marca como 'Pagado'.</p>"
@@ -288,8 +364,15 @@
     "subtitulo": "Gamificación y comunidad",
     "icono": "award",
     "estado": "en diseño",
-    "etiquetas": ["comunidad", "marketing", "incentivos"],
-    "categorias": ["estrategia", "ventas"],
+    "etiquetas": [
+      "comunidad",
+      "marketing",
+      "incentivos"
+    ],
+    "categorias": [
+      "estrategia",
+      "ventas"
+    ],
     "descripcion": "Un 'muro' social interno donde se destacan las mejores vendedoras de la semana, fomentando la competencia sana.",
     "ejemplos_html": [
       "<p><strong>Social:</strong> '¡Felicidades a María por ser la Top Seller de Córdoba este mes!' 🏆</p>"
@@ -311,8 +394,15 @@
     "subtitulo": "IA para evitar quiebres de stock",
     "icono": "database",
     "estado": "propuesta",
-    "etiquetas": ["ia", "operaciones", "compras"],
-    "categorias": ["operaciones", "finanzas"],
+    "etiquetas": [
+      "ia",
+      "operaciones",
+      "compras"
+    ],
+    "categorias": [
+      "operaciones",
+      "finanzas"
+    ],
     "descripcion": "Analiza el historial de ventas para sugerir qué productos comprar al fabricante antes de que se agoten.",
     "ejemplos_html": [
       "<h4>Sugerencia de Compra</h4><p>'Basado en la tendencia actual, el Producto X se agotará en 5 días. Deberías pedir 200 unidades hoy'.</p>"
@@ -334,8 +424,13 @@
     "subtitulo": "Ticketing para resolución de problemas",
     "icono": "help-circle",
     "estado": "validando",
-    "etiquetas": ["atención al cliente", "operaciones"],
-    "categorias": ["operaciones"],
+    "etiquetas": [
+      "atención al cliente",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
     "descripcion": "Sistema de tickets para que líderes y coordinadoras reporten incidencias técnicas o administrativas con tiempos de respuesta (SLA).",
     "ejemplos_html": [
       "<p><strong>Orden Operativo:</strong> Cada reclamo tiene un número de seguimiento y un responsable asignado.</p>"
@@ -349,6 +444,691 @@
       }
     ],
     "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "pagos-en-cuotas-inteligente",
+    "titulo": "Pagos en Cuotas",
+    "subtitulo": "Planes de pago por campaña con entrega al cancelar",
+    "icono": "wallet",
+    "estado": "propuesta",
+    "etiquetas": [
+      "finanzas",
+      "pedidos",
+      "cobranzas"
+    ],
+    "categorias": [
+      "finanzas",
+      "operaciones"
+    ],
+    "descripcion": "Permite dividir pedidos en cuotas mensuales automáticas, generar calendario de vencimientos y habilitar la entrega cuando el plan queda totalmente abonado.",
+    "ejemplos_html": [
+      "<p>Pedido de $120.000 en 4 cuotas: el sistema agenda vencimientos para los próximos 4 meses y bloquea entrega hasta cuota final paga.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor de Cuotas",
+        "monto": "$520.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Incluye calendario automático, recálculo de saldos e integración con pedidos."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Opcional: comisión de pasarela de cobros en cuotas."
+  },
+  {
+    "id": "recurso-page-stock",
+    "titulo": "Recurso page/stock",
+    "subtitulo": "Gestión centralizada de stock por producto",
+    "icono": "archive-box",
+    "estado": "propuesta",
+    "etiquetas": [
+      "stock",
+      "inventario",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
+    "descripcion": "Nueva pantalla administrativa para editar stock disponible, reservado y mínimo por producto desde una única grilla con filtros avanzados.",
+    "ejemplos_html": [
+      "<p>La coordinadora ajusta stock de 50 productos en minutos, con alertas automáticas cuando un SKU llega a mínimo crítico.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Página de Stock",
+        "monto": "$260.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Incluye edición masiva, filtros por categoría y auditoría de cambios."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "combos-inteligentes",
+    "titulo": "Combos de Productos",
+    "subtitulo": "Armado de packs con puntos personalizados",
+    "icono": "squares-2x2",
+    "estado": "propuesta",
+    "etiquetas": [
+      "ventas",
+      "stock",
+      "campañas"
+    ],
+    "categorias": [
+      "ventas",
+      "operaciones"
+    ],
+    "descripcion": "Permite crear combos comerciales que descuentan automáticamente el stock de cada producto componente y asignan puntaje específico al combo.",
+    "ejemplos_html": [
+      "<p>Combo \"Inicio Fragancias\" descuenta 1 perfume + 1 crema + 1 body splash y suma 35 puntos en lugar de la suma estándar.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor de Combos",
+        "monto": "$390.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Incluye reglas de stock compuesto y tabla de puntos personalizada."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "impresion-masiva-pedidos",
+    "titulo": "Impresión Masiva de Pedidos",
+    "subtitulo": "Por líder, campaña y coordinadora con rótulos",
+    "icono": "printer",
+    "estado": "propuesta",
+    "etiquetas": [
+      "operaciones",
+      "pedidos",
+      "logística"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
+    "descripcion": "Genera impresión por lote de pedidos con rótulos de clasificación para armado y despacho según jerarquía comercial y campaña.",
+    "ejemplos_html": [
+      "<p>Impresión de 180 pedidos de Campaña 12 agrupados por líder, con etiqueta de bolsa y hoja de control por coordinadora.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Impresión Masiva",
+        "monto": "$310.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Plantillas configurables y filtros por zona, líder y campaña."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Consumibles de impresión."
+  },
+  {
+    "id": "inser-oferta-cierre",
+    "titulo": "Inser de Oferta Especial",
+    "subtitulo": "Promoción automática para próximo cierre/campaña",
+    "icono": "megaphone",
+    "estado": "propuesta",
+    "etiquetas": [
+      "marketing",
+      "campañas",
+      "ventas"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
+    "descripcion": "Inserta ofertas destacadas para el próximo cierre en panel, resumen de pedido y comunicaciones para impulsar recompra anticipada.",
+    "ejemplos_html": [
+      "<p>Al cerrar campaña, se muestra \"Inser Cierre 13\" con combo promocional y botón directo para reservar cupo.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor de Inser Promocional",
+        "monto": "$180.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Programación por calendario y segmentación por perfil comercial."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "membresia-desarrollo-ai",
+    "titulo": "Membresía de Desarrollo AI",
+    "subtitulo": "Servicio mensual de evolución continua",
+    "icono": "cpu-chip",
+    "estado": "propuesta",
+    "etiquetas": [
+      "ia",
+      "soporte",
+      "mantenimiento"
+    ],
+    "categorias": [
+      "estrategia",
+      "operaciones"
+    ],
+    "descripcion": "Plan mensual con desarrollo asistido por IA (Codex / Anthropic), soporte, copias diarias, mantenimiento, gestión operativa y mejoras UI.",
+    "ejemplos_html": [
+      "<p><strong>$600.000/mes:</strong> incluye horas de desarrollo evolutivo, control preventivo y costos del proveedor de IA.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Membresía AI Full Service",
+        "monto": "$600.000 ARS",
+        "periodicidad": "Por mes",
+        "detalle": "Incluye soporte, backups diarios y mejoras continuas de plataforma."
+      }
+    ],
+    "licencia": "Servicio mensual",
+    "gastos_externos": "Incluye gastos de proveedor de IA."
+  },
+  {
+    "id": "base-conocimiento-comercial",
+    "titulo": "Base de Conocimiento",
+    "subtitulo": "Portal de recursos para vendedoras, líderes y coordinadoras",
+    "icono": "book-open",
+    "estado": "propuesta",
+    "etiquetas": [
+      "capacitacion",
+      "soporte",
+      "contenido"
+    ],
+    "categorias": [
+      "estrategia",
+      "recursos humanos"
+    ],
+    "descripcion": "Biblioteca digital con tutoriales, respuestas frecuentes, materiales de capacitación y rutas por rol para acelerar autonomía del equipo comercial.",
+    "ejemplos_html": [
+      "<p>Las vendedoras consultan \"Cómo cargar pedido\" y acceden a video, guía rápida y preguntas frecuentes en una sola vista.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Portal de Conocimiento",
+        "monto": "$340.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Estructura por rol, buscador interno y editor de artículos."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo",
+    "gastos_externos": "Opcional: CDN para videos."
+  },
+  {
+    "id": "bandeja-whatsapp-crm",
+    "titulo": "Bandeja de Entrada WhatsApp + CRM",
+    "subtitulo": "Gestión centralizada de chats y seguimiento comercial",
+    "icono": "chat-bubble-left-right",
+    "estado": "propuesta",
+    "etiquetas": [
+      "whatsapp",
+      "crm",
+      "ventas"
+    ],
+    "categorias": [
+      "ventas",
+      "operaciones"
+    ],
+    "descripcion": "Centraliza conversaciones de WhatsApp vía API/QR, asigna chats a agentes y registra historial comercial en una ficha CRM unificada.",
+    "ejemplos_html": [
+      "<p>Un chat entrante se asigna a la líder responsable, con etiquetas de estado y recordatorios de seguimiento automático.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Inbox WhatsApp CRM",
+        "monto": "$740.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Multiagente, asignación, etiquetas y tablero de productividad."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Costo por sesión/API de WhatsApp y hosting de colas."
+  },
+  {
+    "id": "campanas-masivas-whatsapp-api",
+    "titulo": "Campañas Masivas WhatsApp (API)",
+    "subtitulo": "Difusión segmentada por campaña y perfil",
+    "icono": "paper-airplane",
+    "estado": "propuesta",
+    "etiquetas": [
+      "whatsapp",
+      "marketing",
+      "campañas"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
+    "descripcion": "Permite enviar campañas masivas de difusión con segmentación por zona, rol, historial de compra y etapa de campaña.",
+    "ejemplos_html": [
+      "<p>Se envía promoción de cierre solo a vendedoras sin pedido confirmado en las últimas 48 horas.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor de Campañas WhatsApp",
+        "monto": "$430.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Segmentación avanzada, plantillas y métricas de apertura/respuesta."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Costo oficial por conversación (Meta/Proveedor BSP)."
+  },
+  {
+    "id": "notificaciones-whatsapp-api",
+    "titulo": "Notificaciones WhatsApp (API)",
+    "subtitulo": "Avisos automáticos de estados y recordatorios",
+    "icono": "bell-alert",
+    "estado": "propuesta",
+    "etiquetas": [
+      "whatsapp",
+      "automatizacion",
+      "pedidos"
+    ],
+    "categorias": [
+      "operaciones",
+      "ventas"
+    ],
+    "descripcion": "Envía notificaciones automáticas por eventos clave: pedido recibido, pago aplicado, vencimiento próximo, despacho y entrega.",
+    "ejemplos_html": [
+      "<p>Recordatorio 24h antes del vencimiento de cuota con link directo de pago y resumen del saldo pendiente.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Orquestador de Notificaciones",
+        "monto": "$280.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Plantillas, reglas por evento y bitácora de envíos."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Costo por mensaje según proveedor API."
+  },
+  {
+    "id": "stock-automatizado-reglas",
+    "titulo": "Stock Automatizado",
+    "subtitulo": "Actualización inteligente de existencias",
+    "icono": "arrows-right-left",
+    "estado": "propuesta",
+    "etiquetas": [
+      "stock",
+      "automatizacion",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
+    "descripcion": "Automatiza movimientos de stock por ventas, devoluciones, ajustes y reposición, con reglas de seguridad para evitar quiebres e inconsistencias.",
+    "ejemplos_html": [
+      "<p>Si el stock cae bajo mínimo, crea alerta y sugerencia de reposición para compras internas.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Automatización de Stock",
+        "monto": "$360.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Reglas de ingreso/egreso, alertas y tablero de cobertura."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "app-android-vendedoras",
+    "titulo": "APP Android",
+    "subtitulo": "Aplicación nativa para operación comercial móvil",
+    "icono": "device-phone-mobile",
+    "estado": "propuesta",
+    "etiquetas": [
+      "movil",
+      "ventas",
+      "productividad"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
+    "descripcion": "Aplicación Android para vendedoras y líderes con catálogo, pedidos, estado de cuenta, notificaciones y seguimiento de campañas.",
+    "ejemplos_html": [
+      "<p>La vendedora arma pedido offline y lo sincroniza al recuperar conexión.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Desarrollo App Android",
+        "monto": "$2.400.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Incluye publicación inicial en Play Store y soporte de arranque."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo",
+    "gastos_externos": "Cuenta de desarrollador y servicios push."
+  },
+  {
+    "id": "app-ios-vendedoras",
+    "titulo": "APP iOS",
+    "subtitulo": "Aplicación nativa para ecosistema Apple",
+    "icono": "device-tablet",
+    "estado": "propuesta",
+    "etiquetas": [
+      "movil",
+      "ventas",
+      "productividad"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
+    "descripcion": "Aplicación iOS con foco en experiencia premium para gestión de pedidos, seguimiento de metas y comunicación de campañas.",
+    "ejemplos_html": [
+      "<p>Notificaciones de cierre y promociones segmentadas con acceso directo al carrito.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Desarrollo App iOS",
+        "monto": "$2.800.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Incluye publicación inicial en App Store y ajustes de cumplimiento."
+      }
+    ],
+    "licencia": "Licencia de uso exclusivo",
+    "gastos_externos": "Cuenta Apple Developer y servicios push."
+  },
+  {
+    "id": "portal-proveedores-compras",
+    "titulo": "Portal de Proveedores & Compras",
+    "subtitulo": "Abastecimiento y órdenes de compra centralizadas",
+    "icono": "building-storefront",
+    "estado": "propuesta",
+    "etiquetas": [
+      "compras",
+      "proveedores",
+      "stock"
+    ],
+    "categorias": [
+      "operaciones",
+      "finanzas"
+    ],
+    "descripcion": "Gestiona cotizaciones, órdenes de compra y recepciones para mejorar la reposición de productos críticos.",
+    "ejemplos_html": [
+      "<p>Comparativo de 3 proveedores para perfume importado con costo, plazo y calidad histórica.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Compras",
+        "monto": "$410.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Alta de proveedores, órdenes y flujo de aprobación."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "ranking-red-comercial",
+    "titulo": "Ranking de Red Comercial",
+    "subtitulo": "Tablero de desempeño por zona y jerarquía",
+    "icono": "trophy",
+    "estado": "propuesta",
+    "etiquetas": [
+      "gamificacion",
+      "ventas",
+      "reportes"
+    ],
+    "categorias": [
+      "estrategia",
+      "ventas"
+    ],
+    "descripcion": "Visualiza ranking de vendedoras, líderes y coordinadoras con filtros por campaña, puntos y crecimiento.",
+    "ejemplos_html": [
+      "<p>Top 10 de líderes por facturación y cumplimiento de meta trimestral.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Dashboard de Rankings",
+        "monto": "$230.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "KPIs dinámicos y exportación para reuniones comerciales."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "programa-fidelizacion-clientes-finales",
+    "titulo": "Programa de Fidelización",
+    "subtitulo": "Beneficios para recompra y retención",
+    "icono": "gift-top",
+    "estado": "propuesta",
+    "etiquetas": [
+      "retencion",
+      "clientes",
+      "marketing"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
+    "descripcion": "Sistema de beneficios por recompra, cupones y niveles de fidelidad para aumentar frecuencia de compra.",
+    "ejemplos_html": [
+      "<p>Cliente final recibe cupón del 10% al completar su tercera compra en 60 días.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Motor de Fidelización",
+        "monto": "$330.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Reglas de acumulación, cupones y beneficios por nivel."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Opcional: proveedor de email/SMS."
+  },
+  {
+    "id": "control-vencimientos-productos",
+    "titulo": "Control de Vencimientos",
+    "subtitulo": "Seguimiento por lote y fecha de expiración",
+    "icono": "calendar-days",
+    "estado": "propuesta",
+    "etiquetas": [
+      "calidad",
+      "stock",
+      "logistica"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
+    "descripcion": "Registra lotes y vencimientos para priorizar salida FIFO y evitar pérdidas por productos expirados.",
+    "ejemplos_html": [
+      "<p>Alerta de lotes que vencen en 45 días con recomendación de promoción de liquidación.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Gestión de Lotes",
+        "monto": "$370.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Trazabilidad por lote, alertas y reportes preventivos."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "simulador-ganancias-vendedora",
+    "titulo": "Simulador de Ganancias",
+    "subtitulo": "Proyección de utilidad por pedido y campaña",
+    "icono": "calculator",
+    "estado": "propuesta",
+    "etiquetas": [
+      "ventas",
+      "capacitacion",
+      "puntos"
+    ],
+    "categorias": [
+      "ventas",
+      "estrategia"
+    ],
+    "descripcion": "Calculadora para estimar ganancia neta según mix de productos, descuentos y costos operativos.",
+    "ejemplos_html": [
+      "<p>La vendedora simula un pedido de $180.000 y ve margen esperado y puntos alcanzados.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Simulador Comercial",
+        "monto": "$150.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Motor de fórmulas y panel educativo para toma de decisiones."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "agenda-visitas-cobranzas",
+    "titulo": "Agenda de Visitas y Cobranzas",
+    "subtitulo": "Planificación territorial de seguimiento",
+    "icono": "map-pin",
+    "estado": "propuesta",
+    "etiquetas": [
+      "cobranzas",
+      "territorio",
+      "operaciones"
+    ],
+    "categorias": [
+      "operaciones",
+      "finanzas"
+    ],
+    "descripcion": "Organiza visitas presenciales por zona para cobro, entrega y seguimiento de cartera con historial por cliente.",
+    "ejemplos_html": [
+      "<p>Ruta diaria con 12 visitas priorizadas por deuda y cercanía geográfica.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Agenda Territorial",
+        "monto": "$280.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Planificador, checklist de visita y registro de resultados."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Opcional: API de mapas."
+  },
+  {
+    "id": "modulo-referidos-equipo",
+    "titulo": "Módulo de Referidos",
+    "subtitulo": "Captación de nuevas vendedoras por recomendación",
+    "icono": "user-plus",
+    "estado": "propuesta",
+    "etiquetas": [
+      "onboarding",
+      "crecimiento",
+      "ventas"
+    ],
+    "categorias": [
+      "estrategia",
+      "recursos humanos"
+    ],
+    "descripcion": "Sistema para registrar referidos, asignar incentivos y medir la calidad de incorporación por líder o coordinadora.",
+    "ejemplos_html": [
+      "<p>La líder invita a 5 referidas y el sistema liquida bono al confirmar su primera campaña activa.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Programa de Referidos",
+        "monto": "$210.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Tracking de altas y liquidación automática de incentivos."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "portal-autogestion-documentos",
+    "titulo": "Portal de Autogestión de Documentos",
+    "subtitulo": "Constancias, resúmenes y comprobantes descargables",
+    "icono": "document-text",
+    "estado": "propuesta",
+    "etiquetas": [
+      "autogestion",
+      "documentacion",
+      "soporte"
+    ],
+    "categorias": [
+      "operaciones"
+    ],
+    "descripcion": "Espacio para que cada perfil descargue comprobantes de pago, estados de cuenta y documentos administrativos sin intervención manual.",
+    "ejemplos_html": [
+      "<p>La coordinadora descarga resumen mensual consolidado de su red con un clic.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Portal Documental",
+        "monto": "$240.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Repositorio seguro con permisos por rol y trazabilidad de descargas."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "encuestas-mercado-rapidas",
+    "titulo": "Encuestas de Mercado Rápidas",
+    "subtitulo": "Validación de productos y campañas en tiempo real",
+    "icono": "chart-pie",
+    "estado": "propuesta",
+    "etiquetas": [
+      "investigacion",
+      "marketing",
+      "datos"
+    ],
+    "categorias": [
+      "estrategia",
+      "ventas"
+    ],
+    "descripcion": "Herramienta para lanzar microencuestas a la red y detectar tendencias de consumo antes de cada campaña.",
+    "ejemplos_html": [
+      "<p>Encuesta de 3 preguntas sobre fragancias preferidas para definir compras del próximo cierre.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Módulo de Encuestas Express",
+        "monto": "$170.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Constructor de encuestas y reportes con segmentación."
+      }
+    ],
+    "licencia": "Licencia perpetua",
+    "gastos_externos": "Ninguno."
+  },
+  {
+    "id": "centro-alertas-operativas",
+    "titulo": "Centro de Alertas Operativas",
+    "subtitulo": "Semáforo unificado de riesgos y pendientes",
+    "icono": "exclamation-triangle",
+    "estado": "propuesta",
+    "etiquetas": [
+      "alertas",
+      "operaciones",
+      "control"
+    ],
+    "categorias": [
+      "operaciones",
+      "estrategia"
+    ],
+    "descripcion": "Consolida alertas críticas de stock, cobranzas, demoras y devoluciones en un panel priorizado para acción inmediata.",
+    "ejemplos_html": [
+      "<p>Semáforo rojo en Campaña 15 por mora superior al 20% en Zona Oeste.</p>"
+    ],
+    "precios": [
+      {
+        "concepto": "Centro de Alertas",
+        "monto": "$295.000 ARS",
+        "periodicidad": "Pago único",
+        "detalle": "Reglas de criticidad, responsables y seguimiento de resolución."
+      }
+    ],
+    "licencia": "Licencia de uso interno",
     "gastos_externos": "Ninguno."
   }
 ]
