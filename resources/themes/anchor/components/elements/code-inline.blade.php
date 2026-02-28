@@ -1,1 +1,1 @@
-<code class="inline-block px-2 py-1 my-0.5 font-mono bg-zinc-200 rounded-md dark:bg-zinc-800 dark:text-white">{{ $slot }}</code>
+<code class="inline-block px-2 py-1 my-0.5 font-mono bg-white/70 dark:bg-slate-900/70 text-secondary-800 dark:text-sky-200 rounded-md border border-white/60 dark:border-sky-300/20 backdrop-blur-lg">{{ $slot }}</code>
