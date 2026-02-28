@@ -1,0 +1,62 @@
+[
+  {
+    "id": "sidebar-explorar-catalogo",
+    "titulo": "Sidebar · Explorar catálogo",
+    "icono": "rectangle-group",
+    "descripcion": "Acceso directo al catálogo de mejoras disponible para revisión funcional.",
+    "precio": "A definir",
+    "moneda": "A definir",
+    "estado": "instalado",
+    "meta": {
+      "origen": "sidebar",
+      "link": "mejoras",
+      "orden": 1
+    },
+    "degradado": "from-indigo-600 via-fuchsia-500 to-cyan-400"
+  },
+  {
+    "id": "sidebar-sistemas-activos",
+    "titulo": "Sidebar · Sistemas activos",
+    "icono": "check-badge",
+    "descripcion": "Vista de sistemas operativos activos del panel de mejoras.",
+    "precio": "A definir",
+    "moneda": "A definir",
+    "estado": "instalado",
+    "meta": {
+      "origen": "sidebar",
+      "link": "modulos-activos",
+      "orden": 2
+    },
+    "degradado": "from-emerald-600 via-teal-500 to-cyan-500"
+  },
+  {
+    "id": "sidebar-en-desarrollo",
+    "titulo": "Sidebar · En desarrollo",
+    "icono": "beaker",
+    "descripcion": "Sección para seguimiento de mejoras en curso.",
+    "precio": "A definir",
+    "moneda": "A definir",
+    "estado": "instalado",
+    "meta": {
+      "origen": "sidebar",
+      "link": "en-curso",
+      "orden": 3
+    },
+    "degradado": "from-amber-500 via-orange-500 to-rose-500"
+  },
+  {
+    "id": "sidebar-activos",
+    "titulo": "Sidebar · Activos",
+    "icono": "cube",
+    "descripcion": "Listado de activos configurables para contenido y presentación.",
+    "precio": "A definir",
+    "moneda": "A definir",
+    "estado": "instalado",
+    "meta": {
+      "origen": "sidebar",
+      "link": "activos",
+      "orden": 4
+    },
+    "degradado": "from-violet-600 via-purple-600 to-indigo-600"
+  }
+]
