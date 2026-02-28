@@ -95,6 +95,255 @@ new class extends Component {
     ],
 ];
 
+    public array $dataOperativa = [
+        'notas' => [],
+        'kanban' => [],
+        'reportes' => [],
+        'tickets' => [],
+    ];
+
+    public array $notaForm = [
+        'titulo' => '',
+        'contenido' => '',
+    ];
+
+    public ?string $notaEditandoId = null;
+
+    public array $kanbanForm = [
+        'modulo' => '',
+        'titulo' => '',
+        'estado' => 'pendiente',
+        'subtareas' => '',
+    ];
+
+    public array $reporteForm = [
+        'modulo' => '',
+        'tipo' => 'operativo',
+        'resumen' => '',
+    ];
+
+    public array $ticketForm = [
+        'modulo' => '',
+        'titulo' => '',
+        'descripcion' => '',
+        'estado' => 'abierto',
+        'prioridad' => 'media',
+    ];
+
+    public string $mensajeOperativo = '';
+
+    public function mount(): void
+    {
+        $this->cargarDataOperativa();
+    }
+
+    public function getRutaDataOperativa(): string
+    {
+        return resource_path('themes/anchor/pages/mejoras/items/operaciones.json');
+    }
+
+    public function cargarDataOperativa(): void
+    {
+        $ruta = $this->getRutaDataOperativa();
+
+        if (! File::exists($ruta)) {
+            $this->guardarDataOperativa();
+
+            return;
+        }
+
+        $decodificado = json_decode(File::get($ruta), true);
+
+        if (! is_array($decodificado)) {
+            return;
+        }
+
+        foreach (['notas', 'kanban', 'reportes', 'tickets'] as $clave) {
+            if (is_array($decodificado[$clave] ?? null)) {
+                $this->dataOperativa[$clave] = $decodificado[$clave];
+            }
+        }
+    }
+
+    public function guardarDataOperativa(): void
+    {
+        $json = json_encode($this->dataOperativa, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        if ($json === false) {
+            return;
+        }
+
+        $ruta = $this->getRutaDataOperativa();
+        $tmp = $ruta.'.tmp';
+
+        File::put($tmp, $json.PHP_EOL);
+        File::move($tmp, $ruta);
+    }
+
+    public function guardarNota(): void
+    {
+        $titulo = trim($this->notaForm['titulo']);
+        $contenido = trim($this->notaForm['contenido']);
+
+        if ($titulo === '' || $contenido === '') {
+            $this->mensajeOperativo = 'Completa el título y el contenido de la nota.';
+
+            return;
+        }
+
+        if ($this->notaEditandoId !== null) {
+            foreach ($this->dataOperativa['notas'] as &$nota) {
+                if (($nota['id'] ?? '') === $this->notaEditandoId) {
+                    $nota['titulo'] = $titulo;
+                    $nota['contenido'] = $contenido;
+                    $nota['actualizado_en'] = now()->toDateTimeString();
+                }
+            }
+            unset($nota);
+            $this->mensajeOperativo = 'Nota actualizada correctamente.';
+        } else {
+            $this->dataOperativa['notas'][] = [
+                'id' => (string) Str::uuid(),
+                'titulo' => $titulo,
+                'contenido' => $contenido,
+                'creado_en' => now()->toDateTimeString(),
+                'actualizado_en' => now()->toDateTimeString(),
+            ];
+            $this->mensajeOperativo = 'Nota creada correctamente.';
+        }
+
+        $this->guardarDataOperativa();
+        $this->notaEditandoId = null;
+        $this->notaForm = ['titulo' => '', 'contenido' => ''];
+    }
+
+    public function editarNota(string $id): void
+    {
+        $nota = collect($this->dataOperativa['notas'])->firstWhere('id', $id);
+
+        if (! is_array($nota)) {
+            return;
+        }
+
+        $this->notaEditandoId = $id;
+        $this->notaForm = [
+            'titulo' => (string) ($nota['titulo'] ?? ''),
+            'contenido' => (string) ($nota['contenido'] ?? ''),
+        ];
+    }
+
+    public function crearTareaKanban(): void
+    {
+        $modulo = trim($this->kanbanForm['modulo']);
+        $titulo = trim($this->kanbanForm['titulo']);
+
+        if ($modulo === '' || $titulo === '') {
+            $this->mensajeOperativo = 'Define módulo y título para crear la tarea.';
+
+            return;
+        }
+
+        $subtareas = collect(explode("\n", (string) $this->kanbanForm['subtareas']))
+            ->map(fn (string $linea): string => trim($linea))
+            ->filter(fn (string $linea): bool => $linea !== '')
+            ->map(fn (string $linea): array => ['titulo' => $linea, 'completada' => false])
+            ->values()
+            ->all();
+
+        $this->dataOperativa['kanban'][] = [
+            'id' => (string) Str::uuid(),
+            'modulo' => $modulo,
+            'titulo' => $titulo,
+            'estado' => (string) ($this->kanbanForm['estado'] ?? 'pendiente'),
+            'subtareas' => $subtareas,
+            'creado_en' => now()->toDateTimeString(),
+        ];
+
+        $this->guardarDataOperativa();
+        $this->mensajeOperativo = 'Tarea kanban registrada.';
+        $this->kanbanForm = ['modulo' => '', 'titulo' => '', 'estado' => 'pendiente', 'subtareas' => ''];
+    }
+
+    public function moverTareaKanban(string $id, string $estado): void
+    {
+        foreach ($this->dataOperativa['kanban'] as &$tarea) {
+            if (($tarea['id'] ?? '') === $id) {
+                $tarea['estado'] = $estado;
+            }
+        }
+        unset($tarea);
+
+        $this->guardarDataOperativa();
+    }
+
+    public function crearReporte(): void
+    {
+        $modulo = trim($this->reporteForm['modulo']);
+        $resumen = trim($this->reporteForm['resumen']);
+
+        if ($modulo === '' || $resumen === '') {
+            $this->mensajeOperativo = 'Completa módulo y resumen para guardar el reporte.';
+
+            return;
+        }
+
+        $this->dataOperativa['reportes'][] = [
+            'id' => (string) Str::uuid(),
+            'modulo' => $modulo,
+            'tipo' => (string) ($this->reporteForm['tipo'] ?? 'operativo'),
+            'resumen' => $resumen,
+            'fecha' => now()->toDateTimeString(),
+        ];
+
+        $this->guardarDataOperativa();
+        $this->mensajeOperativo = 'Reporte guardado.';
+        $this->reporteForm = ['modulo' => '', 'tipo' => 'operativo', 'resumen' => ''];
+    }
+
+    public function crearTicket(): void
+    {
+        $modulo = trim($this->ticketForm['modulo']);
+        $titulo = trim($this->ticketForm['titulo']);
+
+        if ($modulo === '' || $titulo === '') {
+            $this->mensajeOperativo = 'Completa módulo y título del ticket.';
+
+            return;
+        }
+
+        $this->dataOperativa['tickets'][] = [
+            'id' => (string) Str::uuid(),
+            'modulo' => $modulo,
+            'titulo' => $titulo,
+            'descripcion' => trim((string) ($this->ticketForm['descripcion'] ?? '')),
+            'estado' => (string) ($this->ticketForm['estado'] ?? 'abierto'),
+            'prioridad' => (string) ($this->ticketForm['prioridad'] ?? 'media'),
+            'creado_en' => now()->toDateTimeString(),
+        ];
+
+        $this->guardarDataOperativa();
+        $this->mensajeOperativo = 'Ticket creado correctamente.';
+        $this->ticketForm = [
+            'modulo' => '',
+            'titulo' => '',
+            'descripcion' => '',
+            'estado' => 'abierto',
+            'prioridad' => 'media',
+        ];
+    }
+
+    public function actualizarEstadoTicket(string $id, string $estado): void
+    {
+        foreach ($this->dataOperativa['tickets'] as &$ticket) {
+            if (($ticket['id'] ?? '') === $id) {
+                $ticket['estado'] = $estado;
+            }
+        }
+        unset($ticket);
+
+        $this->guardarDataOperativa();
+    }
+
     public function getMejorasProperty(): Collection
     {
         $files = File::glob(resource_path('themes/anchor/pages/mejoras/items/*.json')) ?: [];
@@ -356,7 +605,11 @@ new class extends Component {
                         'mejoras' => ['nombre' => 'Explorar Catálogo', 'icon' => 'heroicon-o-rectangle-group'],
                         'modulos-activos' => ['nombre' => 'Sistemas Activos', 'icon' => 'heroicon-o-check-badge'],
                         'en-curso' => ['nombre' => 'En Desarrollo', 'icon' => 'heroicon-o-beaker'],
-                        'activos' => ['nombre' => 'Activos', 'icon' => 'heroicon-o-cube']
+                        'activos' => ['nombre' => 'Activos', 'icon' => 'heroicon-o-cube'],
+                        'notas' => ['nombre' => 'Notas', 'icon' => 'heroicon-o-document-text'],
+                        'kanban' => ['nombre' => 'Kanban', 'icon' => 'heroicon-o-squares-2x2'],
+                        'reportes' => ['nombre' => 'Reportes', 'icon' => 'heroicon-o-chart-bar-square'],
+                        'tickets' => ['nombre' => 'Tickets', 'icon' => 'heroicon-o-lifebuoy']
                     ] as $id => $item)
                         <button wire:click="$set('tabActiva', '{{ $id }}')"
                             class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all {{ $tabActiva === $id 
@@ -385,6 +638,12 @@ new class extends Component {
 
             {{-- ÁREA DE CONTENIDO --}}
             <main class="flex-1 min-h-[600px]">
+                @if($mensajeOperativo !== '')
+                    <div class="mb-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/70 dark:border-indigo-800 px-4 py-3 text-sm font-bold text-indigo-700 dark:text-indigo-200">
+                        {{ $mensajeOperativo }}
+                    </div>
+                @endif
+
                 {{-- VISTA: CATÁLOGO EXPLORADOR --}}
                 @if($tabActiva === 'mejoras')
                     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -515,6 +774,145 @@ new class extends Component {
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+                @endif
+
+                @if($tabActiva === 'notas')
+                    <div class="grid gap-4 lg:grid-cols-2">
+                        <div class="os-glass rounded-3xl p-6 space-y-3">
+                            <h3 class="text-lg font-black text-slate-900 dark:text-white">Sistema de notas</h3>
+                            <input wire:model="notaForm.titulo" type="text" placeholder="Título"
+                                class="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                            <textarea wire:model="notaForm.contenido" rows="5" placeholder="Contenido de la nota"
+                                class="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm"></textarea>
+                            <button wire:click="guardarNota" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-black">{{ $notaEditandoId ? 'Actualizar nota' : 'Guardar nota' }}</button>
+                        </div>
+                        <div class="space-y-3">
+                            @forelse($dataOperativa['notas'] as $nota)
+                                <div class="os-glass rounded-2xl p-4">
+                                    <div class="flex items-center justify-between gap-3">
+                                        <h4 class="font-black text-slate-900 dark:text-white">{{ $nota['titulo'] ?? 'Sin título' }}</h4>
+                                        <button wire:click="editarNota('{{ $nota['id'] ?? '' }}')" class="text-xs font-black text-indigo-600">Editar</button>
+                                    </div>
+                                    <p class="mt-2 text-sm text-slate-600 dark:text-zinc-300">{{ $nota['contenido'] ?? '' }}</p>
+                                </div>
+                            @empty
+                                <div class="os-glass rounded-2xl p-4 text-sm font-bold text-slate-500">No hay notas registradas.</div>
+                            @endforelse
+                        </div>
+                    </div>
+                @endif
+
+                @if($tabActiva === 'kanban')
+                    <div class="space-y-4">
+                        <div class="os-glass rounded-3xl p-6 grid gap-3 lg:grid-cols-2">
+                            <input wire:model="kanbanForm.modulo" type="text" placeholder="Módulo"
+                                class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                            <input wire:model="kanbanForm.titulo" type="text" placeholder="Título de tarea"
+                                class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                            <select wire:model="kanbanForm.estado" class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en progreso">En progreso</option>
+                                <option value="hecho">Hecho</option>
+                            </select>
+                            <textarea wire:model="kanbanForm.subtareas" rows="3" placeholder="Subtareas (una por línea)"
+                                class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm"></textarea>
+                            <button wire:click="crearTareaKanban" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-black w-fit">Crear tarea</button>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            @foreach(['pendiente' => 'Pendiente', 'en progreso' => 'En progreso', 'hecho' => 'Hecho'] as $estadoId => $estadoLabel)
+                                <div class="os-glass rounded-3xl p-4">
+                                    <h4 class="font-black text-slate-900 dark:text-white mb-3">{{ $estadoLabel }}</h4>
+                                    <div class="space-y-3">
+                                        @foreach(collect($dataOperativa['kanban'])->where('estado', $estadoId) as $tarea)
+                                            <div class="rounded-2xl p-3 bg-white/80 dark:bg-zinc-900/70 border border-slate-200 dark:border-zinc-800">
+                                                <p class="text-sm font-black text-slate-900 dark:text-white">{{ $tarea['titulo'] ?? '' }}</p>
+                                                <p class="text-xs font-bold text-indigo-600 mt-1">{{ $tarea['modulo'] ?? '' }}</p>
+                                                <ul class="mt-2 text-xs text-slate-600 dark:text-zinc-300 list-disc pl-4">
+                                                    @foreach(($tarea['subtareas'] ?? []) as $subtarea)
+                                                        <li>{{ $subtarea['titulo'] ?? '' }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                <div class="flex gap-2 mt-3">
+                                                    @foreach(['pendiente', 'en progreso', 'hecho'] as $estadoMover)
+                                                        <button wire:click="moverTareaKanban('{{ $tarea['id'] ?? '' }}', '{{ $estadoMover }}')" class="text-[10px] px-2 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 font-black">{{ $estadoMover }}</button>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                @if($tabActiva === 'reportes')
+                    <div class="grid gap-4 lg:grid-cols-2">
+                        <div class="os-glass rounded-3xl p-6 space-y-3">
+                            <h3 class="text-lg font-black text-slate-900 dark:text-white">Sistema de reportes</h3>
+                            <input wire:model="reporteForm.modulo" type="text" placeholder="Módulo"
+                                class="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                            <select wire:model="reporteForm.tipo" class="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                                <option value="operativo">Operativo</option>
+                                <option value="financiero">Financiero</option>
+                                <option value="incidencias">Incidencias</option>
+                            </select>
+                            <textarea wire:model="reporteForm.resumen" rows="4" placeholder="Resumen del reporte"
+                                class="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm"></textarea>
+                            <button wire:click="crearReporte" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-black">Guardar reporte</button>
+                        </div>
+                        <div class="space-y-3">
+                            @forelse($dataOperativa['reportes'] as $reporte)
+                                <div class="os-glass rounded-2xl p-4">
+                                    <p class="text-xs font-black uppercase text-indigo-600">{{ $reporte['tipo'] ?? 'operativo' }} · {{ $reporte['modulo'] ?? '' }}</p>
+                                    <p class="mt-2 text-sm text-slate-600 dark:text-zinc-300">{{ $reporte['resumen'] ?? '' }}</p>
+                                </div>
+                            @empty
+                                <div class="os-glass rounded-2xl p-4 text-sm font-bold text-slate-500">No hay reportes registrados.</div>
+                            @endforelse
+                        </div>
+                    </div>
+                @endif
+
+                @if($tabActiva === 'tickets')
+                    <div class="space-y-4">
+                        <div class="os-glass rounded-3xl p-6 grid gap-3 lg:grid-cols-2">
+                            <input wire:model="ticketForm.modulo" type="text" placeholder="Módulo"
+                                class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                            <input wire:model="ticketForm.titulo" type="text" placeholder="Título del ticket"
+                                class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                            <select wire:model="ticketForm.estado" class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                                <option value="abierto">Abierto</option>
+                                <option value="en progreso">En progreso</option>
+                                <option value="resuelto">Resuelto</option>
+                                <option value="cerrado">Cerrado</option>
+                            </select>
+                            <select wire:model="ticketForm.prioridad" class="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm">
+                                <option value="baja">Baja</option>
+                                <option value="media">Media</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                            <textarea wire:model="ticketForm.descripcion" rows="3" placeholder="Descripción"
+                                class="lg:col-span-2 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-sm"></textarea>
+                            <button wire:click="crearTicket" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-black w-fit">Crear ticket</button>
+                        </div>
+                        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+                            @forelse($dataOperativa['tickets'] as $ticket)
+                                <div class="os-glass rounded-2xl p-4 space-y-2">
+                                    <p class="text-xs font-black uppercase text-indigo-600">{{ $ticket['modulo'] ?? '' }} · {{ $ticket['prioridad'] ?? 'media' }}</p>
+                                    <h4 class="font-black text-slate-900 dark:text-white">{{ $ticket['titulo'] ?? '' }}</h4>
+                                    <p class="text-sm text-slate-600 dark:text-zinc-300">{{ $ticket['descripcion'] ?? '' }}</p>
+                                    <select wire:change="actualizarEstadoTicket('{{ $ticket['id'] ?? '' }}', $event.target.value)" class="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-xs font-bold">
+                                        @foreach(['abierto', 'en progreso', 'resuelto', 'cerrado'] as $estadoTicket)
+                                            <option value="{{ $estadoTicket }}" @selected(($ticket['estado'] ?? '') === $estadoTicket)>{{ ucfirst($estadoTicket) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @empty
+                                <div class="os-glass rounded-2xl p-4 text-sm font-bold text-slate-500">No hay tickets cargados.</div>
+                            @endforelse
+                        </div>
                     </div>
                 @endif
             </main>
