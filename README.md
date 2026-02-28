@@ -163,6 +163,12 @@ Todo completamente integrado con el diseño Alma Mia.
 * El tema activo se define en `theme.json`. Tus usuarias (vendedoras/líderes) ven el frontend del tema, no el panel administrat
 ivo.
 
+### Tema/UI: fondo visual base
+
+* El layout principal del tema `anchor` usa la clase `.fixed-wallpaper` con una imagen local en `asset('storage/bg.jpg')`.
+* El archivo físico debe existir en `storage/app/public/bg.jpg` y publicarse en `public/storage/bg.jpg` mediante el symlink de Laravel (`php artisan storage:link`).
+* Se debe mantener el overlay actual (`bg-white/50 dark:bg-zinc-950/50`) para preservar legibilidad en modo claro y oscuro.
+
 ### `productos`
 
 * SKU, precio, puntos y estados.

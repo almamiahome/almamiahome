@@ -29,7 +29,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=2000');
+            background-image: url('{{ asset('storage/bg.jpg') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
