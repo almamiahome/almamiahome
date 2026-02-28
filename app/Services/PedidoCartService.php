@@ -163,6 +163,7 @@ class PedidoCartService
     {
         $catalogo = Catalogo::with([
             'paginas.productos.producto.categorias',
+            'paginas.productos.productosGrupo.categorias',
         ])->latest('id')->first();
 
         if (! $catalogo) {
@@ -178,24 +179,46 @@ class PedidoCartService
                     'imagen'      => $pagina->imagen,
                     'imagen_path' => $pagina->imagen ? asset('storage/'.$pagina->imagen) : null,
                     'productos'   => $pagina->productos->map(function (CatalogoPaginaProducto $pivot) {
+                        $productoPrincipal = $pivot->producto;
+
                         return [
-                            'id'           => $pivot->id,
-                            'producto_id'  => $pivot->producto_id,
-                            'pos_x'        => (float) $pivot->pos_x,
-                            'pos_y'        => (float) $pivot->pos_y,
-                            'producto'     => $pivot->producto ? [
-                                'id'                => $pivot->producto->id,
-                                'nombre'            => $pivot->producto->nombre,
-                                'precio'            => (float) $pivot->producto->precio,
-                                'puntos_por_unidad' => (int) ($pivot->producto->puntos_por_unidad ?? 0),
-                                'stock_actual'      => is_null($pivot->producto->stock_actual)
+                            'id'              => $pivot->id,
+                            'producto_id'     => $pivot->producto_id,
+                            'es_grupo'        => (bool) $pivot->es_grupo,
+                            'pos_x'           => (float) $pivot->pos_x,
+                            'pos_y'           => (float) $pivot->pos_y,
+                            'producto'        => $productoPrincipal ? [
+                                'id'                => $productoPrincipal->id,
+                                'nombre'            => $productoPrincipal->nombre,
+                                'precio'            => (float) $productoPrincipal->precio,
+                                'puntos_por_unidad' => (int) ($productoPrincipal->puntos_por_unidad ?? 0),
+                                'stock_actual'      => is_null($productoPrincipal->stock_actual)
                                     ? null
-                                    : (int) $pivot->producto->stock_actual,
-                                'categorias'        => $pivot->producto->categorias->pluck('nombre')->toArray(),
-                                'imagen'            => $pivot->producto->imagen
-                                    ? asset('storage/'.$pivot->producto->imagen)
+                                    : (int) $productoPrincipal->stock_actual,
+                                'categorias'        => $productoPrincipal->categorias->pluck('nombre')->toArray(),
+                                'imagen'            => $productoPrincipal->imagen
+                                    ? asset('storage/'.$productoPrincipal->imagen)
                                     : null,
                             ] : null,
+                            'productos_grupo' => $pivot->productosGrupo
+                                ->map(function ($productoGrupo) {
+                                    return [
+                                        'id'                => $productoGrupo->id,
+                                        'nombre'            => $productoGrupo->nombre,
+                                        'sku'               => $productoGrupo->sku,
+                                        'precio'            => (float) $productoGrupo->precio,
+                                        'puntos_por_unidad' => (int) ($productoGrupo->puntos_por_unidad ?? 0),
+                                        'stock_actual'      => is_null($productoGrupo->stock_actual)
+                                            ? null
+                                            : (int) $productoGrupo->stock_actual,
+                                        'categorias'        => $productoGrupo->categorias->pluck('nombre')->toArray(),
+                                        'imagen'            => $productoGrupo->imagen
+                                            ? asset('storage/'.$productoGrupo->imagen)
+                                            : null,
+                                    ];
+                                })
+                                ->values()
+                                ->toArray(),
                         ];
                     })->values()->toArray(),
                 ];

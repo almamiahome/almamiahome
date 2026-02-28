@@ -360,15 +360,15 @@ new class extends Component {
                             
                             <template x-for="producto in pagina.productos" :key="producto.id">
                                 <button type="button"
-                                    @click="addProductoDesdePagina(producto)"
+                                    @click="manejarClickHotspot(producto)"
                                     class="absolute z-20 h-9 w-9 md:h-11 md:w-11 flex items-center justify-center rounded-full shadow-lg ring-4 transition-all hover:scale-110 -translate-x-1/2 -translate-y-1/2"
                                     :style="posicionFlotante(producto)"
-                                    :class="estadoBotonCatalogo[producto.producto_id ?? producto.id] === 'agregado' ? 'bg-emerald-500 ring-emerald-100 text-white' : 'bg-indigo-600 ring-white text-white'">
+                                    :class="estadoHotspot(producto) === 'agregado' ? 'bg-emerald-500 ring-emerald-100 text-white' : 'bg-indigo-600 ring-white text-white'">
                                     
-                                    <svg x-show="estadoBotonCatalogo[producto.producto_id ?? producto.id] !== 'agregado'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg x-show="estadoHotspot(producto) !== 'agregado'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
-                                    <svg x-show="estadoBotonCatalogo[producto.producto_id ?? producto.id] === 'agregado'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg x-show="estadoHotspot(producto) === 'agregado'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                     </svg>
                                 </button>
@@ -427,6 +427,33 @@ new class extends Component {
     }
 </style>
             <!-- FIN GRID CATÁLOGO -->
+
+
+            <div x-show="modalHotspotGrupoAbierto" x-cloak class="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 p-4" @click.self="cerrarHotspotGrupo()">
+                <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest">Seleccionar productos del hotspot</h3>
+                        <button type="button" @click="cerrarHotspotGrupo()" class="text-xs font-bold text-slate-500">Cerrar</button>
+                    </div>
+
+                    <div class="max-h-72 overflow-y-auto space-y-2 pr-1">
+                        <template x-for="producto in (hotspotGrupoActivo?.productos ?? [])" :key="`hotspot-grupo-${producto.id}`">
+                            <label class="flex items-center gap-3 p-3 border border-slate-100 rounded-2xl hover:bg-slate-50">
+                                <input type="checkbox" :checked="seleccionHotspotGrupo.includes(String(producto.id))" @change="toggleProductoHotspotGrupo(producto.id)" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                <div>
+                                    <p class="text-sm font-bold text-slate-800" x-text="producto.nombre"></p>
+                                    <p class="text-xs text-slate-500" x-text="`SKU: ${producto.sku ?? '-'} | $${formatMoney(producto.precio ?? 0)}`"></p>
+                                </div>
+                            </label>
+                        </template>
+                    </div>
+
+                    <div class="flex justify-end gap-2 pt-2">
+                        <button type="button" @click="cerrarHotspotGrupo()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600">Cerrar</button>
+                        <button type="button" @click="confirmarHotspotGrupo()" class="px-4 py-2 rounded-xl bg-indigo-600 text-xs font-bold text-white">Agregar seleccionados</button>
+                    </div>
+                </div>
+            </div>
 
             <!-- Carrito -->
             <div class="bg-white dark:bg-slate-950 shadow rounded-2xl p-4 mb-4 border border-slate-200 dark:border-slate-800 overflow-hidden">
