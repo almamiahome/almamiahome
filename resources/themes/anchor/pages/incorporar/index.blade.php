@@ -30,14 +30,39 @@ new class extends Component {
     public $coordinadorasDelLider;
 
     public array $tiposPermitidos = [];
+    public array $departamentosDisponibles = [];
+    public array $zonasDisponibles = [];
 
     public function mount(): void
     {
         $this->currentUser = auth()->user();
         $this->currentRole = $this->currentUser?->getRoleNames()->first() ?? 'registered';
         $this->tiposPermitidos = $this->resolveAllowedTipos();
+        $this->departamentosDisponibles = $this->resolveSettingOptions('almamia.departamentos.mendoza');
+        $this->zonasDisponibles = $this->resolveSettingOptions('almamia.zona.mendoza');
         $this->form = $this->defaultForm();
         $this->loadData();
+    }
+
+    protected function resolveSettingOptions(string $key): array
+    {
+        $items = json_decode(setting($key) ?? '[]', true) ?? [];
+
+        if (! is_array($items)) {
+            return [];
+        }
+
+        $items = array_values(array_filter(array_map(function ($item) {
+            if (! is_scalar($item)) {
+                return null;
+            }
+
+            $normalized = trim((string) $item);
+
+            return $normalized === '' ? null : $normalized;
+        }, $items)));
+
+        return array_values(array_unique($items));
     }
 
     protected function resolveAllowedTipos(): array
@@ -139,8 +164,8 @@ new class extends Component {
             'form.dni' => ['nullable', 'string', 'max:255'],
             'form.whatsapp' => ['nullable', 'string', 'max:255'],
             'form.direccion' => ['nullable', 'string', 'max:255'],
-            'form.zona' => ['nullable', 'string', 'max:255'],
-            'form.departamento' => ['nullable', 'string', 'max:255'],
+            'form.zona' => ['nullable', 'string', 'max:255', Rule::in($this->zonasDisponibles)],
+            'form.departamento' => ['nullable', 'string', 'max:255', Rule::in($this->departamentosDisponibles)],
             'form.lider_id' => ['nullable', 'integer', 'exists:users,id'],
             'form.coordinadora_id' => ['nullable', 'integer', 'exists:users,id'],
         ];
@@ -621,14 +646,24 @@ new class extends Component {
 
                     <div class="space-y-1.5">
                         <label class="text-[10px] font-black uppercase text-slate-500 ml-1">Localidad / Depto</label>
-                        <input type="text" wire:model.defer="form.departamento" 
+                        <select wire:model.defer="form.departamento"
                             class="w-full rounded-xl border-slate-300 bg-white py-3 px-4 text-sm font-semibold shadow-sm focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:border-zinc-700 dark:bg-zinc-950">
+                            <option value="">Seleccioná un departamento</option>
+                            @foreach($departamentosDisponibles as $item)
+                                <option value="{{ $item }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="space-y-1.5">
                         <label class="text-[10px] font-black uppercase text-slate-500 ml-1">Zona</label>
-                        <input type="text" wire:model.defer="form.zona" placeholder="Zona de venta" 
+                        <select wire:model.defer="form.zona"
                             class="w-full rounded-xl border-slate-300 bg-white py-3 px-4 text-sm font-semibold shadow-sm focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:border-zinc-700 dark:bg-zinc-950">
+                            <option value="">Seleccioná una zona</option>
+                            @foreach($zonasDisponibles as $item)
+                                <option value="{{ $item }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </section>
