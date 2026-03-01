@@ -147,7 +147,7 @@
                         </div>
                     </li>
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
-                        <a href="{{ route('catalogo.publico') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Catálogo</a>
+                        <a href="/vercatalogo" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Catálogo</a>
                     </li>
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
                         <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Blog</a>
