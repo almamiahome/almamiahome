@@ -572,9 +572,24 @@ new class extends Component {
                         <div class="space-y-6">
                             <form wire:submit.prevent="saveMap" class="space-y-4">
                                 <div class="space-y-3" x-data="{ modalGrupoAbierto: false }">
-                                    <label class="inline-flex items-center gap-3 text-xs font-black text-slate-700">
-                                        <input type="checkbox" wire:model.live="mapForm.es_grupo" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                                        Grupo de productos
+                                    <label for="mapa-es-grupo" class="block text-xs font-black uppercase tracking-widest text-slate-700">
+                                        Tipo de asignación
+                                    </label>
+
+                                    <label for="mapa-es-grupo" class="group flex w-full cursor-pointer items-center justify-between rounded-2xl border border-slate-300 bg-white px-4 py-3 transition hover:border-emerald-400 hover:bg-emerald-50/40">
+                                        <div class="space-y-1">
+                                            <p class="text-xs font-black text-slate-800">Grupo de productos</p>
+                                            <p class="text-[11px] font-semibold" :class="$wire.mapForm.es_grupo ? 'text-emerald-700' : 'text-slate-500'">
+                                                <span x-text="$wire.mapForm.es_grupo ? 'Activo: selección múltiple' : 'Inactivo: producto individual'"></span>
+                                            </p>
+                                        </div>
+
+                                        <span class="relative inline-flex items-center">
+                                            <input id="mapa-es-grupo" type="checkbox" role="switch" :aria-checked="$wire.mapForm.es_grupo ? 'true' : 'false'" wire:model.live="mapForm.es_grupo" class="peer sr-only">
+                                            <span class="relative inline-flex h-7 w-14 items-center rounded-full bg-slate-300 ring-offset-2 transition peer-checked:bg-emerald-600 peer-focus-visible:outline-none peer-focus-visible:ring-4 peer-focus-visible:ring-emerald-500/60 peer-focus-visible:ring-offset-white">
+                                                <span class="ml-1 h-5 w-5 rounded-full bg-white shadow transition peer-checked:translate-x-7"></span>
+                                            </span>
+                                        </span>
                                     </label>
 
                                     @if($mapForm['es_grupo'])
@@ -593,13 +608,22 @@ new class extends Component {
                                                     <button type="button" @click="modalGrupoAbierto = false" class="text-slate-500 font-bold">Cerrar</button>
                                                 </div>
 
-                                                <div class="max-h-80 overflow-y-auto space-y-2 pr-2">
+                                                <div class="max-h-80 overflow-y-auto space-y-3 pr-2">
                                                     @foreach($productos as $prod)
-                                                        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 hover:bg-slate-50">
-                                                            <input type="checkbox" value="{{ $prod->id }}" wire:model="mapForm.producto_ids" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                                                            <span class="text-xs font-bold text-slate-700">
-                                                                {{ $prod->nombre }} - {{ $prod->categorias->first()?->nombre ?? 'Sin categoría' }} (SKU: {{ $prod->sku ?? 'N/D' }})
-                                                            </span>
+                                                        <label class="group relative block cursor-pointer rounded-2xl border-2 border-slate-300 bg-white p-4 text-slate-800 shadow-sm transition hover:border-emerald-500 hover:bg-emerald-50/40 has-[:checked]:border-4 has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50 has-[:checked]:text-emerald-900">
+                                                            <input type="checkbox" value="{{ $prod->id }}" wire:model="mapForm.producto_ids" class="peer sr-only">
+
+                                                            <div class="flex items-start gap-3">
+                                                                <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-slate-500 bg-white text-transparent transition group-has-[:checked]:border-emerald-700 group-has-[:checked]:bg-emerald-700 group-has-[:checked]:text-white">
+                                                                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.2 7.2a1 1 0 01-1.42 0l-3.2-3.2a1 1 0 011.42-1.42l2.49 2.49 6.49-6.49a1 1 0 011.42 0z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </span>
+
+                                                                <span class="text-xs font-extrabold leading-relaxed">
+                                                                    {{ $prod->nombre }} - {{ $prod->categorias->first()?->nombre ?? 'Sin categoría' }} (SKU: {{ $prod->sku ?? 'N/D' }})
+                                                                </span>
+                                                            </div>
                                                         </label>
                                                     @endforeach
                                                 </div>
