@@ -115,10 +115,13 @@
 
                         {{-- Dropdown Crecimiento --}}
                         <x-app.sidebar-dropdown text="Crecimiento" icon="phosphor-trend-up" id="crecimiento_dropdown"
-                            :active="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*')"
-                            :open="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*') ? '1' : '0'">
+                            :active="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('campanas*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*')"
+                            :open="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('campanas*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*') ? '1' : '0'">
                             <x-app.sidebar-link href="/puntaje-reglas" icon="phosphor-trophy" :active="Request::is('puntaje-reglas*')">Puntaje Reglas</x-app.sidebar-link>
                             <x-app.sidebar-link href="/rangos" icon="phosphor-medal" :active="Request::is('rangos*')">Rangos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/campanas" icon="phosphor-flag-banner" :active="Request::is('campanas*')">Campañas</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/bono-lideres" icon="phosphor-currency-circle-dollar" :active="Request::is('bono-lideres*')">Bono Líderes</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/bono-coordinadoras" icon="phosphor-coins" :active="Request::is('bono-coordinadoras*')">Bono Coordinadoras</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
 
                         {{-- Dropdown Cierre --}}
@@ -137,6 +140,7 @@
                     @role('admin')
                         <div class="my-2 border-t border-white/20"></div>
                         <x-app.sidebar-link href="/usuarios" icon="phosphor-users-three" :active="Request::is('usuarios*')">Usuarios</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/mejoras" icon="phosphor-sparkle" :active="Request::is('mejoras*')">Mejoras</x-app.sidebar-link>
                         <x-app.sidebar-link href="/agente" icon="phosphor-robot-duotone" active="false">Agente</x-app.sidebar-link>
                         <x-app.sidebar-link href="{{ route('settings.profile') }}" icon="phosphor-gear-duotone" active="false">Ajustes</x-app.sidebar-link>
                         <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text-duotone" :active="Request::is('changelog') || Request::is('changelog/*')">Novedades</x-app.sidebar-link>
