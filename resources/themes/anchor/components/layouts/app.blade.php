@@ -69,7 +69,7 @@
     </div>
 
 
-    <nav class="lg:hidden fixed bottom-0 inset-x-0 z-[4] border-t border-zinc-200/70 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur px-2 py-2">
+    <nav class="lg:hidden fixed bottom-0 inset-x-0 z-[1000] border-t border-zinc-200/70 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur px-2 py-2">
         <div class="grid grid-cols-5 gap-1">
             <a href="/dashboard" class="flex flex-col items-center justify-center gap-1 rounded-xl py-2 text-[11px] font-semibold text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100/80 dark:hover:bg-zinc-800">
                 <x-phosphor-house class="w-5 h-5" />
