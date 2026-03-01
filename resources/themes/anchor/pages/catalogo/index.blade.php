@@ -438,19 +438,24 @@ new class extends Component {
 
                     <div class="max-h-72 overflow-y-auto space-y-2 pr-1">
                         <template x-for="producto in (hotspotGrupoActivo?.productos ?? [])" :key="`hotspot-grupo-${producto.id}`">
-                            <label class="flex items-center gap-3 p-3 border border-slate-100 rounded-2xl hover:bg-slate-50">
-                                <input type="checkbox" :checked="seleccionHotspotGrupo.includes(String(producto.id))" @change="toggleProductoHotspotGrupo(producto.id)" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
-                                <div>
-                                    <p class="text-sm font-bold text-slate-800" x-text="producto.nombre"></p>
-                                    <p class="text-xs text-slate-500" x-text="`SKU: ${producto.sku ?? '-'} | $${formatMoney(producto.precio ?? 0)}`"></p>
+                            <button type="button" @click="toggleProductoHotspotGrupo(producto.id)" class="w-full text-left p-3 border rounded-2xl transition-all" :class="seleccionHotspotGrupo.includes(String(producto.id)) ? 'border-indigo-500 bg-indigo-50 ring-2 ring-indigo-200' : 'border-slate-200 bg-white hover:bg-slate-50'">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-800" x-text="producto.nombre"></p>
+                                        <p class="text-xs text-slate-500" x-text="`SKU: ${producto.sku ?? '-'} | $${formatMoney(producto.precio ?? 0)}`"></p>
+                                    </div>
+                                    <span class="shrink-0 inline-flex items-center rounded-full px-2 py-1 text-[10px] font-black uppercase tracking-wider" :class="seleccionHotspotGrupo.includes(String(producto.id)) ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'" x-text="seleccionHotspotGrupo.includes(String(producto.id)) ? 'Seleccionado' : 'Sin seleccionar'"></span>
                                 </div>
-                            </label>
+                            </button>
                         </template>
                     </div>
 
-                    <div class="flex justify-end gap-2 pt-2">
-                        <button type="button" @click="cerrarHotspotGrupo()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600">Cerrar</button>
-                        <button type="button" @click="confirmarHotspotGrupo()" class="px-4 py-2 rounded-xl bg-indigo-600 text-xs font-bold text-white">Agregar seleccionados</button>
+                    <div class="flex items-center justify-between gap-2 pt-2">
+                        <p class="text-xs font-semibold text-slate-500" x-text="`${seleccionHotspotGrupo.length} seleccionados`"></p>
+                        <div class="flex gap-2">
+                            <button type="button" @click="cerrarHotspotGrupo()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600">Cerrar</button>
+                            <button type="button" @click="confirmarHotspotGrupo()" class="px-4 py-2 rounded-xl bg-indigo-600 text-xs font-bold text-white">Agregar al carrito</button>
+                        </div>
                     </div>
                 </div>
             </div>

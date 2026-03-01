@@ -253,7 +253,7 @@
                         productos,
                         claveHotspot,
                     };
-                    this.seleccionHotspotGrupo = productos.map((producto) => String(producto.id));
+                    this.seleccionHotspotGrupo = [];
                     this.modalHotspotGrupoAbierto = true;
                     return;
                 }
