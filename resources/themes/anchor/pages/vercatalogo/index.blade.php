@@ -66,6 +66,10 @@ new class extends Component {
                         <div
                             x-ref="slider"
                             @scroll.debounce.50ms="sincronizarScroll"
+                            @touchstart="handleTouchStart($event)"
+                            @touchend="handleTouchEnd($event)"
+                            @mousedown="handleMouseDown($event)"
+                            @mouseup="handleMouseUp($event)"
                             class="no-scrollbar relative flex snap-x snap-mandatory overflow-x-auto rounded-[2rem] bg-slate-100 shadow-xl ring-1 ring-slate-200"
                         >
                             <template x-for="(pagina, index) in paginas" :key="pagina.id">
@@ -102,9 +106,19 @@ new class extends Component {
                             <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Páginas</h3>
                         </div>
 
-                        <div class="no-scrollbar flex snap-x gap-4 overflow-x-auto pb-4">
+                        <div
+                            x-ref="thumbs"
+                            data-thumbnails-track
+                            @mousedown="iniciarArrastreMiniaturas($event)"
+                            @mousemove="arrastrarMiniaturas($event)"
+                            @mouseup="finalizarArrastreMiniaturas()"
+                            @mouseleave="finalizarArrastreMiniaturas()"
+                            @touchstart="iniciarArrastreMiniaturas($event)"
+                            @touchmove="arrastrarMiniaturas($event)"
+                            @touchend="finalizarArrastreMiniaturas()"
+                            class="no-scrollbar flex snap-x gap-4 overflow-x-auto pb-4">
                             <template x-for="(pagina, index) in paginas" :key="`thumb-${pagina.id}`">
-                                <button @click="irAPagina(index)" class="aspect-[1061/1500] w-20 flex-shrink-0 snap-start overflow-hidden rounded-xl border-4 shadow-sm transition-all" :class="paginaActiva === index ? 'scale-105 border-indigo-500 shadow-indigo-100' : 'border-white opacity-50 hover:opacity-100'">
+                                <button @click="irAPagina(index)" :data-thumb-index="index" class="aspect-[1061/1500] w-20 flex-shrink-0 snap-start overflow-hidden rounded-xl border-4 shadow-sm transition-all" :class="paginaActiva === index ? 'scale-105 border-indigo-500 shadow-indigo-100' : 'border-white opacity-50 hover:opacity-100'">
                                     <img :src="pagina.imagen_path" class="h-full w-full object-cover" :alt="`Miniatura página ${pagina.numero}`">
                                 </button>
                             </template>
@@ -122,38 +136,153 @@ new class extends Component {
                 paginaActiva: 0,
                 zoom: false,
                 zoomImage: '',
+                touchStartX: null,
+                touchStartY: null,
+                mouseDown: false,
+                mouseStartX: null,
+                mouseStartY: null,
+                draggingThumbs: false,
+                thumbsStartX: 0,
+                thumbsScrollLeft: 0,
 
                 sincronizarScroll(event) {
-                    const slider = event.target;
-                    this.paginaActiva = Math.round(slider.scrollLeft / slider.clientWidth);
+                    const slider = event?.target ?? this.$refs.slider;
+                    if (!slider) return;
+
+                    const maxIndex = Math.max((this.paginas?.length ?? 1) - 1, 0);
+                    const index = Math.round(slider.scrollLeft / slider.clientWidth);
+                    this.paginaActiva = Math.min(maxIndex, Math.max(0, index));
+                    this.sincronizarMiniaturaActiva();
                 },
 
                 irAPagina(index) {
-                    this.paginaActiva = index;
-                    const slider = this.$refs.slider;
-                    if (!slider) return;
+                    if ((this.paginas ?? []).length === 0) return;
 
-                    slider.scrollTo({
-                        left: slider.clientWidth * index,
-                        behavior: 'smooth',
-                    });
+                    const boundedIndex = Math.min(this.paginas.length - 1, Math.max(0, Number(index)));
+                    this.paginaActiva = boundedIndex;
+
+                    const slider = this.$refs.slider;
+                    if (slider) {
+                        slider.scrollTo({
+                            left: slider.clientWidth * boundedIndex,
+                            behavior: 'smooth',
+                        });
+                    }
+
+                    this.sincronizarMiniaturaActiva();
                 },
 
                 paginaSiguiente() {
-                    if (this.paginaActiva < this.paginas.length - 1) {
-                        this.irAPagina(this.paginaActiva + 1);
-                    }
+                    this.irAPagina(this.paginaActiva + 1);
                 },
 
                 paginaAnterior() {
-                    if (this.paginaActiva > 0) {
-                        this.irAPagina(this.paginaActiva - 1);
-                    }
+                    this.irAPagina(this.paginaActiva - 1);
                 },
 
                 toggleZoom(path) {
                     this.zoomImage = path;
                     this.zoom = !this.zoom;
+                },
+
+                handleTouchStart(event) {
+                    if (!event.touches || !event.touches.length) return;
+                    this.touchStartX = event.touches[0].clientX;
+                    this.touchStartY = event.touches[0].clientY;
+                },
+
+                handleTouchEnd(event) {
+                    if (this.touchStartX === null) return;
+
+                    const touch = event.changedTouches?.[0] ?? null;
+                    if (!touch) {
+                        this.touchStartX = null;
+                        this.touchStartY = null;
+                        return;
+                    }
+
+                    const deltaX = touch.clientX - this.touchStartX;
+                    const deltaY = touch.clientY - this.touchStartY;
+
+                    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                        if (deltaX < 0) {
+                            this.paginaSiguiente();
+                        } else {
+                            this.paginaAnterior();
+                        }
+                    }
+
+                    this.touchStartX = null;
+                    this.touchStartY = null;
+                },
+
+                handleMouseDown(event) {
+                    this.mouseDown = true;
+                    this.mouseStartX = event.clientX;
+                    this.mouseStartY = event.clientY;
+                },
+
+                handleMouseUp(event) {
+                    if (!this.mouseDown) return;
+
+                    const deltaX = event.clientX - this.mouseStartX;
+                    const deltaY = event.clientY - this.mouseStartY;
+                    this.mouseDown = false;
+                    this.mouseStartX = null;
+                    this.mouseStartY = null;
+
+                    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                        if (deltaX < 0) {
+                            this.paginaSiguiente();
+                        } else {
+                            this.paginaAnterior();
+                        }
+                    }
+                },
+
+                iniciarArrastreMiniaturas(event) {
+                    const thumbs = this.$refs.thumbs;
+                    if (!thumbs) return;
+
+                    this.draggingThumbs = true;
+                    this.thumbsStartX = this.obtenerPuntoX(event) - thumbs.offsetLeft;
+                    this.thumbsScrollLeft = thumbs.scrollLeft;
+                },
+
+                arrastrarMiniaturas(event) {
+                    if (!this.draggingThumbs) return;
+
+                    const thumbs = this.$refs.thumbs;
+                    if (!thumbs) return;
+
+                    const x = this.obtenerPuntoX(event) - thumbs.offsetLeft;
+                    const walk = x - this.thumbsStartX;
+                    thumbs.scrollLeft = this.thumbsScrollLeft - walk;
+                },
+
+                finalizarArrastreMiniaturas() {
+                    this.draggingThumbs = false;
+                },
+
+                obtenerPuntoX(event) {
+                    if (event.touches?.length) {
+                        return event.touches[0].pageX;
+                    }
+
+                    return event.pageX;
+                },
+
+                sincronizarMiniaturaActiva() {
+                    const thumbs = this.$refs.thumbs;
+                    if (!thumbs) return;
+
+                    const selector = `[data-thumb-index="${this.paginaActiva}"]`;
+                    const activeThumb = thumbs.querySelector(selector);
+                    activeThumb?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center',
+                    });
                 },
             };
         };

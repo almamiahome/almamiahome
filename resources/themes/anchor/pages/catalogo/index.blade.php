@@ -306,33 +306,7 @@ new class extends Component {
         </div>
             
             
-            <div x-data="{ 
-    zoom: false, 
-    zoomImage: '', 
-    paginaActiva: 0,
-    sincronizarScroll(e) {
-        const el = e.target;
-        this.paginaActiva = Math.round(el.scrollLeft / el.clientWidth);
-    },
-    irAPagina(index) {
-        this.paginaActiva = index;
-        const slider = this.$refs.slider;
-        slider.scrollTo({
-            left: slider.clientWidth * index,
-            behavior: 'smooth'
-        });
-    },
-    paginaSiguiente() {
-        if (this.paginaActiva < this.paginas.length - 1) this.irAPagina(this.paginaActiva + 1);
-    },
-    paginaAnterior() {
-        if (this.paginaActiva > 0) this.irAPagina(this.paginaActiva - 1);
-    },
-    toggleZoom(path) { 
-        this.zoomImage = path; 
-        this.zoom = !this.zoom; 
-    } 
-}" class="max-w-2xl mx-auto px-4 py-8"> <div x-show="zoom" 
+            <div class="max-w-2xl mx-auto px-4 py-8"> <div x-show="zoom" 
          x-transition:opacity
          class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/95 backdrop-blur-md p-4"
          @click="zoom = false" x-cloak>
@@ -349,6 +323,10 @@ new class extends Component {
             <div 
                 x-ref="slider"
                 @scroll.debounce.50ms="sincronizarScroll"
+                @touchstart="handleTouchStart($event)"
+                @touchend="handleTouchEnd($event)"
+                @mousedown="handleMouseDown($event)"
+                @mouseup="handleMouseUp($event)"
                 class="relative flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar rounded-[2rem] bg-slate-100 shadow-xl ring-1 ring-slate-200"
             >
                 <template x-for="(pagina, index) in paginas" :key="pagina.id">
@@ -405,9 +383,21 @@ new class extends Component {
             <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Páginas</h3>
         </div>
         
-        <div class="flex gap-4 overflow-x-auto pb-4 snap-x no-scrollbar">
+        <div
+            x-ref="thumbs"
+            data-thumbnails-track
+            @mousedown="iniciarArrastreMiniaturas($event)"
+            @mousemove="arrastrarMiniaturas($event)"
+            @mouseup="finalizarArrastreMiniaturas()"
+            @mouseleave="finalizarArrastreMiniaturas()"
+            @touchstart="iniciarArrastreMiniaturas($event)"
+            @touchmove="arrastrarMiniaturas($event)"
+            @touchend="finalizarArrastreMiniaturas()"
+            class="flex gap-4 overflow-x-auto pb-4 snap-x no-scrollbar"
+        >
             <template x-for="(pagina, index) in paginas" :key="`thumb-${pagina.id}`">
                 <button @click="irAPagina(index)" 
+                        :data-thumb-index="index"
                         class="flex-shrink-0 w-20 aspect-[1061/1500] rounded-xl overflow-hidden border-4 transition-all snap-start shadow-sm"
                         :class="paginaActiva === index ? 'border-indigo-500 scale-105 shadow-indigo-100' : 'border-white opacity-50 hover:opacity-100'">
                     <img :src="pagina.imagen_path" class="w-full h-full object-cover">
@@ -872,45 +862,56 @@ new class extends Component {
         ])
 
         <script>
-            /**
-             * Extiende window.pedidoApp() para agregar:
-             * - Swipe en mobile (touch).
-             * - Swipe en desktop (mouse drag).
-             * - irAPagina sin hacer scroll hacia arriba.
-             * - Funciona con el slider por transform/translateX (efecto revista).
-             */
             window.pedidoAppWithSwipe = function () {
-                const baseFactory = (typeof window.pedidoApp === 'function')
-                    ? window.pedidoApp
-                    : null;
-
+                const baseFactory = typeof window.pedidoApp === 'function' ? window.pedidoApp : null;
                 const base = baseFactory ? baseFactory() : {};
 
                 return {
-                    // Mezclamos todo lo original
                     ...base,
-
-                    // Estado para swipe táctil
+                    zoom: false,
+                    zoomImage: '',
                     touchStartX: null,
                     touchStartY: null,
-
-                    // Estado para swipe con mouse
                     mouseDown: false,
                     mouseStartX: null,
                     mouseStartY: null,
+                    draggingThumbs: false,
+                    thumbsStartX: 0,
+                    thumbsScrollLeft: 0,
 
-                    /**
-                     * Sobreescribimos irAPagina para NO mover el scroll vertical.
-                     */
+                    sincronizarScroll(event) {
+                        const slider = event?.target ?? this.$refs.slider;
+                        if (!slider) return;
+
+                        const maxIndex = Math.max((this.paginas?.length ?? 1) - 1, 0);
+                        const index = Math.round(slider.scrollLeft / slider.clientWidth);
+                        this.paginaActiva = Math.min(maxIndex, Math.max(0, index));
+                        this.sincronizarMiniaturaActiva();
+                    },
+
                     irAPagina(index) {
+                        const paginas = this.paginas ?? [];
+                        if (paginas.length === 0) return;
+
+                        const boundedIndex = Math.min(paginas.length - 1, Math.max(0, Number(index)));
                         const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
                         const currentScrollLeft = window.scrollX || document.documentElement.scrollLeft;
+                        const slider = this.$refs.slider;
 
                         if (base && typeof base.irAPagina === 'function') {
-                            base.irAPagina.call(this, index);
+                            base.irAPagina.call(this, boundedIndex);
                         } else {
-                            this.paginaActiva = index;
+                            this.paginaActiva = boundedIndex;
                         }
+
+                        if (slider) {
+                            slider.scrollTo({
+                                left: slider.clientWidth * boundedIndex,
+                                behavior: 'smooth',
+                            });
+                        }
+
+                        this.sincronizarMiniaturaActiva();
 
                         this.$nextTick(() => {
                             window.scrollTo({
@@ -921,7 +922,19 @@ new class extends Component {
                         });
                     },
 
-                    // TOUCH
+                    paginaSiguiente() {
+                        this.irAPagina(this.paginaActiva + 1);
+                    },
+
+                    paginaAnterior() {
+                        this.irAPagina(this.paginaActiva - 1);
+                    },
+
+                    toggleZoom(path) {
+                        this.zoomImage = path;
+                        this.zoom = !this.zoom;
+                    },
+
                     handleTouchStart(event) {
                         if (!event.touches || !event.touches.length) return;
                         this.touchStartX = event.touches[0].clientX;
@@ -931,7 +944,7 @@ new class extends Component {
                     handleTouchEnd(event) {
                         if (this.touchStartX === null) return;
 
-                        const touch = (event.changedTouches && event.changedTouches[0]) || null;
+                        const touch = event.changedTouches?.[0] ?? null;
                         if (!touch) {
                             this.touchStartX = null;
                             this.touchStartY = null;
@@ -943,15 +956,9 @@ new class extends Component {
 
                         if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
                             if (deltaX < 0) {
-                                // Swipe izquierda -> siguiente página
-                                if (typeof this.paginaSiguiente === 'function') {
-                                    this.paginaSiguiente();
-                                }
+                                this.paginaSiguiente();
                             } else {
-                                // Swipe derecha -> página anterior
-                                if (typeof this.paginaAnterior === 'function') {
-                                    this.paginaAnterior();
-                                }
+                                this.paginaAnterior();
                             }
                         }
 
@@ -959,7 +966,6 @@ new class extends Component {
                         this.touchStartY = null;
                     },
 
-                    // MOUSE
                     handleMouseDown(event) {
                         this.mouseDown = true;
                         this.mouseStartX = event.clientX;
@@ -969,27 +975,64 @@ new class extends Component {
                     handleMouseUp(event) {
                         if (!this.mouseDown) return;
 
-                        this.mouseDown = false;
-
                         const deltaX = event.clientX - this.mouseStartX;
                         const deltaY = event.clientY - this.mouseStartY;
+                        this.mouseDown = false;
+                        this.mouseStartX = null;
+                        this.mouseStartY = null;
 
                         if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
                             if (deltaX < 0) {
-                                // Arrastró hacia la izquierda
-                                if (typeof this.paginaSiguiente === 'function') {
-                                    this.paginaSiguiente();
-                                }
+                                this.paginaSiguiente();
                             } else {
-                                // Arrastró hacia la derecha
-                                if (typeof this.paginaAnterior === 'function') {
-                                    this.paginaAnterior();
-                                }
+                                this.paginaAnterior();
                             }
                         }
+                    },
 
-                        this.mouseStartX = null;
-                        this.mouseStartY = null;
+                    iniciarArrastreMiniaturas(event) {
+                        const thumbs = this.$refs.thumbs;
+                        if (!thumbs) return;
+
+                        this.draggingThumbs = true;
+                        this.thumbsStartX = this.obtenerPuntoX(event) - thumbs.offsetLeft;
+                        this.thumbsScrollLeft = thumbs.scrollLeft;
+                    },
+
+                    arrastrarMiniaturas(event) {
+                        if (!this.draggingThumbs) return;
+
+                        const thumbs = this.$refs.thumbs;
+                        if (!thumbs) return;
+
+                        const x = this.obtenerPuntoX(event) - thumbs.offsetLeft;
+                        const walk = x - this.thumbsStartX;
+                        thumbs.scrollLeft = this.thumbsScrollLeft - walk;
+                    },
+
+                    finalizarArrastreMiniaturas() {
+                        this.draggingThumbs = false;
+                    },
+
+                    obtenerPuntoX(event) {
+                        if (event.touches?.length) {
+                            return event.touches[0].pageX;
+                        }
+
+                        return event.pageX;
+                    },
+
+                    sincronizarMiniaturaActiva() {
+                        const thumbs = this.$refs.thumbs;
+                        if (!thumbs) return;
+
+                        const selector = `[data-thumb-index="${this.paginaActiva}"]`;
+                        const activeThumb = thumbs.querySelector(selector);
+                        activeThumb?.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest',
+                            inline: 'center',
+                        });
                     },
                 };
             };
