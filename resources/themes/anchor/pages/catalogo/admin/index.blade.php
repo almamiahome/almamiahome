@@ -67,7 +67,7 @@ new class extends Component {
             redirect()->to('/catalogo')->send();
         }
 
-        $this->productos = Producto::orderBy('nombre')->get();
+        $this->productos = Producto::with('categorias')->orderBy('nombre')->get();
         $this->loadCatalogos();
     }
 
@@ -597,21 +597,84 @@ new class extends Component {
                                                     @foreach($productos as $prod)
                                                         <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 hover:bg-slate-50">
                                                             <input type="checkbox" value="{{ $prod->id }}" wire:model="mapForm.producto_ids" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                                                            <span class="text-xs font-bold text-slate-700">{{ $prod->nombre }} ({{ $prod->sku }})</span>
+                                                            <span class="text-xs font-bold text-slate-700">
+                                                                {{ $prod->nombre }} - {{ $prod->categorias->first()?->nombre ?? 'Sin categoría' }} (SKU: {{ $prod->sku ?? 'N/D' }})
+                                                            </span>
                                                         </label>
                                                     @endforeach
                                                 </div>
                                             </div>
                                         </div>
                                     @else
-                                        <div class="space-y-1">
+                                        @php
+                                            $productosBusqueda = $productos->map(fn ($prod) => [
+                                                'id' => (string) $prod->id,
+                                                'nombre' => $prod->nombre,
+                                                'sku' => $prod->sku,
+                                                'categoria' => $prod->categorias->first()?->nombre,
+                                                'etiqueta' => $prod->nombre.' - '.($prod->categorias->first()?->nombre ?? 'Sin categoría').' (SKU: '.($prod->sku ?? 'N/D').')',
+                                            ])->values();
+                                        @endphp
+
+                                        <div
+                                            class="space-y-1"
+                                            x-data="{
+                                                abierto: false,
+                                                query: '',
+                                                seleccionado: @entangle('mapForm.producto_id').live,
+                                                productos: @js($productosBusqueda),
+                                                get filtrados() {
+                                                    const termino = this.query.trim().toLowerCase();
+
+                                                    if (!termino) {
+                                                        return this.productos.slice(0, 30);
+                                                    }
+
+                                                    return this.productos.filter((producto) => {
+                                                        return (producto.nombre ?? '').toLowerCase().includes(termino)
+                                                            || (producto.sku ?? '').toLowerCase().includes(termino)
+                                                            || (producto.categoria ?? '').toLowerCase().includes(termino);
+                                                    }).slice(0, 30);
+                                                },
+                                                get etiquetaSeleccionada() {
+                                                    const encontrado = this.productos.find((producto) => String(producto.id) === String(this.seleccionado));
+                                                    return encontrado ? encontrado.etiqueta : '';
+                                                },
+                                                seleccionar(producto) {
+                                                    this.seleccionado = producto.id;
+                                                    this.query = producto.etiqueta;
+                                                    this.abierto = false;
+                                                },
+                                            }"
+                                            x-init="query = etiquetaSeleccionada"
+                                            x-effect="if (!abierto) { query = etiquetaSeleccionada }"
+                                            @click.outside="abierto = false"
+                                        >
                                             <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Producto</label>
-                                            <select wire:model="mapForm.producto_id" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
-                                                <option value="">Seleccionar...</option>
-                                                @foreach($productos as $prod)
-                                                    <option value="{{ $prod->id }}">{{ $prod->nombre }} ({{ $prod->sku }})</option>
-                                                @endforeach
-                                            </select>
+                                            <input
+                                                type="text"
+                                                x-model="query"
+                                                @focus="abierto = true"
+                                                @input="abierto = true"
+                                                placeholder="Buscar por nombre, SKU o categoría"
+                                                class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold"
+                                            >
+                                            <input type="hidden" wire:model.live="mapForm.producto_id" :value="seleccionado">
+
+                                            <div x-show="abierto" x-cloak class="max-h-56 overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-lg">
+                                                <template x-for="producto in filtrados" :key="producto.id">
+                                                    <button
+                                                        type="button"
+                                                        class="w-full px-4 py-3 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                                                        @click="seleccionar(producto)"
+                                                        x-text="producto.etiqueta"
+                                                    ></button>
+                                                </template>
+
+                                                <p x-show="filtrados.length === 0" class="px-4 py-3 text-xs font-semibold text-slate-400">
+                                                    No se encontraron productos para la búsqueda.
+                                                </p>
+                                            </div>
                                         </div>
                                     @endif
                                 </div>
