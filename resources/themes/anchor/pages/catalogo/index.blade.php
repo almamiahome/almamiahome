@@ -330,7 +330,7 @@ new class extends Component {
                 class="relative flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar rounded-[2rem] bg-slate-100 shadow-xl ring-1 ring-slate-200"
             >
                 <template x-for="(pagina, index) in paginas" :key="pagina.id">
-                    <div class="min-w-full snap-start snap-always relative flex justify-center items-center overflow-hidden">
+                    <div class="min-w-full snap-start snap-always relative flex justify-center items-center overflow-hidden" :class="claseAnimacionPagina(index)">
                         <div class="relative w-full aspect-[1061/1500] bg-white">
                             <img :src="pagina.imagen_path" 
                                  class="absolute inset-0 w-full h-full object-cover select-none"
@@ -410,6 +410,37 @@ new class extends Component {
 <style>
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .catalogo-pagina {
+        transform-origin: left center;
+        transition: transform 420ms cubic-bezier(.22, .61, .36, 1), box-shadow 420ms ease, opacity 320ms ease;
+        will-change: transform, opacity;
+    }
+
+    .catalogo-pagina--sale-adelante {
+        transform: perspective(1400px) rotateY(-18deg) translateX(-2.5%) scale(0.985);
+        box-shadow: -20px 0 38px -18px rgba(15, 23, 42, 0.4), 0 26px 38px -30px rgba(15, 23, 42, 0.38);
+    }
+
+    .catalogo-pagina--sale-atras {
+        transform-origin: right center;
+        transform: perspective(1400px) rotateY(18deg) translateX(2.5%) scale(0.985);
+        box-shadow: 20px 0 38px -18px rgba(15, 23, 42, 0.4), 0 26px 38px -30px rgba(15, 23, 42, 0.38);
+    }
+
+    @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+        .catalogo-pagina {
+            transform-origin: center;
+            transition: transform 260ms ease, opacity 220ms ease;
+        }
+
+        .catalogo-pagina--sale-adelante,
+        .catalogo-pagina--sale-atras {
+            transform: translateX(-2%) scale(0.994);
+            opacity: 0.82;
+            box-shadow: none;
+        }
+    }
     
     /* Soporte para navegadores que no leen aspect-ratio en clases arbitrarias de tailwind */
     .aspect-page {
@@ -875,6 +906,10 @@ new class extends Component {
                     mouseDown: false,
                     mouseStartX: null,
                     mouseStartY: null,
+                    animandoPasoPagina: false,
+                    direccionPasoPagina: null,
+                    paginaSaliente: null,
+                    temporizadorAnimacionPagina: null,
                     draggingThumbs: false,
                     thumbsStartX: 0,
                     thumbsScrollLeft: 0,
@@ -894,6 +929,9 @@ new class extends Component {
                         if (paginas.length === 0) return;
 
                         const boundedIndex = Math.min(paginas.length - 1, Math.max(0, Number(index)));
+                        if (boundedIndex === this.paginaActiva) return;
+
+                        this.iniciarAnimacionPaso(boundedIndex);
                         const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
                         const currentScrollLeft = window.scrollX || document.documentElement.scrollLeft;
                         const slider = this.$refs.slider;
@@ -928,6 +966,35 @@ new class extends Component {
 
                     paginaAnterior() {
                         this.irAPagina(this.paginaActiva - 1);
+                    },
+
+                    iniciarAnimacionPaso(destino) {
+                        const direccion = destino > this.paginaActiva ? 'adelante' : 'atras';
+
+                        this.animandoPasoPagina = true;
+                        this.direccionPasoPagina = direccion;
+                        this.paginaSaliente = this.paginaActiva;
+
+                        if (this.temporizadorAnimacionPagina) {
+                            clearTimeout(this.temporizadorAnimacionPagina);
+                        }
+
+                        this.temporizadorAnimacionPagina = setTimeout(() => {
+                            this.animandoPasoPagina = false;
+                            this.direccionPasoPagina = null;
+                            this.paginaSaliente = null;
+                            this.temporizadorAnimacionPagina = null;
+                        }, 520);
+                    },
+
+                    claseAnimacionPagina(index) {
+                        if (!this.animandoPasoPagina || this.paginaSaliente !== index) {
+                            return 'catalogo-pagina';
+                        }
+
+                        return this.direccionPasoPagina === 'adelante'
+                            ? 'catalogo-pagina catalogo-pagina--sale-adelante'
+                            : 'catalogo-pagina catalogo-pagina--sale-atras';
                     },
 
                     toggleZoom(path) {
