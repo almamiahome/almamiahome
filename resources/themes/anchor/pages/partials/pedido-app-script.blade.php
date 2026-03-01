@@ -182,15 +182,36 @@
                 return this.productos.find(p => Number(p.id) === Number(id));
             },
 
+            obtenerClaveHotspot(productoCatalogo, productoIdFallback = null){
+                if (!productoCatalogo) {
+                    return productoIdFallback ? String(productoIdFallback) : null;
+                }
+
+                if (productoCatalogo?.id !== undefined && productoCatalogo?.id !== null) {
+                    return String(productoCatalogo.id);
+                }
+
+                const paginaId = productoCatalogo?.catalogo_pagina_id
+                    ?? productoCatalogo?.pagina_id
+                    ?? productoCatalogo?.pagina?.id
+                    ?? 'sin-pagina';
+                const productoId = productoCatalogo?.producto_id ?? productoIdFallback ?? 'sin-producto';
+                const posX = productoCatalogo?.pos_x ?? 'sin-pos-x';
+                const posY = productoCatalogo?.pos_y ?? 'sin-pos-y';
+
+                return `${paginaId}-${productoId}-${posX}-${posY}`;
+            },
+
             addProductoDesdePagina(productoCatalogo){
                 const productoId = productoCatalogo?.producto_id ?? productoCatalogo?.id;
                 const prod = (productoId ? this.getProductoById(productoId) : null) ?? productoCatalogo?.producto ?? null;
+                const claveHotspot = this.obtenerClaveHotspot(productoCatalogo, prod?.id ?? productoId);
 
                 if(!prod){
                     this.messages.error = 'Producto no encontrado en el catálogo.';
                     return;
                 }
-                this.addToCart(prod);
+                this.addToCart(prod, claveHotspot);
             },
 
             obtenerProductosHotspot(productoCatalogo){
@@ -206,16 +227,20 @@
             },
 
             estadoHotspot(productoCatalogo){
-                const productos = this.obtenerProductosHotspot(productoCatalogo);
-                if (!productos.length) {
+                const productoIdFallback = productoCatalogo?.producto_id ?? productoCatalogo?.id ?? null;
+                const claveHotspot = this.obtenerClaveHotspot(productoCatalogo, productoIdFallback);
+
+                if (!claveHotspot) {
                     return null;
                 }
 
-                const hayAgregado = productos.some((producto) => this.estadoBotonCatalogo[producto.id] === 'agregado');
-                return hayAgregado ? 'agregado' : null;
+                return this.estadoBotonCatalogo[claveHotspot] === 'agregado' ? 'agregado' : null;
             },
 
             manejarClickHotspot(productoCatalogo){
+                const productoIdFallback = productoCatalogo?.producto_id ?? productoCatalogo?.id ?? null;
+                const claveHotspot = this.obtenerClaveHotspot(productoCatalogo, productoIdFallback);
+
                 if (productoCatalogo?.es_grupo) {
                     const productos = this.obtenerProductosHotspot(productoCatalogo);
                     if (!productos.length) {
@@ -226,6 +251,7 @@
                     this.hotspotGrupoActivo = {
                         ...productoCatalogo,
                         productos,
+                        claveHotspot,
                     };
                     this.seleccionHotspotGrupo = productos.map((producto) => String(producto.id));
                     this.modalHotspotGrupoAbierto = true;
@@ -248,13 +274,14 @@
             confirmarHotspotGrupo(){
                 const productos = this.hotspotGrupoActivo?.productos ?? [];
                 const seleccionados = productos.filter((producto) => this.seleccionHotspotGrupo.includes(String(producto.id)));
+                const claveHotspot = this.hotspotGrupoActivo?.claveHotspot ?? null;
 
                 if (!seleccionados.length) {
                     this.messages.error = 'Seleccioná al menos un producto para agregar al carrito.';
                     return;
                 }
 
-                seleccionados.forEach((producto) => this.addToCart(producto));
+                seleccionados.forEach((producto) => this.addToCart(producto, claveHotspot));
                 this.cerrarHotspotGrupo();
             },
 
@@ -265,7 +292,7 @@
             },
 
             // ==== CARRITO Y ACCIONES ====
-            addToCart(prod){
+            addToCart(prod, claveAnimacion = null){
                 const reglaVis = this.getReglaVisibilidad(prod);
                 if (reglaVis) {
                     const min = Number(reglaVis.puntaje_minimo ?? 0);
@@ -296,7 +323,7 @@
                 this.messages.error = null;
                 this.calculateTotals();
                 this.notifyAddedToCart();
-                this.activarAnimacionAgregado(prod.id);
+                this.activarAnimacionAgregado(claveAnimacion ?? prod.id);
             },
 
             increaseQty(index){
@@ -508,13 +535,13 @@
                 } catch (e) {}
             },
             
-            activarAnimacionAgregado(productoId){
-                if(!productoId) return;
-                const id = Number(productoId);
-                if (this.temporizadoresBotonCatalogo[id]) clearTimeout(this.temporizadoresBotonCatalogo[id]);
-                this.estadoBotonCatalogo = { ...this.estadoBotonCatalogo, [id]: 'agregado' };
-                this.temporizadoresBotonCatalogo[id] = setTimeout(() => {
-                    this.estadoBotonCatalogo = { ...this.estadoBotonCatalogo, [id]: null };
+            activarAnimacionAgregado(claveHotspot){
+                if(claveHotspot === undefined || claveHotspot === null) return;
+                const clave = String(claveHotspot);
+                if (this.temporizadoresBotonCatalogo[clave]) clearTimeout(this.temporizadoresBotonCatalogo[clave]);
+                this.estadoBotonCatalogo = { ...this.estadoBotonCatalogo, [clave]: 'agregado' };
+                this.temporizadoresBotonCatalogo[clave] = setTimeout(() => {
+                    this.estadoBotonCatalogo = { ...this.estadoBotonCatalogo, [clave]: null };
                 }, 1200);
             },
 
