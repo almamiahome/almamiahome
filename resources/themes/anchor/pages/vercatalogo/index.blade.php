@@ -26,6 +26,7 @@ new class extends Component {
     ]"
 >
     @volt('catalogo.publico')
+    <div>
     <x-container class="py-8 sm:py-12">
         <div
             x-data="catalogoPublico(@js($this->paginas_catalogo))"
@@ -359,5 +360,6 @@ new class extends Component {
             }
         }
     </style>
+    </div>
     @endvolt
 </x-layouts.marketing>
