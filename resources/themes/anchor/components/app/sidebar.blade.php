@@ -15,7 +15,7 @@
             'translate-y-full lg:translate-y-0 lg:left-4': !sidebarOpen,
             'translate-y-0 lg:left-4': sidebarOpen,
         }"
-        class="fixed z-[5] inset-x-4 bottom-4 top-20 md:top-4 md:left-4 flex flex-col overflow-hidden  transition-all duration-500 ease-in-out 
+        class="fixed z-[5000] inset-x-4 bottom-4 top-20 md:top-4 md:left-4 flex flex-col overflow-hidden  transition-all duration-500 ease-in-out 
                /* Configuración del Cristal */
                bg-white/70 dark:bg-black/40 backdrop-blur-2xl 
                rounded-[2.5rem] border border-white/40 dark:border-white/10 
