@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premios | Alma Mía Fragancias</title>
+  <style>
+    :root {
+      --fondo-1: #e6f0ff;
+      --fondo-2: #ffe6f5;
+      --texto: #1f2a44;
+      --muted: #4f607d;
+      --borde: rgba(255, 255, 255, 0.65);
+      --vidrio: rgba(255, 255, 255, 0.34);
+      --vidrio-fuerte: rgba(255, 255, 255, 0.55);
+      --sombra: 0 16px 44px rgba(23, 33, 73, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      color: var(--texto);
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(34, 149, 242, 0.28), transparent 36%),
+        radial-gradient(circle at 82% 15%, rgba(243, 79, 195, 0.24), transparent 35%),
+        linear-gradient(130deg, var(--fondo-1), var(--fondo-2));
+    }
+
+    .contenedor {
+      max-width: 1260px;
+      margin: 0 auto;
+      border-radius: 24px;
+      border: 1px solid var(--borde);
+      background: var(--vidrio);
+      box-shadow: var(--sombra);
+      backdrop-filter: blur(14px) saturate(135%);
+      -webkit-backdrop-filter: blur(14px) saturate(135%);
+      overflow: hidden;
+    }
+
+    .cabecera {
+      padding: 24px;
+      border-bottom: 1px solid var(--borde);
+      background: linear-gradient(90deg, rgba(34, 149, 242, 0.3), rgba(243, 79, 195, 0.3));
+    }
+
+    h1 { margin: 0 0 8px; font-size: clamp(1.5rem, 3.1vw, 2.1rem); }
+    .sub { margin: 0; color: var(--muted); }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 20px 24px 0;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--borde);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--vidrio-fuerte);
+      color: var(--texto);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(34, 149, 242, 0.95), rgba(243, 79, 195, 0.92));
+    }
+
+    .panel { display: none; padding: 24px; }
+    .panel.active { display: block; }
+
+    .tarjeta {
+      background: var(--vidrio-fuerte);
+      border: 1px solid var(--borde);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .rejilla { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    h2, h3 { margin: 0 0 10px; }
+    p { margin: 0 0 8px; }
+    ul { margin: 6px 0 0; padding-left: 18px; }
+    li + li { margin-top: 6px; }
+
+    .tabla-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: rgba(255, 255, 255, 0.56);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid rgba(38, 56, 90, 0.26);
+      padding: 8px;
+      text-align: left;
+      white-space: nowrap;
+      font-size: 0.93rem;
+    }
+
+    th { background: rgba(39, 153, 245, 0.19); }
+    .chip { display: inline-block; padding: 4px 8px; border-radius: 999px; background: rgba(243, 79, 195, 0.16); font-weight: 700; color: #9d1b77; }
+    .mini { font-size: 0.9rem; color: var(--muted); }
+    .json-info { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; color: #3e4d74; }
+  </style>
+</head>
+<body>
+  <main class="contenedor">
+    <header class="cabecera">
+      <h1>Sistema de Premios y Seguimiento</h1>
+      <p class="sub">Pantalla estilo liquidglass con pestañas y datos organizados en JSON para escalar sin recargar.</p>
+      <p class="json-info">Origen de datos: <code>#datos-premios</code> (catálogos, cierres, premios, proyección y resumen por líder).</p>
+    </header>
+
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Pestañas del sistema"></nav>
+    <section id="paneles"></section>
+  </main>
+
+  <script id="datos-premios" type="application/json">
+    {
+      "tabs": [
+        {
+          "id": "estructura",
+          "titulo": "Estructura y seguimiento",
+          "secciones": [
+            {
+              "tipo": "listaDoble",
+              "titulo": "1) Estructura de tiempo y seguimiento",
+              "columnas": [
+                {
+                  "titulo": "Organización",
+                  "items": [
+                    "Catálogos: el año se divide en Catálogo N°1, N°2, N°3 y N°4.",
+                    "Cierres: cada catálogo tiene 3 cierres (campañas).",
+                    "Zonificación: filtros por Líder, Zona o Departamento."
+                  ]
+                },
+                {
+                  "titulo": "Métricas de carga",
+                  "items": [
+                    "Pedidos (actividad): cantidad de revendedoras activas por cierre.",
+                    "Unidades: suma total de productos vendidos.",
+                    "Auxiliares (contratapa): se cargan por separado y no suman para premios.",
+                    "Altas: nuevas revendedoras incorporadas.",
+                    "Cobranza: confirmación de pago en tiempo y forma."
+                  ]
+                }
+              ]
+            },
+            {
+              "tipo": "tablaSeguimiento",
+              "titulo": "Simulación con datos actuales de planilla (Líder: Morales Edelmira)",
+              "cabeceras": ["Revendedora", "Catálogo", "Cierre", "Unidades", "Auxiliares"],
+              "filas": [
+                ["Velazquez Luisana Jazmin", "N°1", "N°1", 9, 2],
+                ["Ureta Magali", "N°1", "N°1", 10, 2],
+                ["Ureta Magali", "N°1", "N°2", 11, 2],
+                ["Morales Edelmira", "N°1", "N°1", 20, 4],
+                ["Morales Edelmira", "N°1", "N°2", 20, 2],
+                ["Quevedo Luciana Janet", "N°1", "N°1", 17, 2],
+                ["Quevedo Luciana Janet", "N°1", "N°2", 7, 2],
+                ["Canales Alicia", "N°1", "N°1", 22, 2],
+                ["Canales Alicia", "N°1", "N°2", 13, 2],
+                ["Lucero Claudia", "N°1", "N°1", 18, 2],
+                ["Lucero Claudia", "N°1", "N°2", 33, 2],
+                ["Rios Morena", "N°1", "N°1", 11, 3],
+                ["Rios Morena", "N°1", "N°2", 27, 4],
+                ["Montenegro Zulema", "N°1", "N°1", 5, 2],
+                ["Correa Natalia", "N°1", "N°1", 12, 2],
+                ["Correa Natalia", "N°1", "N°2", 50, 2],
+                ["Campos Maria", "N°1", "N°2", 7, 2],
+                ["Moyano Fabiola", "N°1", "N°2", 9, 2]
+              ],
+              "nota": "Se replica el esquema visible en las imágenes: Unid. y Aux. separados por cierre."
+            },
+            {
+              "tipo": "tablaResumen",
+              "titulo": "Planilla de cierres de líderes (resumen por cierre)",
+              "cabeceras": ["Cierre", "Pedidos", "Unidades", "Auxiliares", "Primeros", "Segundos", "Terceros"],
+              "filas": [
+                ["N°1", 9, 124, 21, 2, 3, 4],
+                ["N°2", 10, 177, 20, 3, 4, 3]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "logica",
+          "titulo": "Lógica de premios",
+          "secciones": [
+            {
+              "tipo": "bloque",
+              "titulo": "2) Lógica de premios y comisiones",
+              "parrafos": [
+                "A) Premio por retención: gana si los pedidos del cierre actual son iguales o mayores al cierre anterior. Pierde si hay menos pedidos.",
+                "B) Pago por actividad (reparto): valor por nivel × cantidad de pedidos.",
+                "Ejemplo: nivel con $1.000 por pedido y 15 pedidos = $15.000.",
+                "C) Plus de crecimiento (15%): aplica cuando la líder cumple objetivos del cierre anterior."
+              ],
+              "destacado": "$15.000"
+            },
+            {
+              "tipo": "tablaLiquidacion",
+              "titulo": "Simulación de liquidación (IBARS AMANDA - CIERRE 1 CAT N°)",
+              "cabeceras": ["Categoría", "Actividad", "Retención", "Meta +3", "Meta +2", "Altas", "Unidades", "Cobranza", "Reparto", "Total a cobrar"],
+              "filas": [
+                ["Diamante Rosa", 60000, "Sí", 5, 3, 5, 408, "Sí", 61100, 245700]
+              ],
+              "totales": {
+                "objetivoPedidos": 50,
+                "objetivoUnidades": 434,
+                "plusCrecimiento": 36855,
+                "totalConObjetivo": 282555
+              }
+            }
+          ]
+        },
+        {
+          "id": "proyeccion",
+          "titulo": "Proyección y pagos",
+          "secciones": [
+            {
+              "tipo": "listaDoble",
+              "titulo": "3) Proyección para próximo cierre",
+              "columnas": [
+                {
+                  "titulo": "Objetivos automáticos",
+                  "items": [
+                    "Objetivo de pedidos: actividad actual + 3 pedidos.",
+                    "Objetivo de unidades proporcional: mantiene promedio de unidades por pedido.",
+                    "Ejemplo: 15 pedidos = 150 unidades (promedio 10). Objetivo: 18 pedidos = 180 unidades.",
+                    "Si cumple pedidos + unidades, se proyecta aumento del 15%."
+                  ]
+                },
+                {
+                  "titulo": "Cronograma de pagos diferido",
+                  "items": [
+                    "Cierre actual: se cargan los datos que están ocurriendo hoy.",
+                    "Lo que cobra hoy: resultado del cierre pasado.",
+                    "Lo que cobrará mañana: cálculo del cierre actual, con o sin plus del 15%."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "revendedoras",
+          "titulo": "Premios revendedoras",
+          "secciones": [
+            {
+              "tipo": "bloque",
+              "titulo": "PREMIOS REVENDEDORAS",
+              "parrafos": [
+                "Premio 3 pedidos consecutivos: gana un premio al sostener 3 pedidos consecutivos con unidades mínimas.",
+                "Premio continuidad y ventas: suma puntos por pedidos consecutivos.",
+                "Los puntos se acumulan para canjear productos.",
+                "El premio se envía en el primer cierre del próximo catálogo.",
+                "Duración: por catálogo.",
+                "Premios por inicio: se premia primer, segundo y tercer pedido consecutivo."
+              ]
+            },
+            {
+              "tipo": "tablaPuntos",
+              "titulo": "Escala de puntos",
+              "cabeceras": ["Unidades", "Puntos"],
+              "filas": [[10, 100], [15, 150], [20, 250]]
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+
+  <script>
+    const datos = JSON.parse(document.getElementById('datos-premios').textContent);
+    const tabsEl = document.getElementById('tabs');
+    const panelesEl = document.getElementById('paneles');
+
+    const moneda = (valor) => `$ ${Number(valor).toLocaleString('es-AR')}`;
+
+    const crearTabla = (cabeceras, filas, formatearMoneda = []) => {
+      const th = cabeceras.map((h) => `<th>${h}</th>`).join('');
+      const body = filas.map((fila) => {
+        const tds = fila.map((celda, i) => {
+          const valor = formatearMoneda.includes(i) ? moneda(celda) : celda;
+          return `<td>${valor}</td>`;
+        }).join('');
+        return `<tr>${tds}</tr>`;
+      }).join('');
+
+      return `
+        <div class="tabla-wrap">
+          <table>
+            <thead><tr>${th}</tr></thead>
+            <tbody>${body}</tbody>
+          </table>
+        </div>
+      `;
+    };
+
+    const renderSeccion = (seccion) => {
+      if (seccion.tipo === 'listaDoble') {
+        const columnas = seccion.columnas.map((col) => `
+          <div>
+            <h3>${col.titulo}</h3>
+            <ul>${col.items.map((item) => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        `).join('');
+
+        return `
+          <article class="tarjeta">
+            <h2>${seccion.titulo}</h2>
+            <div class="rejilla">${columnas}</div>
+          </article>
+        `;
+      }
+
+      if (seccion.tipo === 'bloque') {
+        return `
+          <article class="tarjeta">
+            <h2>${seccion.titulo}</h2>
+            ${seccion.parrafos.map((p) => `<p>${p}</p>`).join('')}
+            ${seccion.destacado ? `<p><span class="chip">${seccion.destacado}</span></p>` : ''}
+          </article>
+        `;
+      }
+
+      if (seccion.tipo === 'tablaLiquidacion') {
+        const tabla = crearTabla(seccion.cabeceras, seccion.filas, [1, 8, 9]);
+        const t = seccion.totales;
+        return `
+          <article class="tarjeta">
+            <h3>${seccion.titulo}</h3>
+            ${tabla}
+            <p class="mini">Objetivo por cierre: <strong>${t.objetivoPedidos}</strong> pedidos | Objetivo unidades: <strong>${t.objetivoUnidades}</strong>.</p>
+            <p class="mini">Plus de crecimiento (15%): <strong>${moneda(t.plusCrecimiento)}</strong> | Total con objetivo: <strong>${moneda(t.totalConObjetivo)}</strong>.</p>
+          </article>
+        `;
+      }
+
+      if (seccion.tipo === 'tablaSeguimiento' || seccion.tipo === 'tablaResumen' || seccion.tipo === 'tablaPuntos') {
+        return `
+          <article class="tarjeta">
+            <h3>${seccion.titulo}</h3>
+            ${crearTabla(seccion.cabeceras, seccion.filas)}
+            ${seccion.nota ? `<p class="mini">${seccion.nota}</p>` : ''}
+          </article>
+        `;
+      }
+
+      return '';
+    };
+
+    const render = () => {
+      tabsEl.innerHTML = datos.tabs.map((tab, index) => `
+        <button class="tab-btn ${index === 0 ? 'active' : ''}" data-tab="tab-${tab.id}" role="tab" aria-selected="${index === 0}">
+          ${tab.titulo}
+        </button>
+      `).join('');
+
+      panelesEl.innerHTML = datos.tabs.map((tab, index) => `
+        <section id="tab-${tab.id}" class="panel ${index === 0 ? 'active' : ''}" role="tabpanel">
+          ${tab.secciones.map((s) => renderSeccion(s)).join('')}
+        </section>
+      `).join('');
+
+      const botones = document.querySelectorAll('.tab-btn');
+      const paneles = document.querySelectorAll('.panel');
+
+      botones.forEach((boton) => {
+        boton.addEventListener('click', () => {
+          const objetivo = boton.dataset.tab;
+          botones.forEach((b) => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          paneles.forEach((p) => p.classList.remove('active'));
+          boton.classList.add('active');
+          boton.setAttribute('aria-selected', 'true');
+          document.getElementById(objetivo).classList.add('active');
+        });
+      });
+    };
+
+    render();
+  </script>
+</body>
+</html>
