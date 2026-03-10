@@ -1,0 +1,216 @@
+*/*/ Estructura de Tiempo y Seguimiento /*/*
+
+El trabajo se organiza de forma jerárquica para mantener el orden de las ventas:
+
+Catálogos: El año se divide en 4 catálogos 
+
+Cierres: Cada catálogo tiene 3 cierres (campañas) 1 por mes.
+
+Catálogo N°1 (Ene - Feb - Mar) 
+Catálogo N°2 (Abr - May - Jun)
+Catálogo N°3 (Jul - Ago - Sep)
+Catálogo N°4 (Oct - Nov - Dic)
+
+////////// Rangos de menor a mayor
+|Revendedora > Lider > Coordinadora|
+
+
+****************************************************
+			PREMIOS REVENDEDORAS
+****************************************************
+
+Premio 3 PEDIDOS CONSECUTIVOS: Gana un premio realizando 3 pedidos de x unidades (Ejemplo 10 unidades) consecutivos
+ 
+Ejemplo: Catálogo N°1 
+Ene - 10 unidades = Premio 1
+Feb - 10 Unidades = Premio 2
+Mar - 10 Unidades = Premio 3
+
+Premio CONTINUIDAD Y VENTAS: Suma puntos con cada pedido consecutivos
+
+(10 Unidades = 100 Puntos) 
+(15 unidades = 150 Puntos)
+(20 Unidades = 250 Puntos)
+
+ℹ️ Acumulables para cambiarse por productos
+ℹ️ Premio se envia en el primer cierre del proximo catalogo
+ℹ️ La duracion es por catalogo (3 Campañas / Cierres) 
+
+
+****************************************************
+
+			PREMIOS LIDERES
+
+****************************************************
+
+CONTEXTO: Los pedidos de las lideres, significa que 1 pedido = 1 revendedora que realzo compra
+
+EJEMPLO: 
+- Lider tenia para presentar desde el: 23 al 25 de febrero 
+- Catálogo N°1 - Cierre / Campaña N°2 = 15 Pedidos
+- 15 pedidos = 15 Revendedoras realizaron compras (Ej. 10 U. C/U)
+
+
+DATOS CLAVE:
+ℹ️ UNIDADES (U.) : Suma de todas las unidades vendidas
+ℹ️ AUXILIARES (Contratapa): Se registran por separado
+ℹ️ AUXILIARES:  no suman para el cálculo de unidades ni premios.
+ℹ️ TOTAL A COBRAR: Total a cobrar el cierre que viene
+ℹ️ OBJETIVO AL PROXIMO CIERRE: U. actual (15) + 3 = 18
+si lo cumple gana:
+ℹ️ COBRANZA: Se marca si el equipo pagó en tiempo y forma (SI/NO).
+ℹ️ ACTIVIDAD: Cantidad de revendedoras que realizaron compra en el cierre actual.
+ℹ️ Altas: Cantidad de nuevas revendedoras incorporadas al equipo en el cierre actual.
+
+
+
+🎁🎁🎁🎁🎁🎁🎁
+🎁 PREMIOS 🎁 
+🎁🎁🎁🎁🎁🎁🎁
+
+
+
+-----------------------------------------------------------
+
+🎁 ACTIVIDAD: Gana el premio cuando se alcanza la cantidad objetivo de pedidos 
+
+
+🐚 PERLA 		(5 a 8): 	Monto Fijo | Premio: $6.000
+🌊 AGUAMARINA 	(8 a 11): 	Monto Fijo | Premio: $12.000
+💧 ZAFIRO 		(12 a 16): 	Monto Fijo | Premio: $18.000
+🌳 ESMERALDA 	(17 a 24): 	Monto Fijo | Premio: $25.000
+🌹 RUBÍ			(25 a 34): 	Monto Fijo | Premio: $35.000
+💎 DIAMANTE 		(35 a 45): 	Monto Fijo | Premio: $45.000
+💗 DIAM. ROSA	(46 a 60): 	Monto Fijo | Premio: $60.000
+⭐ ESTRELLA 		(61 a 80): 	Monto Fijo | Premio: $80.000
+🏆 EJECUTIVA 	(81 a 100): Monto Fijo | Premio: $100.000
+
+-----------------------------------------------------------
+
+🎁 RETENCION: Cobra premio por retencion:
+
+- Se verifica el cierre de campaña anterior (Primer cierre)
+- Gana el premio: Si la cantidad de pedidos actuales es igual o mayor a la del cierre anterior. (15)
+- Pierde el premio: Si hubo menos pedidos que el cierre pasado ("perdió gente")
+- Aplica del rango RUBI para arriba
+
+SI GANA EL PREMIO ES EL MISMO MONTO QUE ACTIVIDAD
+
+-----------------------------------------------------------
+
+🎁 ALTAS: Gana el premio realizando 3 cierres consecutivos incorporando revendedoras  
+
+1 Cierre / Campaña $ 500 C/U
+2 Cierre / Campaña $ 700 C/U
+3 Cierre / Campaña $ 1000 C/U
+
++3 ALTAS $2200 C/U
+
+-----------------------------------------------------------
+
+
+🎁 COBRANZA: Gana el premio si realiza el pago en tiempo y forma de su equipo
+
+
+🐚 PERLA 		(5 a 8 R): 		Monto Fijo | Premio: $4.000
+🌊 AGUAMARINA 	(8 a 11 R): 	Monto Fijo | Premio: $7.200
+💧 ZAFIRO 		(12 a 16 R): 	Monto Fijo | Premio: $9.000
+🌳 ESMERALDA 	(17 a 24 R): 	Monto Fijo | Premio: $12.000
+🌹 RUBÍ 			(25 a 34 R): 	Monto Fijo | Premio: $15.000
+💎 DIAMANTE 		(35 a 45 R): 	Monto Fijo | Premio: $20.000
+💗 DIAM. ROSA	(46 a 60 R): 	Monto Fijo | Premio: $30.000
+⭐ ESTRELLA 		(61 a 80 R):	Monto Fijo | Premio: $40.000
+🏆 EJECUTIVA 	(81 a 100 R): 	Monto Fijo | Premio: $50.000
+
+-----------------------------------------------------------
+
+
+🎁 CRECIMIENTO: Premio de pago unico cuando se sube de nivel:
+
+1) PERLA POR CUMPLIR PRIMER OBJETIVO $25.000
+2) PERLA A AGUAMARINA $25.000
+3) AGUAMARINA A ZAFIRO $30.000
+4) ZAFIRO A ESMERALDA $40.000
+5) ESMERALDA A RUBÍ $50.000
+6) RUBÍ A DIAMANTE $60.000
+7) DIAMANTE A DIAMANTE ROSA $70.000
+8) DIAMANTE ROSA A ESTRELLA $80.000
+9) ESTRELLA A EJECUTIVA $100.000
+
+
+-----------------------------------------------------------
+
+🎁 REPARTO: Depende del Nivel de la Líder MONTO x ACTIVIDAD =
+
+
+				ACTIVIDAD 	MONTOS
+
+🐚 PERLA			(5 a 8): 	$350 	| Premio: Entre $1.750 y $2.800
+🌊 AGUAMARINA	(8 a 11): 	$450 	| Premio: Entre $3.600 y $4.950
+💧 ZAFIRO		(12 a 16):	$500 	| Premio: Entre $6.000 y $8.000
+🌳 ESMERALDA		(17 a 24):	$550 	| Premio: Entre $9.350 y $13.200
+🌹 RUBÍ 			(25 a 34):	$600 	| Premio: Entre $15.000 y $20.400
+💎 DIAMANTE		(35 a 45):	$800 	| Premio: Entre $28.000 y $36.000
+💗 DIAM. ROSA	(46 a 60):	$900 	| Premio: Entre $41.400 y $54.000
+⭐ ESTRELLA 		(61 a 80):	$1.000 	| Premio: Entre $61.000 y $80.000
+🏆 EJECUTIVA 	(81 a 100):	$1.100 	| Premio: Entre $89.100 y $110.000
+
+
+
+-----------------------------------------------------------
+
+
+🎁 PLUS DE CRECIMIENTO: Es un bono extra que se activa únicamente si la líder cumple los objetivos esta establecidos en el cierre anterior como OBJETIVO PROXIMO CIERRE
+
+ (TOTAL A COBRAR) x (X%) | (Ejemplo x 15%)  
+
+ OBJETIVO: UNIDADES / ACTIVIDAD * 10
+
+
+ℹ️ OBJETIVO PROXIMO CIERRE: ACTIVIDAD + 3
+
+-----------------------------------------------------------
+
+🎁 POR UNIDADES: Este premio se asigna cuando se alcanza la cantidad mínima de unidades vendidas que requiere cada categoría.
+
+
+
+🐚 PERLA 		50 U. 	| Premio: $5.000
+🌊 AGUAMARINA 	120 U. 	| Premio: $10.000
+💧 ZAFIRO 		150 U.	| Premio: $12.000
+🌳 ESMERALDA 	200 U.	| Premio: $16.000
+🌹 RUBÍ 			250 U.	| Premio: $20.000
+💎 DIAMANTE 		350 U.	| Premio: $25.000
+💗 DIAM. ROSA 	550 U.	| Premio: $40.000
+⭐ ESTRELLA 		700 U.	| Premio: $50.000
+🏆 EJECUTIVA 	850 U.	| Premio: $65.000
+
+-----------------------------------------------------------
+
+
+
+MODULOS A DESRROLLAR:
+
+
+- ESTRUCTURA ANUAL Y CIERRES / CAMPAÑAS
+- ESTRUCTURA DE PAGOS DIFERIDOS (Mes anterior, mes siguiente) Saldo a pagar / A cobrar / Balance / Deudas / DESCUENTOS A CIERRES FUTUROS
+- FILTRADO POR ZONAS / DEPARTAMENTOS / VISTA LIDERES AVANZADA / VISTA LIDER INDIVIDUAL
+
+MODULOS REVENDEDORAS
+
+- TIENDA DE PREMIOS
+- PREMIO PEDIDOS CONSECUTIVOS
+- PREMIO CONTINUIDAD Y VENTAS
+
+MODULOS LIDERES
+
+- PREMIO ACTIVIDAD
+- PREMIO RETENCION
+- PREMIO ALTAS
+- PREMIO COBRANZA
+- PREMIO CRECIMIENTO
+- PREMIO REPARTO
+- PREMIO PLUS DE CRECIMIENTO
+- PREMIO POR UNIDADES
+
+
