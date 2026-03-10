@@ -2,14 +2,19 @@
 
 Esta carpeta centraliza la documentación funcional y técnica del proyecto.
 
-## Estado de la carpeta (reparación)
+## Estado de la carpeta
 
-Se normalizó la estructura para que exista un índice principal (`README.md`) y así facilitar el acceso a los documentos vigentes.
+Se mantiene un índice principal (`README.md`) para facilitar acceso a documentos vigentes.
 
 ## Documentos disponibles
 
 - `cobros-y-pagos.md`: reglas de negocio, tablas y flujo de liquidación de cobros/pagos por campaña.
 - `plan-premios-liderazgo.md`: plan real de rangos, premios y cálculo operativo de liderazgo.
+- `roadmap.md`: plan de implementación de `sistema.txt` en 20 pasos con subtareas y calendario mensual.
+- `base-de-datos.md`: estructura actual y estructura objetivo de base de datos, con campos nuevos sugeridos.
+- `propuesta.md`: propuesta integral de alcance, enfoque y entregables.
+- `presupuesto.md`: presupuesto por módulo con foco en beneficios y ahorro de tiempo.
+- `revision-reporte.md`: revisión de PRs recientes explicadas en términos simples.
 
 ## Criterio de uso
 
@@ -19,3 +24,4 @@ Se normalizó la estructura para que exista un índice principal (`README.md`) y
 ## Notas de versión internas
 
 - 2026-02-28: en pedidos se habilitó la carga de comprobante de pago para casos sin pago y se añadió el estado `pendiente_verificacion_lider` para revisión de la líder.
+- 2026-03-10: se incorporan roadmap, propuesta, presupuesto, reporte de PRs y documento de base de datos para implementar `sistema.txt`.
