@@ -227,6 +227,12 @@ Extendido desde Wave con:
 * Relaciones Eloquent con `User` para navegar métricas y rangos por campaña.
 * Detalle funcional y montos precargados en `docs/plan-premios-liderazgo.md`.
 
+### Documentación Version2 (planificación)
+
+* Estructura visual actual vs propuesta: `docs/estructura-visual-bd-v2.md`.
+* Roadmap y tareas del mes: `docs/Version2.md`.
+* Resumen histórico de PRs: `docs/resumen-prs-hasta-hoy.md`.
+
 ---
 
 ## Temas Intercambiables (Wave Themes)
