@@ -22,14 +22,14 @@
       color: var(--texto);
       line-height: 1.35;
     }
-    .contenedor { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    .contenedor { max-width: 1500px; margin: 0 auto; padding: 24px; }
     h1 { margin: 0 0 8px; }
     .leyenda { display: flex; gap: 18px; margin: 14px 0 20px; flex-wrap: wrap; }
     .chip { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; }
     .chip i { width: 18px; height: 18px; border-radius: 4px; display: inline-block; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 16px;
     }
     .tabla {
@@ -55,14 +55,15 @@
       border: 1px solid #e5e7eb;
       margin-top: 20px;
     }
-    .relaciones li { margin-bottom: 8px; }
+    .relaciones li,
+    .checklist li { margin-bottom: 8px; }
     code { background: #eef2ff; padding: 2px 6px; border-radius: 6px; }
   </style>
 </head>
 <body>
   <main class="contenedor">
     <h1>Mapa conceptual de la base de datos (estado actual y versión 2)</h1>
-    <p>Este mapa resume las tablas y columnas principales para entender rápidamente cómo se conecta la operación comercial de Alma Mia.</p>
+    <p>Este mapa quedó actualizado con el estado real de migraciones y con los módulos definidos en <code>sistema.txt</code>.</p>
 
     <div class="leyenda">
       <span class="chip"><i style="background:#374151"></i>Actual (producción hoy)</span>
@@ -71,99 +72,92 @@
 
     <section class="grid">
       <article class="tabla actual">
-        <h3>users</h3>
+        <h3>usuarios y jerarquías</h3>
         <ul>
-          <li>id, name, email</li>
-          <li>lider_id, coordinadora_id</li>
-          <li>timestamps</li>
+          <li><strong>users:</strong> id, name, email, lider_id, coordinadora_id</li>
+          <li><strong>coordinadora_lider:</strong> coordinadora_id, lider_id</li>
+          <li>Base de jerarquía: Revendedora → Líder → Coordinadora</li>
         </ul>
       </article>
 
       <article class="tabla actual">
-        <h3>pedidos</h3>
+        <h3>pedidos y artículos</h3>
         <ul>
-          <li>id, codigo_pedido, fecha, mes, catalogo_nro</li>
+          <li><strong>pedidos:</strong> codigo_pedido, fecha, mes, catalogo_nro</li>
           <li>vendedora_id, lider_id, coordinadora_id, responsable_id</li>
-          <li>total_precio_catalogo, total_gastos, total_ganancias, total_a_pagar</li>
-          <li>total_puntos, cantidad_unidades, estado, estado_pago</li>
-          <li>comprobante_pago_path, comprobante_pago_subido_en, datos_pedido</li>
+          <li>totales monetarios + total_puntos + cantidad_unidades</li>
+          <li>estado, estado_pago, comprobante_pago_path, comprobante_pago_subido_en</li>
+          <li>observaciones, datos_pedido (json)</li>
+          <li><strong>pedido_articulos:</strong> sku, producto, descripcion, cantidad, precios, descuentos, puntos, bulto</li>
         </ul>
       </article>
 
       <article class="tabla actual">
-        <h3>pedido_articulos</h3>
+        <h3>catálogo comercial</h3>
         <ul>
-          <li>id, pedido_id</li>
-          <li>producto, descripcion, sku</li>
-          <li>cantidad, precio_catalogo, porcentaje_descuento</li>
-          <li>ganancia, precio_unitario, subtotal, puntos, bulto</li>
-        </ul>
-      </article>
-
-      <article class="tabla actual">
-        <h3>productos / categorias</h3>
-        <ul>
-          <li><strong>productos:</strong> nombre, precio, puntos_por_unidad, sku, stock_actual, activo, imagen</li>
+          <li><strong>productos:</strong> nombre, precio, puntos_por_unidad, sku, stock_actual, activo, medidas, bulto, imagen</li>
           <li><strong>categorias:</strong> nombre, slug</li>
           <li><strong>categoria_producto:</strong> categoria_id, producto_id</li>
-          <li><strong>puntaje_reglas:</strong> nombre, tipo, monto, umbral, datos</li>
+          <li><strong>puntaje_reglas:</strong> min/max unidades, bonificacion, porcentaje, puntos, datos</li>
           <li><strong>categoria_puntaje_regla:</strong> categoria_id, puntaje_regla_id</li>
+          <li><strong>gastos_administrativos:</strong> concepto, monto, tipo</li>
         </ul>
       </article>
 
       <article class="tabla actual">
-        <h3>catalogos visuales</h3>
+        <h3>catálogos visuales y hotspots</h3>
         <ul>
           <li><strong>catalogos:</strong> nombre, imagen_portada, descripcion</li>
           <li><strong>catalogo_paginas:</strong> catalogo_id, numero, imagen</li>
-          <li><strong>catalogo_pagina_productos:</strong> catalogo_pagina_id, producto_id, pos_x, pos_y</li>
+          <li><strong>catalogo_pagina_productos:</strong> catalogo_pagina_id, producto_id, es_grupo, pos_x, pos_y</li>
+          <li><strong>catalogo_hotspot_producto:</strong> catalogo_pagina_producto_id, producto_id</li>
         </ul>
       </article>
 
       <article class="tabla actual">
-        <h3>premios de liderazgo</h3>
+        <h3>premios y rangos de líderes</h3>
         <ul>
-          <li><strong>cierres_campana:</strong> nombre, codigo, fecha_inicio, fecha_cierre, estado</li>
-          <li><strong>rangos_lideres:</strong> nombre, actividad_min, actividad_max, reparto_referencia</li>
-          <li><strong>premio_reglas:</strong> rango_lider_id, tipo, nombre, monto, cuotas, datos</li>
-          <li><strong>metricas_lider_campana:</strong> lider_id, cierre_campana_id, rango_lider_id, premios y validaciones</li>
-          <li><strong>repartos_compras:</strong> tipo_compra, monto_por_revendedora, porcentaje_lider</li>
+          <li><strong>cierres_campana:</strong> nombre, codigo, fecha_inicio, fecha_cierre, estado, datos</li>
+          <li><strong>rangos_lideres:</strong> nombre, slug, posicion, revendedoras_minimas/maximas, unidades_minimas, premios y reparto, color</li>
+          <li><strong>premio_reglas:</strong> rango_lider_id, campana_id, tipo, umbrales, monto, cuotas, datos</li>
+          <li><strong>metricas_lider_campana:</strong> validaciones, cantidades, premios, premio_total, fecha_pago_equipo, datos</li>
+          <li><strong>repartos_compras:</strong> tipo_compra, monto_por_revendedora, porcentajes</li>
         </ul>
       </article>
 
       <article class="tabla actual">
-        <h3>pagos y cobros</h3>
+        <h3>pagos y cobros diferidos (base actual)</h3>
         <ul>
-          <li><strong>pagos:</strong> pedido_id, vendedora_id, mes_campana, mes_pago_programado, monto, estado</li>
-          <li><strong>cobros:</strong> pedido_id, lider_id, coordinadora_id, mes_campana, concepto, monto, estado</li>
+          <li><strong>pagos:</strong> pedido_id, vendedora_id, mes_campana, mes_pago_programado, monto, estado, fecha_pago</li>
+          <li><strong>cobros:</strong> pedido_id, lider_id, coordinadora_id, mes_campana, mes_pago_programado, monto, estado, concepto, fecha_pago</li>
         </ul>
       </article>
 
       <article class="tabla v2">
-        <h3>Versión 2: calendario y control</h3>
+        <h3>Versión 2: estructura anual y cierres</h3>
         <ul>
-          <li><strong>catalogos</strong> (año, número, estado)</li>
-          <li><strong>cierres_campana</strong> (catalogo_id, número de cierre, fecha_liquidacion)</li>
-          <li><strong>pedidos</strong> con cierre_id + catalogo_id + unidades_facturables</li>
+          <li><strong>catalogos</strong> normalizado por año, número (1-4), estado</li>
+          <li><strong>cierres_campana</strong> con catalogo_id, número de cierre (1-3) y fecha_liquidacion</li>
+          <li><strong>pedidos</strong> con cierre_id, catalogo_id, unidades_facturables y unidades_auxiliares</li>
         </ul>
       </article>
 
       <article class="tabla v2">
-        <h3>Versión 2: premios revendedora</h3>
+        <h3>Versión 2: premios revendedoras</h3>
         <ul>
-          <li><strong>revendedora_rachas:</strong> cierres consecutivos, premios otorgados</li>
-          <li><strong>revendedora_puntos:</strong> ganados, canjeados, saldo, vencimiento</li>
-          <li><strong>tienda_premios:</strong> premio, puntos requeridos, stock</li>
-          <li><strong>canjes_premios:</strong> user_id, premio_id, estado, fecha_entrega</li>
+          <li><strong>revendedora_rachas:</strong> control de 3 pedidos consecutivos por catálogo</li>
+          <li><strong>revendedora_puntos:</strong> acumulación/canje/ajuste y saldo</li>
+          <li><strong>tienda_premios:</strong> premios por puntos, stock y vigencia</li>
+          <li><strong>canjes_premios:</strong> historial de canjes y entrega</li>
         </ul>
       </article>
 
       <article class="tabla v2">
-        <h3>Versión 2: finanzas y geografía</h3>
+        <h3>Versión 2: finanzas y reportería territorial</h3>
         <ul>
-          <li><strong>liquidaciones_cierre:</strong> saldo_a_cobrar, saldo_a_pagar, deuda, balance_neto</li>
-          <li><strong>descuentos_futuros:</strong> origen_liquidacion_id, cierre_destino_id, monto, estado</li>
-          <li><strong>zonas</strong> y <strong>departamentos</strong></li>
+          <li><strong>liquidaciones_cierre:</strong> saldo_a_pagar, saldo_a_cobrar, deuda, balance_neto</li>
+          <li><strong>descuentos_futuros:</strong> descuentos aplicados a cierres posteriores</li>
+          <li><strong>zonas</strong> y <strong>departamentos</strong> para filtros avanzados</li>
           <li><strong>users</strong> con zona_id y departamento_id</li>
         </ul>
       </article>
@@ -172,15 +166,25 @@
     <section class="bloque">
       <h2>Relaciones principales (lectura rápida)</h2>
       <ul class="relaciones">
-        <li><code>users (líder/coordinadora)</code> 1:N <code>pedidos</code></li>
-        <li><code>pedidos</code> 1:N <code>pedido_articulos</code></li>
-        <li><code>pedidos</code> 1:N <code>pagos</code> y 1:N <code>cobros</code></li>
-        <li><code>productos</code> N:M <code>categorias</code> vía <code>categoria_producto</code></li>
-        <li><code>categorias</code> N:M <code>puntaje_reglas</code> vía <code>categoria_puntaje_regla</code></li>
-        <li><code>catalogos</code> 1:N <code>catalogo_paginas</code> 1:N <code>catalogo_pagina_productos</code></li>
-        <li><code>rangos_lideres</code> 1:N <code>premio_reglas</code></li>
-        <li><code>cierres_campana</code> 1:N <code>metricas_lider_campana</code></li>
-        <li><code>users (lider_id)</code> 1:N <code>metricas_lider_campana</code></li>
+        <li><code>users (lider_id / coordinadora_id)</code> define jerarquía comercial.</li>
+        <li><code>coordinadora_lider</code> permite asignación múltiple entre coordinadoras y líderes.</li>
+        <li><code>pedidos</code> 1:N <code>pedido_articulos</code>.</li>
+        <li><code>pedidos</code> 1:N <code>pagos</code> y 1:N <code>cobros</code>.</li>
+        <li><code>productos</code> N:M <code>categorias</code> vía <code>categoria_producto</code>.</li>
+        <li><code>categorias</code> N:M <code>puntaje_reglas</code> vía <code>categoria_puntaje_regla</code>.</li>
+        <li><code>catalogos</code> 1:N <code>catalogo_paginas</code> 1:N <code>catalogo_pagina_productos</code>.</li>
+        <li><code>catalogo_pagina_productos</code> N:M <code>productos</code> (grupos) vía <code>catalogo_hotspot_producto</code>.</li>
+        <li><code>rangos_lideres</code> 1:N <code>premio_reglas</code> y 1:N <code>metricas_lider_campana</code>.</li>
+        <li><code>cierres_campana</code> 1:N <code>metricas_lider_campana</code>.</li>
+      </ul>
+    </section>
+
+    <section class="bloque">
+      <h2>Checklist de cobertura en <code>db.html</code></h2>
+      <ul class="checklist">
+        <li>✅ Incluye los módulos actuales de migraciones: pedidos, premios de líderes, pagos/cobros, catálogo, puntaje y gastos.</li>
+        <li>✅ Incluye jerarquía completa de usuarias (users + coordinadora_lider).</li>
+        <li>✅ Incluye backlog V2 solicitado en <code>sistema.txt</code>: anual/cierres, premios revendedoras, finanzas diferidas y geografía.</li>
       </ul>
     </section>
   </main>
