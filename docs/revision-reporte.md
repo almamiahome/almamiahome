@@ -1,101 +1,116 @@
-# Revisión de PRs realizadas (resumen entendible)
+# Revisión histórica de PRs (desde el inicio hasta hoy)
 
-Este reporte resume las PR recientes detectadas en el historial, explicadas en lenguaje simple para dimensionar el trabajo realizado.
+Este reporte deja un resumen en español de los puntos más importantes incorporados por PR, para que el equipo tenga trazabilidad funcional desde el inicio del historial disponible.
+
+> Referencia tomada del historial Git con merges detectados de **PR #15 a #38** y **PR #41**.
+
+## PR #15 — Fondo visual base del tema
+- Se reforzó el uso del fondo local en el layout principal.
+- Se dejó documentado el lineamiento visual de `.fixed-wallpaper`.
+- Impacto: consistencia visual global y base para modo claro/oscuro.
+
+## PR #16 — Puntos interactivos arrastrables en catálogo
+- Se habilitó arrastre de puntos/hotspots en edición.
+- Se mejoró precisión de mapeo en páginas del catálogo.
+- Impacto: menor fricción para administración de contenido visual.
+
+## PR #17 — Extensión de hotspots
+- Se incorporó migración para soportar hotspots grupales y selección múltiple.
+- Impacto: mayor flexibilidad para asociar varios productos por área.
+
+## PR #18 — Carga de zonas/departamentos desde settings
+- Se replicó carga de configuración en flujo de incorporación.
+- Impacto: mejora de consistencia entre datos de configuración y onboarding.
+
+## PR #19 — Catálogo público con Folio
+- Se agregó página pública del catálogo sin acciones de pedido.
+- Impacto: exposición comercial sin afectar flujos privados.
+
+## PR #20 — Ajustes de navegación móvil y jerarquía en pedidos
+- Mejoras de z-index en sidebar/footer móvil.
+- Sincronización líder/vendedora en pedidos.
+- Impacto: mejor usabilidad en pantallas chicas y menor error operativo.
+
+## PR #21 — Filtros y visualización de imágenes
+- Se corrigieron filtros por líder y estados activos del sidebar.
+- Ajustes de estilo para visualización de producto.
+- Impacto: navegación administrativa más clara.
+
+## PR #22 — Adaptación visual estilo Liquid Glass
+- Se actualizaron componentes del tema `anchor` al estilo visual definido.
+- Impacto: coherencia estética entre pantallas.
+
+## PR #23 — Página “Mi red”
+- Se agregó visualización de red por rol en una página dedicada.
+- Impacto: lectura más simple de jerarquías comerciales.
 
 ## PR #24 — Comprobante de pago para pedidos sin pago
-Puntos clave:
-1. Se agregó la posibilidad de subir comprobante cuando el pedido estaba sin pago.
-2. Se incorporó seguimiento del estado de verificación por líder.
-3. Se mejoró el control del flujo pedido → revisión → aprobación/rechazo.
-4. Impacto directo en trazabilidad administrativa y reducción de validaciones manuales.
+- Se habilitó carga de comprobante y estado de verificación por líder.
+- Impacto: trazabilidad de pagos y control operativo.
 
-## PR #25 — Archivo activos e integración en índice
-Puntos clave:
-1. Se incorporó un archivo de activos para centralizar recursos.
-2. Se conectó su lectura en la página principal correspondiente.
-3. Se ordenó la forma de administrar elementos visuales/configurables.
+## PR #25 — Activos instalados
+- Se incorporó `activos.json` y su integración en índice.
+- Impacto: centralización de recursos instalados/visibles.
 
-## PR #26 — Corrección de carga de imágenes en páginas de catálogo
-Puntos clave:
-1. Se corrigieron problemas de carga de imágenes en catálogo.
-2. Se mejoró estabilidad visual en navegación del contenido.
-3. Se redujeron fallos de experiencia de usuario.
+## PR #26 — Corrección de carga de imágenes en catálogo
+- Se corrigió carga múltiple en administración de catálogo.
+- Impacto: estabilidad al gestionar contenido visual.
 
 ## PR #27 — Funcionalidades adicionales en pestañas
-Puntos clave:
-1. Se extendió el comportamiento de pestañas existentes.
-2. Se agregó soporte para interacciones adicionales.
-3. Se mejoró la organización de contenido en pantallas con mucha información.
+- Se agregaron tabs operativas (notas, kanban, reportes, tickets) en mejoras.
+- Impacto: mejor organización de funcionalidades extendidas.
 
 ## PR #28 — Módulos disponibles en mejoras/items
-Puntos clave:
-1. Se incorporó listado de módulos disponibles.
-2. Se mejoró visibilidad de capacidades del sistema.
-3. Facilita priorización de mejoras futuras.
+- Se ampliaron módulos listados para priorización.
+- Impacto: mayor visibilidad del alcance funcional.
 
-## PR #29 — Elementos faltantes del sidebar y validación de z-index
-Puntos clave:
-1. Se completaron elementos que faltaban en barra lateral.
-2. Se revisó superposición visual para evitar capas incorrectas.
-3. Mejora usabilidad del panel.
+## PR #29 — Sidebar y validaciones de capas
+- Se completaron elementos faltantes y prioridades de menú/footer móvil.
+- Impacto: navegación más robusta en admin.
 
-## PR #30 — Ajuste de clave de estado de hotspot
-Puntos clave:
-1. Se corrigió manejo del estado visual de hotspots.
-2. Se evitó desincronización entre estado interno y vista.
-3. Mejora precisión en edición/visualización de catálogo.
+## PR #30 — Estado visual de hotspots
+- Ajuste de clave/estado para evitar desincronización.
+- Impacto: consistencia entre estado interno y UI de catálogo.
 
 ## PR #31 — Ajustes de catálogo y lógica asociada
-Puntos clave:
-1. Se aplicaron cambios coordinados en catálogo y lógica funcional.
-2. Se afinó selección manual en hotspot grupal.
-3. Se redujeron inconsistencias operativas en mapeo de catálogo.
+- Corrección de selección manual de hotspot grupal.
+- Impacto: menor inconsistencia en edición de mapa de productos.
 
-## PR #32 — Mejora del selector de productos en mapeo administrativo
-Puntos clave:
-1. Se optimizó la selección de productos en administración.
-2. Se mejoró la interacción para carga/edición masiva.
-3. Disminuye errores humanos en asociación de productos.
+## PR #32 — Selector de productos en mapeo admin
+- Se optimizó el selector para carga/edición.
+- Impacto: reducción de errores manuales.
 
-## PR #33 — Reemplazo de checkboxes por controles visuales
-Puntos clave:
-1. Se cambió interfaz de selección por controles más claros.
-2. Se mejoró legibilidad del estado seleccionado/no seleccionado.
-3. Beneficio directo para usuarios no técnicos del panel.
+## PR #33 — Controles visuales en reemplazo de checkboxes
+- Mejora de legibilidad de estados seleccionados.
+- Impacto: experiencia más amigable para usuarias no técnicas.
 
-## PR #34 — Ajuste de catálogo público a `/vercatalogo`
-Puntos clave:
-1. Se movió el catálogo público a una ruta más definida.
-2. Se integró previsualización desde inicio.
-3. Se unificó acceso para navegación comercial.
+## PR #34 — Catálogo público en `/vercatalogo`
+- Se movió la navegación pública a una ruta única.
+- Impacto: acceso más claro para consulta comercial.
 
-## PR #35 — Sincronización y navegación por gestos en catálogo
-Puntos clave:
-1. Se unificó navegación entre modo privado y público.
-2. Se corrigió sincronización de gestos/paso de páginas.
-3. Se redujeron saltos visuales y comportamientos inconsistentes.
+## PR #35 — Sincronización y gestos de navegación
+- Se unificó comportamiento entre catálogo privado y público.
+- Impacto: navegación más fluida y predecible.
 
-## PR #36 — Animación visual de transición de página
-Puntos clave:
-1. Se agregó transición animada para cambio de páginas.
-2. Se mejoró percepción de fluidez en navegación.
-3. Aporta una experiencia más moderna en catálogo.
+## PR #36 — Animación de transición de páginas
+- Se agregó transición visual al pasar de página.
+- Impacto: percepción moderna en lectura de catálogo.
 
 ## PR #37 — Corrección de error en `/vercatalogo`
-Puntos clave:
-1. Se corrigió error funcional en la ruta pública del catálogo.
-2. Se restauró estabilidad de acceso para usuarias finales.
-3. Reduce incidencias en producción.
+- Se corrigió error de elemento raíz único.
+- Impacto: estabilidad de la ruta pública.
 
-## PR #38 — `premios.html` con estructura por pestañas
-Puntos clave:
-1. Se creó una vista de premios organizada por pestañas.
-2. Se ordenó información extensa en bloques navegables.
-3. Se facilita lectura y consulta de reglas/premios.
+## PR #38 — Estructura de `premios.html`
+- Se organizó contenido de premios por pestañas.
+- Impacto: lectura más clara para reglas extensas.
+
+## PR #41 — Documentación inicial del plan integral
+- Se agregaron `roadmap.md`, `propuesta.md`, `presupuesto.md`, `base-de-datos.md` y reporte inicial.
+- Impacto: base documental para ejecución del proyecto `sistema.txt`.
 
 ---
 
-## Magnitud general del trabajo reciente
-- Se fortaleció el núcleo de catálogo digital (edición + visualización + navegación).
-- Se mejoró robustez visual y funcional en rutas públicas y administrativas.
-- Se avanzó en la base de premios y operación comercial para siguientes etapas de negocio.
+## Resumen general
+- Se consolidó la base del catálogo digital (edición, mapeo, navegación pública/privada).
+- Se fortaleció la trazabilidad operativa de pedidos y pagos.
+- Se dejó una base documental para avanzar en premios, finanzas y evolución de la versión 2.

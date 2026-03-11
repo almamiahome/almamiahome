@@ -14,7 +14,8 @@ Se mantiene un índice principal (`README.md`) para facilitar acceso a documento
 - `base-de-datos.md`: estructura actual y estructura objetivo de base de datos, con campos nuevos sugeridos.
 - `propuesta.md`: propuesta integral de alcance, enfoque y entregables.
 - `presupuesto.md`: presupuesto por módulo con foco en beneficios y ahorro de tiempo.
-- `revision-reporte.md`: revisión de PRs recientes explicadas en términos simples.
+- `revision-reporte.md`: revisión histórica de PRs (desde el inicio) explicadas en términos simples.
+- `roadmap-etapas/`: roadmap dividido por etapas, cada una en su archivo `.md`.
 
 ## Criterio de uso
 
@@ -25,3 +26,5 @@ Se mantiene un índice principal (`README.md`) para facilitar acceso a documento
 
 - 2026-02-28: en pedidos se habilitó la carga de comprobante de pago para casos sin pago y se añadió el estado `pendiente_verificacion_lider` para revisión de la líder.
 - 2026-03-10: se incorporan roadmap, propuesta, presupuesto, reporte de PRs y documento de base de datos para implementar `sistema.txt`.
+
+- 2026-03-11: se agregó `db.html` en la raíz del proyecto con mapa conceptual de la base de datos (actual en gris oscuro y versión 2 en naranja), se amplió `revision-reporte.md` con histórico desde PR #15 y se separó el roadmap por etapas en `docs/roadmap-etapas/`.

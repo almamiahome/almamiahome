@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa conceptual de base de datos | Alma Mia</title>
+  <style>
+    :root {
+      --fondo: #f5f5f5;
+      --texto: #1f2937;
+      --gris-actual: #374151;
+      --gris-borde: #111827;
+      --naranja-v2: #f97316;
+      --naranja-borde: #c2410c;
+      --panel: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      line-height: 1.35;
+    }
+    .contenedor { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 8px; }
+    .leyenda { display: flex; gap: 18px; margin: 14px 0 20px; flex-wrap: wrap; }
+    .chip { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; }
+    .chip i { width: 18px; height: 18px; border-radius: 4px; display: inline-block; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 16px;
+    }
+    .tabla {
+      border-radius: 12px;
+      color: #fff;
+      overflow: hidden;
+      border: 2px solid transparent;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .tabla.actual { background: var(--gris-actual); border-color: var(--gris-borde); }
+    .tabla.v2 { background: var(--naranja-v2); border-color: var(--naranja-borde); }
+    .tabla h3 {
+      margin: 0;
+      padding: 12px 14px;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.25);
+    }
+    .tabla ul { margin: 0; padding: 10px 18px 14px 28px; font-size: 13px; }
+    .bloque {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+      margin-top: 20px;
+    }
+    .relaciones li { margin-bottom: 8px; }
+    code { background: #eef2ff; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <main class="contenedor">
+    <h1>Mapa conceptual de la base de datos (estado actual y versión 2)</h1>
+    <p>Este mapa resume las tablas y columnas principales para entender rápidamente cómo se conecta la operación comercial de Alma Mia.</p>
+
+    <div class="leyenda">
+      <span class="chip"><i style="background:#374151"></i>Actual (producción hoy)</span>
+      <span class="chip"><i style="background:#f97316"></i>Versión 2 (roadmap)</span>
+    </div>
+
+    <section class="grid">
+      <article class="tabla actual">
+        <h3>users</h3>
+        <ul>
+          <li>id, name, email</li>
+          <li>lider_id, coordinadora_id</li>
+          <li>timestamps</li>
+        </ul>
+      </article>
+
+      <article class="tabla actual">
+        <h3>pedidos</h3>
+        <ul>
+          <li>id, codigo_pedido, fecha, mes, catalogo_nro</li>
+          <li>vendedora_id, lider_id, coordinadora_id, responsable_id</li>
+          <li>total_precio_catalogo, total_gastos, total_ganancias, total_a_pagar</li>
+          <li>total_puntos, cantidad_unidades, estado, estado_pago</li>
+          <li>comprobante_pago_path, comprobante_pago_subido_en, datos_pedido</li>
+        </ul>
+      </article>
+
+      <article class="tabla actual">
+        <h3>pedido_articulos</h3>
+        <ul>
+          <li>id, pedido_id</li>
+          <li>producto, descripcion, sku</li>
+          <li>cantidad, precio_catalogo, porcentaje_descuento</li>
+          <li>ganancia, precio_unitario, subtotal, puntos, bulto</li>
+        </ul>
+      </article>
+
+      <article class="tabla actual">
+        <h3>productos / categorias</h3>
+        <ul>
+          <li><strong>productos:</strong> nombre, precio, puntos_por_unidad, sku, stock_actual, activo, imagen</li>
+          <li><strong>categorias:</strong> nombre, slug</li>
+          <li><strong>categoria_producto:</strong> categoria_id, producto_id</li>
+          <li><strong>puntaje_reglas:</strong> nombre, tipo, monto, umbral, datos</li>
+          <li><strong>categoria_puntaje_regla:</strong> categoria_id, puntaje_regla_id</li>
+        </ul>
+      </article>
+
+      <article class="tabla actual">
+        <h3>catalogos visuales</h3>
+        <ul>
+          <li><strong>catalogos:</strong> nombre, imagen_portada, descripcion</li>
+          <li><strong>catalogo_paginas:</strong> catalogo_id, numero, imagen</li>
+          <li><strong>catalogo_pagina_productos:</strong> catalogo_pagina_id, producto_id, pos_x, pos_y</li>
+        </ul>
+      </article>
+
+      <article class="tabla actual">
+        <h3>premios de liderazgo</h3>
+        <ul>
+          <li><strong>cierres_campana:</strong> nombre, codigo, fecha_inicio, fecha_cierre, estado</li>
+          <li><strong>rangos_lideres:</strong> nombre, actividad_min, actividad_max, reparto_referencia</li>
+          <li><strong>premio_reglas:</strong> rango_lider_id, tipo, nombre, monto, cuotas, datos</li>
+          <li><strong>metricas_lider_campana:</strong> lider_id, cierre_campana_id, rango_lider_id, premios y validaciones</li>
+          <li><strong>repartos_compras:</strong> tipo_compra, monto_por_revendedora, porcentaje_lider</li>
+        </ul>
+      </article>
+
+      <article class="tabla actual">
+        <h3>pagos y cobros</h3>
+        <ul>
+          <li><strong>pagos:</strong> pedido_id, vendedora_id, mes_campana, mes_pago_programado, monto, estado</li>
+          <li><strong>cobros:</strong> pedido_id, lider_id, coordinadora_id, mes_campana, concepto, monto, estado</li>
+        </ul>
+      </article>
+
+      <article class="tabla v2">
+        <h3>Versión 2: calendario y control</h3>
+        <ul>
+          <li><strong>catalogos</strong> (año, número, estado)</li>
+          <li><strong>cierres_campana</strong> (catalogo_id, número de cierre, fecha_liquidacion)</li>
+          <li><strong>pedidos</strong> con cierre_id + catalogo_id + unidades_facturables</li>
+        </ul>
+      </article>
+
+      <article class="tabla v2">
+        <h3>Versión 2: premios revendedora</h3>
+        <ul>
+          <li><strong>revendedora_rachas:</strong> cierres consecutivos, premios otorgados</li>
+          <li><strong>revendedora_puntos:</strong> ganados, canjeados, saldo, vencimiento</li>
+          <li><strong>tienda_premios:</strong> premio, puntos requeridos, stock</li>
+          <li><strong>canjes_premios:</strong> user_id, premio_id, estado, fecha_entrega</li>
+        </ul>
+      </article>
+
+      <article class="tabla v2">
+        <h3>Versión 2: finanzas y geografía</h3>
+        <ul>
+          <li><strong>liquidaciones_cierre:</strong> saldo_a_cobrar, saldo_a_pagar, deuda, balance_neto</li>
+          <li><strong>descuentos_futuros:</strong> origen_liquidacion_id, cierre_destino_id, monto, estado</li>
+          <li><strong>zonas</strong> y <strong>departamentos</strong></li>
+          <li><strong>users</strong> con zona_id y departamento_id</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="bloque">
+      <h2>Relaciones principales (lectura rápida)</h2>
+      <ul class="relaciones">
+        <li><code>users (líder/coordinadora)</code> 1:N <code>pedidos</code></li>
+        <li><code>pedidos</code> 1:N <code>pedido_articulos</code></li>
+        <li><code>pedidos</code> 1:N <code>pagos</code> y 1:N <code>cobros</code></li>
+        <li><code>productos</code> N:M <code>categorias</code> vía <code>categoria_producto</code></li>
+        <li><code>categorias</code> N:M <code>puntaje_reglas</code> vía <code>categoria_puntaje_regla</code></li>
+        <li><code>catalogos</code> 1:N <code>catalogo_paginas</code> 1:N <code>catalogo_pagina_productos</code></li>
+        <li><code>rangos_lideres</code> 1:N <code>premio_reglas</code></li>
+        <li><code>cierres_campana</code> 1:N <code>metricas_lider_campana</code></li>
+        <li><code>users (lider_id)</code> 1:N <code>metricas_lider_campana</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
