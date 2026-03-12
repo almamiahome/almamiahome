@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roadmap Versión 2 - Alma Mia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base: '#09090b',
+              panel: '#111217',
+              neon: '#22d3ee',
+              violetNeon: '#a78bfa',
+              successNeon: '#34d399'
+            },
+            boxShadow: {
+              neon: '0 0 0 1px rgba(34,211,238,.35), 0 0 30px rgba(34,211,238,.12)',
+              violet: '0 0 0 1px rgba(167,139,250,.35), 0 0 25px rgba(167,139,250,.14)'
+            }
+          }
+        }
+      };
+    </script>
+    <style>
+      .glass {
+        backdrop-filter: blur(10px);
+        background: linear-gradient(180deg, rgba(17, 18, 23, 0.9), rgba(17, 18, 23, 0.72));
+      }
+      .grid-bg {
+        background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.07) 1px, transparent 0);
+        background-size: 20px 20px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-base text-zinc-100 grid-bg">
+    <main class="mx-auto max-w-7xl px-5 py-10 md:px-8">
+      <header class="mb-10 rounded-2xl border border-cyan-400/30 bg-panel/80 p-6 shadow-neon glass">
+        <p class="mb-2 inline-flex rounded-full border border-cyan-300/40 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
+          Alma Mia · Roadmap V2
+        </p>
+        <h1 class="text-3xl font-black md:text-4xl">Implementación de Versión 2 en 4 semanas</h1>
+        <p class="mt-3 max-w-4xl text-zinc-300">
+          Plan operativo con hitos, tareas técnicas, validaciones funcionales y checklist de cierre para completar la V2
+          de forma trazable y alineada al sistema y su documentación.
+        </p>
+      </header>
+
+      <section id="resumen" class="mb-8 grid gap-4 md:grid-cols-4"></section>
+      <section id="semanas" class="space-y-6"></section>
+      <section id="cierre" class="mt-10"></section>
+    </main>
+
+    <script id="roadmap-data" type="application/json">
+      {
+        "resumen": {
+          "version": "2.0.0",
+          "duracion": "4 semanas",
+          "objetivo": "Lanzar V2 con lógica comercial estable, módulos administrativos completos, cobertura de pruebas y documentación actualizada.",
+          "hitosGlobales": [
+            "Arquitectura V2 validada",
+            "Flujos comerciales integrados",
+            "Pruebas y QA cerrados",
+            "Go-Live + monitoreo"
+          ]
+        },
+        "semanas": [
+          {
+            "numero": 1,
+            "titulo": "Arquitectura, brechas y base técnica",
+            "hito": "Backlog definitivo y cimientos de V2 aprobados",
+            "objetivos": [
+              "Levantar diagnóstico funcional contra sistema actual y documentación",
+              "Definir alcance cerrado de V2 con prioridades MoSCoW",
+              "Diseñar migraciones, ajustes de modelos y estrategia de datos"
+            ],
+            "tareas": [
+              "Auditar módulos existentes: pedidos, campañas, jerarquías, puntos y bonificaciones",
+              "Mapear brechas entre comportamiento actual vs esperado en V2",
+              "Diseñar ERD actualizado y plan de migraciones MySQL",
+              "Especificar cambios de modelos (fillable, casts, relaciones, eventos)",
+              "Definir criterios de aceptación por módulo",
+              "Actualizar plan de pruebas automatizadas por riesgo",
+              "Preparar tablero de seguimiento (épicas, historias, subtareas)",
+              "Alinear riesgos técnicos y plan de contingencia"
+            ],
+            "entregables": [
+              "Documento de alcance V2",
+              "Matriz de brechas y dependencias",
+              "Diseño de migraciones y modelos",
+              "Plan maestro de pruebas"
+            ]
+          },
+          {
+            "numero": 2,
+            "titulo": "Desarrollo núcleo comercial y datos",
+            "hito": "Lógica comercial V2 implementada en entorno de desarrollo",
+            "objetivos": [
+              "Implementar cambios estructurales de BD y modelos",
+              "Actualizar reglas de negocio críticas",
+              "Sincronizar seeders y datos base"
+            ],
+            "tareas": [
+              "Crear y ejecutar migraciones versionadas para entidades afectadas",
+              "Actualizar modelos en app/Models con relaciones y casts correctos",
+              "Implementar lógica V2 de cálculo de puntos y bonificaciones",
+              "Ajustar jerarquía Vendedora → Líder → Coordinadora",
+              "Actualizar estados y ciclo de vida de pedidos",
+              "Refactorizar asignaciones automáticas y onboarding",
+              "Sincronizar AlmamiaSeeder y ProductosSeeder",
+              "Agregar pruebas unitarias y de integración en tests/"
+            ],
+            "entregables": [
+              "Módulos núcleo funcionales",
+              "Migraciones y seeders actualizados",
+              "Paquete inicial de pruebas pasando"
+            ]
+          },
+          {
+            "numero": 3,
+            "titulo": "Interfaz, QA funcional y documentación",
+            "hito": "V2 operable end-to-end en staging",
+            "objetivos": [
+              "Completar vistas y paneles administrativos pendientes",
+              "Ejecutar pruebas funcionales y correcciones",
+              "Cerrar documentación técnica y de negocio"
+            ],
+            "tareas": [
+              "Actualizar pantallas Folio/Volt según flujos V2",
+              "Validar layouts y coherencia UX en panel autenticado y marketing",
+              "Correr pruebas automatizadas completas (php artisan test)",
+              "Ejecutar pruebas manuales por escenarios críticos",
+              "Corregir defectos priorizados por severidad",
+              "Actualizar README (dependencias y cambios de negocio)",
+              "Documentar módulos en docs/ con ejemplos prácticos",
+              "Preparar guía operativa para soporte y administración"
+            ],
+            "entregables": [
+              "Build candidata en staging",
+              "Reporte QA con evidencias",
+              "Documentación V2 consolidada"
+            ]
+          },
+          {
+            "numero": 4,
+            "titulo": "Hardening, despliegue y cierre",
+            "hito": "Versión 2 publicada y estabilizada",
+            "objetivos": [
+              "Asegurar rendimiento, seguridad y observabilidad",
+              "Ejecutar plan de despliegue con rollback",
+              "Cerrar checklist de liberación y transferencia"
+            ],
+            "tareas": [
+              "Pruebas de regresión final y humo post-deploy",
+              "Afinar rendimiento en consultas y procesos críticos",
+              "Verificar seguridad de flujos sensibles y permisos",
+              "Ejecutar migraciones en producción con ventana controlada",
+              "Monitorear métricas de negocio y aplicación por 72 horas",
+              "Atender incidencias de estabilización",
+              "Realizar retrospectiva técnica + funcional",
+              "Publicar notas de versión y acta de cierre"
+            ],
+            "entregables": [
+              "Producción estable V2",
+              "Checklist de salida firmado",
+              "Lecciones aprendidas y backlog post-lanzamiento"
+            ]
+          }
+        ],
+        "checklistFinal": [
+          "Todas las migraciones aplicadas y verificadas en cada entorno",
+          "Modelos sincronizados con estructura final de BD",
+          "Seeders oficiales ejecutables y consistentes",
+          "Reglas de puntos, bonificaciones y jerarquías validadas",
+          "Flujos de pedido completos sin bloqueos",
+          "Cobertura de pruebas críticas aprobada",
+          "php artisan test en verde",
+          "README y documentación de módulos actualizados",
+          "Notas de versión y plan de rollback publicados",
+          "Capacitación de equipo operativo completada"
+        ]
+      }
+    </script>
+
+    <script>
+      const data = JSON.parse(document.getElementById('roadmap-data').textContent);
+
+      const resumen = document.getElementById('resumen');
+      const semanas = document.getElementById('semanas');
+      const cierre = document.getElementById('cierre');
+
+      const resumenCards = [
+        ['Versión objetivo', data.resumen.version],
+        ['Duración', data.resumen.duracion],
+        ['Hitos globales', data.resumen.hitosGlobales.length + ' hitos'],
+        ['Resultado esperado', 'Go-Live V2 estable']
+      ];
+
+      resumen.innerHTML = resumenCards
+        .map(
+          ([title, value]) => `
+          <article class="rounded-xl border border-violet-300/30 bg-panel/80 p-4 shadow-violet glass">
+            <p class="text-xs uppercase tracking-[0.18em] text-violet-200/80">${title}</p>
+            <p class="mt-2 text-lg font-bold text-white">${value}</p>
+          </article>`
+        )
+        .join('');
+
+      semanas.innerHTML = data.semanas
+        .map(
+          (semana) => `
+          <article class="rounded-2xl border border-cyan-300/30 bg-panel/80 p-6 shadow-neon glass">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h2 class="text-2xl font-extrabold">Semana ${semana.numero}: ${semana.titulo}</h2>
+              <span class="rounded-full border border-cyan-300/40 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-200">
+                Hito: ${semana.hito}
+              </span>
+            </div>
+            <div class="mt-5 grid gap-5 md:grid-cols-3">
+              <section>
+                <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-cyan-200">Objetivos</h3>
+                <ul class="space-y-2 text-sm text-zinc-200">
+                  ${semana.objetivos.map((item) => `<li class="rounded-lg border border-zinc-700 bg-zinc-900/40 p-2">• ${item}</li>`).join('')}
+                </ul>
+              </section>
+              <section>
+                <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-violet-200">Tareas extensas</h3>
+                <ul class="space-y-2 text-sm text-zinc-200">
+                  ${semana.tareas.map((item) => `<li class="rounded-lg border border-zinc-700 bg-zinc-900/40 p-2">• ${item}</li>`).join('')}
+                </ul>
+              </section>
+              <section>
+                <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-emerald-200">Entregables</h3>
+                <ul class="space-y-2 text-sm text-zinc-200">
+                  ${semana.entregables.map((item) => `<li class="rounded-lg border border-emerald-300/30 bg-emerald-500/10 p-2">• ${item}</li>`).join('')}
+                </ul>
+              </section>
+            </div>
+          </article>`
+        )
+        .join('');
+
+      cierre.innerHTML = `
+        <article class="rounded-2xl border border-emerald-300/35 bg-panel/80 p-6 shadow-neon glass">
+          <h2 class="text-2xl font-extrabold text-emerald-300">Checklist de finalización de implementación V2</h2>
+          <p class="mt-2 text-sm text-zinc-300">La implementación se considera cerrada solo si todos los puntos están completos y validados.</p>
+          <ul class="mt-4 grid gap-2 md:grid-cols-2">
+            ${data.checklistFinal
+              .map(
+                (item) => `<li class="rounded-lg border border-emerald-300/30 bg-emerald-500/10 p-3 text-sm text-zinc-100">✓ ${item}</li>`
+              )
+              .join('')}
+          </ul>
+        </article>`;
+    </script>
+  </body>
+</html>
