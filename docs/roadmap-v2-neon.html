@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap Versión 2 · Alma Mia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          boxShadow: {
+            neon: '0 0 30px rgba(34,211,238,.35), 0 0 60px rgba(168,85,247,.25)'
+          },
+          backgroundImage: {
+            grid: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 10% 10%, #1d4ed8 0%, transparent 35%),
+                  radial-gradient(circle at 90% 20%, #9333ea 0%, transparent 30%),
+                  radial-gradient(circle at 70% 80%, #06b6d4 0%, transparent 35%),
+                  #030712;
+    }
+    .liquid-glass {
+      background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100 bg-grid bg-[size:24px_24px]">
+  <main class="max-w-7xl mx-auto px-4 py-10 md:py-14">
+    <header class="liquid-glass shadow-neon rounded-3xl p-6 md:p-8 mb-8">
+      <p id="contexto" class="text-cyan-300 text-sm md:text-base font-semibold tracking-wide"></p>
+      <h1 id="titulo" class="text-2xl md:text-4xl font-black leading-tight mt-2"></h1>
+      <p id="subtitulo" class="text-slate-200/90 mt-4 max-w-3xl"></p>
+      <div class="mt-6 flex flex-wrap gap-3" id="metadatos"></div>
+    </header>
+
+    <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4" id="semanas"></section>
+
+    <section class="liquid-glass rounded-3xl p-6 md:p-8 mt-8 shadow-neon">
+      <h2 class="text-xl md:text-2xl font-bold text-fuchsia-300">Hitos necesarios para cerrar Versión 2</h2>
+      <ul id="hitos" class="mt-4 space-y-3"></ul>
+    </section>
+
+    <section class="liquid-glass rounded-3xl p-6 md:p-8 mt-8">
+      <h2 class="text-xl md:text-2xl font-bold text-cyan-300">Definición de finalización (checklist extensa)</h2>
+      <div id="checklistFinal" class="mt-4 grid gap-4 md:grid-cols-2"></div>
+    </section>
+  </main>
+
+  <script id="roadmapData" type="application/json">
+  {
+    "contexto": "Plan maestro V2 · Alma Mia Fragancias",
+    "titulo": "Roadmap de 4 semanas para implementar la Versión 2",
+    "subtitulo": "Documento visual pensado para cualquier persona del equipo (técnico o no técnico). Incluye fases semanales, hitos obligatorios y una lista de tareas completa para declarar cierre exitoso de la implementación.",
+    "metadatos": [
+      "Duración: 4 semanas",
+      "Enfoque: sistema + procesos + documentación",
+      "Objetivo: salida estable en producción",
+      "Formato editable: JSON embebido"
+    ],
+    "semanas": [
+      {
+        "semana": "Semana 1",
+        "objetivo": "Diagnóstico, alcance funcional y arquitectura V2",
+        "entregables": [
+          "Inventario completo de módulos actuales (pedidos, puntos, campañas, jerarquías, onboarding).",
+          "Mapa de brechas entre versión actual y alcance de V2.",
+          "Definición del alcance cerrado (lo que entra y lo que se pospone).",
+          "Documento de arquitectura funcional y técnica validado por responsables."
+        ],
+        "tareas": [
+          "Relevamiento de procesos operativos reales con áreas clave.",
+          "Listar reglas de negocio vigentes y detectar inconsistencias históricas.",
+          "Definir dependencias entre módulos para evitar bloqueos futuros.",
+          "Priorización por impacto/riesgo (alta, media, baja).",
+          "Plan de migraciones de base de datos con orden de ejecución.",
+          "Alinear criterios de seguridad, permisos y trazabilidad."
+        ]
+      },
+      {
+        "semana": "Semana 2",
+        "objetivo": "Implementación núcleo de sistema y datos",
+        "entregables": [
+          "Migraciones V2 aplicadas en entorno de desarrollo.",
+          "Modelos actualizados con relaciones, fillables y casts.",
+          "Seeders oficiales alineados al nuevo esquema funcional.",
+          "Lógica principal de puntos/bonificaciones/estados implementada."
+        ],
+        "tareas": [
+          "Construir migraciones incrementalmente y validar rollback.",
+          "Actualizar modelos de dominio y eventos de negocio.",
+          "Refactorizar servicios internos para cálculo y asignaciones automáticas.",
+          "Ajustar reglas de campañas y requisitos por jerarquía.",
+          "Registrar decisiones de diseño técnico para auditoría futura.",
+          "Pruebas unitarias iniciales de lógica crítica."
+        ]
+      },
+      {
+        "semana": "Semana 3",
+        "objetivo": "Integración end-to-end, UX operativa y calidad",
+        "entregables": [
+          "Flujos completos probados: onboarding, pedido, puntos, cierre de campaña.",
+          "Paneles y vistas operativas ajustadas a procesos reales.",
+          "Pruebas automatizadas ampliadas para escenarios críticos.",
+          "Listado de incidencias con severidad, responsable y fecha objetivo."
+        ],
+        "tareas": [
+          "Pruebas funcionales con datos de ejemplo representativos.",
+          "Validar casos borde (errores de estado, duplicados, faltantes).",
+          "Revisión UX de mensajes y estados para usuarios no técnicos.",
+          "Hardening de permisos por rol y control de accesos.",
+          "Ajustes de performance en consultas y procesos pesados.",
+          "Ensayo de despliegue en entorno de staging."
+        ]
+      },
+      {
+        "semana": "Semana 4",
+        "objetivo": "Cierre, documentación integral y salida a producción",
+        "entregables": [
+          "UAT aprobado por referentes del negocio.",
+          "Documentación final actualizada (README + docs de módulos).",
+          "Checklist de release firmado por técnico y negocio.",
+          "Plan de soporte post-lanzamiento con responsables definidos."
+        ],
+        "tareas": [
+          "Ejecutar pruebas completas de regresión y estabilidad.",
+          "Validar trazabilidad de datos antes y después de migrar.",
+          "Capacitación breve a usuarios internos con guía operativa.",
+          "Preparar plan de contingencia y rollback documentado.",
+          "Publicar notas internas de versión con cambios funcionales.",
+          "Monitoreo intensivo de 48-72 horas post salida."
+        ]
+      }
+    ],
+    "hitos": [
+      "Hito 1: Alcance V2 y arquitectura aprobados por negocio + tecnología.",
+      "Hito 2: Base de datos, modelos y seeders V2 validados sin errores.",
+      "Hito 3: Flujos críticos funcionando extremo a extremo en staging.",
+      "Hito 4: Suite de pruebas automatizadas en verde (incluye php artisan test).",
+      "Hito 5: Documentación funcional/técnica actualizada y difundida.",
+      "Hito 6: Go-live controlado con plan de soporte y contingencia activo."
+    ],
+    "checklistFinal": [
+      {
+        "categoria": "Sistema y base de datos",
+        "items": [
+          "Todas las migraciones ejecutan y revierten correctamente.",
+          "Integridad referencial sin registros huérfanos.",
+          "Seeders oficiales sincronizados con catálogo real.",
+          "Monitoreo de errores configurado para módulos críticos."
+        ]
+      },
+      {
+        "categoria": "Lógica de negocio",
+        "items": [
+          "Reglas de puntos y bonificaciones verificadas con casos reales.",
+          "Estados de pedidos coherentes con el flujo operativo.",
+          "Jerarquías Vendedora → Líder → Coordinadora validadas.",
+          "Asignaciones automáticas y campañas sin conflictos."
+        ]
+      },
+      {
+        "categoria": "Calidad y pruebas",
+        "items": [
+          "Pruebas unitarias y funcionales actualizadas.",
+          "Ejecución de php artisan test sin fallas.",
+          "Matriz de casos borde cubierta y documentada.",
+          "Incidencias críticas cerradas o mitigadas con plan."
+        ]
+      },
+      {
+        "categoria": "Documentación y adopción",
+        "items": [
+          "README actualizado con cambios de V2 y dependencias.",
+          "Documentos de módulo actualizados en docs/.",
+          "Notas de versión internas publicadas.",
+          "Guía operativa entendible para cualquier perfil del equipo."
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    const data = JSON.parse(document.getElementById('roadmapData').textContent);
+
+    document.getElementById('contexto').textContent = data.contexto;
+    document.getElementById('titulo').textContent = data.titulo;
+    document.getElementById('subtitulo').textContent = data.subtitulo;
+
+    const metadatos = document.getElementById('metadatos');
+    data.metadatos.forEach((item) => {
+      const span = document.createElement('span');
+      span.className = 'px-3 py-1 rounded-full text-xs md:text-sm bg-white/10 border border-white/20';
+      span.textContent = item;
+      metadatos.appendChild(span);
+    });
+
+    const semanas = document.getElementById('semanas');
+    data.semanas.forEach((semana) => {
+      const card = document.createElement('article');
+      card.className = 'liquid-glass rounded-3xl p-5 shadow-neon';
+      card.innerHTML = `
+        <p class="text-cyan-300 text-xs uppercase tracking-widest font-bold">${semana.semana}</p>
+        <h3 class="text-lg font-extrabold mt-1">${semana.objetivo}</h3>
+        <h4 class="text-sm font-semibold mt-4 text-fuchsia-300">Entregables</h4>
+        <ul class="mt-2 space-y-2 text-sm list-disc list-inside text-slate-100/95">
+          ${semana.entregables.map((e) => `<li>${e}</li>`).join('')}
+        </ul>
+        <h4 class="text-sm font-semibold mt-4 text-cyan-300">Tareas clave</h4>
+        <ul class="mt-2 space-y-2 text-sm list-disc list-inside text-slate-100/95">
+          ${semana.tareas.map((t) => `<li>${t}</li>`).join('')}
+        </ul>
+      `;
+      semanas.appendChild(card);
+    });
+
+    const hitos = document.getElementById('hitos');
+    data.hitos.forEach((hito) => {
+      const li = document.createElement('li');
+      li.className = 'p-3 rounded-xl border border-white/15 bg-white/5';
+      li.textContent = hito;
+      hitos.appendChild(li);
+    });
+
+    const checklistFinal = document.getElementById('checklistFinal');
+    data.checklistFinal.forEach((bloque) => {
+      const div = document.createElement('div');
+      div.className = 'p-4 rounded-2xl border border-white/15 bg-white/5';
+      div.innerHTML = `
+        <h3 class="font-bold text-fuchsia-300">${bloque.categoria}</h3>
+        <ul class="mt-2 space-y-2 text-sm list-disc list-inside">
+          ${bloque.items.map((i) => `<li>${i}</li>`).join('')}
+        </ul>
+      `;
+      checklistFinal.appendChild(div);
+    });
+  </script>
+</body>
+</html>
