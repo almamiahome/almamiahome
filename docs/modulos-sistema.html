@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alma Mía · Módulos del sistema</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { background: radial-gradient(circle at top, #1f2937 0%, #020617 60%, #020617 100%); }
+    .window-shadow { box-shadow: 0 28px 80px rgba(15, 23, 42, .65); }
+    .card-glass { backdrop-filter: blur(8px); }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100">
+  <main class="mx-auto max-w-7xl px-4 py-8 md:px-8">
+    <section class="overflow-hidden rounded-2xl border border-slate-700/60 bg-slate-900/80 window-shadow">
+      <header class="flex items-center justify-between border-b border-slate-700/60 bg-slate-800/80 px-4 py-3">
+        <div class="flex items-center gap-2">
+          <span class="h-3 w-3 rounded-full bg-rose-500"></span>
+          <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+          <span class="h-3 w-3 rounded-full bg-emerald-500"></span>
+        </div>
+        <p class="text-xs font-medium uppercase tracking-[0.2em] text-slate-300">Sistema Operativo Alma Mía</p>
+        <div class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i><span id="hora"></span></div>
+      </header>
+
+      <div class="border-b border-slate-700/50 bg-slate-900/70 px-4 py-6 md:px-8">
+        <h1 id="titulo" class="text-2xl font-bold md:text-3xl"></h1>
+        <p id="subtitulo" class="mt-2 max-w-3xl text-sm text-slate-300 md:text-base"></p>
+        <p id="nota" class="mt-3 text-xs text-slate-400"></p>
+      </div>
+
+      <div class="grid gap-4 bg-slate-950/60 p-4 md:grid-cols-2 md:p-8 xl:grid-cols-3" id="grid-modulos"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 p-4">
+    <div class="w-full max-w-xl rounded-xl border border-slate-700 bg-slate-900 p-6">
+      <div class="mb-4 flex items-start justify-between gap-4">
+        <h2 id="modal-titulo" class="text-xl font-semibold"></h2>
+        <button id="cerrar-modal" class="rounded-md border border-slate-600 px-3 py-1 text-xs hover:bg-slate-800">Cerrar</button>
+      </div>
+      <p id="modal-descripcion" class="text-sm text-slate-200"></p>
+    </div>
+  </div>
+
+  <script>
+    const estadoConfig = {
+      activo: {
+        etiqueta: 'Activo',
+        clases: 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
+      },
+      'por-crear': {
+        etiqueta: 'Por crear',
+        clases: 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
+      }
+    };
+
+    const money = (value, currency) => new Intl.NumberFormat('es-UY', {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 0
+    }).format(value);
+
+    function renderModulo(modulo, moneda) {
+      const estado = estadoConfig[modulo.estado] || estadoConfig['por-crear'];
+      const precioTexto = modulo.precio === 0 ? 'Incluido' : money(modulo.precio, moneda);
+
+      return `
+        <article class="card-glass rounded-xl border border-slate-700/70 bg-slate-900/80 p-5">
+          <div class="mb-4 flex items-start justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="rounded-lg border border-slate-700 bg-slate-800 p-2 text-fuchsia-300">
+                <i data-lucide="${modulo.icono}" class="h-5 w-5"></i>
+              </div>
+              <div>
+                <h3 class="text-base font-semibold leading-tight">${modulo.nombre}</h3>
+                <p class="mt-1 text-xs text-slate-400">ID: ${modulo.id}</p>
+              </div>
+            </div>
+            <span class="rounded-full px-2.5 py-1 text-[11px] font-semibold ${estado.clases}">${estado.etiqueta}</span>
+          </div>
+
+          <p class="text-sm text-slate-300">${modulo.descripcion}</p>
+
+          <div class="mt-4 flex items-center justify-between border-t border-slate-700 pt-4">
+            <p class="text-sm font-semibold text-slate-100"><i class="fa-solid fa-tag mr-1 text-sky-300"></i>${precioTexto}</p>
+            <button data-open-modal="${modulo.id}" class="rounded-lg border border-slate-600 bg-slate-800 px-3 py-1.5 text-xs hover:bg-slate-700">
+              Ver detalle
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    async function iniciar() {
+      const hora = document.getElementById('hora');
+      setInterval(() => {
+        hora.textContent = new Date().toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' });
+      }, 1000);
+
+      const response = await fetch('./modulos-sistema.json');
+      const data = await response.json();
+
+      document.getElementById('titulo').textContent = data.meta.titulo;
+      document.getElementById('subtitulo').textContent = data.meta.subtitulo;
+      document.getElementById('nota').textContent = data.meta.notaPrecios;
+
+      const grid = document.getElementById('grid-modulos');
+      grid.innerHTML = data.modulos.map((modulo) => renderModulo(modulo, data.meta.moneda)).join('');
+      lucide.createIcons();
+
+      const modal = document.getElementById('modal');
+      const modalTitulo = document.getElementById('modal-titulo');
+      const modalDescripcion = document.getElementById('modal-descripcion');
+      const cerrar = document.getElementById('cerrar-modal');
+
+      document.querySelectorAll('[data-open-modal]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const modulo = data.modulos.find((item) => item.id === btn.dataset.openModal);
+          if (!modulo) return;
+
+          modalTitulo.textContent = modulo.nombre;
+          modalDescripcion.textContent = modulo.detalle;
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        });
+      });
+
+      const cerrarModal = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      };
+
+      cerrar.addEventListener('click', cerrarModal);
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) cerrarModal();
+      });
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') cerrarModal();
+      });
+    }
+
+    iniciar();
+  </script>
+</body>
+</html>
