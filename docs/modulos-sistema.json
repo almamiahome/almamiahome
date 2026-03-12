@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "titulo": "Mapa de módulos Alma Mía",
+    "subtitulo": "Estado actual y próximos desarrollos",
+    "moneda": "USD",
+    "notaPrecios": "Los precios son estimativos de implementación por módulo y pueden ajustarse por alcance final."
+  },
+  "modulos": [
+    {
+      "id": "autenticacion-wave",
+      "nombre": "Autenticación y seguridad Wave",
+      "estado": "activo",
+      "precio": 0,
+      "icono": "shield-check",
+      "descripcion": "Login, registro, recuperación de contraseña, 2FA e impersonación para operación segura del equipo.",
+      "detalle": "Este módulo ya está operativo sobre Wave e integra autenticación estándar más flujo de seguridad para usuarias internas y administrativas. Incluye gestión de perfil y bases para planes/suscripciones."
+    },
+    {
+      "id": "onboarding-comercial",
+      "nombre": "Onboarding comercial",
+      "estado": "activo",
+      "precio": 0,
+      "icono": "user-plus",
+      "descripcion": "Alta guiada de vendedora/líder y asignación de referente comercial según jerarquía.",
+      "detalle": "Permite completar datos iniciales al registrarse, asignar rol comercial y vincular correctamente líder/coordinadora, evitando inconsistencias jerárquicas desde el inicio."
+    },
+    {
+      "id": "catalogo-productos",
+      "nombre": "Catálogo de productos y categorías",
+      "estado": "activo",
+      "precio": 0,
+      "icono": "package",
+      "descripcion": "Gestión de SKU, precios, puntos y categorías con reglas asociadas.",
+      "detalle": "Administra el catálogo oficial con relaciones entre productos y categorías, preparado para reglas de puntaje por campañas y control de estado de cada producto."
+    },
+    {
+      "id": "pedidos-monetarios",
+      "nombre": "Pedidos y totales monetarios",
+      "estado": "activo",
+      "precio": 0,
+      "icono": "shopping-cart",
+      "descripcion": "Registro de pedidos con artículos, descuentos, puntos y totales por estructura comercial.",
+      "detalle": "Consolida los datos de cada pedido incluyendo vendedora, líder y coordinadora, además de los montos y puntajes para posteriores liquidaciones y reportes."
+    },
+    {
+      "id": "cobros-pagos",
+      "nombre": "Cobros, pagos y trazabilidad",
+      "estado": "activo",
+      "precio": 0,
+      "icono": "wallet",
+      "descripcion": "Control de pagos a vendedoras y cobros/bonos para líderes y coordinadoras.",
+      "detalle": "Gestiona el ciclo financiero por campaña, permitiendo rastrear desembolsos y bonos con estado y periodo de imputación para conciliación operativa."
+    },
+    {
+      "id": "panel-filament",
+      "nombre": "Panel administrativo Filament",
+      "estado": "activo",
+      "precio": 0,
+      "icono": "layout-dashboard",
+      "descripcion": "Administración central de usuarios, roles, catálogos, campañas y contenidos internos.",
+      "detalle": "Interfaz de gestión para el equipo interno con formularios y tablas avanzadas, conectada al modelo de negocio y a la operación diaria."
+    },
+    {
+      "id": "calendario-cierres-v2",
+      "nombre": "Calendario anual y cierres V2",
+      "estado": "por-crear",
+      "precio": 650,
+      "icono": "calendar-days",
+      "descripcion": "Estructura de catálogos trimestrales y cierres correlativos con validaciones automáticas.",
+      "detalle": "Implementa el núcleo temporal de Version2 para asegurar continuidad de cierres y consistencia operativa anual en cálculos, metas y reportes."
+    },
+    {
+      "id": "saldos-diferidos-v2",
+      "nombre": "Saldos diferidos y balance neto",
+      "estado": "por-crear",
+      "precio": 780,
+      "icono": "scale",
+      "descripcion": "Gestión de deudas, descuentos y compensaciones entre cierres con trazabilidad completa.",
+      "detalle": "Permite controlar saldos a pagar/cobrar por cierre, aplicar movimientos a periodos futuros y mantener auditoría del origen y aplicación de cada ajuste."
+    },
+    {
+      "id": "premios-revendedoras-v2",
+      "nombre": "Premios de revendedoras V2",
+      "estado": "por-crear",
+      "precio": 540,
+      "icono": "gift",
+      "descripcion": "Tienda de premios, continuidad de pedidos y canje por puntos acumulados.",
+      "detalle": "Contempla reglas por pedidos consecutivos, tramos de unidades vendidas y entrega programada de premios en el siguiente catálogo."
+    },
+    {
+      "id": "premios-lideres-v2",
+      "nombre": "Premios de líderes V2",
+      "estado": "por-crear",
+      "precio": 920,
+      "icono": "crown",
+      "descripcion": "Motor de incentivos por actividad, retención, crecimiento, cobranza y cumplimiento por rango.",
+      "detalle": "Agrupa reglas complejas de incentivos para líderes, incluyendo comparativas entre cierres, pago único por ascenso y plus de crecimiento sobre objetivos."
+    },
+    {
+      "id": "reportes-zona-v2",
+      "nombre": "Reportes por zona/departamento",
+      "estado": "por-crear",
+      "precio": 610,
+      "icono": "map-pinned",
+      "descripcion": "Vistas de seguimiento territorial con ranking, alertas y evolución por líder.",
+      "detalle": "Entrega paneles de análisis operativo por segmentación geográfica y detalle individual para toma de decisiones comerciales."
+    },
+    {
+      "id": "liquidaciones-automaticas-v2",
+      "nombre": "Liquidaciones automáticas",
+      "estado": "por-crear",
+      "precio": 860,
+      "icono": "cpu",
+      "descripcion": "Procesos automáticos de cierre mensual para calcular y preparar pagos/cobros.",
+      "detalle": "Reduce tareas manuales al ejecutar servicios de cálculo centralizados y generar resultados reproducibles para liquidación operativa."
+    }
+  ]
+}
