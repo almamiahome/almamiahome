@@ -1,118 +1,48 @@
 {
   "meta": {
     "titulo": "Mapa de módulos Alma Mía",
-    "subtitulo": "Estado actual y próximos desarrollos",
+    "subtitulo": "17 módulos activos y 20 módulos/funciones por implementar",
     "moneda": "USD",
-    "notaPrecios": "Los precios son estimativos de implementación por módulo y pueden ajustarse por alcance final."
+    "notaPrecios": "Seleccioná los módulos por crear para armar tu pedido y estimar inversión total."
   },
   "modulos": [
-    {
-      "id": "autenticacion-wave",
-      "nombre": "Autenticación y seguridad Wave",
-      "estado": "activo",
-      "precio": 0,
-      "icono": "shield-check",
-      "descripcion": "Login, registro, recuperación de contraseña, 2FA e impersonación para operación segura del equipo.",
-      "detalle": "Este módulo ya está operativo sobre Wave e integra autenticación estándar más flujo de seguridad para usuarias internas y administrativas. Incluye gestión de perfil y bases para planes/suscripciones."
-    },
-    {
-      "id": "onboarding-comercial",
-      "nombre": "Onboarding comercial",
-      "estado": "activo",
-      "precio": 0,
-      "icono": "user-plus",
-      "descripcion": "Alta guiada de vendedora/líder y asignación de referente comercial según jerarquía.",
-      "detalle": "Permite completar datos iniciales al registrarse, asignar rol comercial y vincular correctamente líder/coordinadora, evitando inconsistencias jerárquicas desde el inicio."
-    },
-    {
-      "id": "catalogo-productos",
-      "nombre": "Catálogo de productos y categorías",
-      "estado": "activo",
-      "precio": 0,
-      "icono": "package",
-      "descripcion": "Gestión de SKU, precios, puntos y categorías con reglas asociadas.",
-      "detalle": "Administra el catálogo oficial con relaciones entre productos y categorías, preparado para reglas de puntaje por campañas y control de estado de cada producto."
-    },
-    {
-      "id": "pedidos-monetarios",
-      "nombre": "Pedidos y totales monetarios",
-      "estado": "activo",
-      "precio": 0,
-      "icono": "shopping-cart",
-      "descripcion": "Registro de pedidos con artículos, descuentos, puntos y totales por estructura comercial.",
-      "detalle": "Consolida los datos de cada pedido incluyendo vendedora, líder y coordinadora, además de los montos y puntajes para posteriores liquidaciones y reportes."
-    },
-    {
-      "id": "cobros-pagos",
-      "nombre": "Cobros, pagos y trazabilidad",
-      "estado": "activo",
-      "precio": 0,
-      "icono": "wallet",
-      "descripcion": "Control de pagos a vendedoras y cobros/bonos para líderes y coordinadoras.",
-      "detalle": "Gestiona el ciclo financiero por campaña, permitiendo rastrear desembolsos y bonos con estado y periodo de imputación para conciliación operativa."
-    },
-    {
-      "id": "panel-filament",
-      "nombre": "Panel administrativo Filament",
-      "estado": "activo",
-      "precio": 0,
-      "icono": "layout-dashboard",
-      "descripcion": "Administración central de usuarios, roles, catálogos, campañas y contenidos internos.",
-      "detalle": "Interfaz de gestión para el equipo interno con formularios y tablas avanzadas, conectada al modelo de negocio y a la operación diaria."
-    },
-    {
-      "id": "calendario-cierres-v2",
-      "nombre": "Calendario anual y cierres V2",
-      "estado": "por-crear",
-      "precio": 650,
-      "icono": "calendar-days",
-      "descripcion": "Estructura de catálogos trimestrales y cierres correlativos con validaciones automáticas.",
-      "detalle": "Implementa el núcleo temporal de Version2 para asegurar continuidad de cierres y consistencia operativa anual en cálculos, metas y reportes."
-    },
-    {
-      "id": "saldos-diferidos-v2",
-      "nombre": "Saldos diferidos y balance neto",
-      "estado": "por-crear",
-      "precio": 780,
-      "icono": "scale",
-      "descripcion": "Gestión de deudas, descuentos y compensaciones entre cierres con trazabilidad completa.",
-      "detalle": "Permite controlar saldos a pagar/cobrar por cierre, aplicar movimientos a periodos futuros y mantener auditoría del origen y aplicación de cada ajuste."
-    },
-    {
-      "id": "premios-revendedoras-v2",
-      "nombre": "Premios de revendedoras V2",
-      "estado": "por-crear",
-      "precio": 540,
-      "icono": "gift",
-      "descripcion": "Tienda de premios, continuidad de pedidos y canje por puntos acumulados.",
-      "detalle": "Contempla reglas por pedidos consecutivos, tramos de unidades vendidas y entrega programada de premios en el siguiente catálogo."
-    },
-    {
-      "id": "premios-lideres-v2",
-      "nombre": "Premios de líderes V2",
-      "estado": "por-crear",
-      "precio": 920,
-      "icono": "crown",
-      "descripcion": "Motor de incentivos por actividad, retención, crecimiento, cobranza y cumplimiento por rango.",
-      "detalle": "Agrupa reglas complejas de incentivos para líderes, incluyendo comparativas entre cierres, pago único por ascenso y plus de crecimiento sobre objetivos."
-    },
-    {
-      "id": "reportes-zona-v2",
-      "nombre": "Reportes por zona/departamento",
-      "estado": "por-crear",
-      "precio": 610,
-      "icono": "map-pinned",
-      "descripcion": "Vistas de seguimiento territorial con ranking, alertas y evolución por líder.",
-      "detalle": "Entrega paneles de análisis operativo por segmentación geográfica y detalle individual para toma de decisiones comerciales."
-    },
-    {
-      "id": "liquidaciones-automaticas-v2",
-      "nombre": "Liquidaciones automáticas",
-      "estado": "por-crear",
-      "precio": 860,
-      "icono": "cpu",
-      "descripcion": "Procesos automáticos de cierre mensual para calcular y preparar pagos/cobros.",
-      "detalle": "Reduce tareas manuales al ejecutar servicios de cálculo centralizados y generar resultados reproducibles para liquidación operativa."
-    }
+    {"id":"autenticacion-wave","nombre":"Autenticación y seguridad Wave","estado":"activo","precio":0,"icono":"shield-check","descripcion":"Login, registro, recuperación y control de accesos.","detalle":"Base de seguridad operativa ya implementada para usuarias internas y administrativas."},
+    {"id":"roles-permisos","nombre":"Roles y permisos","estado":"activo","precio":0,"icono":"key-round","descripcion":"Control granular de permisos por rol comercial.","detalle":"Permite administrar permisos y visibilidad de acciones según el rol asignado."},
+    {"id":"onboarding-comercial","nombre":"Onboarding comercial","estado":"activo","precio":0,"icono":"user-plus","descripcion":"Alta inicial de vendedoras, líderes y coordinadoras.","detalle":"Normaliza el ingreso de nuevas integrantes con reglas jerárquicas definidas."},
+    {"id":"perfil-usuario","nombre":"Perfil y datos de usuario","estado":"activo","precio":0,"icono":"user-circle","descripcion":"Gestión de información personal y comercial.","detalle":"Edición de perfil, contacto y datos de operación para cada usuaria."},
+    {"id":"catalogo-productos","nombre":"Catálogo de productos","estado":"activo","precio":0,"icono":"package","descripcion":"ABM de productos, categorías y estados.","detalle":"Estructura base del catálogo para venta y campañas."},
+    {"id":"categorias-producto","nombre":"Categorías y líneas","estado":"activo","precio":0,"icono":"layers-3","descripcion":"Organización comercial del catálogo por líneas.","detalle":"Facilita filtros, reportes y reglas por tipo de producto."},
+    {"id":"pedidos-base","nombre":"Pedidos base","estado":"activo","precio":0,"icono":"shopping-cart","descripcion":"Registro de pedidos con detalle de ítems.","detalle":"Permite cargar pedidos y asociarlos a estructura comercial."},
+    {"id":"totales-monetarios","nombre":"Totales monetarios","estado":"activo","precio":0,"icono":"receipt","descripcion":"Cálculo de subtotal, descuentos y total final.","detalle":"Motor actual para consolidar montos por pedido."},
+    {"id":"puntos-base","nombre":"Puntos comerciales base","estado":"activo","precio":0,"icono":"star","descripcion":"Asignación inicial de puntaje por venta.","detalle":"Permite registrar puntos por operación según reglas vigentes."},
+    {"id":"campanias-base","nombre":"Campañas comerciales base","estado":"activo","precio":0,"icono":"megaphone","descripcion":"Configuración de periodos y campañas.","detalle":"Define campañas activas y ventanas operativas."},
+    {"id":"cobros-base","nombre":"Cobros y pagos base","estado":"activo","precio":0,"icono":"wallet","descripcion":"Registro de cobranzas y pagos internos.","detalle":"Trazabilidad general de movimientos financieros."},
+    {"id":"panel-filament","nombre":"Panel administrativo","estado":"activo","precio":0,"icono":"layout-dashboard","descripcion":"Gestión interna de operaciones y datos.","detalle":"Panel central para administración diaria del sistema."},
+    {"id":"reportes-basicos","nombre":"Reportes básicos","estado":"activo","precio":0,"icono":"bar-chart-3","descripcion":"Vistas operativas de seguimiento general.","detalle":"Reportes iniciales para control de actividad y ventas."},
+    {"id":"notificaciones-base","nombre":"Notificaciones internas","estado":"activo","precio":0,"icono":"bell","descripcion":"Alertas de acciones y eventos del sistema.","detalle":"Mensajes internos para seguimiento operativo."},
+    {"id":"auditoria-base","nombre":"Auditoría de cambios","estado":"activo","precio":0,"icono":"file-search","descripcion":"Historial de eventos clave del sistema.","detalle":"Registro de cambios para soporte y trazabilidad."},
+    {"id":"importacion-datos","nombre":"Importación de datos","estado":"activo","precio":0,"icono":"database","descripcion":"Carga de datos iniciales por lotes.","detalle":"Permite importar información histórica y operativa."},
+    {"id":"exportacion-datos","nombre":"Exportación de datos","estado":"activo","precio":0,"icono":"download","descripcion":"Descarga de reportes y listados.","detalle":"Exportación en formatos operativos para análisis externo."},
+
+    {"id":"calendario-cierres-v2","nombre":"Calendario anual y cierres V2","estado":"por-crear","precio":650,"icono":"calendar-days","descripcion":"Cierres correlativos con validaciones automáticas.","detalle":"Control de periodos, bloqueos y continuidad entre cierres."},
+    {"id":"saldos-diferidos-v2","nombre":"Saldos diferidos","estado":"por-crear","precio":780,"icono":"scale","descripcion":"Compensaciones y arrastres entre cierres.","detalle":"Gestión de saldos pendientes y aplicación futura."},
+    {"id":"premios-revendedoras-v2","nombre":"Premios de revendedoras","estado":"por-crear","precio":540,"icono":"gift","descripcion":"Canje y seguimiento de premios por puntos.","detalle":"Motor de incentivos para revendedoras por desempeño."},
+    {"id":"premios-lideres-v2","nombre":"Premios de líderes","estado":"por-crear","precio":920,"icono":"crown","descripcion":"Bonos por crecimiento, actividad y cobranza.","detalle":"Reglas avanzadas de incentivo para liderazgo comercial."},
+    {"id":"ranking-zonal","nombre":"Ranking por zona","estado":"por-crear","precio":460,"icono":"map-pinned","descripcion":"Ranking territorial por cierre y campaña.","detalle":"Comparativas de rendimiento por zona y referente."},
+    {"id":"liquidaciones-automaticas","nombre":"Liquidaciones automáticas","estado":"por-crear","precio":860,"icono":"cpu","descripcion":"Cálculo masivo de resultados por cierre.","detalle":"Proceso automatizado para liquidaciones reproducibles."},
+    {"id":"objetivos-personalizados","nombre":"Objetivos personalizados","estado":"por-crear","precio":490,"icono":"target","descripcion":"Metas dinámicas por rol y nivel.","detalle":"Configuración de objetivos con seguimiento de cumplimiento."},
+    {"id":"tramos-comision","nombre":"Tramos de comisión","estado":"por-crear","precio":620,"icono":"percent","descripcion":"Escalas de comisión por rendimiento.","detalle":"Cálculo de comisiones por tramo y periodo."},
+    {"id":"estado-pedido-avanzado","nombre":"Estados de pedido avanzados","estado":"por-crear","precio":430,"icono":"list-checks","descripcion":"Flujo completo de estados operativos.","detalle":"Pipeline detallado desde carga hasta entrega y cierre."},
+    {"id":"devoluciones-cambios","nombre":"Devoluciones y cambios","estado":"por-crear","precio":550,"icono":"refresh-ccw","descripcion":"Gestión de devoluciones con impacto monetario.","detalle":"Proceso de reversas y ajustes por reclamos o cambios."},
+    {"id":"alertas-morosidad","nombre":"Alertas de morosidad","estado":"por-crear","precio":390,"icono":"alert-triangle","descripcion":"Detección temprana de riesgo de cobranza.","detalle":"Alertas automáticas para seguimiento preventivo."},
+    {"id":"seguimiento-cartera","nombre":"Seguimiento de cartera","estado":"por-crear","precio":640,"icono":"briefcase-business","descripcion":"Vista consolidada de deuda y recupero.","detalle":"Panel de cartera por vendedora, líder y zona."},
+    {"id":"simulador-ganancias","nombre":"Simulador de ganancias","estado":"por-crear","precio":470,"icono":"calculator","descripcion":"Estimador de ganancia por escenario de venta.","detalle":"Proyecciones de ingresos según objetivos y mix."},
+    {"id":"tablero-ejecutivo","nombre":"Tablero ejecutivo","estado":"por-crear","precio":880,"icono":"monitor-up","descripcion":"Indicadores clave para dirección comercial.","detalle":"KPIs estratégicos en tiempo real para toma de decisión."},
+    {"id":"automatizacion-whatsapp","nombre":"Automatización WhatsApp","estado":"por-crear","precio":730,"icono":"message-circle","descripcion":"Recordatorios y avisos operativos automáticos.","detalle":"Mensajería programada para eventos de campaña y cobro."},
+    {"id":"fidelizacion-clientes","nombre":"Fidelización de clientes","estado":"por-crear","precio":520,"icono":"heart","descripcion":"Reglas de recurrencia y recompensas.","detalle":"Módulo para sostener recompra y lealtad."},
+    {"id":"bundle-promociones","nombre":"Bundles y promociones","estado":"por-crear","precio":560,"icono":"boxes","descripcion":"Promociones por combo y reglas condicionales.","detalle":"Definición de combos y bonificaciones por volumen."},
+    {"id":"control-stock-zona","nombre":"Control de stock por zona","estado":"por-crear","precio":690,"icono":"warehouse","descripcion":"Disponibilidad y rotación por territorio.","detalle":"Monitoreo de stock con alertas por quiebre."},
+    {"id":"centro-ayuda","nombre":"Centro de ayuda interno","estado":"por-crear","precio":340,"icono":"life-buoy","descripcion":"Base de conocimiento para el equipo.","detalle":"Guías, tutoriales y respuestas operativas frecuentes."},
+    {"id":"integracion-bi","nombre":"Integración BI externa","estado":"por-crear","precio":970,"icono":"network","descripcion":"Conexión de datos a herramientas de analítica.","detalle":"Exposición de datos para análisis avanzado y tableros externos."}
   ]
 }

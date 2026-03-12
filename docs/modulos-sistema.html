@@ -32,7 +32,37 @@
         <p id="nota" class="mt-3 text-xs text-slate-400"></p>
       </div>
 
-      <div class="grid gap-4 bg-slate-950/60 p-4 md:grid-cols-2 md:p-8 xl:grid-cols-3" id="grid-modulos"></div>
+      <div class="grid gap-6 bg-slate-950/60 p-4 md:p-8 lg:grid-cols-[1fr_320px]">
+        <div class="space-y-7">
+          <section>
+            <div class="mb-4 flex items-center justify-between">
+              <h2 class="text-lg font-semibold text-emerald-300">Módulos activos</h2>
+              <span id="total-activos" class="rounded-full border border-emerald-500/30 bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-200"></span>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3" id="grid-activos"></div>
+          </section>
+
+          <section>
+            <div class="mb-4 flex items-center justify-between">
+              <h2 class="text-lg font-semibold text-amber-300">Módulos / funciones por crear</h2>
+              <span id="total-crear" class="rounded-full border border-amber-500/30 bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-200"></span>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3" id="grid-crear"></div>
+          </section>
+        </div>
+
+        <aside class="h-fit rounded-xl border border-slate-700/70 bg-slate-900/85 p-4 lg:sticky lg:top-8">
+          <h3 class="text-base font-semibold">Pedido de implementación</h3>
+          <p class="mt-1 text-xs text-slate-400">Marcá los módulos por crear para calcular total estimado.</p>
+          <div class="mt-4 space-y-2 text-sm">
+            <p class="flex items-center justify-between"><span>Seleccionados</span><strong id="pedido-cantidad">0</strong></p>
+            <p class="flex items-center justify-between"><span>Total estimado</span><strong id="pedido-total" class="text-sky-300">USD 0</strong></p>
+          </div>
+          <div class="mt-4 max-h-72 space-y-2 overflow-auto pr-1" id="pedido-lista">
+            <p class="text-xs text-slate-500">Todavía no seleccionaste módulos.</p>
+          </div>
+        </aside>
+      </div>
     </section>
   </main>
 
@@ -67,6 +97,12 @@
     function renderModulo(modulo, moneda) {
       const estado = estadoConfig[modulo.estado] || estadoConfig['por-crear'];
       const precioTexto = modulo.precio === 0 ? 'Incluido' : money(modulo.precio, moneda);
+      const checkHtml = modulo.estado === 'por-crear'
+        ? `<label class="mt-3 flex cursor-pointer items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-2 text-xs hover:border-sky-500/60">
+            <input type="checkbox" data-modulo-check="${modulo.id}" class="h-4 w-4 rounded border-slate-500 bg-slate-900 text-sky-400 focus:ring-sky-500" />
+            <span>Agregar al pedido</span>
+          </label>`
+        : '';
 
       return `
         <article class="card-glass rounded-xl border border-slate-700/70 bg-slate-900/80 p-5">
@@ -91,8 +127,33 @@
               Ver detalle
             </button>
           </div>
+          ${checkHtml}
         </article>
       `;
+    }
+
+    function actualizarPedido(data) {
+      const checks = [...document.querySelectorAll('[data-modulo-check]:checked')];
+      const seleccionados = checks
+        .map((check) => data.modulos.find((modulo) => modulo.id === check.dataset.moduloCheck))
+        .filter(Boolean);
+
+      const total = seleccionados.reduce((acc, modulo) => acc + modulo.precio, 0);
+      document.getElementById('pedido-cantidad').textContent = seleccionados.length;
+      document.getElementById('pedido-total').textContent = money(total, data.meta.moneda);
+
+      const lista = document.getElementById('pedido-lista');
+      if (!seleccionados.length) {
+        lista.innerHTML = '<p class="text-xs text-slate-500">Todavía no seleccionaste módulos.</p>';
+        return;
+      }
+
+      lista.innerHTML = seleccionados.map((modulo) => `
+        <div class="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-2 text-xs">
+          <p class="font-medium text-slate-100">${modulo.nombre}</p>
+          <p class="mt-1 text-slate-300">${money(modulo.precio, data.meta.moneda)}</p>
+        </div>
+      `).join('');
     }
 
     async function iniciar() {
@@ -108,9 +169,21 @@
       document.getElementById('subtitulo').textContent = data.meta.subtitulo;
       document.getElementById('nota').textContent = data.meta.notaPrecios;
 
-      const grid = document.getElementById('grid-modulos');
-      grid.innerHTML = data.modulos.map((modulo) => renderModulo(modulo, data.meta.moneda)).join('');
+      const modulosActivos = data.modulos.filter((modulo) => modulo.estado === 'activo');
+      const modulosPorCrear = data.modulos.filter((modulo) => modulo.estado === 'por-crear');
+
+      document.getElementById('total-activos').textContent = `${modulosActivos.length} activos`;
+      document.getElementById('total-crear').textContent = `${modulosPorCrear.length} por crear`;
+
+      document.getElementById('grid-activos').innerHTML = modulosActivos.map((modulo) => renderModulo(modulo, data.meta.moneda)).join('');
+      document.getElementById('grid-crear').innerHTML = modulosPorCrear.map((modulo) => renderModulo(modulo, data.meta.moneda)).join('');
+
       lucide.createIcons();
+
+      document.querySelectorAll('[data-modulo-check]').forEach((checkbox) => {
+        checkbox.addEventListener('change', () => actualizarPedido(data));
+      });
+      actualizarPedido(data);
 
       const modal = document.getElementById('modal');
       const modalTitulo = document.getElementById('modal-titulo');
