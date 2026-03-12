@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es" class="h-full bg-zinc-50">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Ejemplos V2 - Alma Mia Fragancias</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c'
+            }
+          },
+          boxShadow: {
+            soft: '0 8px 30px rgba(15, 23, 42, 0.06)'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+</head>
+<body class="min-h-full bg-zinc-50 text-zinc-900">
+  <div class="mx-auto max-w-7xl space-y-8 px-4 py-8 lg:px-8">
+    <header class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-brand-600">Alma Mia Fragancias · Vista demo</p>
+          <h1 class="mt-2 text-3xl font-bold tracking-tight">uiejemplos.html · Kit visual versión 2</h1>
+          <p class="mt-2 max-w-3xl text-sm text-zinc-600">Pantallas de referencia estilo shadcn + Tailwind para validar UX de todos los módulos V2. Todos los campos son demostrativos (no funcionales) pero incluyen estructura completa de tablas, formularios, gráficas y estados.</p>
+        </div>
+        <div class="inline-flex items-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs text-zinc-600">
+          <span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
+          Prototipo visual listo para revisión
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-soft">
+        <p class="text-xs uppercase tracking-wide text-zinc-500">Catálogo activo</p>
+        <p class="mt-2 text-2xl font-semibold">N°2 · 2026</p>
+        <p class="mt-1 text-sm text-zinc-500">Abr · May · Jun</p>
+      </article>
+      <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-soft">
+        <p class="text-xs uppercase tracking-wide text-zinc-500">Cierre en curso</p>
+        <p class="mt-2 text-2xl font-semibold">Campaña 2/3</p>
+        <p class="mt-1 text-sm text-zinc-500">16 días restantes</p>
+      </article>
+      <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-soft">
+        <p class="text-xs uppercase tracking-wide text-zinc-500">Balance neto global</p>
+        <p class="mt-2 text-2xl font-semibold text-emerald-600">+$1.245.000</p>
+        <p class="mt-1 text-sm text-zinc-500">Pagos vs cobros diferidos</p>
+      </article>
+      <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-soft">
+        <p class="text-xs uppercase tracking-wide text-zinc-500">Alertas operativas</p>
+        <p class="mt-2 text-2xl font-semibold text-amber-600">12 pendientes</p>
+        <p class="mt-1 text-sm text-zinc-500">Comprobantes y deuda acumulada</p>
+      </article>
+    </section>
+
+    <section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+      <h2 class="text-xl font-semibold">A) Estructura anual y cierres / campañas</h2>
+      <p class="mt-1 text-sm text-zinc-600">Matriz anual de 4 catálogos con 3 cierres por catálogo, trazabilidad de pedidos y estado operativo.</p>
+      <div class="mt-5 overflow-x-auto rounded-lg border border-zinc-200">
+        <table class="min-w-full divide-y divide-zinc-200 text-sm">
+          <thead class="bg-zinc-50 text-left text-xs uppercase tracking-wide text-zinc-500">
+            <tr>
+              <th class="px-3 py-2">Catálogo</th><th class="px-3 py-2">Mes</th><th class="px-3 py-2">Cierre</th><th class="px-3 py-2">Fecha límite</th><th class="px-3 py-2">Pedidos</th><th class="px-3 py-2">Estado</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-100 bg-white">
+            <tr><td class="px-3 py-2">N°1</td><td class="px-3 py-2">Enero</td><td class="px-3 py-2">1/3</td><td class="px-3 py-2">31/01/2026</td><td class="px-3 py-2">348</td><td class="px-3 py-2"><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs text-emerald-700">Cerrado</span></td></tr>
+            <tr><td class="px-3 py-2">N°2</td><td class="px-3 py-2">Mayo</td><td class="px-3 py-2">2/3</td><td class="px-3 py-2">30/05/2026</td><td class="px-3 py-2">412</td><td class="px-3 py-2"><span class="rounded-full bg-sky-100 px-2 py-1 text-xs text-sky-700">En proceso</span></td></tr>
+            <tr><td class="px-3 py-2">N°4</td><td class="px-3 py-2">Diciembre</td><td class="px-3 py-2">3/3</td><td class="px-3 py-2">20/12/2026</td><td class="px-3 py-2">0</td><td class="px-3 py-2"><span class="rounded-full bg-zinc-100 px-2 py-1 text-xs text-zinc-700">Programado</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <form class="mt-5 grid gap-4 md:grid-cols-3">
+        <label class="text-sm">Año
+          <input disabled type="number" value="2026" class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2" />
+        </label>
+        <label class="text-sm">Catálogo
+          <select disabled class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2"><option>N°2</option></select>
+        </label>
+        <label class="text-sm">Estado de cierre
+          <select disabled class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2"><option>En validación</option></select>
+        </label>
+      </form>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-2">
+      <article class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+        <h2 class="text-xl font-semibold">B) Pagos diferidos avanzados</h2>
+        <p class="mt-1 text-sm text-zinc-600">Saldo a pagar, saldo a cobrar, balance, deuda y descuentos a cierres futuros.</p>
+        <div class="mt-4 overflow-x-auto rounded-lg border border-zinc-200">
+          <table class="min-w-full divide-y divide-zinc-200 text-sm">
+            <thead class="bg-zinc-50 text-left text-xs uppercase tracking-wide text-zinc-500">
+              <tr><th class="px-3 py-2">Líder</th><th class="px-3 py-2">Saldo pagar</th><th class="px-3 py-2">Saldo cobrar</th><th class="px-3 py-2">Deuda</th><th class="px-3 py-2">Descuento próximo cierre</th></tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-100 bg-white">
+              <tr><td class="px-3 py-2">Marina Soto</td><td class="px-3 py-2">$85.000</td><td class="px-3 py-2">$120.000</td><td class="px-3 py-2">$0</td><td class="px-3 py-2">$10.000</td></tr>
+              <tr><td class="px-3 py-2">Lorena Pérez</td><td class="px-3 py-2">$70.000</td><td class="px-3 py-2">$62.000</td><td class="px-3 py-2 text-rose-600">$8.000</td><td class="px-3 py-2">$0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+          <label class="text-sm">Tipo de movimiento
+            <select disabled class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2"><option>Cobro líder</option></select>
+          </label>
+          <label class="text-sm">Mes de liquidación
+            <input disabled type="month" value="2026-06" class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2" />
+          </label>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+        <h2 class="text-xl font-semibold">C) Filtros por territorio y vista comercial</h2>
+        <p class="mt-1 text-sm text-zinc-600">Segmentación por zona/departamento con vista líder individual y proyección.</p>
+        <form class="mt-4 grid gap-3 md:grid-cols-2">
+          <label class="text-sm">Zona
+            <select disabled class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2"><option>Centro</option></select>
+          </label>
+          <label class="text-sm">Departamento
+            <select disabled class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2"><option>Capital</option></select>
+          </label>
+          <label class="text-sm">Líder
+            <input disabled value="Marina Soto" class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2" />
+          </label>
+          <label class="text-sm">Proyección próximo cierre
+            <input disabled value="18 pedidos / 210 U" class="mt-1 w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2" />
+          </label>
+        </form>
+        <div class="mt-4 rounded-lg border border-zinc-200 p-3">
+          <canvas id="graficoTerritorio" height="150"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+      <h2 class="text-xl font-semibold">D) Módulos revendedoras</h2>
+      <div class="mt-4 grid gap-6 lg:grid-cols-3">
+        <article class="rounded-lg border border-zinc-200 p-4">
+          <h3 class="font-semibold">Tienda de premios</h3>
+          <p class="mt-1 text-sm text-zinc-600">Canje por puntos acumulados.</p>
+          <div class="mt-3 space-y-2 text-sm">
+            <div class="flex items-center justify-between rounded-md bg-zinc-50 px-3 py-2"><span>Perfume Aura 50ml</span><span>1.500 pts</span></div>
+            <div class="flex items-center justify-between rounded-md bg-zinc-50 px-3 py-2"><span>Set corporal</span><span>2.200 pts</span></div>
+          </div>
+        </article>
+        <article class="rounded-lg border border-zinc-200 p-4">
+          <h3 class="font-semibold">Premio 3 pedidos consecutivos</h3>
+          <p class="mt-1 text-sm text-zinc-600">Seguimiento por campaña con metas de unidades.</p>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li class="flex justify-between rounded-md bg-emerald-50 px-3 py-2"><span>Ene: 10U</span><span class="text-emerald-700">Cumplido</span></li>
+            <li class="flex justify-between rounded-md bg-emerald-50 px-3 py-2"><span>Feb: 12U</span><span class="text-emerald-700">Cumplido</span></li>
+            <li class="flex justify-between rounded-md bg-amber-50 px-3 py-2"><span>Mar: 8U</span><span class="text-amber-700">Pendiente</span></li>
+          </ul>
+        </article>
+        <article class="rounded-lg border border-zinc-200 p-4">
+          <h3 class="font-semibold">Continuidad y ventas</h3>
+          <p class="mt-1 text-sm text-zinc-600">Tabla de equivalencias de unidades a puntos.</p>
+          <table class="mt-3 w-full text-sm">
+            <tbody class="divide-y divide-zinc-200">
+              <tr><td class="py-2">10 unidades</td><td class="py-2 text-right">100 pts</td></tr>
+              <tr><td class="py-2">15 unidades</td><td class="py-2 text-right">150 pts</td></tr>
+              <tr><td class="py-2">20 unidades</td><td class="py-2 text-right">250 pts</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+      <h2 class="text-xl font-semibold">E) Módulos líderes (premios)</h2>
+      <p class="mt-1 text-sm text-zinc-600">Cobertura de actividad, retención, altas, cobranza, crecimiento, reparto, plus y unidades.</p>
+      <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Actividad</p><p class="mt-1 text-lg font-semibold">$25.000</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Retención</p><p class="mt-1 text-lg font-semibold">$25.000</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Altas</p><p class="mt-1 text-lg font-semibold">$6.600</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Cobranza</p><p class="mt-1 text-lg font-semibold">$12.000</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Crecimiento</p><p class="mt-1 text-lg font-semibold">$40.000</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Reparto</p><p class="mt-1 text-lg font-semibold">$13.200</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Plus crecimiento</p><p class="mt-1 text-lg font-semibold">15%</p></div>
+        <div class="rounded-lg border border-zinc-200 p-4"><p class="text-xs text-zinc-500">Premio por unidades</p><p class="mt-1 text-lg font-semibold">$16.000</p></div>
+      </div>
+      <div class="mt-4 rounded-lg border border-zinc-200 p-3">
+        <canvas id="graficoPremios" height="130"></canvas>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-soft">
+      <h2 class="text-xl font-semibold">Funciones transversales (seguridad, onboarding, estados, auditoría, reportería)</h2>
+      <div class="mt-4 grid gap-4 lg:grid-cols-2">
+        <form class="space-y-3 rounded-lg border border-zinc-200 p-4">
+          <h3 class="font-semibold">Formulario de alta guiada</h3>
+          <input disabled placeholder="Nombre completo" class="w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm" />
+          <input disabled placeholder="DNI" class="w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm" />
+          <select disabled class="w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm"><option>Rol: Revendedora</option></select>
+          <input disabled placeholder="Líder referente" class="w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm" />
+          <input disabled placeholder="Coordinadora" class="w-full rounded-md border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm" />
+        </form>
+        <div class="rounded-lg border border-zinc-200 p-4">
+          <h3 class="font-semibold">Bitácora de auditoría</h3>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li class="rounded-md bg-zinc-50 px-3 py-2">[09:45] Pedido #P-12091 pasó a estado <strong>Confirmado</strong>.</li>
+            <li class="rounded-md bg-zinc-50 px-3 py-2">[10:20] Carga de comprobante validada por administración.</li>
+            <li class="rounded-md bg-zinc-50 px-3 py-2">[11:05] Recalculo de premio de actividad en cierre 2/3.</li>
+            <li class="rounded-md bg-zinc-50 px-3 py-2">[11:50] Reporte exportado en CSV para dirección comercial.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const commonOptions = {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, grid: { color: '#e4e4e7' } }, x: { grid: { display: false } } }
+    };
+
+    new Chart(document.getElementById('graficoTerritorio'), {
+      type: 'bar',
+      data: {
+        labels: ['Centro', 'Norte', 'Sur', 'Este'],
+        datasets: [{ label: 'Pedidos', data: [210, 156, 133, 180], backgroundColor: '#f97316', borderRadius: 8 }]
+      },
+      options: commonOptions
+    });
+
+    new Chart(document.getElementById('graficoPremios'), {
+      type: 'line',
+      data: {
+        labels: ['Actividad', 'Retención', 'Altas', 'Cobranza', 'Reparto', 'Unidades'],
+        datasets: [{
+          label: 'Monto',
+          data: [25000, 25000, 6600, 12000, 13200, 16000],
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37, 99, 235, 0.2)',
+          fill: true,
+          tension: 0.35
+        }]
+      },
+      options: commonOptions
+    });
+  </script>
+</body>
+</html>
