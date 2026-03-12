@@ -4,94 +4,112 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alma Mía · Mapa de Módulos V2</title>
+    <title>Alma Mía · Sistema de módulos V2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        panel: 'rgba(255, 255, 255, 0.72)',
-                        panelDark: 'rgba(24, 24, 27, 0.64)',
-                        accent: '#7c3aed',
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
                     },
                     boxShadow: {
-                        glass: '0 12px 40px rgba(16, 24, 40, 0.12), inset 0 1px 1px rgba(255,255,255,0.45)',
+                        glass: '0 18px 45px rgba(22, 28, 45, 0.16), inset 0 1px 1px rgba(255,255,255,0.35)'
                     },
-                    backdropBlur: {
-                        xl: '26px',
+                    colors: {
+                        primary: '#6d28d9'
                     }
-                },
-            },
-        };
+                }
+            }
+        }
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-violet-200/60 via-white to-indigo-200/70 text-zinc-800">
-    <div class="fixed inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(124,58,237,0.24),transparent_36%),radial-gradient(circle_at_85%_25%,rgba(59,130,246,0.2),transparent_40%),radial-gradient(circle_at_60%_90%,rgba(236,72,153,0.18),transparent_34%)]"></div>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(109,40,217,0.28),transparent_34%),radial-gradient(circle_at_92%_22%,rgba(14,165,233,0.22),transparent_38%),radial-gradient(circle_at_50%_96%,rgba(168,85,247,0.20),transparent_42%)]"></div>
 
-    <main class="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <header class="mb-8 rounded-3xl border border-white/40 bg-panel p-6 shadow-glass backdrop-blur-xl">
-            <p class="mb-2 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-violet-700">
-                <i class="fa-solid fa-layer-group"></i>
-                Alma Mía Fragancias · Mapa funcional
-            </p>
-            <h1 class="text-2xl font-semibold tracking-tight sm:text-3xl">Sistema tipo OS · Módulos activos + backlog V2</h1>
-            <p class="mt-3 max-w-3xl text-sm text-zinc-700 sm:text-base">
-                Vista documental en HTML + Tailwind con diseño liquid-glass inspirado en shadcn premium SaaS. Todos los módulos se cargan desde JSON interno para facilitar edición y escalado.
-            </p>
-        </header>
-
-        <section class="mb-8 grid gap-4 md:grid-cols-3">
-            <article class="rounded-2xl border border-white/50 bg-panel p-5 shadow-glass backdrop-blur-xl">
-                <p class="text-xs uppercase tracking-wide text-zinc-500">Módulos activos</p>
-                <p id="totalCurrent" class="mt-2 text-3xl font-semibold">0</p>
-                <p class="text-sm text-zinc-600">Componentes actualmente instalados.</p>
-            </article>
-            <article class="rounded-2xl border border-white/50 bg-panel p-5 shadow-glass backdrop-blur-xl">
-                <p class="text-xs uppercase tracking-wide text-zinc-500">Módulos V2 por implementar</p>
-                <p id="totalPlanned" class="mt-2 text-3xl font-semibold">0</p>
-                <p class="text-sm text-zinc-600">Funciones nuevas con costo configurable.</p>
-            </article>
-            <article class="rounded-2xl border border-white/50 bg-panel p-5 shadow-glass backdrop-blur-xl">
-                <p class="text-xs uppercase tracking-wide text-zinc-500">Inversión total seleccionada</p>
-                <p id="totalPrice" class="mt-2 text-3xl font-semibold text-violet-700">$0</p>
-                <p id="selectedCount" class="text-sm text-zinc-600">0 módulos nuevos seleccionados.</p>
-            </article>
-        </section>
-
-        <section class="mb-10">
-            <div class="mb-4 flex items-center justify-between gap-3">
-                <h2 class="text-xl font-semibold">17 módulos / funciones actuales</h2>
-                <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">Activos</span>
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <section class="rounded-[28px] border border-white/50 bg-white/50 shadow-glass backdrop-blur-xl">
+            <div class="border-b border-white/60 px-4 py-3 sm:px-6">
+                <div class="flex flex-wrap items-center justify-between gap-3 text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                        <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+                        <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+                        <p class="ml-2 font-medium text-slate-600">Alma Mía OS · Arquitectura modular V2</p>
+                    </div>
+                    <p class="rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-700">
+                        100% editable por JSON
+                    </p>
+                </div>
             </div>
-            <div id="currentModules" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
-        </section>
 
-        <section>
-            <div class="mb-4 flex items-center justify-between gap-3">
-                <h2 class="text-xl font-semibold">15 módulos / funciones nuevas para V2</h2>
-                <span class="rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-medium text-violet-700">Por implementar</span>
+            <div class="grid gap-4 p-4 lg:grid-cols-[280px_1fr] sm:p-6">
+                <aside class="space-y-3 rounded-2xl border border-white/60 bg-white/70 p-4">
+                    <h1 class="text-lg font-semibold">Panel de planeación</h1>
+                    <p class="text-sm text-slate-600">Vista estilo sistema operativo (liquid glass + shadcn) con módulos activos y módulos nuevos para la versión 2.</p>
+
+                    <div class="grid gap-3">
+                        <article class="rounded-xl border border-emerald-200 bg-emerald-50/80 p-3">
+                            <p class="text-xs uppercase tracking-wide text-emerald-700">Módulos activos</p>
+                            <p id="totalCurrent" class="mt-1 text-2xl font-semibold text-emerald-900">0</p>
+                        </article>
+                        <article class="rounded-xl border border-violet-200 bg-violet-50/90 p-3">
+                            <p class="text-xs uppercase tracking-wide text-violet-700">Módulos nuevos V2</p>
+                            <p id="totalPlanned" class="mt-1 text-2xl font-semibold text-violet-900">0</p>
+                        </article>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 bg-white p-3">
+                        <p class="text-xs uppercase tracking-wide text-slate-500">Resumen de presupuesto</p>
+                        <p id="selectedCount" class="mt-1 text-sm text-slate-600">0 módulos seleccionados</p>
+                        <p id="subtotalPrice" class="mt-2 text-lg font-semibold text-slate-900">$0</p>
+                        <p id="ivaPrice" class="text-sm text-slate-500">IVA estimado: $0</p>
+                        <p id="totalPrice" class="mt-1 text-base font-semibold text-violet-700">Total: $0</p>
+                        <div class="mt-3 border-t border-slate-100 pt-3">
+                            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Selección actual</p>
+                            <ul id="selectedList" class="space-y-1 text-xs text-slate-600"></ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="space-y-6">
+                    <section>
+                        <div class="mb-3 flex items-center justify-between gap-2">
+                            <h2 class="text-lg font-semibold">17 módulos / funciones actuales instalados</h2>
+                            <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activos</span>
+                        </div>
+                        <div id="currentModules" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+                    </section>
+
+                    <section>
+                        <div class="mb-3 flex items-center justify-between gap-2">
+                            <h2 class="text-lg font-semibold">15 módulos / funciones a implementar en V2</h2>
+                            <span class="rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700">Nuevos</span>
+                        </div>
+                        <div id="plannedModules" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+                    </section>
+                </section>
             </div>
-            <div id="plannedModules" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
         </section>
     </main>
 
-    <dialog id="moduleModal" class="w-[min(92vw,680px)] rounded-2xl border border-white/40 bg-white/85 p-0 text-zinc-800 shadow-2xl backdrop:bg-zinc-900/50">
-        <div class="border-b border-zinc-200/80 p-5">
+    <dialog id="moduleModal" class="w-[min(92vw,700px)] rounded-2xl border border-white/60 bg-white/95 p-0 text-slate-800 shadow-2xl backdrop:bg-slate-950/45">
+        <div class="border-b border-slate-200 px-5 py-4">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p id="modalBadge" class="mb-2 inline-block rounded-full px-3 py-1 text-xs font-semibold"></p>
+                    <p id="modalBadge" class="mb-2 inline-block rounded-full px-2.5 py-1 text-xs font-semibold"></p>
                     <h3 id="modalTitle" class="text-xl font-semibold"></h3>
                 </div>
-                <button onclick="moduleModal.close()" class="rounded-lg border border-zinc-300 px-2 py-1 text-sm hover:bg-zinc-100">Cerrar</button>
+                <button onclick="moduleModal.close()" class="rounded-lg border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-100">Cerrar</button>
             </div>
         </div>
-        <div class="space-y-3 p-5">
-            <p id="modalDescription" class="text-sm leading-relaxed text-zinc-700"></p>
-            <p id="modalDetail" class="rounded-xl border border-zinc-200 bg-zinc-50 p-3 text-sm text-zinc-700"></p>
+        <div class="space-y-3 px-5 py-4">
+            <p id="modalDescription" class="text-sm text-slate-700"></p>
+            <p id="modalDetail" class="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700"></p>
             <p id="modalPrice" class="text-sm font-medium text-violet-700"></p>
         </div>
     </dialog>
@@ -99,127 +117,137 @@
     <script id="modulesData" type="application/json">
 {
   "currentModules": [
-    { "id": "M01", "name": "Panel administrativo central", "icon": "layout-dashboard", "faIcon": "fa-solid fa-gauge-high", "description": "Gestión general del negocio desde una consola única.", "detail": "Concentra accesos de control comercial, métricas y administración operativa para perfiles internos." },
-    { "id": "M02", "name": "Gestión de usuarias y roles", "icon": "users", "faIcon": "fa-solid fa-user-shield", "description": "Alta, edición y permisos por perfil comercial.", "detail": "Soporta estructura de permisos con jerarquía de administración, liderazgo y fuerza de ventas." },
-    { "id": "M03", "name": "Catálogo de productos", "icon": "package", "faIcon": "fa-solid fa-box-open", "description": "Carga y mantenimiento de fragancias y líneas.", "detail": "Permite clasificar productos, mantener precios base y publicar disponibilidad para campaña." },
-    { "id": "M04", "name": "Categorías y clasificación", "icon": "folders", "faIcon": "fa-solid fa-folder-tree", "description": "Ordenamiento del catálogo por tipo de producto.", "detail": "Sostiene segmentación para análisis comercial y reglas internas de exposición de catálogo." },
-    { "id": "M05", "name": "Pedidos de vendedora", "icon": "shopping-cart", "faIcon": "fa-solid fa-cart-shopping", "description": "Creación y seguimiento de pedidos comerciales.", "detail": "Incluye carga manual y trazabilidad de pedidos realizados por la red de ventas." },
-    { "id": "M06", "name": "Estados del pedido", "icon": "list-checks", "faIcon": "fa-solid fa-list-check", "description": "Control de flujo operativo del pedido.", "detail": "Monitorea transición entre estados como creación, validación, preparación y cierre." },
-    { "id": "M07", "name": "Comprobantes de pago", "icon": "receipt", "faIcon": "fa-solid fa-receipt", "description": "Carga y revisión de evidencia de pago.", "detail": "Centraliza comprobantes para validación administrativa y conciliación de cobranzas." },
-    { "id": "M08", "name": "Campañas comerciales", "icon": "megaphone", "faIcon": "fa-solid fa-bullhorn", "description": "Configuración de campañas por periodo.", "detail": "Permite gestionar objetivos comerciales por ciclo y contexto promocional." },
-    { "id": "M09", "name": "Reglas base de puntaje", "icon": "badge-percent", "faIcon": "fa-solid fa-star-half-stroke", "description": "Asignación de puntaje por dinámica comercial.", "detail": "Cálculo principal de puntos para seguimiento del rendimiento de la red." },
-    { "id": "M10", "name": "Estructura jerárquica comercial", "icon": "network", "faIcon": "fa-solid fa-diagram-project", "description": "Modelo Vendedora → Líder → Coordinadora.", "detail": "Define dependencias y visibilidad de resultados por nivel de liderazgo." },
-    { "id": "M11", "name": "Panel de líderes", "icon": "monitor-cog", "faIcon": "fa-solid fa-chalkboard-user", "description": "Vista de seguimiento por equipo y avances.", "detail": "Muestra indicadores de desempeño de líderes y cumplimiento por campaña." },
-    { "id": "M12", "name": "Panel de vendedora", "icon": "monitor-smartphone", "faIcon": "fa-solid fa-mobile-screen-button", "description": "Interfaz individual para operación comercial.", "detail": "Permite consultar progreso personal, pedidos y contexto de objetivos vigentes." },
-    { "id": "M13", "name": "Reportes administrativos", "icon": "bar-chart-3", "faIcon": "fa-solid fa-chart-column", "description": "Reportería consolidada para decisiones.", "detail": "Incluye métricas de ventas, avance de campañas y comportamiento de pedidos." },
-    { "id": "M14", "name": "Gestión de cierres de campaña", "icon": "calendar-check-2", "faIcon": "fa-solid fa-calendar-check", "description": "Cierre operativo y validación final de periodo.", "detail": "Ordena actividades críticas de fin de campaña y consistencia de resultados." },
-    { "id": "M15", "name": "Roadmap y planificación interna", "icon": "map", "faIcon": "fa-solid fa-map-location-dot", "description": "Plan por etapas para evolución del sistema.", "detail": "Documenta hitos técnicos y funcionales para alcanzar objetivos estratégicos." },
-    { "id": "M16", "name": "Control de cobros y pagos", "icon": "wallet", "faIcon": "fa-solid fa-wallet", "description": "Registro financiero básico por operación.", "detail": "Permite mantener trazabilidad de entradas/salidas vinculadas a pedidos y campañas." },
-    { "id": "M17", "name": "Base documental y gobernanza", "icon": "book-open-text", "faIcon": "fa-solid fa-book", "description": "Repositorio de documentación interna del sistema.", "detail": "Mantiene guías, decisiones funcionales y soporte de evolución para el equipo." }
+    { "id": "M01", "name": "Panel administrativo central", "icon": "layout-dashboard", "faIcon": "fa-solid fa-gauge-high", "description": "Control general de indicadores, campañas, pedidos y cobranza.", "detail": "Concentra métricas operativas para toma de decisiones diaria por parte del equipo de coordinación." },
+    { "id": "M02", "name": "Gestión de catálogo de productos", "icon": "package-search", "faIcon": "fa-solid fa-box-open", "description": "Alta, edición y segmentación de productos por campaña.", "detail": "Permite administrar nombre, línea, precio base, presentación y vigencia comercial." },
+    { "id": "M03", "name": "Inventario y stock por lote", "icon": "boxes", "faIcon": "fa-solid fa-cubes", "description": "Seguimiento de existencia y movimientos de inventario.", "detail": "Registra entradas, salidas y niveles de alerta para evitar quiebres durante campaña." },
+    { "id": "M04", "name": "Pedidos de vendedoras", "icon": "shopping-cart", "faIcon": "fa-solid fa-cart-shopping", "description": "Carga y control del ciclo completo de pedidos.", "detail": "Incluye validación de pedidos, estados de avance y trazabilidad hasta la entrega final." },
+    { "id": "M05", "name": "Control de estados del pedido", "icon": "git-branch", "faIcon": "fa-solid fa-code-branch", "description": "Estados operativos por etapa comercial.", "detail": "Facilita auditoría de demoras y cuellos de botella en preparación y distribución." },
+    { "id": "M06", "name": "Jerarquía comercial", "icon": "network", "faIcon": "fa-solid fa-sitemap", "description": "Estructura Vendedora → Líder → Coordinadora.", "detail": "Gestiona asignaciones de equipo, relaciones y supervisión por unidad territorial." },
+    { "id": "M07", "name": "Gestión de campañas", "icon": "calendar-clock", "faIcon": "fa-solid fa-calendar-days", "description": "Apertura, seguimiento y cierre de campañas.", "detail": "Define periodos, metas y reglas de operación por ciclo comercial." },
+    { "id": "M08", "name": "Motor de puntos", "icon": "badge-check", "faIcon": "fa-solid fa-medal", "description": "Cálculo de puntajes por venta y objetivos.", "detail": "Centraliza reglas de acumulación para premios, ranking y bonificaciones internas." },
+    { "id": "M09", "name": "Bonificaciones comerciales", "icon": "sparkles", "faIcon": "fa-solid fa-star", "description": "Automatización de incentivos por desempeño.", "detail": "Configura bonos por tramos de ventas, consistencia y resultados de equipo." },
+    { "id": "M10", "name": "Módulo de cobranzas", "icon": "wallet", "faIcon": "fa-solid fa-wallet", "description": "Registro de pagos, saldos y cuentas corrientes.", "detail": "Permite controlar deuda vigente y comportamiento de pago por vendedora." },
+    { "id": "M11", "name": "Reportes comerciales", "icon": "bar-chart-3", "faIcon": "fa-solid fa-chart-column", "description": "Paneles de ventas, avance y cumplimiento de metas.", "detail": "Entrega reportes por campaña, territorio y rol para seguimiento ejecutivo." },
+    { "id": "M12", "name": "Panel de líderes", "icon": "users", "faIcon": "fa-solid fa-people-group", "description": "Seguimiento de equipos y desempeño por líder.", "detail": "Muestra productividad, estado de cartera y focos de mejora por cada célula." },
+    { "id": "M13", "name": "Panel de vendedora", "icon": "user-round", "faIcon": "fa-solid fa-user", "description": "Vista individual de pedidos, saldo y objetivos.", "detail": "Permite autogestión comercial con indicadores clave y próximos hitos." },
+    { "id": "M14", "name": "Roles y permisos", "icon": "shield", "faIcon": "fa-solid fa-user-shield", "description": "Control de accesos por perfil operativo.", "detail": "Define autorización granular para módulos administrativos y operativos." },
+    { "id": "M15", "name": "Autenticación segura", "icon": "lock-keyhole", "faIcon": "fa-solid fa-lock", "description": "Inicio de sesión y sesiones seguras.", "detail": "Integra autenticación robusta y trazabilidad básica de acceso al sistema." },
+    { "id": "M16", "name": "Notificaciones internas", "icon": "bell", "faIcon": "fa-solid fa-bell", "description": "Alertas de campaña, pagos y vencimientos.", "detail": "Envía avisos relevantes para mantener ritmo operativo del equipo comercial." },
+    { "id": "M17", "name": "Soporte de documentación", "icon": "files", "faIcon": "fa-solid fa-folder-open", "description": "Base documental operativa del negocio.", "detail": "Centraliza políticas, guías y documentación funcional para el equipo." }
   ],
   "plannedModules": [
-    { "id": "V2-01", "name": "Motor avanzado de comisiones", "icon": "coins", "faIcon": "fa-solid fa-coins", "description": "Comisiones automáticas por nivel, tramo y campaña.", "detail": "Calculará comisiones dinámicas por reglas parametrizables y auditoría por periodo.", "price": 1200 },
-    { "id": "V2-02", "name": "Bonificaciones inteligentes", "icon": "gift", "faIcon": "fa-solid fa-gift", "description": "Bonos por cumplimiento y aceleradores de metas.", "detail": "Permitirá definir bonos condicionales y ventanas especiales por campaña.", "price": 850 },
-    { "id": "V2-03", "name": "CRM de clientas", "icon": "contact-round", "faIcon": "fa-solid fa-address-book", "description": "Gestión de historial de compra y seguimiento.", "detail": "Consolidará fichas de clientas con segmentación, notas y actividad comercial.", "price": 1600 },
-    { "id": "V2-04", "name": "Automatización de WhatsApp", "icon": "message-circle-more", "faIcon": "fa-brands fa-whatsapp", "description": "Notificaciones y recordatorios automatizados.", "detail": "Enviará mensajes operativos para estados de pedido, pagos y campañas.", "price": 990 },
-    { "id": "V2-05", "name": "Onboarding guiado por perfil", "icon": "graduation-cap", "faIcon": "fa-solid fa-user-graduate", "description": "Flujos de bienvenida para vendedoras y líderes.", "detail": "Activará pasos iniciales, checklist y contenido contextual por rol.", "price": 780 },
-    { "id": "V2-06", "name": "Módulo de inventario en tiempo real", "icon": "warehouse", "faIcon": "fa-solid fa-warehouse", "description": "Disponibilidad y reservas por pedido.", "detail": "Conectará stock operativo con demanda para prevenir quiebres de inventario.", "price": 1750 },
-    { "id": "V2-07", "name": "Centro de analítica predictiva", "icon": "line-chart", "faIcon": "fa-solid fa-chart-line", "description": "Pronóstico de ventas y comportamiento de red.", "detail": "Aplicará tendencias históricas para anticipar necesidades comerciales.", "price": 2100 },
-    { "id": "V2-08", "name": "Portal de formación continua", "icon": "book-marked", "faIcon": "fa-solid fa-book-open-reader", "description": "Microcursos y certificaciones internas.", "detail": "Permitirá itinerarios formativos por rol y medición de avance.", "price": 1100 },
-    { "id": "V2-09", "name": "Gamificación comercial", "icon": "trophy", "faIcon": "fa-solid fa-trophy", "description": "Retos, rankings y recompensas por desempeño.", "detail": "Motivará cumplimiento mediante ligas, logros y metas semanales.", "price": 940 },
-    { "id": "V2-10", "name": "Gestor de campañas omnicanal", "icon": "radio-tower", "faIcon": "fa-solid fa-tower-broadcast", "description": "Orquestación de campañas en múltiples canales.", "detail": "Sincronizará acciones de email, mensajería y panel interno desde una sola vista.", "price": 1680 },
-    { "id": "V2-11", "name": "Facturación y conciliación ampliada", "icon": "file-text", "faIcon": "fa-solid fa-file-invoice-dollar", "description": "Emisión documental y control financiero extendido.", "detail": "Integrará documentos fiscales y conciliaciones automáticas de cobranzas.", "price": 1320 },
-    { "id": "V2-12", "name": "Centro de soporte con tickets", "icon": "life-buoy", "faIcon": "fa-solid fa-headset", "description": "Gestión de incidencias operativas y comerciales.", "detail": "Permitirá clasificar consultas por prioridad y SLA internos.", "price": 870 },
-    { "id": "V2-13", "name": "Módulo de referidos", "icon": "user-plus", "faIcon": "fa-solid fa-user-plus", "description": "Captación de nuevas vendedoras con trazabilidad.", "detail": "Asociará invitaciones, conversiones y recompensas por recomendación.", "price": 760 },
-    { "id": "V2-14", "name": "App móvil PWA avanzada", "icon": "smartphone", "faIcon": "fa-solid fa-mobile-alt", "description": "Experiencia móvil offline-first.", "detail": "Ofrecerá navegación rápida con capacidades sin conexión y notificaciones push.", "price": 2300 },
-    { "id": "V2-15", "name": "Auditoría y bitácora legal", "icon": "shield-check", "faIcon": "fa-solid fa-shield-halved", "description": "Trazabilidad completa de acciones críticas.", "detail": "Registrará eventos sensibles para cumplimiento interno y revisiones de control.", "price": 980 }
+    { "id": "V2-01", "name": "Pronóstico inteligente de demanda", "icon": "brain-circuit", "faIcon": "fa-solid fa-brain", "description": "Predicción de ventas y reposición por campaña.", "detail": "Analiza histórico y estacionalidad para sugerir abastecimiento y metas realistas.", "price": 1850 },
+    { "id": "V2-02", "name": "CRM de seguimiento comercial", "icon": "contact-round", "faIcon": "fa-solid fa-address-book", "description": "Gestión de relaciones y seguimiento de cartera.", "detail": "Incluye agenda comercial, historial de interacción y alertas de reactivación.", "price": 1320 },
+    { "id": "V2-03", "name": "Automatizaciones de campañas", "icon": "bot", "faIcon": "fa-solid fa-robot", "description": "Flujos automáticos de recordatorios y acciones.", "detail": "Dispara tareas según eventos: inicio, mitad y cierre de campaña.", "price": 1490 },
+    { "id": "V2-04", "name": "Gestión avanzada de metas", "icon": "target", "faIcon": "fa-solid fa-bullseye", "description": "Metas por rol, región y temporada.", "detail": "Configura objetivos dinámicos y alertas de desvío para corrección temprana.", "price": 980 },
+    { "id": "V2-05", "name": "Simulador de comisiones", "icon": "calculator", "faIcon": "fa-solid fa-calculator", "description": "Simula impacto de reglas de pago e incentivos.", "detail": "Permite evaluar escenarios antes de activar cambios en producción.", "price": 910 },
+    { "id": "V2-06", "name": "Centro de capacitación", "icon": "graduation-cap", "faIcon": "fa-solid fa-graduation-cap", "description": "Microaprendizajes y rutas de formación.", "detail": "Incluye contenido por rol, progreso y certificaciones internas.", "price": 1140 },
+    { "id": "V2-07", "name": "Módulo de logística inteligente", "icon": "truck", "faIcon": "fa-solid fa-truck-fast", "description": "Optimización de entregas y rutas.", "detail": "Prioriza despachos por urgencia, zona y disponibilidad de stock.", "price": 1700 },
+    { "id": "V2-08", "name": "Portal de premios y canjes", "icon": "gift", "faIcon": "fa-solid fa-gift", "description": "Canje de puntos con catálogo de beneficios.", "detail": "Gestiona stock de premios, reglas de redención y control de cupos.", "price": 1250 },
+    { "id": "V2-09", "name": "Motor de segmentación avanzada", "icon": "filter", "faIcon": "fa-solid fa-filter", "description": "Segmentos por comportamiento y performance.", "detail": "Facilita campañas dirigidas y estrategias diferenciadas por perfil.", "price": 1080 },
+    { "id": "V2-10", "name": "Integración WhatsApp Business", "icon": "message-circle", "faIcon": "fa-brands fa-whatsapp", "description": "Comunicación automatizada de recordatorios.", "detail": "Envía avisos de cierre, deuda y promociones desde plantillas aprobadas.", "price": 870 },
+    { "id": "V2-11", "name": "Facturación y conciliación extendida", "icon": "file-text", "faIcon": "fa-solid fa-file-invoice-dollar", "description": "Soporte documental y conciliación financiera.", "detail": "Consolida facturas, recibos y validaciones de pagos para auditoría.", "price": 1620 },
+    { "id": "V2-12", "name": "Centro de soporte con tickets", "icon": "life-buoy", "faIcon": "fa-solid fa-headset", "description": "Gestión formal de incidencias operativas.", "detail": "Define categorías, prioridades y niveles de servicio internos.", "price": 760 },
+    { "id": "V2-13", "name": "Módulo de referidos", "icon": "user-plus", "faIcon": "fa-solid fa-user-plus", "description": "Captación de nuevas vendedoras.", "detail": "Controla invitaciones, conversiones y recompensas por recomendación.", "price": 640 },
+    { "id": "V2-14", "name": "PWA móvil avanzada", "icon": "smartphone", "faIcon": "fa-solid fa-mobile-screen-button", "description": "Experiencia móvil offline-first.", "detail": "Permite operaciones críticas sin conexión y sincronización posterior.", "price": 2250 },
+    { "id": "V2-15", "name": "Auditoría legal y bitácora", "icon": "shield-check", "faIcon": "fa-solid fa-shield-halved", "description": "Trazabilidad legal de acciones críticas.", "detail": "Registra cambios sensibles en reglas, montos y accesos administrativos.", "price": 1030 }
   ]
 }
     </script>
 
     <script>
+        const ivaRate = 0.21;
+        const money = (value) => `$${value.toLocaleString('es-AR')}`;
+
         const data = JSON.parse(document.getElementById('modulesData').textContent);
         const currentContainer = document.getElementById('currentModules');
         const plannedContainer = document.getElementById('plannedModules');
-
-        const formatMoney = (value) => `$${value.toLocaleString('es-AR')}`;
 
         const badgeByType = {
             current: 'border border-emerald-200 bg-emerald-50 text-emerald-700',
             planned: 'border border-violet-200 bg-violet-50 text-violet-700'
         };
 
-        const renderCard = (module, type) => {
-            const article = document.createElement('article');
-            article.className = 'rounded-2xl border border-white/50 bg-panel p-5 shadow-glass backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-xl';
-
-            const topRow = document.createElement('div');
-            topRow.className = 'mb-3 flex items-start justify-between gap-3';
-            topRow.innerHTML = `
-                <div class="inline-flex items-center gap-2 rounded-full ${badgeByType[type]} px-3 py-1 text-xs font-semibold">
-                    <i class="${module.faIcon}"></i>
-                    ${module.id}
-                </div>
-                ${type === 'planned'
-                    ? `<label class="inline-flex items-center gap-2 text-xs text-zinc-600"><input data-price="${module.price}" class="module-check h-4 w-4 rounded border-zinc-300 text-violet-600" type="checkbox" /> Incluir</label>`
-                    : ''}
-            `;
-
-            const icon = document.createElement('i');
-            icon.setAttribute('data-lucide', module.icon);
-            icon.className = 'mb-3 h-5 w-5 text-violet-600';
-
-            const title = document.createElement('h3');
-            title.className = 'text-base font-semibold';
-            title.textContent = module.name;
-
-            const desc = document.createElement('p');
-            desc.className = 'mt-2 text-sm text-zinc-700';
-            desc.textContent = module.description;
-
-            const bottom = document.createElement('div');
-            bottom.className = 'mt-4 flex items-center justify-between';
-            bottom.innerHTML = `
-                <button class="open-modal rounded-lg border border-zinc-300 bg-white/80 px-3 py-1.5 text-xs font-medium hover:bg-zinc-100">Ver detalle</button>
-                ${type === 'planned' ? `<span class="text-sm font-semibold text-violet-700">${formatMoney(module.price)}</span>` : '<span class="text-xs text-zinc-500">Instalado</span>'}
-            `;
-
-            article.append(topRow, icon, title, desc, bottom);
-            article.querySelector('.open-modal').addEventListener('click', () => openModal(module, type));
-
-            return article;
-        };
+        const modal = document.getElementById('moduleModal');
 
         const openModal = (module, type) => {
-            document.getElementById('modalBadge').className = `mb-2 inline-block rounded-full px-3 py-1 text-xs font-semibold ${badgeByType[type]}`;
-            document.getElementById('modalBadge').textContent = `${module.id} · ${type === 'current' ? 'Activo' : 'V2'}`;
+            const badge = document.getElementById('modalBadge');
+            badge.className = `mb-2 inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${badgeByType[type]}`;
+            badge.textContent = `${module.id} · ${type === 'current' ? 'Activo' : 'Por implementar'}`;
             document.getElementById('modalTitle').textContent = module.name;
             document.getElementById('modalDescription').textContent = module.description;
             document.getElementById('modalDetail').textContent = module.detail;
             document.getElementById('modalPrice').textContent = type === 'planned'
-                ? `Costo estimado de implementación: ${formatMoney(module.price)}`
-                : 'Este módulo ya forma parte de la base instalada actual.';
-            document.getElementById('moduleModal').showModal();
+                ? `Costo estimado del módulo: ${money(module.price)}`
+                : 'Este módulo forma parte de la base instalada actual.';
+            modal.showModal();
         };
 
-        const updateTotal = () => {
+        const card = (module, type) => {
+            const el = document.createElement('article');
+            el.className = 'rounded-2xl border border-white/60 bg-white/75 p-4 shadow-glass backdrop-blur-xl transition hover:-translate-y-0.5 hover:shadow-xl';
+
+            el.innerHTML = `
+                <div class="mb-3 flex items-start justify-between gap-2">
+                    <span class="inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-semibold ${badgeByType[type]}">
+                        <i class="${module.faIcon}"></i>
+                        ${module.id}
+                    </span>
+                    ${type === 'planned'
+                    ? `<label class="inline-flex items-center gap-2 text-xs text-slate-600"><input type="checkbox" class="module-check h-4 w-4 rounded border-slate-300 text-violet-600" data-id="${module.id}" data-name="${module.name}" data-price="${module.price}" /> Incluir</label>`
+                    : '<span class="text-xs text-emerald-700">Instalado</span>'}
+                </div>
+                <i data-lucide="${module.icon}" class="mb-3 h-5 w-5 text-violet-700"></i>
+                <h3 class="text-sm font-semibold leading-snug">${module.name}</h3>
+                <p class="mt-2 text-sm text-slate-600">${module.description}</p>
+                <div class="mt-4 flex items-center justify-between gap-2">
+                    <button class="open-modal rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium hover:bg-slate-100">Ver explicación</button>
+                    ${type === 'planned' ? `<span class="text-sm font-semibold text-violet-700">${money(module.price)}</span>` : ''}
+                </div>
+            `;
+
+            el.querySelector('.open-modal').addEventListener('click', () => openModal(module, type));
+            return el;
+        };
+
+        const updateBudget = () => {
             const checks = [...document.querySelectorAll('.module-check')];
-            const selected = checks.filter(c => c.checked);
-            const total = selected.reduce((sum, c) => sum + Number(c.dataset.price || 0), 0);
-            document.getElementById('totalPrice').textContent = formatMoney(total);
-            document.getElementById('selectedCount').textContent = `${selected.length} módulos nuevos seleccionados.`;
+            const selected = checks.filter((check) => check.checked);
+            const subtotal = selected.reduce((acc, check) => acc + Number(check.dataset.price || 0), 0);
+            const iva = subtotal * ivaRate;
+            const total = subtotal + iva;
+
+            document.getElementById('selectedCount').textContent = `${selected.length} módulos seleccionados`;
+            document.getElementById('subtotalPrice').textContent = money(subtotal);
+            document.getElementById('ivaPrice').textContent = `IVA estimado (21%): ${money(iva)}`;
+            document.getElementById('totalPrice').textContent = `Total: ${money(total)}`;
+
+            const selectedList = document.getElementById('selectedList');
+            selectedList.innerHTML = '';
+
+            if (!selected.length) {
+                selectedList.innerHTML = '<li class="text-slate-400">Sin módulos nuevos seleccionados.</li>';
+                return;
+            }
+
+            selected.forEach((item) => {
+                const row = document.createElement('li');
+                row.className = 'flex items-center justify-between gap-2 rounded-md bg-slate-50 px-2 py-1';
+                row.innerHTML = `<span>${item.dataset.id}</span><span>${money(Number(item.dataset.price || 0))}</span>`;
+                selectedList.appendChild(row);
+            });
         };
 
-        data.currentModules.forEach(module => currentContainer.appendChild(renderCard(module, 'current')));
-        data.plannedModules.forEach(module => plannedContainer.appendChild(renderCard(module, 'planned')));
+        data.currentModules.forEach((item) => currentContainer.appendChild(card(item, 'current')));
+        data.plannedModules.forEach((item) => plannedContainer.appendChild(card(item, 'planned')));
 
         document.getElementById('totalCurrent').textContent = data.currentModules.length;
         document.getElementById('totalPlanned').textContent = data.plannedModules.length;
 
-        document.querySelectorAll('.module-check').forEach(check => check.addEventListener('change', updateTotal));
+        document.querySelectorAll('.module-check').forEach((check) => check.addEventListener('change', updateBudget));
 
         lucide.createIcons();
-        updateTotal();
+        updateBudget();
     </script>
 </body>
 
