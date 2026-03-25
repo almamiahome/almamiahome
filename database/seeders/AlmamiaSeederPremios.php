@@ -23,7 +23,6 @@ class AlmamiaSeederPremios extends Seeder
         DB::table('repartos_compras')->truncate();
         DB::table('premio_reglas')->truncate();
         DB::table('rangos_lideres')->truncate();
-        DB::table('cierres_campana')->truncate();
 
         if ($driver === 'sqlite') {
             DB::statement('PRAGMA foreign_keys = ON;');
@@ -31,27 +30,27 @@ class AlmamiaSeederPremios extends Seeder
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
 
-        $catalogoBaseId = Catalogo::query()->firstOrCreate(
+        $catalogoBaseId = Catalogo::query()->updateOrCreate(
             ['nombre' => 'Catálogo Base Premios V2'],
             [
                 'descripcion' => 'Catálogo de referencia para pruebas de campaña y cierres V2.',
-                'anio' => (int) now()->format('Y'),
-                'numero' => 1,
+                'anio' => null,
+                'numero' => null,
             ]
         )->id;
 
-        $cierreBaseId = DB::table('cierres_campana')->insertGetId([
-            'nombre' => 'Campaña Base Premios',
-            'codigo' => 'CAMP-BASE',
-            'catalogo_id' => $catalogoBaseId,
-            'numero_cierre' => 1,
-            'estado' => CierreCampana::ESTADO_PLANIFICADO,
-            'datos' => json_encode([
-                'nota' => 'Cierre referencial para precargar el plan de premios Alma Mia.',
-            ]),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $cierreBaseId = CierreCampana::query()->updateOrCreate(
+            ['codigo' => 'CAMP-BASE'],
+            [
+                'nombre' => 'Campaña Base Premios',
+                'catalogo_id' => $catalogoBaseId,
+                'numero_cierre' => 1,
+                'estado' => CierreCampana::ESTADO_PLANIFICADO,
+                'datos' => [
+                    'nota' => 'Cierre referencial para precargar el plan de premios Alma Mia.',
+                ],
+            ]
+        )->id;
 
         $rangos = [
             ['nombre' => 'Perla', 'revendedoras_minimas' => 5, 'revendedoras_maximas' => 8, 'unidades_minimas' => 50, 'premio_actividad' => 6000, 'premio_unidades' => 5000, 'premio_cobranzas' => 4000, 'reparto_referencia' => 350],
