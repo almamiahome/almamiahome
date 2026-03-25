@@ -1,0 +1,51 @@
+{
+  "catalogo": {
+    "nombre": "Catálogo Fixture 2026-02",
+    "descripcion": "Fixture reproducible para acumulación y canje de puntos.",
+    "anio": 2026,
+    "numero": 2
+  },
+  "cierre": {
+    "nombre": "Campaña 2026-04",
+    "codigo": "CAMP-FIX-2026-04",
+    "numero_cierre": 1,
+    "fecha_inicio": "2026-04-01",
+    "fecha_cierre": "2026-04-21",
+    "fecha_liquidacion": "2026-04-30",
+    "estado": "en_liquidacion"
+  },
+  "movimientos_puntos": [
+    {
+      "estado": "confirmado",
+      "puntos": 100,
+      "origen": "pedido",
+      "motivo": "Acumulación por 10 unidades",
+      "datos": {
+        "unidades": 10,
+        "escala": "base"
+      }
+    },
+    {
+      "estado": "confirmado",
+      "puntos": 150,
+      "origen": "pedido",
+      "motivo": "Acumulación por 15 unidades",
+      "datos": {
+        "unidades": 15,
+        "escala": "intermedia"
+      }
+    },
+    {
+      "estado": "canjeado",
+      "puntos": -120,
+      "origen": "canje",
+      "motivo": "Canje de kit"
+    },
+    {
+      "estado": "vencido",
+      "puntos": -130,
+      "origen": "vencimiento",
+      "motivo": "Cierre de vigencia por catálogo"
+    }
+  ]
+}

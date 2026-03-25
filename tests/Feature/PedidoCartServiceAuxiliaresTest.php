@@ -83,3 +83,56 @@ it('excluye unidades auxiliares del calculo de puntos y unidades comerciales', f
         ->and($pedido->cantidad_unidades)->toBe(3)
         ->and($pedido->total_puntos)->toBe(15);
 });
+
+it('mantiene unidades comerciales en cero cuando todo el carrito es auxiliar', function () {
+    $catalogo = Catalogo::query()->create([
+        'nombre' => 'Catálogo auxiliar',
+    ]);
+
+    CierreCampana::query()->create([
+        'nombre' => 'Campaña auxiliar',
+        'codigo' => 'CAMP-TEST-AUX',
+        'catalogo_id' => $catalogo->id,
+        'numero_cierre' => 2,
+        'fecha_inicio' => now()->subDay()->toDateString(),
+        'fecha_cierre' => now()->addDay()->toDateString(),
+        'estado' => CierreCampana::ESTADO_ABIERTO,
+    ]);
+
+    $categoria = Categoria::query()->create([
+        'nombre' => 'Auxiliares',
+        'slug' => 'auxiliares',
+    ]);
+
+    $productoAuxiliar = Producto::query()->create([
+        'nombre' => 'Bolsa auxiliar',
+        'precio' => 500,
+        'puntos_por_unidad' => 4,
+        'sku' => 'AUX-002',
+        'activo' => true,
+    ]);
+
+    $productoAuxiliar->categorias()->attach($categoria->id);
+
+    $service = app(PedidoCartService::class);
+
+    $service->storePedido([
+        'cart' => [
+            [
+                'producto_id' => $productoAuxiliar->id,
+                'nombre' => $productoAuxiliar->nombre,
+                'cantidad' => 5,
+                'precio_unitario' => 500,
+                'puntos' => 4,
+                'es_auxiliar' => true,
+            ],
+        ],
+    ], 'PED-AUX-0002');
+
+    $pedido = Pedido::query()->where('codigo_pedido', 'PED-AUX-0002')->firstOrFail();
+
+    expect($pedido->unidades_facturables)->toBe(0)
+        ->and($pedido->cantidad_unidades)->toBe(0)
+        ->and($pedido->unidades_auxiliares)->toBe(5)
+        ->and($pedido->total_puntos)->toBe(0);
+});
