@@ -105,3 +105,24 @@ La UI no entra a desarrollo final sin datos estables y dominio validado.
 - **Secuencial:** 5.1, 5.5, 5.9, 5.10.
 - **Paralelo:** 5.2 + 5.3 + 5.4, luego 5.6 + 5.7 + 5.8.
 - **Cierre sprint:** validación integral y handoff.
+
+## Estado real por etapa (actualizado al 25 de marzo de 2026)
+
+- **Etapa 1:** en curso (fundaciones y trazabilidad base ya operativas).
+- **Etapa 2:** en curso (motores de revendedora implementados; cierre integral pendiente por validación completa).
+- **Etapa 3:** en curso (premios avanzados implementados con pruebas previas; requiere corrida integral estable).
+- **Etapa 4:** en curso (T17 y T18 con cobertura nueva; T19/T20 abiertos por bloqueo de memoria en suite integral).
+
+## Dependencias desbloqueadas hacia Etapa 5
+
+### Desbloqueadas
+- T17 (módulo financiero integral) con escenarios críticos cubiertos en pruebas automatizadas.
+- T18 (reportería base) con filtros y comparativas entre cierres cubiertos en pruebas automatizadas.
+
+### Aún bloqueadas
+- T19 (QA integral) por imposibilidad de completar `php artisan test` en el entorno actual.
+- T20 (salida operativa) porque depende del cumplimiento de T19.
+
+### Impacto en Etapa 5
+- Se puede avanzar en diseño y ajustes no críticos de vistas de Etapa 5.
+- No se recomienda declarar salida productiva de Etapa 5 hasta cerrar T19/T20 con evidencia completa.

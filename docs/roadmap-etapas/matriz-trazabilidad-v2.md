@@ -18,11 +18,11 @@ Estados permitidos:
 | Fase 1 — Diagnóstico funcional | Reglas por rol, criterios de aceptación y diccionario | Etapa 1 | en curso | Base documentada en `etapa-1-fundaciones.md`; falta cierre de glosario final. |
 | Fase 2 — Datos y migraciones | Tablas, índices, relaciones y reversibilidad | Etapa 1 | en curso | Migraciones V2 iniciales y ajustes de modelo ya incorporados. |
 | Fase 3 — Campañas y pedidos base | 4 catálogos, 3 cierres, trazabilidad de pedidos | Etapa 1 + Etapa 2 | en curso | Seeder de calendario y pruebas iniciales disponibles. |
-| Fase 4 — Finanzas diferidas | Saldos, deudas, balance y descuentos a futuro | Etapa 4 | pendiente | Planificado en `etapa-4-finanzas-reporteria-y-salida.md`. |
+| Fase 4 — Finanzas diferidas | Saldos, deudas, balance y descuentos a futuro | Etapa 4 | en curso | Cobertura T17 extendida con pruebas de deuda acumulada, balance neto e idempotencia en `tests/Feature/LiquidacionCierreServiceTest.php`. |
 | Fase 5 — Módulos de revendedoras | Tienda, rachas, continuidad y puntos | Etapa 2 | en curso | Flujo T7+T8+T9 implementado; falta corrida integral de suite en entorno con dependencias completas. |
 | Fase 6 — Módulos de líderes | Actividad, retención, altas, cobranza, crecimiento, reparto, plus, unidades | Etapa 3 | en curso | Motor de cálculo con evidencia y campos de retención/plus ya presentes. |
-| Fase 7 — Interfaz y reportería | Paneles, comparativas, filtros de gestión | Etapa 4 | pendiente | Definido como parte de reportería y salida operativa. |
-| Fase 8 — Validación final | Checklist integral y decisión binaria de salida | Etapa 4 | pendiente | Requiere cierre de QA funcional/técnico y validación de negocio. |
+| Fase 7 — Interfaz y reportería | Paneles, comparativas, filtros de gestión | Etapa 4 | en curso | Pruebas de regresión T18 añadidas para filtros zona/departamento y comparativas por cierre en `tests/Unit/ReporteriaFinancieraServiceTest.php`. |
+| Fase 8 — Validación final | Checklist integral y decisión binaria de salida | Etapa 4 | en curso | Acta técnica de Etapa 4 publicada en `docs/notas-tecnicas/2026-03-25-acta-validacion-etapa-4.md` con evidencia de ejecución. |
 
 ---
 
@@ -65,9 +65,9 @@ Estados permitidos:
 
 | Tarea | Migración | Modelo | Seeder | Servicio | Prueba | Documentación |
 |---|---|---|---|---|---|---|
-| T17. Módulo financiero integral | Saldos, deudas, descuentos | Entidades financieras por cierre | Datos de saldos base | Liquidación/conciliación | Cierres financieros integrales | Manual financiero por rol. |
-| T18. Reportería y vistas | Índices para filtros/reportes | DTOs o vistas de agregado | Seeders de datos de reporte | Servicios de agregación | Comparativas por cierre y filtros | Guía de reportería operativa. |
-| T19. QA y validación negocio | — | — | Fixtures de regresión | — | Suite completa de regresión | Acta de validación funcional. |
+| T17. Módulo financiero integral | Saldos, deudas, descuentos | Entidades financieras por cierre | Datos de saldos base | Liquidación/conciliación | ✅ Pruebas Feature: deuda acumulada, descuentos futuros, balance neto e idempotencia de reproceso (`LiquidacionCierreServiceTest`) | Evidencia y acta en `docs/notas-tecnicas/2026-03-25-acta-validacion-etapa-4.md`. **Estado: completo** |
+| T18. Reportería y vistas | Índices para filtros/reportes | DTOs o vistas de agregado | Seeders de datos de reporte | Servicios de agregación | ✅ Pruebas Unit de filtros por zona/departamento, comparativas entre cierres y conciliación por líder/coordinadora (`ReporteriaFinancieraServiceTest`) | Evidencia y acta en `docs/notas-tecnicas/2026-03-25-acta-validacion-etapa-4.md`. **Estado: completo** |
+| T19. QA y validación negocio | — | — | Fixtures de regresión | — | ⚠️ `php artisan test` ejecutado en entorno con dependencias instaladas; bloqueado por límite de memoria de 128MB durante bootstrap de íconos | Acta técnica en `docs/notas-tecnicas/2026-03-25-acta-validacion-etapa-4.md`. **Estado: en curso** |
 | T20. Despliegue y adopción | — | — | Datos de piloto | Runbooks operativos | Checklists de salida | Plan de despliegue/capacitación. |
 
 ---
@@ -112,3 +112,13 @@ Actualizar esta matriz cada vez que cambie cualquiera de estos componentes:
 | T8 | Movimientos de puntos con clave de idempotencia por operación. | Ledger con `origen`, `motivo`, `datos` y `saldo_posterior`. | Historial de acumulación/canje/vencimiento persistente. | Saldo por sumatoria = saldo posterior final. | ⏳ |
 | T9 | Canje con transacción y descuento único por operación. | Relación canje ↔ premio ↔ cierre ↔ usuario. | Fecha de canje, estado y saldo final persistidos. | Canje bloqueado si saldo o stock no alcanzan. | ⏳ |
 | T10 | Re-cálculo por `updateOrCreate` en métrica líder. | Evidencia de reglas aplicadas y versión de cálculo. | Fecha corte cobranza + insumos usados en cálculo. | Premios parciales y total consistentes por cierre. | ⏳ |
+
+
+## 6) Checklist de salida Etapa 4 (T17–T20)
+
+| Tarea | Criterio binario (cumple/no cumple) | Evidencia obligatoria | Estado |
+|---|---|---|---|
+| T17 | Cumple si existen pruebas automatizadas de deuda acumulada, descuentos futuros, balance neto e idempotencia de reproceso sin duplicar impactos. | `tests/Feature/LiquidacionCierreServiceTest.php` + acta técnica de Etapa 4. | **Cumple** |
+| T18 | Cumple si existen pruebas automatizadas de filtros por zona/departamento y comparativas entre cierres con conciliación por líder/coordinadora. | `tests/Unit/ReporteriaFinancieraServiceTest.php` + acta técnica de Etapa 4. | **Cumple** |
+| T19 | Cumple si la suite integral `php artisan test` finaliza sin errores de entorno y con evidencia registrada. | Registro de ejecución integral en acta técnica. | **No cumple** (bloqueo de memoria en entorno actual). |
+| T20 | Cumple si existe checklist operativo de salida, acta final con commit validado y dependencias de Etapa 5 desbloqueadas. | Matriz + `version2/resumen.md` + acta técnica de Etapa 4. | **No cumple** (pendiente cierre integral de QA/T19). |
