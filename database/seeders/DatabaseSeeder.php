@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CatalogosSeeder::class);
         $this->call(CalendarioComercialSeeder::class);
         $this->call(AlmamiaSeederPremios::class);
+        $this->call(Etapa2PremiosSeeder::class);
 
         Schema::enableForeignKeyConstraints();
 

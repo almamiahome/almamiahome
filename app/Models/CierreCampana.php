@@ -60,4 +60,24 @@ class CierreCampana extends Model
     {
         return $this->hasMany(MetricaLiderCampana::class);
     }
+
+    public function rachasRevendedoras(): HasMany
+    {
+        return $this->hasMany(RevendedoraRacha::class, 'cierre_id');
+    }
+
+    public function puntosRevendedoras(): HasMany
+    {
+        return $this->hasMany(RevendedoraPunto::class, 'cierre_id');
+    }
+
+    public function premiosTienda(): HasMany
+    {
+        return $this->hasMany(TiendaPremio::class, 'cierre_id');
+    }
+
+    public function canjesPremios(): HasMany
+    {
+        return $this->hasMany(CanjePremio::class, 'cierre_id');
+    }
 }

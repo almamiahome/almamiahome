@@ -441,6 +441,8 @@ INSERT INTO `profile_key_values` (`id`, `type`, `keyvalue_id`, `keyvalue_type`, 
 (29, 'TextInput', 4, 'users', 'zona', 'LAVALLE', NULL, NULL),
 (30, 'TextInput', 4, 'users', 'departamento', 'Central', NULL, NULL);
 SQL);
+
+        $this->call(Etapa2PremiosSeeder::class);
     }
 
 

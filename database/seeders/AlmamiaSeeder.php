@@ -309,6 +309,8 @@ SQL);
             (82, 13, 2, NULL, NULL),
             (83, 16, 8, NULL, NULL);
 SQL);
+
+        $this->call(Etapa2PremiosSeeder::class);
     }
 
 

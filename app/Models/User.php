@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\TiendaPremio;
+use App\Models\RevendedoraRacha;
+use App\Models\RevendedoraPunto;
+use App\Models\CanjePremio;
 use App\Models\Cobro;
 use App\Models\MetricaLiderCampana;
 use App\Models\Pago;
@@ -153,6 +157,27 @@ class User extends WaveUser
     }
     
     
+
+    public function rachasRevendedora(): HasMany
+    {
+        return $this->hasMany(RevendedoraRacha::class);
+    }
+
+    public function movimientosPuntosRevendedora(): HasMany
+    {
+        return $this->hasMany(RevendedoraPunto::class);
+    }
+
+    public function premiosTiendaGestionados(): HasMany
+    {
+        return $this->hasMany(TiendaPremio::class);
+    }
+
+    public function canjesPremios(): HasMany
+    {
+        return $this->hasMany(CanjePremio::class);
+    }
+
     public function needsOnboarding(): bool
     {
         $dni = (string) $this->profile('dni');
