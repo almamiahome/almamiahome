@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\CierreCampana;
 use App\Models\MetricaLiderCampana;
 use App\Models\User;
+use App\Services\CierreCampanaStateMachine;
 use App\Services\PremiosLiderCalculator;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
 class CierreCampanaController extends Controller
 {
+    public function __construct(private readonly CierreCampanaStateMachine $stateMachine)
+    {
+    }
+
     public function totalesPorLider(CierreCampana $cierre, Authenticatable $usuario): Collection
     {
         if (! $usuario->can('crecimiento.ver_metricas_liderazgo')) {
@@ -87,7 +92,7 @@ class CierreCampanaController extends Controller
             abort(403, 'No tiene permiso para registrar campañas.');
         }
 
-        return CierreCampana::create([
+        $cierre = CierreCampana::create([
             'nombre' => $datos['nombre'],
             'codigo' => $datos['codigo'],
             'catalogo_id' => $datos['catalogo_id'] ?? null,
@@ -98,6 +103,14 @@ class CierreCampanaController extends Controller
             'estado' => $datos['estado'] ?? CierreCampana::ESTADO_PLANIFICADO,
             'datos' => $datos['datos'] ?? null,
         ]);
+
+        $this->stateMachine->registrarEstadoInicial(
+            cierre: $cierre,
+            usuario: $usuario,
+            motivo: 'Campaña registrada desde cierre general.'
+        );
+
+        return $cierre;
     }
 
     public function cerrarCampana(CierreCampana $cierre, Authenticatable $usuario): CierreCampana
@@ -106,14 +119,15 @@ class CierreCampanaController extends Controller
             abort(403, 'No tiene permiso para cerrar campañas.');
         }
 
-        $cierre->update([
-            'estado' => CierreCampana::ESTADO_CERRADO,
-            'datos' => array_merge($cierre->datos ?? [], [
+        return $this->stateMachine->transicionar(
+            cierre: $cierre,
+            estadoNuevo: CierreCampana::ESTADO_CERRADO,
+            usuario: $usuario,
+            motivo: 'Cierre ejecutado desde cierre general.',
+            datosAdicionales: [
                 'cerrada_por' => $usuario->id,
                 'cerrada_en' => now()->toDateTimeString(),
-            ]),
-        ]);
-
-        return $cierre->refresh();
+            ]
+        );
     }
 }

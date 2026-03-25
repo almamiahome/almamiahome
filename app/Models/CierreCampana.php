@@ -80,4 +80,10 @@ class CierreCampana extends Model
     {
         return $this->hasMany(CanjePremio::class, 'cierre_id');
     }
+
+
+    public function historialEstados(): HasMany
+    {
+        return $this->hasMany(CierreCampanaHistorialEstado::class)->orderByDesc('fecha_cambio');
+    }
 }

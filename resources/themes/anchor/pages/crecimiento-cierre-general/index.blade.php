@@ -3,6 +3,7 @@ use function Laravel\Folio\{middleware, name};
 use App\Http\Controllers\Crecimiento\CierreCampanaController;
 use App\Models\Catalogo;
 use App\Models\CierreCampana;
+use Illuminate\Validation\ValidationException;
 use Livewire\Volt\Component;
 
 middleware([
@@ -25,6 +26,7 @@ new class extends Component {
     public $totales = [];
     public $resumen = [];
     public $estadoMensaje = null;
+    public $estadoMensajeTipo = 'success';
 
     public $nuevo = [
         'nombre' => null,
@@ -85,6 +87,7 @@ new class extends Component {
         $controlador = app(CierreCampanaController::class);
         $cierre = $controlador->registrarCampana($this->nuevo, auth()->user());
 
+        $this->estadoMensajeTipo = 'success';
         $this->estadoMensaje = 'Campaña registrada correctamente.';
         $this->nuevo = [
             'nombre' => null,
@@ -108,12 +111,20 @@ new class extends Component {
             return;
         }
 
-        $controlador = app(CierreCampanaController::class);
-        $cierre = CierreCampana::findOrFail($this->selectedCierreId);
-        $controlador->cerrarCampana($cierre, auth()->user());
+        try {
+            $controlador = app(CierreCampanaController::class);
+            $cierre = CierreCampana::findOrFail($this->selectedCierreId);
+            $controlador->cerrarCampana($cierre, auth()->user());
 
-        $this->estadoMensaje = 'Cierre actualizado a estado "cerrado".';
-        $this->loadCierres();
+            $this->estadoMensajeTipo = 'success';
+            $this->estadoMensaje = 'Campaña cerrada correctamente.';
+            $this->loadCierres();
+        } catch (ValidationException $exception) {
+            $this->estadoMensajeTipo = 'error';
+            $this->estadoMensaje = collect($exception->errors())
+                ->flatten()
+                ->first() ?? 'No se pudo completar el cierre de campaña.';
+        }
     }
 };
 ?>
@@ -133,7 +144,7 @@ new class extends Component {
         </div>
 
         @if($estadoMensaje)
-            <div class="p-3 text-sm text-green-800 bg-green-100 border border-green-200 rounded-lg">
+            <div class="p-3 text-sm rounded-lg border {{ $estadoMensajeTipo === 'error' ? 'text-red-800 bg-red-100 border-red-200' : 'text-green-800 bg-green-100 border-green-200' }}">
                 {{ $estadoMensaje }}
             </div>
         @endif
