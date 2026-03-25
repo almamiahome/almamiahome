@@ -30,6 +30,8 @@ class CatalogosSeeder extends Seeder
             [
                 'descripcion' => 'Catálogo base para pruebas con posiciones relativas.',
                 'imagen_portada' => null,
+                'anio' => (int) now()->format('Y'),
+                'numero' => 1,
             ]
         );
 

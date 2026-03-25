@@ -13,6 +13,7 @@ class AlmamiaSeeder extends Seeder
      */
     public function run(): void
     {
+        // Compatibilidad V2 etapa 1: este seeder mantiene datos de productos/categorías y no redefine catálogo-cierre.
         // Primero limpiamos tablas hijas y luego las padres para evitar problemas de FK
         Schema::disableForeignKeyConstraints();
         DB::table('categoria_puntaje_regla')->delete();

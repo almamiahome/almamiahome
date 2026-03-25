@@ -90,9 +90,12 @@ class CierreCampanaController extends Controller
         return CierreCampana::create([
             'nombre' => $datos['nombre'],
             'codigo' => $datos['codigo'],
+            'catalogo_id' => $datos['catalogo_id'] ?? null,
+            'numero_cierre' => $datos['numero_cierre'] ?? 1,
             'fecha_inicio' => $datos['fecha_inicio'] ?? null,
             'fecha_cierre' => $datos['fecha_cierre'] ?? null,
-            'estado' => $datos['estado'] ?? 'configurada',
+            'fecha_liquidacion' => $datos['fecha_liquidacion'] ?? null,
+            'estado' => $datos['estado'] ?? CierreCampana::ESTADO_PLANIFICADO,
             'datos' => $datos['datos'] ?? null,
         ]);
     }
@@ -104,7 +107,7 @@ class CierreCampanaController extends Controller
         }
 
         $cierre->update([
-            'estado' => 'cerrada',
+            'estado' => CierreCampana::ESTADO_CERRADO,
             'datos' => array_merge($cierre->datos ?? [], [
                 'cerrada_por' => $usuario->id,
                 'cerrada_en' => now()->toDateTimeString(),

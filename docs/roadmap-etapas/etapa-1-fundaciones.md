@@ -27,3 +27,25 @@
 - Ajustar modelos `app/Models` (fillable, casts, relaciones, scopes).
 - Relacionar pedidos, pagos, cobros y métricas con cierres.
 - Estandarizar scopes de consulta para reportes.
+
+
+## Avance de implementación inicial (2026-03-25)
+
+### Entregado en este inicio de etapa 1
+- ✅ Migración base para calendario comercial versión 2:
+  - `catalogos`: agrega `anio` y `numero` con índice único por año.
+  - `cierres_campana`: agrega `catalogo_id`, `numero_cierre`, `fecha_liquidacion` e índices operativos.
+  - Normaliza estados heredados a estados oficiales (`planificado` y `cerrado`).
+- ✅ Modelos actualizados en `app/Models`:
+  - `Catalogo`: nuevos fillables/casts y relación `cierres()`.
+  - `CierreCampana`: nuevos fillables/casts, relación `catalogo()` y constantes de estados válidos.
+- ✅ Vista operativa de cierre general (`resources/themes/anchor/pages/crecimiento-cierre-general/index.blade.php`) actualizada con Volt/Folio y middleware:
+  - selección de catálogo,
+  - número de cierre (1..3),
+  - estado inicial oficial,
+  - fecha de liquidación.
+
+### Pendientes para completar etapa 1
+- ⚠️ Definir y cerrar glosario funcional final en documentación de negocio.
+- ⚠️ Implementar reglas estrictas de transición de estados (planificado → abierto → en liquidación → cerrado) con validación centralizada.
+- ⚠️ Completar pruebas automatizadas de calendario comercial y cierres.

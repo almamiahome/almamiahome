@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Catalogo;
+use App\Models\CierreCampana;
 use App\Models\RangoLider;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +31,21 @@ class AlmamiaSeederPremios extends Seeder
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
 
+        $catalogoBaseId = Catalogo::query()->firstOrCreate(
+            ['nombre' => 'Catálogo Base Premios V2'],
+            [
+                'descripcion' => 'Catálogo de referencia para pruebas de campaña y cierres V2.',
+                'anio' => (int) now()->format('Y'),
+                'numero' => 1,
+            ]
+        )->id;
+
         $cierreBaseId = DB::table('cierres_campana')->insertGetId([
             'nombre' => 'Campaña Base Premios',
             'codigo' => 'CAMP-BASE',
-            'estado' => 'configurada',
+            'catalogo_id' => $catalogoBaseId,
+            'numero_cierre' => 1,
+            'estado' => CierreCampana::ESTADO_PLANIFICADO,
             'datos' => json_encode([
                 'nota' => 'Cierre referencial para precargar el plan de premios Alma Mia.',
             ]),

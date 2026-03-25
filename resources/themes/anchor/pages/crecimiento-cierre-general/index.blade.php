@@ -1,13 +1,26 @@
 <?php
 use function Laravel\Folio\{middleware, name};
 use App\Http\Controllers\Crecimiento\CierreCampanaController;
+use App\Models\Catalogo;
 use App\Models\CierreCampana;
 use Livewire\Volt\Component;
+
+middleware([
+    'auth',
+    function ($request, $next) {
+        if (! $request->user() || ! $request->user()->can('crecimiento.ver_cierres_campana')) {
+            abort(403, 'No tiene permisos para acceder al cierre general.');
+        }
+
+        return $next($request);
+    },
+]);
 
 name('crecimiento-cierre-general');
 
 new class extends Component {
     public $cierres = [];
+    public $catalogos = [];
     public $selectedCierreId = null;
     public $totales = [];
     public $resumen = [];
@@ -16,14 +29,20 @@ new class extends Component {
     public $nuevo = [
         'nombre' => null,
         'codigo' => null,
+        'catalogo_id' => null,
+        'numero_cierre' => 1,
         'fecha_inicio' => null,
         'fecha_cierre' => null,
-        'estado' => 'configurada',
+        'fecha_liquidacion' => null,
+        'estado' => CierreCampana::ESTADO_PLANIFICADO,
         'datos' => null,
     ];
 
     public function mount()
     {
+        $this->catalogos = Catalogo::orderByDesc('anio')->orderBy('numero')->get();
+        $this->nuevo['catalogo_id'] = $this->catalogos->first()?->id;
+
         $this->loadCierres();
     }
 
@@ -55,8 +74,12 @@ new class extends Component {
         $this->validate([
             'nuevo.nombre' => 'required|string|max:255',
             'nuevo.codigo' => 'required|string|max:50|unique:cierres_campana,codigo',
+            'nuevo.catalogo_id' => 'required|exists:catalogos,id',
+            'nuevo.numero_cierre' => 'required|integer|min:1|max:3',
             'nuevo.fecha_inicio' => 'nullable|date',
             'nuevo.fecha_cierre' => 'nullable|date|after_or_equal:nuevo.fecha_inicio',
+            'nuevo.fecha_liquidacion' => 'nullable|date|after_or_equal:nuevo.fecha_cierre',
+            'nuevo.estado' => 'required|in:' . implode(',', CierreCampana::ESTADOS_VALIDOS),
         ]);
 
         $controlador = app(CierreCampanaController::class);
@@ -66,9 +89,12 @@ new class extends Component {
         $this->nuevo = [
             'nombre' => null,
             'codigo' => null,
+            'catalogo_id' => $this->catalogos->first()?->id,
+            'numero_cierre' => 1,
             'fecha_inicio' => null,
             'fecha_cierre' => null,
-            'estado' => 'configurada',
+            'fecha_liquidacion' => null,
+            'estado' => CierreCampana::ESTADO_PLANIFICADO,
             'datos' => null,
         ];
 
@@ -86,7 +112,7 @@ new class extends Component {
         $cierre = CierreCampana::findOrFail($this->selectedCierreId);
         $controlador->cerrarCampana($cierre, auth()->user());
 
-        $this->estadoMensaje = 'Cierre actualizado a estado "cerrada".';
+        $this->estadoMensaje = 'Cierre actualizado a estado "cerrado".';
         $this->loadCierres();
     }
 };
@@ -125,7 +151,8 @@ new class extends Component {
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <p class="font-semibold text-slate-800">{{ $cierre->nombre }}</p>
-                                        <p class="text-xs text-slate-500">Código {{ $cierre->codigo }} • {{ $cierre->estado }}</p>
+                                        <p class="text-xs text-slate-500">Código {{ $cierre->codigo }} • {{ $cierre->estado }} • Cierre {{ $cierre->numero_cierre }}</p>
+                                        <p class="text-xs text-slate-500">{{ $cierre->catalogo?->nombre ?? 'Sin catálogo' }}</p>
                                     </div>
                                     <span class="text-xs text-slate-500">{{ optional($cierre->fecha_cierre)->format('d/m') }}</span>
                                 </div>
@@ -141,8 +168,40 @@ new class extends Component {
                     <div class="space-y-3">
                         <x-input label="Nombre" wire:model.live="nuevo.nombre" />
                         <x-input label="Código" wire:model.live="nuevo.codigo" />
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Catálogo</label>
+                            <select wire:model.live="nuevo.catalogo_id" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500">
+                                @foreach($catalogos as $catalogo)
+                                    <option value="{{ $catalogo->id }}">{{ $catalogo->nombre }} ({{ $catalogo->anio }} · N°{{ $catalogo->numero }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Número de cierre</label>
+                                <select wire:model.live="nuevo.numero_cierre" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="1">Cierre 1</option>
+                                    <option value="2">Cierre 2</option>
+                                    <option value="3">Cierre 3</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Estado inicial</label>
+                                <select wire:model.live="nuevo.estado" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="{{ \App\Models\CierreCampana::ESTADO_PLANIFICADO }}">Planificado</option>
+                                    <option value="{{ \App\Models\CierreCampana::ESTADO_ABIERTO }}">Abierto</option>
+                                    <option value="{{ \App\Models\CierreCampana::ESTADO_LIQUIDACION }}">En liquidación</option>
+                                    <option value="{{ \App\Models\CierreCampana::ESTADO_CERRADO }}">Cerrado</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <x-input label="Fecha de inicio" type="date" wire:model.live="nuevo.fecha_inicio" />
                         <x-input label="Fecha de cierre" type="date" wire:model.live="nuevo.fecha_cierre" />
+                        <x-input label="Fecha de liquidación" type="date" wire:model.live="nuevo.fecha_liquidacion" />
+
                         <div class="flex justify-end">
                             <x-button wire:click="registrarCierre" class="bg-indigo-600 text-white">Registrar</x-button>
                         </div>
