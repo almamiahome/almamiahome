@@ -22,6 +22,8 @@ class MetricaLiderCampana extends Model
         'unidades_ok',
         'cobranzas_ok',
         'crecimiento_ok',
+        'retencion_ok',
+        'plus_crecimiento_ok',
         'altas_pagadas_en_cierre',
         'cantidad_1c',
         'cantidad_2c',
@@ -32,8 +34,12 @@ class MetricaLiderCampana extends Model
         'premio_cobranzas',
         'premio_altas',
         'premio_crecimiento',
+        'premio_retencion',
+        'premio_plus_crecimiento',
         'premio_total',
         'fecha_pago_equipo',
+        'objetivo_proximo_cierre',
+        'actividad_cierre_anterior',
         'datos',
     ];
 
@@ -47,6 +53,8 @@ class MetricaLiderCampana extends Model
         'unidades_ok' => 'boolean',
         'cobranzas_ok' => 'boolean',
         'crecimiento_ok' => 'boolean',
+        'retencion_ok' => 'boolean',
+        'plus_crecimiento_ok' => 'boolean',
         'altas_pagadas_en_cierre' => 'array',
         'cantidad_1c' => 'integer',
         'cantidad_2c' => 'integer',
@@ -57,8 +65,12 @@ class MetricaLiderCampana extends Model
         'premio_cobranzas' => 'float',
         'premio_altas' => 'float',
         'premio_crecimiento' => 'float',
+        'premio_retencion' => 'float',
+        'premio_plus_crecimiento' => 'float',
         'premio_total' => 'float',
         'fecha_pago_equipo' => 'datetime',
+        'objetivo_proximo_cierre' => 'integer',
+        'actividad_cierre_anterior' => 'integer',
         'datos' => 'array',
     ];
 
