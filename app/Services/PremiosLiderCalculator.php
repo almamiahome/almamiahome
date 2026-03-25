@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\CierreCampana;
+use App\Models\LiderAltaCuota;
+use App\Models\LiderSaltoRangoHistorial;
 use App\Models\MetricaLiderCampana;
 use App\Models\PremioRegla;
 use App\Models\RangoLider;
@@ -13,125 +15,68 @@ use Illuminate\Support\Carbon;
 
 class PremiosLiderCalculator
 {
-    public const VERSION_CALCULO = 'v2_retencion_plus_crecimiento';
+    public const VERSION_CALCULO = 'v3_modular_etapa_3';
 
     public function calcular(CierreCampana $campana, User $lider, array $datos): MetricaLiderCampana
     {
         $rango = $this->resolverRango($datos);
-        $revendedorasActivas = (int) ($datos['revendedoras_activas'] ?? 0);
-        $unidades = (int) ($datos['unidades'] ?? 0);
-        $fechaPagoEquipo = $this->resolverFechaPago($datos['fecha_pago_equipo'] ?? null);
-        $altas = (int) ($datos['altas'] ?? 0);
-        $cantidad1c = (int) ($datos['cantidad_1c'] ?? 0);
-        $cantidad2c = (int) ($datos['cantidad_2c'] ?? 0);
-        $cantidad3c = (int) ($datos['cantidad_3c'] ?? 0);
-        $crecimientoLogrado = (bool) ($datos['crecimiento_logrado'] ?? false);
-        $retencionLograda = (bool) ($datos['retencion_lograda'] ?? false);
-        $plusCrecimientoLogrado = (bool) ($datos['plus_crecimiento_logrado'] ?? false);
-        $objetivoProximoCierre = $this->resolverEnteroNullable($datos['objetivo_proximo_cierre'] ?? null);
-        $actividadCierreAnterior = $this->resolverEnteroNullable($datos['actividad_cierre_anterior'] ?? null);
+        $actividad = $this->moduloActividad($rango, $datos);
+        $altas = $this->moduloAltas($campana, $datos);
+        $cobranzas = $this->moduloCobranzas($campana, $rango, $datos);
+        $crecimiento = $this->moduloCrecimiento($campana, $rango, $datos);
+        $retencion = $this->moduloRetencion($campana, $rango, $datos);
+        $reparto = $this->moduloReparto($datos);
+        $plusUnidades = $this->moduloPlusUnidades($campana, $rango, $datos);
 
-        $actividadOk = $rango ? $this->validarActividad($rango, $revendedorasActivas) : false;
-        $altasOk = $altas >= 3;
-        $unidadesOk = $rango ? $unidades >= $rango->unidades_minimas : false;
-        $cobranzasOk = $this->validarCobranzas($campana, $fechaPagoEquipo);
-        $crecimientoOk = $crecimientoLogrado;
-        $retencionOk = $retencionLograda;
-        $plusCrecimientoOk = $plusCrecimientoLogrado;
-
-        $altasPagadas = $this->resolverAltasPagadas($datos, $campana, $altas);
-        $montoRepartoTotal = $this->calcularRepartoTotal($cantidad1c, $cantidad2c, $cantidad3c);
-
-        $premioActividad = $actividadOk && $rango ? (float) $rango->premio_actividad : 0.0;
-        $premioUnidades = $unidadesOk && $rango ? (float) $rango->premio_unidades : 0.0;
-        $premioCobranzas = $cobranzasOk && $rango ? (float) $rango->premio_cobranzas : 0.0;
-        $premioAltas = $altasOk ? $this->calcularPremioAltas($altasPagadas, $altas) : 0.0;
-        $premioCrecimiento = $crecimientoOk ? $this->resolverPremioCrecimiento($rango, $campana) : 0.0;
-        $premioRetencion = $retencionOk ? $this->resolverPremioPorTipo($rango, $campana, 'retencion') : 0.0;
-        $premioPlusCrecimiento = $plusCrecimientoOk ? $this->resolverPremioPorTipo($rango, $campana, 'plus_crecimiento') : 0.0;
-
-        $premioTotal = $premioActividad + $premioUnidades + $premioCobranzas
-            + $premioAltas + $premioCrecimiento + $premioRetencion + $premioPlusCrecimiento + $montoRepartoTotal;
+        $premioTotal = $actividad['premio_actividad'] + $altas['premio_altas'] + $cobranzas['premio_cobranzas']
+            + $crecimiento['premio_crecimiento'] + $retencion['premio_retencion'] + $reparto['monto_reparto_total']
+            + $plusUnidades['premio_plus_crecimiento'] + $plusUnidades['premio_unidades'];
 
         $payload = [
-            'actividad_ok' => $actividadOk,
-            'altas_ok' => $altasOk,
-            'unidades_ok' => $unidadesOk,
-            'cobranzas_ok' => $cobranzasOk,
-            'crecimiento_ok' => $crecimientoOk,
-            'retencion_ok' => $retencionOk,
-            'plus_crecimiento_ok' => $plusCrecimientoOk,
-            'altas_pagadas_en_cierre' => $altasPagadas,
-            'cantidad_1c' => $cantidad1c,
-            'cantidad_2c' => $cantidad2c,
-            'cantidad_3c' => $cantidad3c,
-            'monto_reparto_total' => $montoRepartoTotal,
-            'premio_actividad' => $premioActividad,
-            'premio_unidades' => $premioUnidades,
-            'premio_cobranzas' => $premioCobranzas,
-            'premio_altas' => $premioAltas,
-            'premio_crecimiento' => $premioCrecimiento,
-            'premio_retencion' => $premioRetencion,
-            'premio_plus_crecimiento' => $premioPlusCrecimiento,
+            'actividad_ok' => $actividad['actividad_ok'],
+            'altas_ok' => $altas['altas_ok'],
+            'unidades_ok' => $plusUnidades['unidades_ok'],
+            'cobranzas_ok' => $cobranzas['cobranzas_ok'],
+            'crecimiento_ok' => $crecimiento['crecimiento_ok'],
+            'retencion_ok' => $retencion['retencion_ok'],
+            'plus_crecimiento_ok' => $plusUnidades['plus_crecimiento_ok'],
+            'altas_pagadas_en_cierre' => $altas['altas_pagadas_en_cierre'],
+            'cantidad_1c' => $reparto['cantidad_1c'],
+            'cantidad_2c' => $reparto['cantidad_2c'],
+            'cantidad_3c' => $reparto['cantidad_3c'],
+            'monto_reparto_total' => $reparto['monto_reparto_total'],
+            'premio_actividad' => $actividad['premio_actividad'],
+            'premio_unidades' => $plusUnidades['premio_unidades'],
+            'premio_cobranzas' => $cobranzas['premio_cobranzas'],
+            'premio_altas' => $altas['premio_altas'],
+            'premio_crecimiento' => $crecimiento['premio_crecimiento'],
+            'premio_retencion' => $retencion['premio_retencion'],
+            'premio_plus_crecimiento' => $plusUnidades['premio_plus_crecimiento'],
             'premio_total' => $premioTotal,
-            'fecha_pago_equipo' => $fechaPagoEquipo,
-            'objetivo_proximo_cierre' => $objetivoProximoCierre,
-            'actividad_cierre_anterior' => $actividadCierreAnterior,
+            'fecha_pago_equipo' => $cobranzas['fecha_pago_equipo'],
+            'objetivo_proximo_cierre' => $plusUnidades['objetivo_proximo_cierre'],
+            'actividad_cierre_anterior' => $retencion['actividad_cierre_anterior'],
             'datos' => [
-                'revendedoras_activas' => $revendedorasActivas,
-                'unidades' => $unidades,
-                'altas_mes' => $altas,
+                'revendedoras_activas' => $actividad['revendedoras_activas'],
+                'unidades' => $plusUnidades['unidades'],
+                'altas_mes' => $altas['altas_mes'],
                 'rango_nombre' => $rango?->nombre,
                 'rango_id' => $rango?->id,
                 'cierre_codigo' => $campana->codigo,
                 'cierre_nombre' => $campana->nombre,
-                'objetivo_proximo_cierre' => $objetivoProximoCierre,
-                'actividad_cierre_anterior' => $actividadCierreAnterior,
+                'objetivo_proximo_cierre' => $plusUnidades['objetivo_proximo_cierre'],
+                'actividad_cierre_anterior' => $retencion['actividad_cierre_anterior'],
                 'evidencia' => [
                     'version_calculo' => self::VERSION_CALCULO,
                     'reglas_aplicadas' => [
-                        [
-                            'codigo' => 'actividad',
-                            'cumple' => $actividadOk,
-                            'premio' => $premioActividad,
-                        ],
-                        [
-                            'codigo' => 'unidades',
-                            'cumple' => $unidadesOk,
-                            'premio' => $premioUnidades,
-                        ],
-                        [
-                            'codigo' => 'cobranzas',
-                            'cumple' => $cobranzasOk,
-                            'premio' => $premioCobranzas,
-                        ],
-                        [
-                            'codigo' => 'altas',
-                            'cumple' => $altasOk,
-                            'premio' => $premioAltas,
-                        ],
-                        [
-                            'codigo' => 'crecimiento',
-                            'cumple' => $crecimientoOk,
-                            'premio' => $premioCrecimiento,
-                        ],
-                        [
-                            'codigo' => 'retencion',
-                            'cumple' => $retencionOk,
-                            'premio' => $premioRetencion,
-                        ],
-                        [
-                            'codigo' => 'plus_crecimiento',
-                            'cumple' => $plusCrecimientoOk,
-                            'premio' => $premioPlusCrecimiento,
-                        ],
-                    ],
-                    'insumos' => [
-                        'crecimiento_logrado' => $crecimientoLogrado,
-                        'retencion_lograda' => $retencionLograda,
-                        'plus_crecimiento_logrado' => $plusCrecimientoLogrado,
-                        'objetivo_proximo_cierre' => $objetivoProximoCierre,
-                        'actividad_cierre_anterior' => $actividadCierreAnterior,
+                        ['codigo' => 'actividad', 'cumple' => $actividad['actividad_ok'], 'premio' => $actividad['premio_actividad']],
+                        ['codigo' => 'retencion', 'cumple' => $retencion['retencion_ok'], 'premio' => $retencion['premio_retencion']],
+                        ['codigo' => 'altas', 'cumple' => $altas['altas_ok'], 'premio' => $altas['premio_altas']],
+                        ['codigo' => 'cobranzas', 'cumple' => $cobranzas['cobranzas_ok'], 'premio' => $cobranzas['premio_cobranzas']],
+                        ['codigo' => 'crecimiento', 'cumple' => $crecimiento['crecimiento_ok'], 'premio' => $crecimiento['premio_crecimiento']],
+                        ['codigo' => 'reparto', 'cumple' => $reparto['monto_reparto_total'] > 0, 'premio' => $reparto['monto_reparto_total']],
+                        ['codigo' => 'plus_crecimiento', 'cumple' => $plusUnidades['plus_crecimiento_ok'], 'premio' => $plusUnidades['premio_plus_crecimiento']],
+                        ['codigo' => 'unidades', 'cumple' => $plusUnidades['unidades_ok'], 'premio' => $plusUnidades['premio_unidades']],
                     ],
                 ],
             ],
@@ -143,7 +88,150 @@ class PremiosLiderCalculator
             'rango_lider_id' => $rango?->id,
         ], $payload);
 
+        $this->persistirCuotasAltas($metrica, $lider, $campana, $altas['altas_pagadas_en_cierre']);
+        $this->persistirHistorialSaltoRango($lider, $campana, $crecimiento);
+
         return $metrica->refresh();
+    }
+
+    protected function moduloActividad(?RangoLider $rango, array $datos): array
+    {
+        $revendedorasActivas = (int) ($datos['revendedoras_activas'] ?? 0);
+        $actividadOk = $rango ? $this->validarActividad($rango, $revendedorasActivas) : false;
+
+        return [
+            'revendedoras_activas' => $revendedorasActivas,
+            'actividad_ok' => $actividadOk,
+            'premio_actividad' => $actividadOk && $rango ? (float) $rango->premio_actividad : 0.0,
+        ];
+    }
+
+    protected function moduloRetencion(CierreCampana $campana, ?RangoLider $rango, array $datos): array
+    {
+        $actividadAnterior = $this->resolverEnteroNullable($datos['actividad_cierre_anterior'] ?? null);
+        $actividadActual = (int) ($datos['revendedoras_activas'] ?? 0);
+        $retencionLograda = (bool) ($datos['retencion_lograda'] ?? false);
+
+        $retencionOk = $retencionLograda;
+        if ($actividadAnterior !== null) {
+            $retencionOk = $actividadActual >= $actividadAnterior;
+        }
+
+        return [
+            'retencion_ok' => $retencionOk,
+            'actividad_cierre_anterior' => $actividadAnterior,
+            'premio_retencion' => $retencionOk ? $this->resolverPremioPorTipo($rango, $campana, 'retencion') : 0.0,
+        ];
+    }
+
+    protected function moduloAltas(CierreCampana $campana, array $datos): array
+    {
+        $altas = (int) ($datos['altas'] ?? 0);
+        $altasOk = $altas >= 3;
+        $altasPagadas = $this->resolverAltasPagadas($datos, $campana, $altas);
+
+        return [
+            'altas_mes' => $altas,
+            'altas_ok' => $altasOk,
+            'altas_pagadas_en_cierre' => $altasPagadas,
+            'premio_altas' => $altasOk ? $this->calcularPremioAltas($altasPagadas, $altas) : 0.0,
+        ];
+    }
+
+    protected function moduloCobranzas(CierreCampana $campana, ?RangoLider $rango, array $datos): array
+    {
+        $fechaPagoEquipo = $this->resolverFechaPago($datos['fecha_pago_equipo'] ?? null);
+        $cobranzasOk = $this->validarCobranzas($campana, $fechaPagoEquipo);
+
+        return [
+            'cobranzas_ok' => $cobranzasOk,
+            'fecha_pago_equipo' => $fechaPagoEquipo,
+            'premio_cobranzas' => $cobranzasOk && $rango ? (float) $rango->premio_cobranzas : 0.0,
+        ];
+    }
+
+    protected function moduloCrecimiento(CierreCampana $campana, ?RangoLider $rango, array $datos): array
+    {
+        $crecimientoOk = (bool) ($datos['crecimiento_logrado'] ?? false);
+
+        return [
+            'crecimiento_ok' => $crecimientoOk,
+            'rango_anterior_id' => $datos['rango_anterior_id'] ?? null,
+            'rango_nuevo_id' => $rango?->id,
+            'motivo' => $crecimientoOk ? 'Salto de rango validado' : 'Sin salto de rango válido',
+            'premio_crecimiento' => $crecimientoOk ? $this->resolverPremioCrecimiento($rango, $campana) : 0.0,
+        ];
+    }
+
+    protected function moduloReparto(array $datos): array
+    {
+        $cantidad1c = (int) ($datos['cantidad_1c'] ?? 0);
+        $cantidad2c = (int) ($datos['cantidad_2c'] ?? 0);
+        $cantidad3c = (int) ($datos['cantidad_3c'] ?? 0);
+
+        return [
+            'cantidad_1c' => $cantidad1c,
+            'cantidad_2c' => $cantidad2c,
+            'cantidad_3c' => $cantidad3c,
+            'monto_reparto_total' => $this->calcularRepartoTotal($cantidad1c, $cantidad2c, $cantidad3c),
+        ];
+    }
+
+    protected function moduloPlusUnidades(CierreCampana $campana, ?RangoLider $rango, array $datos): array
+    {
+        $unidades = (int) ($datos['unidades'] ?? 0);
+        $objetivoProximoCierre = $this->resolverEnteroNullable($datos['objetivo_proximo_cierre'] ?? null);
+        $plusLogrado = (bool) ($datos['plus_crecimiento_logrado'] ?? false);
+        $plusCrecimientoOk = $plusLogrado || ($objetivoProximoCierre !== null && $unidades >= $objetivoProximoCierre);
+        $unidadesOk = $rango ? $unidades >= $rango->unidades_minimas : false;
+
+        return [
+            'unidades' => $unidades,
+            'unidades_ok' => $unidadesOk,
+            'plus_crecimiento_ok' => $plusCrecimientoOk,
+            'objetivo_proximo_cierre' => $objetivoProximoCierre,
+            'premio_plus_crecimiento' => $plusCrecimientoOk ? $this->resolverPremioPorTipo($rango, $campana, 'plus_crecimiento') : 0.0,
+            'premio_unidades' => $unidadesOk && $rango ? (float) $rango->premio_unidades : 0.0,
+        ];
+    }
+
+    protected function persistirCuotasAltas(MetricaLiderCampana $metrica, User $lider, CierreCampana $campana, array $altasPagadas): void
+    {
+        foreach ($altasPagadas as $detalle) {
+            LiderAltaCuota::query()->updateOrCreate([
+                'metrica_lider_campana_id' => $metrica->id,
+                'numero_cuota' => (int) ($detalle['cuota'] ?? 0),
+            ], [
+                'lider_id' => $lider->id,
+                'cierre_campana_id' => $campana->id,
+                'altas_reportadas' => (int) ($detalle['altas'] ?? 0),
+                'monto_pagado' => (float) ($detalle['monto_pagado'] ?? 0),
+                'estado' => 'liquidado',
+                'datos' => [
+                    'cierre_codigo' => $detalle['cierre_codigo'] ?? $campana->codigo,
+                ],
+            ]);
+        }
+    }
+
+    protected function persistirHistorialSaltoRango(User $lider, CierreCampana $campana, array $crecimiento): void
+    {
+        if (! $crecimiento['crecimiento_ok']) {
+            return;
+        }
+
+        LiderSaltoRangoHistorial::query()->updateOrCreate([
+            'lider_id' => $lider->id,
+            'cierre_campana_id' => $campana->id,
+        ], [
+            'rango_anterior_id' => $crecimiento['rango_anterior_id'],
+            'rango_nuevo_id' => $crecimiento['rango_nuevo_id'],
+            'estado' => 'registrado',
+            'motivo' => $crecimiento['motivo'],
+            'datos' => [
+                'origen' => 'PremiosLiderCalculator',
+            ],
+        ]);
     }
 
     protected function resolverRango(array $datos): ?RangoLider

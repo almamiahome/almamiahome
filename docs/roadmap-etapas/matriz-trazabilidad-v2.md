@@ -19,7 +19,7 @@ Estados permitidos:
 | Fase 2 — Datos y migraciones | Tablas, índices, relaciones y reversibilidad | Etapa 1 | en curso | Migraciones V2 iniciales y ajustes de modelo ya incorporados. |
 | Fase 3 — Campañas y pedidos base | 4 catálogos, 3 cierres, trazabilidad de pedidos | Etapa 1 + Etapa 2 | en curso | Seeder de calendario y pruebas iniciales disponibles. |
 | Fase 4 — Finanzas diferidas | Saldos, deudas, balance y descuentos a futuro | Etapa 4 | pendiente | Planificado en `etapa-4-finanzas-reporteria-y-salida.md`. |
-| Fase 5 — Módulos de revendedoras | Tienda, rachas, continuidad y puntos | Etapa 2 | en curso | Estructura de tablas de rachas/puntos/canjes disponible; faltan cierres funcionales completos. |
+| Fase 5 — Módulos de revendedoras | Tienda, rachas, continuidad y puntos | Etapa 2 | en curso | Flujo T7+T8+T9 implementado; falta corrida integral de suite en entorno con dependencias completas. |
 | Fase 6 — Módulos de líderes | Actividad, retención, altas, cobranza, crecimiento, reparto, plus, unidades | Etapa 3 | en curso | Motor de cálculo con evidencia y campos de retención/plus ya presentes. |
 | Fase 7 — Interfaz y reportería | Paneles, comparativas, filtros de gestión | Etapa 4 | pendiente | Definido como parte de reportería y salida operativa. |
 | Fase 8 — Validación final | Checklist integral y decisión binaria de salida | Etapa 4 | pendiente | Requiere cierre de QA funcional/técnico y validación de negocio. |
@@ -102,3 +102,13 @@ Actualizar esta matriz cada vez que cambie cualquiera de estos componentes:
 - servicios de cálculo,
 - pruebas de reglas críticas,
 - documentación funcional del roadmap.
+
+## 5) Checklist de salida Etapa 2 (T6–T10)
+
+| Tarea | Idempotencia | Trazabilidad | Auditoría | Consistencia de saldos | Estado |
+|---|---|---|---|---|---|
+| T6 | Seeder anual re-ejecutable sin duplicados por código/cierre. | Códigos de catálogo y cierre determinísticos. | Conteos verificables por año y catálogo. | N/A | ⏳ |
+| T7 | Reproceso por `(user_id, catalogo_id, cierre_id)` sin duplicar rachas. | Registro de origen, motivo y saldo de racha. | Estados `activa/premiada/reiniciada` auditables por cierre. | N/A | ⏳ |
+| T8 | Movimientos de puntos con clave de idempotencia por operación. | Ledger con `origen`, `motivo`, `datos` y `saldo_posterior`. | Historial de acumulación/canje/vencimiento persistente. | Saldo por sumatoria = saldo posterior final. | ⏳ |
+| T9 | Canje con transacción y descuento único por operación. | Relación canje ↔ premio ↔ cierre ↔ usuario. | Fecha de canje, estado y saldo final persistidos. | Canje bloqueado si saldo o stock no alcanzan. | ⏳ |
+| T10 | Re-cálculo por `updateOrCreate` en métrica líder. | Evidencia de reglas aplicadas y versión de cálculo. | Fecha corte cobranza + insumos usados en cálculo. | Premios parciales y total consistentes por cierre. | ⏳ |

@@ -1,7 +1,18 @@
 # Etapa 3 — Premios de liderazgo avanzados
 
-**Rango del roadmap:** pasos 11 al 16
+**Rango del roadmap:** pasos 11 al 16  
 **Objetivo:** completar reglas de premio líder para liquidación integral.
+
+## Plan de implementación T11–T16
+
+| Tarea | Alcance implementado | Estado |
+|---|---|---|
+| T11 Retención | Validación contra actividad del cierre anterior con evidencia en métricas. | completo |
+| T12 Altas | Cálculo de cuotas y persistencia de historial en `lider_altas_cuotas`. | completo |
+| T13 Cobranza | Regla de corte de 7 días respecto de `fecha_cierre` con prueba de bordes. | completo |
+| T14 Crecimiento | Registro idempotente de salto de rango en `lider_saltos_rango_historial`. | completo |
+| T15 Reparto | Módulo dedicado por tipo 1C/2C/3C y trazabilidad de monto total. | completo |
+| T16 Plus/unidades | Módulo de objetivo próximo cierre + mínimo de unidades por rango. | completo |
 
 ## Tarea 11. Premio por retención
 - Comparar actividad del cierre actual vs anterior.

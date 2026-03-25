@@ -1,0 +1,1 @@
+{"descripcion":"T12 cuotas por altas con recálculo idempotente","altas":3,"altas_pagadas_en_cierre":[{"cierre_codigo":"CAMP-2026-06","altas":3,"cuota":1,"monto_pagado":2200},{"cierre_codigo":"CAMP-2026-07","altas":3,"cuota":2,"monto_pagado":2200},{"cierre_codigo":"CAMP-2026-08","altas":3,"cuota":3,"monto_pagado":2200}]}
