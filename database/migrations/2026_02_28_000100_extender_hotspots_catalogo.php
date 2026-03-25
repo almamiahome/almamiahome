@@ -13,7 +13,28 @@ return new class extends Migration {
     {
         Schema::table('catalogo_pagina_productos', function (Blueprint $table) {
             $table->boolean('es_grupo')->default(false)->after('producto_id');
+
+            /**
+             * Orden obligatorio:
+             * 1) Se elimina la FK actual de producto_id.
+             * 2) Recién después se cambia a nullable.
+             * 3) Finalmente se vuelve a crear la FK.
+             *
+             * En MySQL no es válido alterar nulabilidad mientras la FK sigue activa.
+             */
+            $table->dropForeign(['producto_id']);
+        });
+
+        Schema::table('catalogo_pagina_productos', function (Blueprint $table) {
             $table->foreignId('producto_id')->nullable()->change();
+        });
+
+        Schema::table('catalogo_pagina_productos', function (Blueprint $table) {
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on('productos')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
 
         Schema::create('catalogo_hotspot_producto', function (Blueprint $table) {
@@ -39,11 +60,29 @@ return new class extends Migration {
     {
         Schema::dropIfExists('catalogo_hotspot_producto');
 
+        Schema::table('catalogo_pagina_productos', function (Blueprint $table) {
+            $table->dropForeign(['producto_id']);
+        });
+
         DB::table('catalogo_pagina_productos')->whereNull('producto_id')->delete();
 
         Schema::table('catalogo_pagina_productos', function (Blueprint $table) {
-            $table->dropColumn('es_grupo');
+            /**
+             * Orden obligatorio inverso:
+             * 1) Con FK eliminada, se limpia data nula incompatible.
+             * 2) Se vuelve producto_id NOT NULL.
+             * 3) Se recrea la FK para restaurar integridad referencial.
+             */
             $table->foreignId('producto_id')->nullable(false)->change();
+            $table->dropColumn('es_grupo');
+        });
+
+        Schema::table('catalogo_pagina_productos', function (Blueprint $table) {
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on('productos')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 };

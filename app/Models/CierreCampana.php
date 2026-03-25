@@ -29,7 +29,7 @@ class CierreCampana extends Model
 
     public function premioReglas(): HasMany
     {
-        return $this->hasMany(PremioRegla::class);
+        return $this->hasMany(PremioRegla::class, 'campana_id');
     }
 
     public function metricas(): HasMany
