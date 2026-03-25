@@ -7,50 +7,53 @@ use App\Models\CierreCampana;
 use App\Models\RangoLider;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AlmamiaSeederPremios extends Seeder
 {
+    private const VERSION_SEEDER = 'v2.1';
+    private const LLAVE_SEEDER = 'Database\\Seeders\\AlmamiaSeederPremios';
+
     public function run(): void
     {
-        $driver = DB::getDriverName();
-
-        if ($driver === 'sqlite') {
-            DB::statement('PRAGMA foreign_keys = OFF;');
-        } else {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        }
-        DB::table('metricas_lider_campana')->truncate();
-        DB::table('repartos_compras')->truncate();
-        DB::table('premio_reglas')->truncate();
-        DB::table('rangos_lideres')->truncate();
-
-        if ($driver === 'sqlite') {
-            DB::statement('PRAGMA foreign_keys = ON;');
-        } else {
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        if ($this->yaFueEjecutado()) {
+            return;
         }
 
-        $catalogoBaseId = Catalogo::query()->updateOrCreate(
+        $catalogoBase = Catalogo::query()->updateOrCreate(
             ['nombre' => 'Catálogo Base Premios V2'],
             [
                 'descripcion' => 'Catálogo de referencia para pruebas de campaña y cierres V2.',
                 'anio' => null,
                 'numero' => null,
             ]
-        )->id;
+        );
 
-        $cierreBaseId = CierreCampana::query()->updateOrCreate(
-            ['codigo' => 'CAMP-BASE'],
+        $cierreReferencia = CierreCampana::query()
+            ->where('codigo', 'CAMP-BASE')
+            ->orWhere('nombre', 'Campaña Base Premios')
+            ->first();
+
+        $cierreBase = CierreCampana::query()->updateOrCreate(
+            ['id' => $cierreReferencia?->id],
             [
+                'codigo' => 'CAMP-BASE',
                 'nombre' => 'Campaña Base Premios',
-                'catalogo_id' => $catalogoBaseId,
+                'catalogo_id' => $catalogoBase->id,
                 'numero_cierre' => 1,
                 'estado' => CierreCampana::ESTADO_PLANIFICADO,
                 'datos' => [
                     'nota' => 'Cierre referencial para precargar el plan de premios Alma Mia.',
                 ],
             ]
-        )->id;
+        );
+
+        DB::table('metricas_lider_campana')
+            ->where('cierre_campana_id', $cierreBase->id)
+            ->delete();
+        DB::table('premio_reglas')
+            ->where('campana_id', $cierreBase->id)
+            ->delete();
 
         $rangos = [
             ['nombre' => 'Perla', 'revendedoras_minimas' => 5, 'revendedoras_maximas' => 8, 'unidades_minimas' => 50, 'premio_actividad' => 6000, 'premio_unidades' => 5000, 'premio_cobranzas' => 4000, 'reparto_referencia' => 350],
@@ -66,7 +69,9 @@ class AlmamiaSeederPremios extends Seeder
 
         $rangosInsertados = [];
         foreach ($rangos as $rango) {
-            $rangoId = RangoLider::query()->insertGetId([
+            $rangoModelo = RangoLider::query()->updateOrCreate(
+                ['nombre' => $rango['nombre']],
+                [
                 'nombre' => $rango['nombre'],
                 'revendedoras_minimas' => $rango['revendedoras_minimas'],
                 'revendedoras_maximas' => $rango['revendedoras_maximas'],
@@ -75,12 +80,11 @@ class AlmamiaSeederPremios extends Seeder
                 'premio_unidades' => $rango['premio_unidades'],
                 'premio_cobranzas' => $rango['premio_cobranzas'],
                 'reparto_referencia' => $rango['reparto_referencia'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                ]
+            );
 
             $rangosInsertados[$rango['nombre']] = array_merge($rango, [
-                'id' => $rangoId,
+                'id' => $rangoModelo->id,
             ]);
         }
 
@@ -115,7 +119,7 @@ class AlmamiaSeederPremios extends Seeder
             foreach ($componentes as $tipo => $config) {
                 DB::table('premio_reglas')->insert([
                     'rango_lider_id' => $rango['id'],
-                    'campana_id' => $cierreBaseId,
+                    'campana_id' => $cierreBase->id,
                     'tipo' => $tipo,
                     'umbral_minimo' => $config['umbral_minimo'],
                     'umbral_maximo' => $config['umbral_maximo'] ?? null,
@@ -149,7 +153,7 @@ class AlmamiaSeederPremios extends Seeder
 
             DB::table('premio_reglas')->insert([
                 'rango_lider_id' => $rangoOrigen['id'],
-                'campana_id' => $cierreBaseId,
+                'campana_id' => $cierreBase->id,
                 'tipo' => 'crecimiento',
                 'umbral_minimo' => $rangoDestino['revendedoras_minimas'] ?? $rangoOrigen['revendedoras_minimas'],
                 'umbral_maximo' => $rangoDestino['revendedoras_maximas'] ?? null,
@@ -170,18 +174,57 @@ class AlmamiaSeederPremios extends Seeder
         ];
 
         foreach ($repartos as $reparto) {
-            DB::table('repartos_compras')->insert([
-                'tipo_compra' => $reparto['tipo_compra'],
-                'monto_por_revendedora' => $reparto['monto_por_revendedora'],
-                'descripcion' => sprintf('Monto fijo por revendedora en su %s.', strtolower($reparto['tipo_compra'])),
-                'datos' => json_encode([
-                    'monto_base' => $reparto['monto_por_revendedora'],
-                    'porcentaje_lider' => $reparto['porcentaje_lider'] ?? null,
-                    'porcentaje_revendedora' => $reparto['porcentaje_revendedora'] ?? null,
-                ]),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            DB::table('repartos_compras')->updateOrInsert(
+                ['tipo_compra' => $reparto['tipo_compra']],
+                [
+                    'monto_por_revendedora' => $reparto['monto_por_revendedora'],
+                    'descripcion' => sprintf('Monto fijo por revendedora en su %s.', strtolower($reparto['tipo_compra'])),
+                    'datos' => json_encode([
+                        'monto_base' => $reparto['monto_por_revendedora'],
+                        'porcentaje_lider' => $reparto['porcentaje_lider'] ?? null,
+                        'porcentaje_revendedora' => $reparto['porcentaje_revendedora'] ?? null,
+                    ]),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
         }
+
+        $this->registrarEjecucion($cierreBase->id);
+    }
+
+    private function yaFueEjecutado(): bool
+    {
+        if (! Schema::hasTable('control_ejecucion_seeders')) {
+            return false;
+        }
+
+        return DB::table('control_ejecucion_seeders')
+            ->where('seeder', self::LLAVE_SEEDER)
+            ->where('version', self::VERSION_SEEDER)
+            ->exists();
+    }
+
+    private function registrarEjecucion(int $cierreCampanaId): void
+    {
+        if (! Schema::hasTable('control_ejecucion_seeders')) {
+            return;
+        }
+
+        DB::table('control_ejecucion_seeders')->updateOrInsert(
+            [
+                'seeder' => self::LLAVE_SEEDER,
+                'version' => self::VERSION_SEEDER,
+            ],
+            [
+                'ejecutado_en' => now(),
+                'datos' => json_encode([
+                    'cierre_campana_id' => $cierreCampanaId,
+                    'codigo_cierre' => 'CAMP-BASE',
+                ]),
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]
+        );
     }
 }
