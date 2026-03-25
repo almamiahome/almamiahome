@@ -1,0 +1,37 @@
+{
+  "catalogo": {
+    "nombre": "Catálogo Fixture 2026-01",
+    "descripcion": "Fixture reproducible para pruebas de racha en catálogo/cierre.",
+    "anio": 2026,
+    "numero": 1
+  },
+  "cierres": [
+    {
+      "nombre": "Campaña 2026-01",
+      "codigo": "CAMP-FIX-2026-01",
+      "numero_cierre": 1,
+      "fecha_inicio": "2026-01-01",
+      "fecha_cierre": "2026-01-21",
+      "fecha_liquidacion": "2026-01-31",
+      "estado": "cerrado"
+    },
+    {
+      "nombre": "Campaña 2026-02",
+      "codigo": "CAMP-FIX-2026-02",
+      "numero_cierre": 2,
+      "fecha_inicio": "2026-02-01",
+      "fecha_cierre": "2026-02-21",
+      "fecha_liquidacion": "2026-02-28",
+      "estado": "cerrado"
+    },
+    {
+      "nombre": "Campaña 2026-03",
+      "codigo": "CAMP-FIX-2026-03",
+      "numero_cierre": 3,
+      "fecha_inicio": "2026-03-01",
+      "fecha_cierre": "2026-03-21",
+      "fecha_liquidacion": "2026-03-31",
+      "estado": "cerrado"
+    }
+  ]
+}
