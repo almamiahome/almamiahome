@@ -13,6 +13,11 @@ use Illuminate\Support\Collection;
 
 class CierreCampanaController extends Controller
 {
+    public function __construct(
+        protected CierreCampanaStateMachine $stateMachine
+    ) {
+    }
+
     public function totalesPorLider(CierreCampana $cierre, Authenticatable $usuario): Collection
     {
         if (! $usuario->can('crecimiento.ver_metricas_liderazgo')) {
@@ -100,7 +105,7 @@ class CierreCampanaController extends Controller
             'datos' => $datos['datos'] ?? null,
         ]);
 
-        app(CierreCampanaStateMachine::class)->registrarEstadoInicial($cierre, $usuario);
+        $this->stateMachine->registrarEstadoInicial($cierre, $usuario);
 
         return $cierre->refresh();
     }
@@ -111,7 +116,7 @@ class CierreCampanaController extends Controller
             abort(403, 'No tiene permiso para actualizar el estado de campañas.');
         }
 
-        return app(CierreCampanaStateMachine::class)->transicionar($cierre, $estadoNuevo, $usuario, $motivo);
+        return $this->stateMachine->transicionar($cierre, $estadoNuevo, $usuario, $motivo);
     }
 
     public function cerrarCampana(CierreCampana $cierre, Authenticatable $usuario, ?string $motivo = null): CierreCampana
