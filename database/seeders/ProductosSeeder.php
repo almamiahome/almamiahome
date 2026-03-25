@@ -10,6 +10,7 @@ class ProductosSeeder extends Seeder
 {
     public function run(): void
     {
+        // Compatibilidad V2 etapa 1: este seeder mantiene datos de productos/categorías y no redefine catálogo-cierre.
         // ⚠️ Si NO querés borrar nada antes, comentá este bloque
         Schema::disableForeignKeyConstraints();
         DB::table('categoria_producto')->truncate();
