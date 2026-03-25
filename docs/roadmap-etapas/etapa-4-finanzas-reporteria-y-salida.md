@@ -22,3 +22,19 @@
 - Plan piloto, monitoreo y salida total.
 - Capacitación operativa para perfiles internos.
 - Definir métricas de éxito y soporte post-lanzamiento.
+
+## Entregables implementados en esta iteración
+
+### Finanzas
+- Migraciones para `liquidaciones_cierre` y `descuentos_futuros` con auditoría y FK a `cierres_campana` + `users`.
+- Servicio `LiquidacionCierreService` con cálculo de saldos, balance neto y aplicación automática de descuentos futuros.
+- Idempotencia funcional y de base de datos para descuentos futuros por (`origen_liquidacion_id`, `cierre_destino_id`, `motivo`).
+
+### Reportería
+- Servicio `ReporteriaFinancieraService` con agregados por líder, coordinadora y cierre.
+- Filtros operativos por `zona_id`, `departamento_id`, `catalogo_id`, `cierre_id` y estado.
+- Endpoint de timeline individual y exportación comparativa en CSV/XLS (compatibilidad operativa).
+
+### Segmentación geográfica
+- Estructura `zonas` y `departamentos` con relación a `users`.
+- Fixture reproducible de finanzas para validar escenarios de cierres y descuentos.

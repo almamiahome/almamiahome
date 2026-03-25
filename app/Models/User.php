@@ -10,6 +10,8 @@ use App\Models\Cobro;
 use App\Models\MetricaLiderCampana;
 use App\Models\Pago;
 use App\Models\Producto;
+use App\Models\Departamento;
+use App\Models\Zona;
 use App\Models\RangoLider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -40,6 +42,10 @@ class User extends WaveUser
         'verification_code',
         'verified',
         'trial_ends_at',
+        'lider_id',
+        'coordinadora_id',
+        'zona_id',
+        'departamento_id',
     ];
 
     /**
@@ -176,6 +182,37 @@ class User extends WaveUser
     public function canjesPremios(): HasMany
     {
         return $this->hasMany(CanjePremio::class);
+    }
+
+
+    public function zona()
+    {
+        return $this->belongsTo(Zona::class);
+    }
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
+    }
+
+    public function liquidacionesComoLider(): HasMany
+    {
+        return $this->hasMany(LiquidacionCierre::class, 'lider_id');
+    }
+
+    public function liquidacionesComoCoordinadora(): HasMany
+    {
+        return $this->hasMany(LiquidacionCierre::class, 'coordinadora_id');
+    }
+
+    public function descuentosFuturosComoLider(): HasMany
+    {
+        return $this->hasMany(DescuentoFuturo::class, 'lider_id');
+    }
+
+    public function descuentosFuturosComoCoordinadora(): HasMany
+    {
+        return $this->hasMany(DescuentoFuturo::class, 'coordinadora_id');
     }
 
     public function needsOnboarding(): bool

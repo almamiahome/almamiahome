@@ -86,4 +86,15 @@ class CierreCampana extends Model
     {
         return $this->hasMany(CanjePremio::class, 'cierre_id');
     }
+
+    public function liquidaciones(): HasMany
+    {
+        return $this->hasMany(LiquidacionCierre::class);
+    }
+
+    public function descuentosFuturosDestino(): HasMany
+    {
+        return $this->hasMany(DescuentoFuturo::class, 'cierre_destino_id');
+    }
 }
+

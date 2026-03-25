@@ -106,6 +106,15 @@ Este bloque ya cubre el cálculo base de actividad, altas, cobranzas, crecimient
 - `cobros` para montos de líderes y coordinadoras.
 - Estados de programación/pago para administración financiera inicial.
 
+
+### 7) Liquidaciones financieras y reportería avanzada (etapa 4)
+
+- `liquidaciones_cierre` y `descuentos_futuros` para consolidación de saldo a cobrar/pagar, deuda arrastrada, descuento aplicado y balance neto.
+- Aplicación automática de descuentos futuros con idempotencia por combinación origen/destino/motivo.
+- Segmentación geográfica con `zonas` y `departamentos` vinculadas a `users`.
+- Servicio de reportería con agregados por líder/coordinadora/cierre y exportables CSV/XLS.
+- Endpoints API para comparativas y timeline individual.
+
 ---
 
 ## Módulos a desarrollar en V2 (según `sistema.txt`)

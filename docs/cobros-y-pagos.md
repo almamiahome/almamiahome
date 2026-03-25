@@ -47,3 +47,34 @@ Este módulo incorpora un registro explícito para pagos a vendedoras asociados 
 ### Impacto en BD y modelos
 - **BD**: migración `2026_02_28_120000_add_comprobante_pago_to_pedidos_table.php` añade campos de estado y trazabilidad del comprobante.
 - **Modelo `Pedido`**: se actualizan `fillable` y `casts` para persistir correctamente los nuevos datos.
+
+## Liquidaciones por cierre y descuentos futuros (Etapa 4)
+
+Se agregan dos tablas de auditoría financiera:
+
+- `liquidaciones_cierre`: guarda por líder/coordinadora y cierre los campos `saldo_a_cobrar`, `saldo_a_pagar`, `deuda_arrastrada`, `descuento_aplicado` y `balance_neto`.
+- `descuentos_futuros`: registra descuentos/bonos para aplicar a cierres destino, con idempotencia por (`origen_liquidacion_id`, `cierre_destino_id`, `motivo`).
+
+### Reglas de cálculo
+
+El servicio `LiquidacionCierreService` calcula por cierre y líder:
+
+- `saldo_a_cobrar`: suma de cobros vigentes del cierre.
+- `saldo_a_pagar`: suma de pagos asociados a pedidos de su red para el cierre.
+- `deuda_arrastrada`: remanente histórico de cierres anteriores.
+- `descuento_aplicado`: descuentos futuros ya aplicados al cierre destino.
+- `balance_neto`: `saldo_a_cobrar - saldo_a_pagar - deuda_arrastrada + descuento_aplicado`.
+
+También persiste `detalle_json` con trazabilidad del cálculo para auditoría interna.
+
+### Ejemplo real de cierre
+
+Cierre `2026-C1` (líder #2):
+
+- saldo a cobrar: `125.000`
+- saldo a pagar: `49.000`
+- deuda arrastrada: `8.000`
+- descuento aplicado: `0`
+- balance neto: `68.000`
+
+Luego se genera un descuento futuro por `12.000` al cierre `2026-C2` con motivo `bonus_buen_cobro`; al ejecutar la aplicación automática del cierre destino, el descuento pasa a estado `aplicado` y aumenta el balance neto del destino.
