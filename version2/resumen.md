@@ -1,83 +1,72 @@
 # Resumen estratégico V2
 
-## Visión
-Consolidar una plataforma comercial escalable para **Alma Mia Fragancias**, capaz de soportar crecimiento de red, reglas de negocio cambiantes por campaña y trazabilidad punta a punta (pedido → cierre → liquidación → premios).
+## Propósito general
+Alinear la operación de **Alma Mía Fragancias** con el modelo comercial real del negocio (catálogos, cierres, jerarquías y premios), asegurando trazabilidad entre datos, lógica, interfaz y documentación.
 
-## Objetivo V2
-Implementar una arquitectura funcional y de datos que permita operar campañas con menor riesgo operativo, mayor auditabilidad y despliegues incrementales sin detener la operación actual.
+## Alcance funcional de V2 (derivado de `sistema.txt`)
+1. Estructura anual por catálogos y cierres/campañas.
+2. Estructura de pagos diferidos (saldo a pagar / a cobrar / balance / deudas / descuentos futuros).
+3. Filtrado por zonas y departamentos, vista de líderes avanzada e individual.
+4. Módulos de revendedoras:
+   - Tienda de premios,
+   - Premio por pedidos consecutivos,
+   - Premio de continuidad y ventas.
+5. Módulos de líderes:
+   - Actividad,
+   - Retención,
+   - Altas,
+   - Cobranza,
+   - Crecimiento,
+   - Reparto,
+   - Plus de crecimiento,
+   - Premio por unidades.
 
-## Problemas que resuelve V2
-1. **Desalineación parcial entre estructura y evolución de datos**: existen múltiples migraciones evolutivas para dominios críticos (pedidos, métricas, premios), lo que requiere consolidación por contexto para reducir deuda técnica.
-2. **Riesgo de deriva en modelos**: el dominio comercial creció en entidades (Pedido, PuntajeRegla, MetricaLiderCampana, CierreCampana, etc.) y necesita estandarizar contratos de relaciones, casts y eventos para mantener consistencia.
-3. **Seeders con propósito mixto**: coexisten seeders operativos, de fixtures y de soporte histórico; V2 propone separar explícitamente semilla base, semilla de pruebas y semilla de demo.
-4. **Cobertura de pruebas funcionales insuficiente para negocio crítico**: hoy hay cobertura limitada en rutas/home y comprobante de pago; V2 requiere cobertura formal para puntajes, jerarquías, estados de pedido, cierres y bonificaciones.
+## Etapas oficiales de V2
 
-## Problemas detectados explícitos (base actual)
+### Fase 1 — Diagnóstico y contrato funcional
+- Consolidar reglas de `sistema.txt` en lenguaje operativo.
+- Definir criterios de aceptación por módulo y por rol (Revendedora/Líder/Coordinadora).
 
-### Migraciones
-- Evolución distribuida y acumulativa de tablas críticas (`pedidos`, `metricas_lider_campana`, `premio_reglas`, hotspots), dificultando lectura histórica y rollback por módulo.
-- Convención de nombres heterogénea (crear/agregar/actualizar/simplificar) que complica ubicar rápidamente cambios por bounded context.
+### Fase 2 — Modelo de datos y migraciones
+- Diseñar tablas, relaciones e índices por campaña/cierre.
+- Garantizar migraciones reversibles y compatibles con operación vigente.
 
-### Modelos
-- Alta densidad de modelos de negocio con responsabilidades potencialmente cruzadas (catálogo, pedidos, premios, métricas), sin una guía de contratos V2 documentada.
-- Necesidad de matriz explícita de `fillable`, `casts` y relaciones obligatorias por entidad para evitar regresiones al ampliar lógica comercial.
+### Fase 3 — Implementación base de campañas y pedidos
+- Activar estructura anual (4 catálogos x 3 cierres).
+- Estandarizar estados de pedidos y base de cálculo por cierre.
 
-### Seeders
-- Presencia de archivo atípico `DatabaseSeeder-----php`, indicio de artefacto técnico a depurar en V2.
-- Mezcla de seeders de negocio, infraestructura Wave y fixtures de pruebas en un mismo espacio lógico.
+### Fase 4 — Finanzas diferidas y cobranzas
+- Implementar saldos a pagar/cobrar, balance y deudas.
+- Aplicar descuentos a cierres futuros con trazabilidad.
 
-### Pruebas
-- Suite actual acotada para el dominio: predominan pruebas de rutas/base y una prueba específica de comprobante de pago.
-- Falta de pruebas de integración para cálculo de puntos/bonificaciones, jerarquía comercial y cierres de campaña.
+### Fase 5 — Módulos de revendedoras
+- Tienda de premios y canje por puntos.
+- Pedidos consecutivos y continuidad/ventas por catálogo.
 
-## Principios V2
-1. **Compatibilidad progresiva**: ningún corte disruptivo en operación comercial.
-2. **Trazabilidad total**: cada regla de negocio debe ser auditable y reproducible.
-3. **Un único origen de verdad por dominio**: contratos claros entre migraciones, modelos, seeders y pruebas.
-4. **Documentación viva**: todo cambio comercial debe nacer con documentación y pruebas.
-5. **Separación por contextos**: catálogo, pedidos, campañas, premios y finanzas evolucionan con fronteras claras.
+### Fase 6 — Módulos de líderes
+- Premios de actividad, retención, altas, cobranza, crecimiento, reparto, plus y unidades.
+- Evidencia reproducible por cierre y rango.
 
-## Estrategia de migración (paralela e incremental)
-1. **Fase paralela (shadow mode)**
-   - Introducir módulos V2 sin retirar V1.
-   - Duplicar cálculo en procesos críticos (puntajes/cierres) y comparar resultados.
-2. **Fase incremental por dominio**
-   - Migrar primero contextos de bajo riesgo (catálogo/parametría), luego pedidos, después premios y cierres.
-   - Activar feature flags por módulo para controlar exposición.
-3. **Fase de conmutación controlada**
-   - Definir checklist de salida por dominio.
-   - Ejecutar ventana de cambio por campaña/cierre para minimizar impacto.
-4. **Fase de retiro V1**
-   - Eliminar código/dependencias obsoletas sólo tras evidencias de estabilidad.
+### Fase 7 — UX/UI, filtros y reportes
+- Paneles minimalistas por tarea operativa.
+- Filtros por zona/departamento y vistas avanzada/individual de líderes.
 
-## Riesgos y mitigaciones
-- **Riesgo: divergencia entre cálculos V1 y V2.**  
-  **Mitigación:** validación dual automática por campaña y alarmas por desviación.
-- **Riesgo: cambios de esquema impactan operación diaria.**  
-  **Mitigación:** migraciones backward-compatible y despliegues fuera de ventanas críticas.
-- **Riesgo: seeders inconsistentes entre entornos.**  
-  **Mitigación:** separar seeders `base`, `testing` y `demo` con contratos de ejecución.
-- **Riesgo: baja cobertura de pruebas en lógica crítica.**  
-  **Mitigación:** política de PR con pruebas obligatorias por dominio comercial.
+### Fase 8 — Validación final y salida a release
+- Verificación integral de datos, lógica, QA y documentación.
+- Estado final binario: **APROBADO** o **NO APROBADO**.
+- Si algún ítem falla, activar **retorno de fase** con causa y acción correctiva documentada.
 
-## Decisiones arquitectónicas (ADR breve)
+## Mapa de carpetas V2
+- `version2/categoria-1/`: estructura anual, campañas, pedidos base y trazabilidad inicial.
+- `version2/categoria-2/`: finanzas diferidas, balances, descuentos y cobranzas.
+- `version2/categoria-3/`: módulos de revendedoras (tienda y premios por continuidad).
+- `version2/categoria-4/`: módulos de líderes (actividad, retención, altas, cobranza).
+- `version2/categoria-5/`: módulos de líderes avanzados + reportería y filtros.
+- `version2/validacion-final.md`: checklist exacta de Fase 8 con evidencia.
 
-### ADR-001: Migración paralela con feature flags
-- **Decisión:** coexistencia V1/V2 hasta validar equivalencia funcional.
-- **Motivo:** minimizar riesgo operativo en campañas activas.
-- **Consecuencia:** mayor complejidad temporal de mantenimiento, compensada por menor probabilidad de caída.
-
-### ADR-002: Contratos de dominio por contexto
-- **Decisión:** definir contratos explícitos por contexto (migraciones-modelos-seeders-pruebas).
-- **Motivo:** evitar deriva de negocio entre capas técnicas.
-- **Consecuencia:** mayor disciplina documental y revisión técnica por PR.
-
-### ADR-003: Seeders separados por finalidad
-- **Decisión:** dividir semilla en `base`, `testing`, `demo`.
-- **Motivo:** reproducibilidad y consistencia entre ambientes.
-- **Consecuencia:** pipeline de CI más claro y menor riesgo de datos incorrectos en producción.
-
-### ADR-004: Cobertura mínima por flujo crítico
-- **Decisión:** exigir pruebas de integración para puntajes, pedidos, cierres y bonificaciones antes de habilitar V2 por dominio.
-- **Motivo:** proteger reglas comerciales de alto impacto.
-- **Consecuencia:** incremento inicial del esfuerzo de QA con fuerte reducción de regresiones.
+## Regla de control de avance
+Ninguna etapa puede cerrarse sin:
+1. Evidencia de comandos ejecutados,
+2. Evidencia de archivos impactados,
+3. Resultado explícito (aprobado/no aprobado),
+4. Registro de retorno de fase cuando aplique.

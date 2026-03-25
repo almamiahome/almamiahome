@@ -1,48 +1,42 @@
-# Tarea 3.7
+# Tarea 3.7 — Emisión de premio en primer cierre siguiente
 
-## Problema actual
-La operación actual del dominio de la categoría 3 presenta pasos manuales, riesgo de inconsistencias y baja trazabilidad para el flujo específico de esta tarea.
+## Contexto de negocio
+Esta tarea pertenece a **Categoría 3: Módulos de revendedoras**, alineada al plan de Version 2 definido desde `sistema.txt`.
 
-## Solución propuesta
-Diseñar e implementar un entregable incremental para la categoría 3 que estandarice datos, reglas y validaciones, sin romper compatibilidad con V1.
+## Objetivo de la tarea
+Emisión de premio en primer cierre siguiente. Con ello se contribuye al objetivo macro de la categoría: **Entregar tienda de premios y reglas de pedidos consecutivos y continuidad/ventas.**.
 
-## Requisitos técnicos
-- Laravel 12 + Wave + Folio/Volt según arquitectura existente.
-- Migraciones reversibles y compatibles con datos actuales.
-- Modelos con fillable/casts/relaciones explícitas.
-- Pruebas automatizadas para casos felices y de borde.
-- Documentación funcional y técnica en español.
+## Alcance técnico
+- Definir contrato de datos, reglas y validaciones específicas de esta tarea.
+- Mantener compatibilidad con operación actual (sin ruptura de flujos vigentes).
+- Dejar trazabilidad funcional, técnica y de QA para cierre de fase.
 
-## Plan paso a paso
-1. Levantar estado actual del flujo y dependencias técnicas.
-1. Definir contrato de datos y regla de negocio de la tarea.
-1. Crear migraciones y ajustes de modelo necesarios.
-1. Implementar servicio/caso de uso y validaciones.
-1. Agregar seeders mínimos de soporte para QA.
-1. Crear o ampliar pruebas unitarias/feature.
-1. Documentar impacto, checklist y plan de rollback.
+## Subtareas mínimas
+1. Levantar estado actual y dependencias directas.
+2. Diseñar cambio funcional/técnico con impacto explícito.
+3. Implementar en código/migraciones/modelos según corresponda.
+4. Añadir pruebas automatizadas del caso feliz y casos borde.
+5. Documentar evidencia y criterios de salida.
 
-## Riesgos
-- Regresión en cálculos existentes del dominio.
-- Datos históricos incompletos al migrar.
-- Desacople insuficiente con lógica heredada V1.
-
-## Dependencias
-- Migraciones del dominio de pedidos/campañas ya aplicadas.
-- Disponibilidad de modelos y relaciones base.
-- Seeders oficiales `AlmamiaSeeder` y `ProductosSeeder` alineados cuando aplique.
+## Riesgos controlados
+- Divergencia entre cálculo esperado y cálculo implementado.
+- Inconsistencia de datos por cierres históricos incompletos.
+- Falta de evidencia para aprobar gate de fase.
 
 ## Criterios de éxito
-- La tarea se ejecuta de forma independiente cuando el contexto no exige bloqueo cruzado.
-- No rompe flujos vigentes de creación/edición/consulta.
-- Incluye trazabilidad de cambios y resultado verificable por pruebas.
+- Regla implementada y verificable por evidencia reproducible.
+- Pruebas relacionadas en verde.
+- Documentación en español con impacto funcional claro.
 
 ## Checklist de validación
-- [ ] Se validó migración `up/down` en entorno local.
-- [ ] Se actualizaron modelos involucrados.
-- [ ] Se revisaron/actualizaron seeders requeridos.
-- [ ] Se ejecutó `php artisan test` sin fallos relacionados.
-- [ ] Se documentó impacto funcional para negocio.
+- [ ] Se definió criterio funcional sin ambigüedad para esta tarea.
+- [ ] Se registró impacto en datos/modelos (si aplica).
+- [ ] Se añadieron o ajustaron pruebas automatizadas.
+- [ ] Se ejecutaron comandos de validación y se guardó evidencia.
+- [ ] Se documentó plan de rollback o corrección.
 
-## Independencia de ejecución
-Esta tarea está diseñada para ejecutarse de forma independiente **cuando no existan bloqueos explícitos de datos o secuencia funcional**. Si detecta dependencia dura, debe registrarse antes de iniciar implementación.
+## Dependencias cruzadas
+- `version2/resumen.md`
+- `version2/mcp.md`
+- `version2/skills.md`
+- `sistema.txt`
