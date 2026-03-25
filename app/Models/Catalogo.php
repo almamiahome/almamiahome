@@ -32,4 +32,24 @@ class Catalogo extends Model
     {
         return $this->hasMany(CierreCampana::class);
     }
+
+    public function rachasRevendedoras(): HasMany
+    {
+        return $this->hasMany(RevendedoraRacha::class);
+    }
+
+    public function puntosRevendedoras(): HasMany
+    {
+        return $this->hasMany(RevendedoraPunto::class);
+    }
+
+    public function premiosTienda(): HasMany
+    {
+        return $this->hasMany(TiendaPremio::class);
+    }
+
+    public function canjesPremios(): HasMany
+    {
+        return $this->hasMany(CanjePremio::class);
+    }
 }
