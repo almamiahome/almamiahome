@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AlmamiaSeeder extends Seeder
 {
@@ -13,15 +14,17 @@ class AlmamiaSeeder extends Seeder
     public function run(): void
     {
         // Primero limpiamos tablas hijas y luego las padres para evitar problemas de FK
+        Schema::disableForeignKeyConstraints();
         DB::table('categoria_puntaje_regla')->delete();
         DB::table('categoria_producto')->delete();
         DB::table('puntaje_reglas')->delete();
         DB::table('categorias')->delete();
+        Schema::enableForeignKeyConstraints();
 
         /**
          * CATEGORÍAS
          */
-        DB::statement(<<<SQL
+                $this->insertDesdeDump(<<<'SQL'
             INSERT INTO `categorias` (`id`, `nombre`, `slug`, `created_at`, `updated_at`) VALUES
             (1, 'Perfumeria', 'perfumeria', '2025-11-04 10:38:00', '2025-11-16 06:00:50'),
             (2, 'Contratapa', 'contratapa', '2025-11-04 10:38:14', '2025-11-16 06:04:40'),
@@ -44,12 +47,12 @@ class AlmamiaSeeder extends Seeder
             (19, 'Aromaterapia', 'aromaterapia', '2025-11-04 12:08:16', '2025-11-16 06:00:50'),
             (20, 'Cremas 250cc', 'cremas-250cc', '2025-11-04 12:56:29', '2025-11-16 06:00:50'),
             (21, 'Difusores 100 cc', 'difusores-100-cc', '2025-11-04 12:56:29', '2025-11-16 06:00:50');
-            SQL);
+SQL);
 
         /**
          * PUNTAJE_REGLAS
          */
-        DB::statement(<<<SQL
+                $this->insertDesdeDump(<<<'SQL'
             INSERT INTO `puntaje_reglas` (`id`, `min_unidades`, `max_unidades`, `descripcion`, `bonificacion`, `porcentaje`, `beneficios`, `puntaje_minimo`, `puntaje_minimo_descripcion`, `puntos_mensuales`, `puntos_por_campania`, `datos`, `created_at`, `updated_at`) VALUES
             (2, 5, 7, 'REGLADESCUENTO', NULL, 20.00, 'de 5 a 7 unidades 25 porciento', NULL, NULL, NULL, NULL, NULL, '2025-11-16 05:34:50', '2025-11-16 06:59:27'),
             (4, 8, 11, 'REGLADESCUENTO', NULL, 25.00, 'De 8 a 11 unidades 25 Porciento', NULL, NULL, 120, 360, NULL, '2025-11-16 06:50:01', '2025-11-16 06:50:01'),
@@ -57,12 +60,12 @@ class AlmamiaSeeder extends Seeder
             (6, 22, 99, 'REGLADESCUENTO', NULL, 30.00, NULL, NULL, NULL, 480, 750, NULL, '2025-11-16 09:16:59', '2025-11-16 09:16:59'),
             (7, NULL, NULL, 'REGLAVISIBILIDAD', NULL, 10.00, 'VISIBILIDAD SEGUN PUNTOS MINIMOS', 8, NULL, NULL, NULL, NULL, '2025-11-16 09:18:13', '2025-11-16 09:18:13'),
             (8, NULL, NULL, 'REGLAVISIBILIDAD', NULL, 50.00, NULL, 10, NULL, NULL, NULL, NULL, '2025-11-18 05:11:25', '2025-11-18 05:11:51');
-            SQL);
+SQL);
 
         /**
          * CATEGORIA_PRODUCTO
          */
-        DB::statement(<<<SQL
+                $this->insertDesdeDump(<<<'SQL'
             INSERT INTO `categoria_producto` (`id`, `categoria_id`, `producto_id`, `created_at`, `updated_at`) VALUES
             (2, 2, 2, '2025-11-04 12:53:52', '2025-11-04 12:53:52'),
             (3, 3, 3, '2025-11-04 12:53:52', '2025-11-04 12:53:52'),
@@ -219,12 +222,12 @@ class AlmamiaSeeder extends Seeder
             (154, 19, 155, '2025-11-04 12:56:29', '2025-11-04 12:56:29'),
             (155, 19, 156, '2025-11-04 12:56:29', '2025-11-04 12:56:29'),
             (156, 19, 157, '2025-11-04 12:56:29', '2025-11-04 12:56:29');
-            SQL);
+SQL);
 
         /**
          * CATEGORIA_PUNTAJE_REGLA
          */
-        DB::statement(<<<SQL
+                $this->insertDesdeDump(<<<'SQL'
             INSERT INTO `categoria_puntaje_regla` (`id`, `categoria_id`, `puntaje_regla_id`, `created_at`, `updated_at`) VALUES
             (1, 1, 2, '2025-11-16 06:44:48', '2025-11-16 06:44:48'),
             (3, 3, 2, '2025-11-16 06:44:48', '2025-11-16 06:44:48'),
@@ -304,6 +307,49 @@ class AlmamiaSeeder extends Seeder
             (81, 2, 7, NULL, NULL),
             (82, 13, 2, NULL, NULL),
             (83, 16, 8, NULL, NULL);
-            SQL);
+SQL);
+    }
+
+
+    private function insertDesdeDump(string $sql): void
+    {
+        preg_match_all('/INSERT INTO\s+`?([\w]+)`?\s*\(([^)]+)\)\s*VALUES\s*(.+?);/is', $sql, $sentencias, PREG_SET_ORDER);
+
+        foreach ($sentencias as $sentencia) {
+            $tabla = $sentencia[1];
+            $columnas = array_map(
+                static fn (string $columna): string => trim(str_replace('`', '', $columna)),
+                explode(',', $sentencia[2])
+            );
+
+            $registros = [];
+            preg_match_all('/\((.*?)\)(?:,|$)/s', $sentencia[3], $tuplas);
+
+            foreach ($tuplas[1] as $tupla) {
+                $valoresCrudos = str_getcsv($tupla, ',', "'", '\\');
+                $fila = [];
+
+                foreach ($columnas as $indice => $columna) {
+                    $valor = $valoresCrudos[$indice] ?? null;
+                    $valorNormalizado = is_string($valor) ? trim($valor) : $valor;
+
+                    if ($valorNormalizado === null || strtoupper((string) $valorNormalizado) === 'NULL') {
+                        $fila[$columna] = null;
+                    } elseif (is_string($valorNormalizado) && is_numeric($valorNormalizado)) {
+                        $fila[$columna] = str_contains($valorNormalizado, '.')
+                            ? (float) $valorNormalizado
+                            : (int) $valorNormalizado;
+                    } else {
+                        $fila[$columna] = $valor;
+                    }
+                }
+
+                $registros[] = $fila;
+            }
+
+            foreach (array_chunk($registros, 500) as $bloque) {
+                DB::table($tabla)->insert($bloque);
+            }
+        }
     }
 }

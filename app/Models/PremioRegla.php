@@ -36,6 +36,6 @@ class PremioRegla extends Model
 
     public function campana(): BelongsTo
     {
-        return $this->belongsTo(CierreCampana::class);
+        return $this->belongsTo(CierreCampana::class, 'campana_id');
     }
 }

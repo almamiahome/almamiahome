@@ -4,21 +4,22 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class ProductosSeeder extends Seeder
 {
     public function run(): void
     {
         // ⚠️ Si NO querés borrar nada antes, comentá este bloque
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::disableForeignKeyConstraints();
         DB::table('categoria_producto')->truncate();
         DB::table('categoria_puntaje_regla')->truncate();
         DB::table('gastos_administrativos')->truncate();
         DB::table('productos')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::enableForeignKeyConstraints();
 
         // Insertamos los datos EXACTOS del dump
-        DB::unprepared("
+                $this->insertDesdeDump(<<<'SQL'
 INSERT INTO `categoria_producto` (`id`, `categoria_id`, `producto_id`, `created_at`, `updated_at`) VALUES
 (2, 2, 2, '2025-11-04 12:53:52', '2025-11-04 12:53:52'),
 (3, 3, 3, '2025-11-04 12:53:52', '2025-11-04 12:53:52'),
@@ -438,6 +439,49 @@ INSERT INTO `profile_key_values` (`id`, `type`, `keyvalue_id`, `keyvalue_type`, 
 (28, 'TextInput', 4, 'users', 'whatsapp', '+54115861516', NULL, NULL),
 (29, 'TextInput', 4, 'users', 'zona', 'LAVALLE', NULL, NULL),
 (30, 'TextInput', 4, 'users', 'departamento', 'Central', NULL, NULL);
-        ");
+SQL);
+    }
+
+
+    private function insertDesdeDump(string $sql): void
+    {
+        preg_match_all('/INSERT INTO\s+`?([\w]+)`?\s*\(([^)]+)\)\s*VALUES\s*(.+?);/is', $sql, $sentencias, PREG_SET_ORDER);
+
+        foreach ($sentencias as $sentencia) {
+            $tabla = $sentencia[1];
+            $columnas = array_map(
+                static fn (string $columna): string => trim(str_replace('`', '', $columna)),
+                explode(',', $sentencia[2])
+            );
+
+            $registros = [];
+            preg_match_all('/\((.*?)\)(?:,|$)/s', $sentencia[3], $tuplas);
+
+            foreach ($tuplas[1] as $tupla) {
+                $valoresCrudos = str_getcsv($tupla, ',', "'", '\\');
+                $fila = [];
+
+                foreach ($columnas as $indice => $columna) {
+                    $valor = $valoresCrudos[$indice] ?? null;
+                    $valorNormalizado = is_string($valor) ? trim($valor) : $valor;
+
+                    if ($valorNormalizado === null || strtoupper((string) $valorNormalizado) === 'NULL') {
+                        $fila[$columna] = null;
+                    } elseif (is_string($valorNormalizado) && is_numeric($valorNormalizado)) {
+                        $fila[$columna] = str_contains($valorNormalizado, '.')
+                            ? (float) $valorNormalizado
+                            : (int) $valorNormalizado;
+                    } else {
+                        $fila[$columna] = $valor;
+                    }
+                }
+
+                $registros[] = $fila;
+            }
+
+            foreach (array_chunk($registros, 500) as $bloque) {
+                DB::table($tabla)->insert($bloque);
+            }
+        }
     }
 }
