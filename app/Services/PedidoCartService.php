@@ -7,6 +7,7 @@ use App\Models\{
     CatalogoPagina,
     CatalogoPaginaProducto,
     Categoria,
+    CierreCampana,
     GastoAdministrativo,
     Pedido,
     PedidoArticulo,
@@ -305,6 +306,7 @@ class PedidoCartService
             'cart.*.precio_unitario_descuento' => ['nullable', 'numeric', 'min:0'],
             'cart.*.subtotal'                  => ['nullable', 'numeric', 'min:0'],
             'cart.*.puntos'                    => ['nullable', 'integer', 'min:0'],
+            'cart.*.es_auxiliar'               => ['nullable', 'boolean'],
             'gastos'                           => ['nullable', 'array'],
             'gastos.*'                         => ['integer', 'exists:gastos_administrativos,id'],
             'observaciones'                    => ['nullable', 'string', 'max:1000'],
@@ -324,7 +326,8 @@ class PedidoCartService
         $subtotal          = 0;
         $totalGanancias    = 0;
         $totalPuntos       = 0;
-        $totalUnidades     = 0;
+        $totalUnidadesFacturables = 0;
+        $totalUnidadesAuxiliares = 0;
 
         foreach ($data['cart'] as $item) {
             $producto = Producto::find($item['producto_id']);
@@ -363,8 +366,15 @@ class PedidoCartService
             $subtotalCatalogo  += $subtotalCatItem;
             $subtotal          += $subtotalDesc;
             $totalGanancias    += $gananciaItem;
-            $totalPuntos       += $puntos * $cantidad;
-            $totalUnidades     += $cantidad;
+            $esAuxiliar = $this->esArticuloAuxiliar($item, $producto);
+
+            if ($esAuxiliar) {
+                $totalUnidadesAuxiliares += $cantidad;
+            } else {
+                // Regla explícita: las unidades auxiliares no participan de premios ni unidades comerciales.
+                $totalPuntos += $puntos * $cantidad;
+                $totalUnidadesFacturables += $cantidad;
+            }
 
             $cartItems[] = [
                 'sku'                  => $producto->sku,
@@ -413,6 +423,10 @@ class PedidoCartService
         DB::beginTransaction();
 
         try {
+            $fechaPedido = now()->toDateString();
+            $cierreCampana = $this->resolverCierreCampanaPorFecha($fechaPedido);
+            $catalogoId = $cierreCampana?->catalogo_id ?: Catalogo::query()->latest('id')->value('id');
+
             $datosPedido = $this->datosPedidoPayload($lider, $vendedora, $usuarioActual);
 
             $datosPedido['gastos'] = $gastosCollection->map(function (GastoAdministrativo $gasto) {
@@ -429,14 +443,18 @@ class PedidoCartService
                 'vendedora_id'          => $vendedora?->id,
                 'lider_id'              => $lider?->id,
                 'responsable_id'        => $usuarioActual?->id,
-                'fecha'                 => now()->toDateString(),
+                'fecha'                 => $fechaPedido,
                 'mes'                   => now()->format('Y-m'),
+                'catalogo_id'           => $catalogoId,
+                'cierre_id'             => $cierreCampana?->id,
                 'total_precio_catalogo' => $subtotalCatalogo,
                 'total_gastos'          => $totalGastos,
                 'total_ganancias'       => $totalGanancias,
                 'total_a_pagar'         => $totalAPagar,
                 'total_puntos'          => $totalPuntos,
-                'cantidad_unidades'     => $totalUnidades,
+                'cantidad_unidades'     => $totalUnidadesFacturables,
+                'unidades_facturables'  => $totalUnidadesFacturables,
+                'unidades_auxiliares'   => $totalUnidadesAuxiliares,
                 'estado'                => 'Nuevo',
                 'observaciones'         => $data['observaciones'] ?? null,
                 'datos_pedido'          => $datosPedido,
@@ -459,6 +477,28 @@ class PedidoCartService
 
             return ['error' => 'Error al guardar pedido: ' . $e->getMessage()];
         }
+    }
+
+    private function resolverCierreCampanaPorFecha(string $fechaPedido): ?CierreCampana
+    {
+        return CierreCampana::query()
+            ->whereDate('fecha_inicio', '<=', $fechaPedido)
+            ->whereDate('fecha_cierre', '>=', $fechaPedido)
+            ->orderByDesc('fecha_inicio')
+            ->first()
+            ?: CierreCampana::query()
+                ->whereDate('fecha_inicio', '<=', $fechaPedido)
+                ->orderByDesc('fecha_inicio')
+                ->first();
+    }
+
+    private function esArticuloAuxiliar(array $item, Producto $producto): bool
+    {
+        if (array_key_exists('es_auxiliar', $item)) {
+            return filter_var($item['es_auxiliar'], FILTER_VALIDATE_BOOL);
+        }
+
+        return str_starts_with(strtoupper((string) $producto->sku), 'AUX-');
     }
 
     private function userProfileData(?User $user): array

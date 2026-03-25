@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Pedido extends Model
 {
@@ -15,12 +16,16 @@ class Pedido extends Model
         'fecha',
         'mes',
         'catalogo_nro',
+        'catalogo_id',
+        'cierre_id',
         'total_precio_catalogo',
         'total_gastos',
         'total_ganancias',
         'total_a_pagar',
         'total_puntos',
         'cantidad_unidades',
+        'unidades_facturables',
+        'unidades_auxiliares',
         'estado',
         'estado_pago',
         'comprobante_pago_path',
@@ -31,8 +36,12 @@ class Pedido extends Model
 
     protected $casts = [
         'datos_pedido' => 'array',
+        'catalogo_id' => 'integer',
+        'cierre_id' => 'integer',
         'coordinadora_id' => 'integer',
         'comprobante_pago_subido_en' => 'datetime',
+        'unidades_facturables' => 'integer',
+        'unidades_auxiliares' => 'integer',
     ];
 
     public function articulos()
@@ -69,4 +78,15 @@ class Pedido extends Model
     {
         return $this->belongsTo(User::class, 'responsable_id');
     }
+
+    public function catalogo(): BelongsTo
+    {
+        return $this->belongsTo(Catalogo::class, 'catalogo_id');
+    }
+
+    public function cierreCampana(): BelongsTo
+    {
+        return $this->belongsTo(CierreCampana::class, 'cierre_id');
+    }
 }
+

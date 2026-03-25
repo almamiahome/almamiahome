@@ -70,8 +70,10 @@ La base tecnológica se mantiene sobre **Laravel + Wave + Filament + Folio + Liv
 
 - Tabla `pedidos` con:
   - código de pedido,
+  - referencia a `catalogo_id` y `cierre_id` para trazabilidad comercial,
   - totales monetarios,
-  - total de puntos y unidades,
+  - total de puntos y unidades facturables (auxiliares excluidos),
+  - separación entre `unidades_facturables` y `unidades_auxiliares`,
   - estado operativo,
   - estado de pago,
   - comprobante de pago.
