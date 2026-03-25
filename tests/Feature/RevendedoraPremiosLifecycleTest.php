@@ -1,12 +1,12 @@
 <?php
 
-use App\Models\CanjePremio;
 use App\Models\Catalogo;
 use App\Models\CierreCampana;
 use App\Models\RevendedoraPunto;
 use App\Models\RevendedoraRacha;
 use App\Models\TiendaPremio;
 use App\Models\User;
+use App\Services\PremiosRevendedoraService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -18,9 +18,10 @@ function cargarFixtureJson(string $archivo): array
     return json_decode(file_get_contents($ruta), true, 512, JSON_THROW_ON_ERROR);
 }
 
-it('mantiene racha de 3 cierres consecutivos con recálculo idempotente por cierre', function () {
+it('T7 mantiene racha de 3 cierres consecutivos con recálculo idempotente por cierre', function () {
     $fixture = cargarFixtureJson('catalogo_cierre_base_v2.json');
 
+    $servicio = app(PremiosRevendedoraService::class);
     $revendedora = User::factory()->create();
     $catalogo = Catalogo::query()->create($fixture['catalogo']);
 
@@ -28,43 +29,11 @@ it('mantiene racha de 3 cierres consecutivos con recálculo idempotente por cier
         return CierreCampana::query()->create(array_merge($datos, ['catalogo_id' => $catalogo->id]));
     });
 
-    foreach ($cierres as $indice => $cierre) {
-        RevendedoraRacha::query()->updateOrCreate(
-            [
-                'user_id' => $revendedora->id,
-                'catalogo_id' => $catalogo->id,
-                'cierre_id' => $cierre->id,
-            ],
-            [
-                'estado' => $indice === 2 ? 'premiada' : 'activa',
-                'racha_actual' => $indice + 1,
-                'mejor_racha' => $indice + 1,
-                'fecha_inicio' => $cierres->first()->fecha_inicio,
-                'fecha_ultimo_movimiento' => $cierre->fecha_cierre,
-                'origen' => 'fixture',
-                'motivo' => 'Simulación de cierre consecutivo',
-                'saldo_posterior' => $indice + 1,
-            ],
-        );
+    foreach ($cierres as $cierre) {
+        $servicio->procesarRacha($revendedora, $cierre, true);
     }
 
-    RevendedoraRacha::query()->updateOrCreate(
-        [
-            'user_id' => $revendedora->id,
-            'catalogo_id' => $catalogo->id,
-            'cierre_id' => $cierres->last()->id,
-        ],
-        [
-            'estado' => 'premiada',
-            'racha_actual' => 3,
-            'mejor_racha' => 3,
-            'fecha_inicio' => $cierres->first()->fecha_inicio,
-            'fecha_ultimo_movimiento' => $cierres->last()->fecha_cierre,
-            'origen' => 'fixture',
-            'motivo' => 'Recálculo idempotente',
-            'saldo_posterior' => 3,
-        ],
-    );
+    $servicio->procesarRacha($revendedora, $cierres->last(), true);
 
     $ultimaRacha = RevendedoraRacha::query()
         ->where('user_id', $revendedora->id)
@@ -74,64 +43,49 @@ it('mantiene racha de 3 cierres consecutivos con recálculo idempotente por cier
     expect(RevendedoraRacha::query()->count())->toBe(3)
         ->and($ultimaRacha->estado)->toBe('premiada')
         ->and($ultimaRacha->racha_actual)->toBe(3)
-        ->and($ultimaRacha->mejor_racha)->toBe(3)
-        ->and($ultimaRacha->motivo)->toBe('Recálculo idempotente');
+        ->and($ultimaRacha->mejor_racha)->toBe(3);
 });
 
-it('controla acumulación, canje y vencimiento de puntos con saldo trazable', function () {
-    $fixture = cargarFixtureJson('revendedora_premios_cierre_v2.json');
+it('T7+T8+T9 ejecuta flujo completo de cierres consecutivos con saldo y canje consistentes', function () {
+    $fixture = cargarFixtureJson('catalogo_cierre_base_v2.json');
 
+    $servicio = app(PremiosRevendedoraService::class);
     $revendedora = User::factory()->create();
     $catalogo = Catalogo::query()->create($fixture['catalogo']);
-    $cierre = CierreCampana::query()->create(array_merge($fixture['cierre'], ['catalogo_id' => $catalogo->id]));
 
-    $saldo = 0;
+    $cierres = collect($fixture['cierres'])->map(function (array $datos) use ($catalogo) {
+        return CierreCampana::query()->create(array_merge($datos, ['catalogo_id' => $catalogo->id]));
+    });
 
-    foreach ($fixture['movimientos_puntos'] as $movimiento) {
-        $saldo += $movimiento['puntos'];
-
-        RevendedoraPunto::query()->create([
-            'user_id' => $revendedora->id,
-            'catalogo_id' => $catalogo->id,
-            'cierre_id' => $cierre->id,
-            'estado' => $movimiento['estado'],
-            'puntos' => $movimiento['puntos'],
-            'origen' => $movimiento['origen'],
-            'motivo' => $movimiento['motivo'],
-            'saldo_posterior' => $saldo,
-            'datos' => $movimiento['datos'] ?? null,
-        ]);
+    foreach ($cierres as $indice => $cierre) {
+        $servicio->procesarRacha($revendedora, $cierre, true, ['indice' => $indice + 1]);
+        $servicio->registrarMovimientoPuntos(
+            revendedora: $revendedora,
+            cierre: $cierre,
+            puntos: 100,
+            estado: 'confirmado',
+            origen: 'pedido',
+            motivo: 'Acumulación por cierre consecutivo',
+            idempotenciaClave: 'puntos-cierre-' . $cierre->id,
+        );
     }
 
     $premio = TiendaPremio::query()->create([
         'user_id' => $revendedora->id,
         'catalogo_id' => $catalogo->id,
-        'cierre_id' => $cierre->id,
+        'cierre_id' => $cierres->last()->id,
         'estado' => 'activo',
-        'nombre' => 'Kit de inicio',
-        'descripcion' => 'Premio para validar flujo de canje',
+        'nombre' => 'Kit de continuidad',
+        'descripcion' => 'Premio de integración T7+T8+T9',
         'puntos_requeridos' => 120,
-        'stock' => 10,
+        'stock' => 2,
         'origen' => 'fixture',
     ]);
 
-    CanjePremio::query()->create([
-        'user_id' => $revendedora->id,
-        'tienda_premio_id' => $premio->id,
-        'catalogo_id' => $catalogo->id,
-        'cierre_id' => $cierre->id,
-        'estado' => 'aprobado',
-        'puntos_canjeados' => 120,
-        'saldo_posterior' => 130,
-        'origen' => 'fixture',
-        'motivo' => 'Canje de validación',
-    ]);
+    $canje = $servicio->ejecutarCanje($revendedora, $premio, $cierres->last());
 
-    $saldoFinal = (int) RevendedoraPunto::query()->where('user_id', $revendedora->id)->sum('puntos');
-    $vencidos = (int) RevendedoraPunto::query()->where('user_id', $revendedora->id)->where('estado', 'vencido')->sum('puntos');
-
-    expect($saldoFinal)->toBe(0)
-        ->and($vencidos)->toBe(-130)
-        ->and(CanjePremio::query()->where('user_id', $revendedora->id)->count())->toBe(1)
-        ->and(RevendedoraPunto::query()->where('user_id', $revendedora->id)->latest('id')->value('saldo_posterior'))->toBe(0);
+    expect($canje->estado)->toBe('aprobado')
+        ->and($servicio->saldoPuntos($revendedora, $catalogo))->toBe(180)
+        ->and(RevendedoraPunto::query()->where('user_id', $revendedora->id)->count())->toBe(4)
+        ->and(RevendedoraRacha::query()->where('user_id', $revendedora->id)->latest('id')->value('estado'))->toBe('premiada');
 });

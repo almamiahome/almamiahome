@@ -65,7 +65,7 @@ class PremiosLiderCalculatorTest extends TestCase
         $this->assertTrue($metrica->unidades_ok);
         $this->assertTrue($metrica->cobranzas_ok);
         $this->assertSame(PremiosLiderCalculator::VERSION_CALCULO, data_get($evidencia, 'version_calculo'));
-        $this->assertCount(7, data_get($evidencia, 'reglas_aplicadas', []));
+        $this->assertCount(8, data_get($evidencia, 'reglas_aplicadas', []));
         $this->assertSame(9, data_get($evidencia, 'insumos.objetivo_proximo_cierre'));
     }
 
