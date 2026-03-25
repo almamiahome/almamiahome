@@ -76,6 +76,12 @@ class CierreCampana extends Model
         return $this->hasMany(TiendaPremio::class, 'cierre_id');
     }
 
+
+    public function historialEstados(): HasMany
+    {
+        return $this->hasMany(CierreCampanaHistorialEstado::class, 'cierre_campana_id');
+    }
+
     public function canjesPremios(): HasMany
     {
         return $this->hasMany(CanjePremio::class, 'cierre_id');
