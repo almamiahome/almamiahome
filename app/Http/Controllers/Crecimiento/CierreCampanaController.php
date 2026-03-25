@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CierreCampana;
 use App\Models\MetricaLiderCampana;
 use App\Models\User;
+use App\Services\CierreCampanaStateMachine;
 use App\Services\PremiosLiderCalculator;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
@@ -87,7 +88,7 @@ class CierreCampanaController extends Controller
             abort(403, 'No tiene permiso para registrar campañas.');
         }
 
-        return CierreCampana::create([
+        $cierre = CierreCampana::create([
             'nombre' => $datos['nombre'],
             'codigo' => $datos['codigo'],
             'catalogo_id' => $datos['catalogo_id'] ?? null,
@@ -98,22 +99,32 @@ class CierreCampanaController extends Controller
             'estado' => $datos['estado'] ?? CierreCampana::ESTADO_PLANIFICADO,
             'datos' => $datos['datos'] ?? null,
         ]);
+
+        app(CierreCampanaStateMachine::class)->registrarEstadoInicial($cierre, $usuario);
+
+        return $cierre->refresh();
     }
 
-    public function cerrarCampana(CierreCampana $cierre, Authenticatable $usuario): CierreCampana
+    public function cambiarEstadoCampana(CierreCampana $cierre, string $estadoNuevo, Authenticatable $usuario, ?string $motivo = null): CierreCampana
+    {
+        if (! $usuario->can('crecimiento.cerrar_campana')) {
+            abort(403, 'No tiene permiso para actualizar el estado de campañas.');
+        }
+
+        return app(CierreCampanaStateMachine::class)->transicionar($cierre, $estadoNuevo, $usuario, $motivo);
+    }
+
+    public function cerrarCampana(CierreCampana $cierre, Authenticatable $usuario, ?string $motivo = null): CierreCampana
     {
         if (! $usuario->can('crecimiento.cerrar_campana')) {
             abort(403, 'No tiene permiso para cerrar campañas.');
         }
 
-        $cierre->update([
-            'estado' => CierreCampana::ESTADO_CERRADO,
-            'datos' => array_merge($cierre->datos ?? [], [
-                'cerrada_por' => $usuario->id,
-                'cerrada_en' => now()->toDateTimeString(),
-            ]),
-        ]);
-
-        return $cierre->refresh();
+        return $this->cambiarEstadoCampana(
+            cierre: $cierre,
+            estadoNuevo: CierreCampana::ESTADO_CERRADO,
+            usuario: $usuario,
+            motivo: $motivo ?? 'Cierre operativo de campaña',
+        );
     }
 }

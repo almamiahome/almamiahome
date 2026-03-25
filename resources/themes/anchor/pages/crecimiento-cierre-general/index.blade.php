@@ -25,6 +25,8 @@ new class extends Component {
     public $totales = [];
     public $resumen = [];
     public $estadoMensaje = null;
+    public $estadoError = null;
+    public $motivoCierre = null;
 
     public $nuevo = [
         'nombre' => null,
@@ -71,6 +73,8 @@ new class extends Component {
 
     public function registrarCierre()
     {
+        $this->estadoError = null;
+
         $this->validate([
             'nuevo.nombre' => 'required|string|max:255',
             'nuevo.codigo' => 'required|string|max:50|unique:cierres_campana,codigo',
@@ -104,16 +108,25 @@ new class extends Component {
 
     public function cerrarCierre()
     {
+        $this->estadoError = null;
+
         if (! $this->selectedCierreId) {
+            $this->estadoError = 'Debe seleccionar una campaña antes de intentar cerrarla.';
+
             return;
         }
 
         $controlador = app(CierreCampanaController::class);
         $cierre = CierreCampana::findOrFail($this->selectedCierreId);
-        $controlador->cerrarCampana($cierre, auth()->user());
 
-        $this->estadoMensaje = 'Cierre actualizado a estado "cerrado".';
-        $this->loadCierres();
+        try {
+            $controlador->cerrarCampana($cierre, auth()->user(), $this->motivoCierre);
+            $this->estadoMensaje = 'Cierre actualizado a estado "cerrado".';
+            $this->motivoCierre = null;
+            $this->loadCierres();
+        } catch (\Throwable $exception) {
+            $this->estadoError = $exception->getMessage();
+        }
     }
 };
 ?>
@@ -128,6 +141,7 @@ new class extends Component {
                 :border="false"
             />
             <div class="flex gap-2">
+                <x-input wire:model.live="motivoCierre" placeholder="Motivo del cierre (opcional)" />
                 <x-button wire:click="cerrarCierre" class="bg-red-100 text-red-700">Cerrar campaña</x-button>
             </div>
         </div>
@@ -135,6 +149,12 @@ new class extends Component {
         @if($estadoMensaje)
             <div class="p-3 text-sm text-green-800 bg-green-100 border border-green-200 rounded-lg">
                 {{ $estadoMensaje }}
+            </div>
+        @endif
+
+        @if($estadoError)
+            <div class="p-3 text-sm text-red-800 bg-red-100 border border-red-200 rounded-lg">
+                {{ $estadoError }}
             </div>
         @endif
 
