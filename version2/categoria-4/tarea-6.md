@@ -40,3 +40,41 @@ Persistencia de métricas de actividad y altas. Con ello se contribuye al objeti
 - `version2/mcp.md`
 - `version2/skills.md`
 - `sistema.txt`
+
+## Prerrequisitos exactos de ejecución
+
+- PHP **8.2.x** disponible en CLI y en cPanel (`php -v`).
+- Composer **2.7+** instalado globalmente (`composer --version`).
+- MySQL **8.0+** (o MariaDB compatible) accesible con credenciales válidas.
+- Extensiones PHP habilitadas: `bcmath`, `ctype`, `fileinfo`, `json`, `mbstring`, `openssl`, `pdo_mysql`, `tokenizer`, `xml`.
+- Permisos cPanel requeridos:
+  - acceso a **Terminal**,
+  - acceso a **MySQL Databases**,
+  - permiso de escritura en `storage/` y `bootstrap/cache/`,
+  - posibilidad de ejecutar `php artisan` desde la raíz del proyecto.
+
+## Pasos numerados con comandos exactos, salida esperada y validación
+
+| Paso | Comando exacto (sin Node/npm) | Output esperado | Validación manual | Validación automática |
+|---|---|---|---|---|
+| 1 | `php -v` | Versión PHP 8.2.x visible en consola. | Confirmar que la versión coincide con el entorno objetivo. | `php -r "exit(version_compare(PHP_VERSION, '8.2.0', '>=') ? 0 : 1);"` devuelve código 0. |
+| 2 | `composer --version` | Composer 2.7+ reportado. | Verificar que no use binario roto o alias inválido. | `composer --version | grep -E 'Composer version 2\.(7|8|9|[1-9][0-9])'` sin error. |
+| 3 | `php -m` | Lista de módulos PHP incluyendo extensiones críticas. | Revisar visualmente `pdo_mysql`, `mbstring`, `bcmath`, `xml`. | `php -m | grep -E '^(pdo_mysql|mbstring|bcmath|xml)$'` con todas presentes. |
+| 4 | `php artisan config:clear && php artisan cache:clear` | Mensajes `Configuration cache cleared!` y `Application cache cleared!`. | Confirmar que no hubo excepciones en consola. | Código de salida 0 para ambos comandos. |
+| 5 | `php artisan migrate --pretend` | SQL planificada sin aplicar cambios reales. | Validar que aparecen tablas/columnas esperadas de la tarea **4.6**. | Verificar que el comando termina en exit code 0. |
+| 6 | `php artisan test --filter="Tarea4_6"` | Resultado de pruebas relacionadas (`PASS` esperado). | Revisar nombre de pruebas tocadas por la tarea. | Si no existen pruebas específicas, registrar explícitamente `No tests executed` y crear pendiente técnica. |
+| 7 | `php artisan test` | Suite completa en verde (`PASS`). | Confirmar que no hay tests marcados como `Risky` o `Skipped` sin justificación. | Exit code 0 global. |
+| 8 | `php artisan about` | Estado de app, drivers y conexión visible. | Verificar conexión MySQL activa y entorno correcto (`production` o `staging` según plan). | Confirmar presencia de sección `Environment` y `Drivers` en salida. |
+
+## Criterio DONE objetivo (evidencia obligatoria)
+
+La tarea **4.6** se considera **DONE** únicamente si existe evidencia verificable de:
+
+1. **Comandos ejecutados**: transcripción o captura de los pasos 1 al 8 con fecha/hora.
+2. **Archivos impactados**: listado concreto de archivos modificados en Git (`git status --short`).
+3. **Resultado funcional**: prueba manual reproducible del flujo de negocio que cubre esta tarea.
+4. **Resultado automático**: `php artisan test` en verde y, cuando aplique, prueba filtrada de la tarea.
+5. **Estado de datos**: evidencia de esquema o datos (tabla/consulta) consistente con el cambio.
+
+Sin estas 5 evidencias, la tarea queda en **NO DONE** y no debe pasar de fase.
+

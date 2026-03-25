@@ -7,10 +7,28 @@ Este esquema MCP define puertas de control para pasar de una fase a otra sin com
 ### Gate A — Datos y migraciones
 **Objetivo:** no permitir avance funcional si la base de datos quedó inconsistente.
 
-**Requisitos de aprobación:**
-1. Migraciones nuevas aplican y revierten correctamente.
-2. Seeders oficiales siguen operativos.
-3. Modelos afectados actualizados (fillable, casts, relaciones).
+**Tareas mapeadas (IDs):**
+- 1.3, 1.4, 1.5, 1.6
+- 2.2, 2.3
+- 3.5
+- 4.6
+- 5.5
+
+**Rutas reales asociadas:**
+- `/version2/categoria-1/tarea-3.md`
+- `/version2/categoria-1/tarea-4.md`
+- `/version2/categoria-1/tarea-5.md`
+- `/version2/categoria-1/tarea-6.md`
+- `/version2/categoria-2/tarea-2.md`
+- `/version2/categoria-2/tarea-3.md`
+- `/version2/categoria-3/tarea-5.md`
+- `/version2/categoria-4/tarea-6.md`
+- `/version2/categoria-5/tarea-5.md`
+
+**Evidencia mínima por gate:**
+1. **Comando:** `php artisan migrate --pretend` y `php artisan migrate:status`.
+2. **Archivo:** migración y modelo impactado en `database/migrations/*` y `app/Models/*`.
+3. **Resultado:** tablas/columnas esperadas visibles y estado `Yes` en migraciones aplicadas.
 
 **Bloquea avance si:**
 - falta migración para cambio estructural,
@@ -22,10 +40,24 @@ Este esquema MCP define puertas de control para pasar de una fase a otra sin com
 ### Gate B — Reglas y pruebas
 **Objetivo:** garantizar que la lógica comercial no rompe comportamiento existente.
 
-**Requisitos de aprobación:**
-1. Pruebas críticas nuevas/ajustadas para la regla tocada.
-2. Ejecución completa de `php artisan test`.
-3. Evidencia de casos borde para cálculos monetarios/puntaje/estados.
+**Tareas mapeadas (IDs):**
+- 1.7, 1.8, 1.9
+- 2.1, 2.4, 2.5, 2.6, 2.8, 2.9
+- 3.3, 3.4, 3.6, 3.7, 3.8, 3.9
+- 4.2, 4.3, 4.4, 4.5, 4.7, 4.8, 4.9
+- 5.1, 5.2, 5.3, 5.4, 5.9
+
+**Rutas reales asociadas:**
+- `/version2/categoria-1/tarea-7.md` a `/version2/categoria-1/tarea-9.md`
+- `/version2/categoria-2/tarea-1.md`, `/version2/categoria-2/tarea-4.md` a `/version2/categoria-2/tarea-6.md`, `/version2/categoria-2/tarea-8.md`, `/version2/categoria-2/tarea-9.md`
+- `/version2/categoria-3/tarea-3.md` a `/version2/categoria-3/tarea-4.md`, `/version2/categoria-3/tarea-6.md` a `/version2/categoria-3/tarea-9.md`
+- `/version2/categoria-4/tarea-2.md` a `/version2/categoria-4/tarea-5.md`, `/version2/categoria-4/tarea-7.md` a `/version2/categoria-4/tarea-9.md`
+- `/version2/categoria-5/tarea-1.md` a `/version2/categoria-5/tarea-4.md`, `/version2/categoria-5/tarea-9.md`
+
+**Evidencia mínima por gate:**
+1. **Comando:** `php artisan test` y, cuando aplique, `php artisan test --filter=<caso>`.
+2. **Archivo:** pruebas en `tests/` más servicio/regla en `app/`.
+3. **Resultado:** suite en verde y evidencia de al menos 1 caso borde por regla crítica.
 
 **Bloquea avance si:**
 - no existe cobertura en cambios críticos,
@@ -37,10 +69,18 @@ Este esquema MCP define puertas de control para pasar de una fase a otra sin com
 ### Gate C — UX/UI minimalista (liquid glass)
 **Objetivo:** asegurar “aplicación limpia”, sin ruido visual y con foco operativo.
 
-**Requisitos de aprobación:**
-1. Nuevos elementos son mínimos y reutilizan componentes.
-2. Se respeta estética liquid glass con legibilidad clara.
-3. Cada vista prioriza tarea principal (UI justa y necesaria).
+**Tareas mapeadas (IDs):**
+- 5.6, 5.7, 5.8
+
+**Rutas reales asociadas:**
+- `/version2/categoria-5/tarea-6.md`
+- `/version2/categoria-5/tarea-7.md`
+- `/version2/categoria-5/tarea-8.md`
+
+**Evidencia mínima por gate:**
+1. **Comando:** `php artisan test --filter=Feature` (o subconjunto UI si existe).
+2. **Archivo:** vistas y componentes modificados en `resources/themes/anchor/`.
+3. **Resultado:** vista operativa sin duplicidad de acciones y con legibilidad validada.
 
 **Bloquea avance si:**
 - hay sobrecarga de tarjetas/widgets,
@@ -52,10 +92,24 @@ Este esquema MCP define puertas de control para pasar de una fase a otra sin com
 ### Gate D — Documentación y release
 **Objetivo:** no cerrar fase sin trazabilidad funcional y técnica.
 
-**Requisitos de aprobación:**
-1. Documentación de negocio actualizada.
-2. Impacto en BD/modelos/pruebas registrado.
-3. Nota de versión con alcance, riesgos y rollback.
+**Tareas mapeadas (IDs):**
+- 1.1, 1.2, 1.10
+- 2.7, 2.10
+- 3.1, 3.2, 3.10
+- 4.1, 4.10
+- 5.10
+
+**Rutas reales asociadas:**
+- `/version2/categoria-1/tarea-1.md`, `/version2/categoria-1/tarea-2.md`, `/version2/categoria-1/tarea-10.md`
+- `/version2/categoria-2/tarea-7.md`, `/version2/categoria-2/tarea-10.md`
+- `/version2/categoria-3/tarea-1.md`, `/version2/categoria-3/tarea-2.md`, `/version2/categoria-3/tarea-10.md`
+- `/version2/categoria-4/tarea-1.md`, `/version2/categoria-4/tarea-10.md`
+- `/version2/categoria-5/tarea-10.md`
+
+**Evidencia mínima por gate:**
+1. **Comando:** `git diff --name-only` y `php artisan test`.
+2. **Archivo:** actualización en `/version2/*.md` y, si aplica, README/docs.
+3. **Resultado:** alcance, riesgos, rollback y estado de aprobación explícitos.
 
 **Bloquea avance si:**
 - cambio de negocio sin documentación,
@@ -64,27 +118,26 @@ Este esquema MCP define puertas de control para pasar de una fase a otra sin com
 
 ---
 
-## 2) Matriz cruzada (Agente ↔ Skill ↔ MCP ↔ tareas del roadmap)
+## 2) Matriz cruzada (Agente ↔ Skill ↔ MCP ↔ tareas reales V2)
 
-| Agente | Skill principal | Gate MCP dominante | Tareas roadmap (docs/roadmap.md) |
+| Agente | Skill principal | Gate MCP dominante | Tareas reales (IDs y rutas) |
 |---|---|---|---|
-| Descubrimiento Funcional | Análisis funcional comercial | Gate D | Pasos 1, 3, 18 |
-| Datos y Migraciones | Diseño de datos y migraciones seguras | Gate A | Pasos 2, 4, 6 |
-| Dominio Comercial | Implementación de reglas de cálculo | Gate B | Pasos 7 al 17 |
-| UX/UI Minimalista | UI minimalista estilo liquid glass | Gate C | Pasos 18 y 20 |
-| Calidad y Pruebas | QA automatizado y regresión | Gate B | Paso 19 |
-| Documentación y Release | Documentación operativa y técnica | Gate D | Pasos 5, 19, 20 |
+| Descubrimiento Funcional | Análisis funcional comercial | Gate D | 1.1, 1.2, 3.1 (`/version2/categoria-1/tarea-1.md`, `/version2/categoria-1/tarea-2.md`, `/version2/categoria-3/tarea-1.md`) |
+| Datos y Migraciones | Diseño de datos y migraciones seguras | Gate A | 1.3, 1.4, 2.3, 3.5, 4.6, 5.5 |
+| Dominio Comercial | Implementación de reglas de cálculo | Gate B | 1.7, 2.4, 2.5, 3.3, 4.5, 5.1 |
+| UX/UI Minimalista | UI minimalista estilo liquid glass | Gate C | 5.6, 5.7, 5.8 |
+| Calidad y Pruebas | QA automatizado y regresión | Gate B | 1.9, 2.8, 3.8, 4.8, 5.9 |
+| Documentación y Release | Documentación operativa y técnica | Gate D | 1.10, 2.10, 3.10, 4.10, 5.10 |
 
 ---
 
 ## 3) Flujo recomendado de fases con control MCP
 
-1. **Fase Funcional:** Agente de Descubrimiento → Gate D preliminar.
-2. **Fase Estructural:** Agente de Datos y Migraciones → Gate A.
-3. **Fase Lógica:** Agente de Dominio Comercial → Gate B parcial.
-4. **Fase UI:** Agente UX/UI Minimalista → Gate C.
-5. **Fase QA:** Agente de Calidad → Gate B final.
-6. **Fase Cierre:** Agente de Documentación y Release → Gate D final.
+1. **Fase Funcional:** Descubrimiento funcional → Gate D preliminar.
+2. **Fase Estructural:** Datos y migraciones → Gate A.
+3. **Fase Lógica:** Dominio comercial → Gate B parcial.
+4. **Fase UI:** UX/UI minimalista → Gate C.
+5. **Fase QA:** Calidad y pruebas → Gate B final.
+6. **Fase Cierre:** Documentación y release → Gate D final.
 
-Si un gate falla, la fase no avanza y vuelve al agente responsable con observaciones puntuales.
-
+Si un gate falla, la fase no avanza y vuelve al agente responsable con observaciones puntuales y evidencia faltante.
