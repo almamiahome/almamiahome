@@ -214,3 +214,102 @@ MODULOS LIDERES
 - PREMIO POR UNIDADES
 
 
+============================================================
+PLAN OPERATIVO VERSION 2 (ALINEADO A ETAPAS, OBJETIVOS Y CARPETAS)
+============================================================
+
+RESUMEN V2
+- La Version 2 se ejecuta en 8 fases controladas.
+- Cada fase tiene objetivos, tareas y subtareas verificables.
+- Las carpetas `version2/categoria-*` representan bloques ejecutables del roadmap.
+
+FASES VERSION 2
+
+FASE 1 - DIAGNOSTICO FUNCIONAL
+Objetivo: traducir reglas comerciales de este documento en contratos funcionales claros.
+Tareas:
+1) Definir reglas por rol (Revendedora/Lider/Coordinadora).
+2) Definir criterios de aceptación por módulo.
+Subtareas:
+- validar terminología comercial,
+- registrar casos borde por campaña,
+- consolidar diccionario de negocio.
+
+FASE 2 - DATOS Y MIGRACIONES
+Objetivo: asegurar estructura de datos estable y reversible.
+Tareas:
+1) Diseñar tablas por campañas, premios y métricas.
+2) Ajustar relaciones e índices para consultas por cierre.
+Subtareas:
+- migraciones up/down,
+- validación de claves foráneas,
+- compatibilidad con seeders oficiales.
+
+FASE 3 - CAMPAÑAS Y PEDIDOS BASE
+Objetivo: implementar flujo operativo base por catálogo/cierre.
+Tareas:
+1) Configurar 4 catálogos anuales y 3 cierres por catálogo.
+2) Estandarizar estados de pedido y trazabilidad.
+Subtareas:
+- registrar objetivo próximo cierre,
+- separar auxiliares del cálculo de unidades,
+- mantener historial por campaña.
+
+FASE 4 - FINANZAS DIFERIDAS
+Objetivo: controlar saldos, deudas y pagos entre cierres.
+Tareas:
+1) Registrar saldo a pagar y a cobrar.
+2) Calcular balance y descuentos a cierres futuros.
+Subtareas:
+- auditoría de deuda por líder,
+- aplicación de descuentos automáticos,
+- conciliación de cobranza por periodo.
+
+FASE 5 - MODULOS DE REVENDEDORAS
+Objetivo: habilitar premios y continuidad por catálogo.
+Tareas:
+1) Tienda de premios por puntos.
+2) Premio por 3 pedidos consecutivos.
+3) Premio de continuidad y ventas.
+Subtareas:
+- reglas por unidades,
+- acumulación y canje,
+- envío en primer cierre del próximo catálogo.
+
+FASE 6 - MODULOS DE LIDERES
+Objetivo: implementar 8 premios con cálculo auditable.
+Tareas:
+1) Actividad, retención, altas, cobranza.
+2) Crecimiento, reparto, plus crecimiento, por unidades.
+Subtareas:
+- validación por rango,
+- evidencia numérica por cierre,
+- reglas de elegibilidad y exclusiones.
+
+FASE 7 - INTERFAZ Y REPORTERIA
+Objetivo: entregar paneles operativos claros y filtros de gestión.
+Tareas:
+1) Vista líderes avanzada e individual.
+2) Filtros por zona y departamento.
+Subtareas:
+- priorizar UI minimalista,
+- tablas y resúmenes por cierre,
+- alertas de desviación de objetivo.
+
+FASE 8 - VALIDACION FINAL
+Objetivo: cerrar V2 con estado binario sin ambigüedad.
+Tareas:
+1) Ejecutar checklist final con evidencia concreta.
+2) Marcar estado APROBADO o NO APROBADO.
+Subtareas:
+- si falla un ítem, registrar retorno de fase,
+- documentar causa y acción correctiva,
+- revalidar hasta cumplir criterios de salida.
+
+ALINEACION POR CARPETAS VERSION2
+- categoria-1: fases 1, 2 y 3 (base funcional, datos y operación de campañas).
+- categoria-2: fase 4 (finanzas diferidas, deuda, balance y descuentos).
+- categoria-3: fase 5 (módulos de revendedoras).
+- categoria-4: fase 6 (módulos de líderes base).
+- categoria-5: fases 6 y 7 (módulos líderes avanzados + reportería/filtros).
+- validacion-final.md: fase 8 (cierre integral y decisión final).
