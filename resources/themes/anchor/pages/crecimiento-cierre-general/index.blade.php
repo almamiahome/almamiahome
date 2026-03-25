@@ -74,6 +74,7 @@ new class extends Component {
     public function registrarCierre()
     {
         $this->estadoError = null;
+        $this->estadoMensaje = null;
 
         $this->validate([
             'nuevo.nombre' => 'required|string|max:255',
@@ -87,7 +88,14 @@ new class extends Component {
         ]);
 
         $controlador = app(CierreCampanaController::class);
-        $cierre = $controlador->registrarCampana($this->nuevo, auth()->user());
+
+        try {
+            $cierre = $controlador->registrarCampana($this->nuevo, auth()->user());
+        } catch (\Throwable $exception) {
+            $this->estadoError = $this->resolverMensajeEstado($exception);
+
+            return;
+        }
 
         $this->estadoMensaje = 'Campaña registrada correctamente.';
         $this->nuevo = [
@@ -109,6 +117,7 @@ new class extends Component {
     public function cerrarCierre()
     {
         $this->estadoError = null;
+        $this->estadoMensaje = null;
 
         if (! $this->selectedCierreId) {
             $this->estadoError = 'Debe seleccionar una campaña antes de intentar cerrarla.';
@@ -125,8 +134,31 @@ new class extends Component {
             $this->motivoCierre = null;
             $this->loadCierres();
         } catch (\Throwable $exception) {
-            $this->estadoError = $exception->getMessage();
+            $this->estadoError = $this->resolverMensajeEstado($exception);
         }
+    }
+
+    protected function resolverMensajeEstado(\Throwable $exception): string
+    {
+        $mensaje = $exception->getMessage();
+
+        if (str_contains($mensaje, 'Transición no permitida')) {
+            return 'No se pudo cerrar la campaña porque la transición de estado no está permitida.';
+        }
+
+        if (str_contains($mensaje, 'fecha de liquidación')) {
+            return 'No se pudo continuar: debe definir la fecha de liquidación antes de cambiar a ese estado.';
+        }
+
+        if (str_contains($mensaje, 'fecha de cierre')) {
+            return 'No se pudo cerrar la campaña: debe definir la fecha de cierre.';
+        }
+
+        if (str_contains($mensaje, 'ya se encuentra en el estado solicitado')) {
+            return 'La campaña ya se encuentra en el estado solicitado.';
+        }
+
+        return 'No fue posible actualizar el estado de la campaña. Verifica los datos e inténtalo nuevamente.';
     }
 };
 ?>
