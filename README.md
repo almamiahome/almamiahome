@@ -13,6 +13,20 @@ Este repositorio contiene la plataforma interna de **Alma Mia Fragancias** para 
 La base tecnológica se mantiene sobre **Laravel + Wave + Filament + Folio + Livewire/Volt**.
 
 
+## Estado V2 por etapa
+
+> Corte operativo: **25 de marzo de 2026**.
+
+- **Etapa 1 (Fundaciones):** en curso.
+- **Etapa 2 (Ejecución comercial):** en curso.
+- **Etapa 3 (Premios avanzados):** en curso.
+- **Etapa 4 (Finanzas, reportería, QA y salida):** en curso.
+
+Notas de control:
+- T17 y T18 cuentan con cobertura de pruebas actualizada.
+- T19/T20 siguen abiertos hasta completar `php artisan test` sin bloqueos de entorno.
+
+
 ## Dependencias
 
 > Fuente de verdad: `composer.json` (backend) y `package.json` (frontend).  
