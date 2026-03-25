@@ -23,6 +23,11 @@ Dejar preparado el esquema para Alma Mía v2 con foco en:
 4. `2026_03_25_100300_v2_crear_control_ejecucion_seeders.php`
    - Tabla para registrar versión y fecha de ejecución de seeders.
 
+5. `2026_03_25_170000_add_catalogo_cierre_unidades_to_pedidos_table.php`
+   - Agrega a `pedidos` los campos `catalogo_id`, `cierre_id`, `unidades_facturables` y `unidades_auxiliares`.
+   - Incluye claves foráneas, índices compuestos para consultas por líder/fecha y soporte de trazabilidad por campaña.
+   - Regla funcional aplicada en carga de pedidos: las unidades auxiliares no suman a premios ni a unidades comerciales.
+
 ## Recomendación de despliegue
 
 1. Ejecutar en staging con `php artisan migrate --pretend`.
