@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ThemesTableSeeder::class);
         $this->call(PermisosSeeder::class);
         $this->call(CatalogosSeeder::class);
+        // El calendario maestro debe ejecutarse antes del plan de premios.
         $this->call(CalendarioComercialSeeder::class);
         $this->call(AlmamiaSeederPremios::class);
         $this->call(Etapa2PremiosSeeder::class);
