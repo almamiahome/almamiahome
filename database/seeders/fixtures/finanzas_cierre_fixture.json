@@ -1,0 +1,36 @@
+{
+  "zonas": [
+    {"id": 1, "nombre": "Norte", "codigo": "NORTE", "activa": true},
+    {"id": 2, "nombre": "Centro", "codigo": "CENTRO", "activa": true}
+  ],
+  "departamentos": [
+    {"id": 1, "zona_id": 1, "nombre": "Capital", "codigo": "CAP", "activo": true},
+    {"id": 2, "zona_id": 2, "nombre": "Interior", "codigo": "INT", "activo": true}
+  ],
+  "liquidaciones_cierre": [
+    {
+      "id": 1001,
+      "cierre_campana_id": 1,
+      "lider_id": 2,
+      "coordinadora_id": 3,
+      "saldo_a_cobrar": 125000,
+      "saldo_a_pagar": 49000,
+      "deuda_arrastrada": 8000,
+      "descuento_aplicado": 0,
+      "balance_neto": 68000,
+      "estado": "auditada"
+    }
+  ],
+  "descuentos_futuros": [
+    {
+      "id": 2001,
+      "origen_liquidacion_id": 1001,
+      "cierre_destino_id": 2,
+      "lider_id": 2,
+      "coordinadora_id": 3,
+      "monto": 12000,
+      "motivo": "bonus_buen_cobro",
+      "estado": "pendiente"
+    }
+  ]
+}

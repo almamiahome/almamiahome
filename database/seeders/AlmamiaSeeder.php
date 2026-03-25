@@ -311,6 +311,8 @@ SQL);
 SQL);
 
         $this->call(Etapa2PremiosSeeder::class);
+        // Fixture financiero reproducible para cierres y descuentos futuros.
+        $this->call(FixtureFinanzasSeeder::class);
     }
 
 
