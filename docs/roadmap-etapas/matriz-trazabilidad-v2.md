@@ -122,3 +122,18 @@ Actualizar esta matriz cada vez que cambie cualquiera de estos componentes:
 | T18 | Cumple si existen pruebas automatizadas de filtros por zona/departamento y comparativas entre cierres con conciliación por líder/coordinadora. | `tests/Unit/ReporteriaFinancieraServiceTest.php` + acta técnica de Etapa 4. | **Cumple** |
 | T19 | Cumple si la suite integral `php artisan test` finaliza sin errores de entorno y con evidencia registrada. | Registro de ejecución integral en acta técnica. | **No cumple** (bloqueo de memoria en entorno actual). |
 | T20 | Cumple si existe checklist operativo de salida, acta final con commit validado y dependencias de Etapa 5 desbloqueadas. | Matriz + `version2/resumen.md` + acta técnica de Etapa 4. | **No cumple** (pendiente cierre integral de QA/T19). |
+
+## 7) Checklist de inicio Etapa 5 (T5.1–T5.10)
+
+| Tarea | Criterio de inicio/cierre | Evidencia mínima esperada | Estado |
+|---|---|---|---|
+| T5.1 | Motor de crecimiento por cambio de nivel con control anti-duplicado por cierre. | Servicio de dominio + pruebas de salto único. | **En preparación** |
+| T5.2 | Cálculo de reparto por rango con bandas coherentes por actividad. | Tabla de reglas + pruebas unitarias por rango. | **En preparación** |
+| T5.3 | Plus de crecimiento condicionado a objetivo del cierre anterior. | Persistencia del objetivo + casos cumple/no cumple. | **En preparación** |
+| T5.4 | Premio por unidades mínimas según rango vigente. | Reglas parametrizadas + pruebas de umbral. | **En preparación** |
+| T5.5 | Consolidado total a cobrar unificando 5.1–5.4. | Registro auditable por líder/cierre en métrica final. | **En preparación** |
+| T5.6 | Filtros de zona/departamento conectados a paneles de liderazgo. | Evidencia de filtros activos en vistas operativas. | **Parcial** |
+| T5.7 | Vista líder avanzada montada en Folio/Volt con middleware explícito. | `resources/themes/anchor/pages/lideres/seguimiento-cierres/index.blade.php` | **Iniciado** |
+| T5.8 | Vista líder individual de liquidación montada en Folio/Volt con middleware explícito. | `resources/themes/anchor/pages/lideres/liquidacion/index.blade.php` | **Iniciado** |
+| T5.9 | Pruebas E2E de reportería y premios avanzados. | Ejecución estable de suite integral sin bloqueo de entorno. | **Bloqueado por T19** |
+| T5.10 | Documentación final de operación y handoff. | Acta final + matriz actualizada + checklist operativo firmado. | **Pendiente** |
