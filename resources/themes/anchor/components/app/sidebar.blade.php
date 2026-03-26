@@ -138,6 +138,15 @@
                     <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('notificaciones') }}" icon="phosphor-bell-duotone" active="false">Notificaciones</x-app.sidebar-link>
 
                     @role('admin')
+                        <x-app.sidebar-dropdown text="UI V2" icon="phosphor-layout" id="ui_v2_dropdown"
+                            :active="Request::is('admin-ui-v2*')"
+                            :open="Request::is('admin-ui-v2*') ? '1' : '0'">
+                            <x-app.sidebar-link href="/admin-ui-v2/seguimiento-lideres" icon="phosphor-chart-line-up" :active="Request::is('admin-ui-v2/seguimiento-lideres')">Seguimiento Líderes V2</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/admin-ui-v2/premios-vigentes" icon="phosphor-gift" :active="Request::is('admin-ui-v2/premios-vigentes')">Premios Vigentes V2</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/admin-ui-v2/paneles-lideres-coordinadoras" icon="phosphor-table" :active="Request::is('admin-ui-v2/paneles-lideres-coordinadoras')">Paneles Liderazgo V2</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/admin-ui-v2/panel-alternativa" icon="phosphor-squares-four" :active="Request::is('admin-ui-v2/panel-alternativa')">Panel Alternativa V2</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/admin-ui-v2/perfil-seguimiento-lideres" icon="phosphor-user-focus" :active="Request::is('admin-ui-v2/perfil-seguimiento-lideres')">Perfil Líder V2</x-app.sidebar-link>
+                        </x-app.sidebar-dropdown>
                         <div class="my-2 border-t border-white/20"></div>
                         <x-app.sidebar-link href="/usuarios" icon="phosphor-users-three" :active="Request::is('usuarios*')">Usuarios</x-app.sidebar-link>
                         <x-app.sidebar-link href="/mejoras" icon="phosphor-sparkle" :active="Request::is('mejoras*')">Mejoras</x-app.sidebar-link>
