@@ -62,6 +62,15 @@
                     <x-app.sidebar-link href="/catalogo" icon="phosphor-book" :active="Request::is('catalogo')">Catálogo</x-app.sidebar-link>
                     <x-app.sidebar-link href="/mis-pedidos" icon="phosphor-list-checks" :active="Request::is('mis-pedidos*')">Mis Pedidos</x-app.sidebar-link>
 
+                    @hasanyrole('vendedora|lider|coordinadora|admin')
+                        <x-app.sidebar-dropdown text="Beneficios" icon="phosphor-gift" id="beneficios_dropdown"
+                            :active="Request::is('marketplace*') || Request::is('billetera*')"
+                            :open="Request::is('marketplace*') || Request::is('billetera*') ? '1' : '0'">
+                            <x-app.sidebar-link href="/marketplace" icon="phosphor-storefront" :active="Request::is('marketplace*')">Tienda de premios</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/billetera" icon="phosphor-wallet" :active="Request::is('billetera*')">Billetera</x-app.sidebar-link>
+                        </x-app.sidebar-dropdown>
+                    @endhasanyrole
+
                     @hasanyrole('lider|admin')
                         <x-app.sidebar-link href="/vendedoras" icon="phosphor-handshake" :active="Request::is('vendedoras*')">Vendedoras</x-app.sidebar-link>
                     @endhasanyrole
@@ -85,6 +94,15 @@
                     @role('coordinadora')
                         <x-app.sidebar-link href="/zona-coordinadora" icon="phosphor-users-three" :active="Request::is('zona-coordinadora*')">Zona Coordinadora</x-app.sidebar-link>
                     @endrole
+
+                    @hasanyrole('lider|admin')
+                        <x-app.sidebar-dropdown text="Cierres líderes" icon="phosphor-chart-line-up" id="cierres_lideres_dropdown"
+                            :active="Request::is('lideres/seguimiento-cierres*') || Request::is('lideres/liquidacion*')"
+                            :open="Request::is('lideres/seguimiento-cierres*') || Request::is('lideres/liquidacion*') ? '1' : '0'">
+                            <x-app.sidebar-link href="/lideres/seguimiento-cierres" icon="phosphor-chart-bar" :active="Request::is('lideres/seguimiento-cierres*')">Seguimiento de cierres</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/lideres/liquidacion" icon="phosphor-calculator" :active="Request::is('lideres/liquidacion*')">Liquidación por cierres</x-app.sidebar-link>
+                        </x-app.sidebar-dropdown>
+                    @endhasanyrole
 
                     <x-app.sidebar-link href="/perfil" icon="phosphor-user" :active="Request::is('perfil')">Perfil</x-app.sidebar-link>
 
