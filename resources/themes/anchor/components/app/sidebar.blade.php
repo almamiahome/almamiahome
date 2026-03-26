@@ -95,13 +95,22 @@
                     @role('admin')
                         {{-- Dropdown Catálogo --}}
                         <x-app.sidebar-dropdown text="Catálogo" icon="phosphor-package" id="catalogo_dropdown"
-                            :active="Request::is('categorias*') || Request::is('productos*') || Request::is('stock*') || Request::is('envios*') || Request::is('rotulos*')"
-                            :open="Request::is('categorias*') || Request::is('productos*') || Request::is('stock*') || Request::is('envios*') || Request::is('rotulos*') ? '1' : '0'">
+                            :active="Request::is('catalogo/admin*') || Request::is('categorias*') || Request::is('productos*') || Request::is('stock*') || Request::is('rotulos*')"
+                            :open="Request::is('catalogo/admin*') || Request::is('categorias*') || Request::is('productos*') || Request::is('stock*') || Request::is('rotulos*') ? '1' : '0'">
                             
                             <x-app.sidebar-link href="/catalogo/admin" icon="phosphor-wrench" :active="Request::is('catalogo/admin*')">Editar Catálogo</x-app.sidebar-link>
                             <x-app.sidebar-link href="/productos" icon="phosphor-tag" :active="Request::is('productos*')">Productos</x-app.sidebar-link>
                             <x-app.sidebar-link href="/categorias" icon="phosphor-folders" :active="Request::is('categorias*')">Categorías</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/stock" icon="phosphor-package" :active="Request::is('stock*')">Stock</x-app.sidebar-link>
                             <x-app.sidebar-link href="/rotulos" icon="phosphor-ticket" :active="Request::is('rotulos*')">Rótulos</x-app.sidebar-link>
+                        </x-app.sidebar-dropdown>
+
+                        {{-- Dropdown Ventas --}}
+                        <x-app.sidebar-dropdown text="Ventas" icon="phosphor-storefront" id="ventas_dropdown"
+                            :active="Request::is('campanas*') || Request::is('pedidos/facturas-masivas*')"
+                            :open="Request::is('campanas*') || Request::is('pedidos/facturas-masivas*') ? '1' : '0'">
+                            <x-app.sidebar-link href="/campanas" icon="phosphor-flag-banner" :active="Request::is('campanas*')">Campañas</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/pedidos/facturas-masivas" icon="phosphor-file-text" :active="Request::is('pedidos/facturas-masivas*')">Facturas Masivas</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
 
                         {{-- Dropdown Finanzas --}}
@@ -150,6 +159,8 @@
                         <div class="my-2 border-t border-white/20"></div>
                         <x-app.sidebar-link href="/usuarios" icon="phosphor-users-three" :active="Request::is('usuarios*')">Usuarios</x-app.sidebar-link>
                         <x-app.sidebar-link href="/mejoras" icon="phosphor-sparkle" :active="Request::is('mejoras*')">Mejoras</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/tareas" icon="phosphor-kanban" :active="Request::is('tareas*')">Tareas</x-app.sidebar-link>
+                        <x-app.sidebar-link href="/notas" icon="phosphor-note" :active="Request::is('notas*')">Notas</x-app.sidebar-link>
                         <x-app.sidebar-link href="/agente" icon="phosphor-robot-duotone" active="false">Agente</x-app.sidebar-link>
                         <x-app.sidebar-link href="{{ route('settings.profile') }}" icon="phosphor-gear-duotone" active="false">Ajustes</x-app.sidebar-link>
                         <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text-duotone" :active="Request::is('changelog') || Request::is('changelog/*')">Novedades</x-app.sidebar-link>
