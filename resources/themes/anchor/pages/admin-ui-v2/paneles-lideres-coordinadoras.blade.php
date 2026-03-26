@@ -65,7 +65,7 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('admin-ui-v2.paneles-lideres-coordinadoras')
-        <x-app.container class="space-y-6">
+        <x-app.container class="space-y-6 rounded-3xl border border-white/10 bg-slate-950/80 p-6 text-white shadow-2xl">
             <x-app.heading
                 title="UI V2 · Paneles de líderes y coordinadoras"
                 description="Comparativa operativa con datos acumulados de pedidos reales."
@@ -73,11 +73,11 @@ new class extends Component {
             />
 
             <div class="grid gap-6 xl:grid-cols-2">
-                <div class="overflow-hidden rounded-3xl border border-white/40 bg-white/45 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
-                    <div class="border-b border-white/40 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:text-slate-200">Top líderes por pedidos</div>
+                <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/25 shadow-xl backdrop-blur-xl">
+                    <div class="border-b border-white/10 px-4 py-3 text-sm font-semibold text-white/80">Top líderes por pedidos</div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm">
-                            <thead class="bg-white/50 text-slate-600 dark:bg-slate-800/50 dark:text-slate-200">
+                            <thead class="bg-white/5 text-white/70">
                                 <tr>
                                     <th class="px-4 py-2 text-left">Líder</th>
                                     <th class="px-4 py-2 text-left">Pedidos</th>
@@ -87,25 +87,25 @@ new class extends Component {
                             </thead>
                             <tbody>
                                 @forelse($lideres as $fila)
-                                    <tr class="border-t border-white/40 text-slate-700 dark:border-white/10 dark:text-slate-200">
+                                    <tr class="border-t border-white/10 text-white/90">
                                         <td class="px-4 py-2 font-medium">{{ $fila['nombre'] }}</td>
                                         <td class="px-4 py-2">{{ number_format($fila['pedidos']) }}</td>
                                         <td class="px-4 py-2">{{ number_format($fila['unidades']) }}</td>
                                         <td class="px-4 py-2">${{ number_format($fila['monto'], 0, ',', '.') }}</td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="4" class="px-4 py-5 text-center text-slate-500 dark:text-slate-300">Sin datos de líderes.</td></tr>
+                                    <tr><td colspan="4" class="px-4 py-5 text-center text-white/60">Sin datos de líderes.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="overflow-hidden rounded-3xl border border-white/40 bg-white/45 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
-                    <div class="border-b border-white/40 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:text-slate-200">Top coordinadoras por facturación</div>
+                <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/25 shadow-xl backdrop-blur-xl">
+                    <div class="border-b border-white/10 px-4 py-3 text-sm font-semibold text-white/80">Top coordinadoras por facturación</div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm">
-                            <thead class="bg-white/50 text-slate-600 dark:bg-slate-800/50 dark:text-slate-200">
+                            <thead class="bg-white/5 text-white/70">
                                 <tr>
                                     <th class="px-4 py-2 text-left">Coordinadora</th>
                                     <th class="px-4 py-2 text-left">Pedidos</th>
@@ -114,13 +114,13 @@ new class extends Component {
                             </thead>
                             <tbody>
                                 @forelse($coordinadoras as $fila)
-                                    <tr class="border-t border-white/40 text-slate-700 dark:border-white/10 dark:text-slate-200">
+                                    <tr class="border-t border-white/10 text-white/90">
                                         <td class="px-4 py-2 font-medium">{{ $fila['nombre'] }}</td>
                                         <td class="px-4 py-2">{{ number_format($fila['pedidos']) }}</td>
                                         <td class="px-4 py-2">${{ number_format($fila['monto'], 0, ',', '.') }}</td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="3" class="px-4 py-5 text-center text-slate-500 dark:text-slate-300">Sin datos de coordinadoras.</td></tr>
+                                    <tr><td colspan="3" class="px-4 py-5 text-center text-white/60">Sin datos de coordinadoras.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>

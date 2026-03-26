@@ -156,6 +156,16 @@
                             <x-app.sidebar-link href="/admin-ui-v2/panel-alternativa" icon="phosphor-squares-four" :active="Request::is('admin-ui-v2/panel-alternativa')">Panel Alternativa V2</x-app.sidebar-link>
                             <x-app.sidebar-link href="/admin-ui-v2/perfil-seguimiento-lideres" icon="phosphor-user-focus" :active="Request::is('admin-ui-v2/perfil-seguimiento-lideres')">Perfil Líder V2</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
+
+                        <x-app.sidebar-dropdown text="Version 2" icon="phosphor-file-html" id="version2_html_dropdown"
+                            :active="Request::is('plantillas-v2/*')"
+                            :open="Request::is('plantillas-v2/*') ? '1' : '0'">
+                            <x-app.sidebar-link href="/plantillas-v2/UI-TEMPLATE--V2-SEGUIMIENTO-LIDERES.html" target="_blank" icon="phosphor-chart-line-up" :active="false">Plantilla Seguimiento</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/plantillas-v2/UI-TEMPLATE-V2PREMIOS.html" target="_blank" icon="phosphor-gift" :active="false">Plantilla Premios</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/plantillas-v2/UI-TEMPLATE--V2--PANELES-LIDERES-y-COORDINADORA.html" target="_blank" icon="phosphor-table" :active="false">Plantilla Paneles</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/plantillas-v2/UI-TEMPLATE-V2--TEMPLATE-ALTERNATIVA-2.html.html" target="_blank" icon="phosphor-squares-four" :active="false">Plantilla Alternativa</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/plantillas-v2/UI-TEMPLATE-V2-PERFIL-Y-SEGUIMIENTO-LIDERES.html" target="_blank" icon="phosphor-user-focus" :active="false">Plantilla Perfil</x-app.sidebar-link>
+                        </x-app.sidebar-dropdown>
                         <div class="my-2 border-t border-white/20"></div>
                         <x-app.sidebar-link href="/usuarios" icon="phosphor-users-three" :active="Request::is('usuarios*')">Usuarios</x-app.sidebar-link>
                         <x-app.sidebar-link href="/mejoras" icon="phosphor-sparkle" :active="Request::is('mejoras*')">Mejoras</x-app.sidebar-link>

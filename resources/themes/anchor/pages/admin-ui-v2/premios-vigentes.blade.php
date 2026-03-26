@@ -66,55 +66,59 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('admin-ui-v2.premios-vigentes')
-        <x-app.container class="space-y-6">
+        <x-app.container class="relative space-y-6 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 p-6 text-white shadow-2xl">
+            <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+                <div class="absolute left-[-10%] top-[-10%] h-72 w-72 rounded-full bg-pink-600/20 blur-[120px]"></div>
+                <div class="absolute bottom-[-10%] right-[-10%] h-72 w-72 rounded-full bg-violet-600/20 blur-[120px]"></div>
+            </div>
             <x-app.heading
                 title="UI V2 · Premios vigentes"
-                description="Panel de incentivos alineado a las reglas reales cargadas en el sistema."
+                description="Copia funcional de la plantilla de premios con bloques por tipo de incentivo."
                 :border="false"
             />
 
             <div class="grid gap-4 md:grid-cols-3">
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Campaña</p>
-                    <p class="mt-1 text-lg font-semibold text-slate-800 dark:text-white">{{ $campana }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Campaña</p>
+                    <p class="mt-1 text-lg font-semibold text-pink-300">{{ $campana }}</p>
                 </div>
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Reglas de premio activas</p>
-                    <p class="mt-1 text-2xl font-bold text-slate-800 dark:text-white">{{ number_format(count($reglasPremio)) }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Reglas de premio activas</p>
+                    <p class="mt-1 text-2xl font-bold text-white">{{ number_format(count($reglasPremio)) }}</p>
                 </div>
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Puntos entregados</p>
-                    <p class="mt-1 text-2xl font-bold text-slate-800 dark:text-white">{{ number_format($puntosEntregados) }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Puntos entregados</p>
+                    <p class="mt-1 text-2xl font-bold text-white">{{ number_format($puntosEntregados) }}</p>
                 </div>
             </div>
 
             <div class="grid gap-6 lg:grid-cols-2">
-                <div class="rounded-3xl border border-white/40 bg-white/45 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
-                    <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-200">Premios por rango</h3>
+                <div class="rounded-3xl border border-white/10 bg-black/25 p-4 shadow-xl backdrop-blur-xl">
+                    <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-white/80">Premios por rango</h3>
                     <div class="space-y-2">
                         @forelse($reglasPremio as $regla)
-                            <div class="rounded-xl border border-white/30 bg-white/40 p-3 dark:border-white/10 dark:bg-slate-800/40">
-                                <p class="text-sm font-semibold text-slate-800 dark:text-white">{{ ucfirst($regla['rango']) }} · {{ ucfirst($regla['tipo']) }}</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-300">Umbral {{ $regla['umbral'] }}</p>
-                                <p class="text-sm font-bold text-pink-600 dark:text-pink-300">${{ number_format($regla['monto'], 0, ',', '.') }}</p>
+                            <div class="rounded-xl border border-white/10 bg-white/5 p-3">
+                                <p class="text-sm font-semibold text-white">{{ ucfirst($regla['rango']) }} · {{ ucfirst($regla['tipo']) }}</p>
+                                <p class="text-xs text-white/60">Umbral {{ $regla['umbral'] }}</p>
+                                <p class="text-sm font-bold text-pink-300">${{ number_format($regla['monto'], 0, ',', '.') }}</p>
                             </div>
                         @empty
-                            <p class="text-sm text-slate-500 dark:text-slate-300">No hay reglas de premios registradas para la campaña seleccionada.</p>
+                            <p class="text-sm text-white/60">No hay reglas de premios registradas para la campaña seleccionada.</p>
                         @endforelse
                     </div>
                 </div>
 
-                <div class="rounded-3xl border border-white/40 bg-white/45 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
-                    <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-200">Reglas de puntos de revendedoras</h3>
+                <div class="rounded-3xl border border-white/10 bg-black/25 p-4 shadow-xl backdrop-blur-xl">
+                    <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-white/80">Reglas de puntos de revendedoras</h3>
                     <div class="space-y-2">
                         @forelse($reglasPuntaje as $regla)
-                            <div class="rounded-xl border border-white/30 bg-white/40 p-3 dark:border-white/10 dark:bg-slate-800/40">
-                                <p class="text-sm font-semibold text-slate-800 dark:text-white">{{ $regla['descripcion'] }}</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-300">{{ $regla['tramo'] }}</p>
-                                <p class="text-sm font-bold text-indigo-600 dark:text-indigo-300">{{ number_format($regla['puntos']) }} pts/campaña</p>
+                            <div class="rounded-xl border border-white/10 bg-white/5 p-3">
+                                <p class="text-sm font-semibold text-white">{{ $regla['descripcion'] }}</p>
+                                <p class="text-xs text-white/60">{{ $regla['tramo'] }}</p>
+                                <p class="text-sm font-bold text-indigo-300">{{ number_format($regla['puntos']) }} pts/campaña</p>
                             </div>
                         @empty
-                            <p class="text-sm text-slate-500 dark:text-slate-300">No hay reglas de puntaje configuradas.</p>
+                            <p class="text-sm text-white/60">No hay reglas de puntaje configuradas.</p>
                         @endforelse
                     </div>
                 </div>
