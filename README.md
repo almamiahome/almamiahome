@@ -176,6 +176,14 @@ Objetivo:
 - Plus de crecimiento.
 - Premio por unidades.
 
+### F) Dashboard operativo unificado por rol
+
+- `/dashboard` y `/panel` comparten la misma estrategia funcional para eliminar divergencias.
+- **Vendedora:** saldo de puntos, racha actual, progreso a 3 pedidos, premios canjeables y acceso directo a marketplace.
+- **Líder:** actividad, retención, altas, cobranzas, crecimiento, reparto, plus y unidades desde `metricas_lider_campana`.
+- **Coordinadora/Admin:** consolidado por zona/departamento y alertas por caída de actividad/retención de líderes.
+- Se incorporaron widgets con acceso directo a páginas operativas clave (`/marketplace`, `/resumen-lideres`, `/zona-coordinadora`, `/puntaje-reglas`, `/mis-pedidos`).
+
 ---
 
 ## Funciones importantes transversales (no atadas a un único módulo)

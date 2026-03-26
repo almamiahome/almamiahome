@@ -17,6 +17,7 @@ use App\Models\{
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Services\PremiosRevendedoraService;
 
 class PedidoCartService
 {
@@ -312,6 +313,7 @@ class PedidoCartService
             'observaciones'                    => ['nullable', 'string', 'max:1000'],
             'vendedora_id'                     => ['nullable', 'exists:users,id'],
             'lider_id'                         => ['nullable', 'exists:users,id'],
+            'estado'                           => ['nullable', 'string', 'max:50'],
         ], [
             'cart.min' => 'El carrito está vacío.',
         ]);
@@ -455,7 +457,7 @@ class PedidoCartService
                 'cantidad_unidades'     => $totalUnidadesFacturables,
                 'unidades_facturables'  => $totalUnidadesFacturables,
                 'unidades_auxiliares'   => $totalUnidadesAuxiliares,
-                'estado'                => 'Nuevo',
+                'estado'                => $data['estado'] ?? 'Nuevo',
                 'observaciones'         => $data['observaciones'] ?? null,
                 'datos_pedido'          => $datosPedido,
             ]);
@@ -464,6 +466,26 @@ class PedidoCartService
                 PedidoArticulo::create(array_merge($item, [
                     'pedido_id' => $pedido->id,
                 ]));
+            }
+
+            $estadoPedido = mb_strtolower((string) ($pedido->estado ?? ''));
+            $esConfirmado = in_array($estadoPedido, ['confirmado', 'facturado', 'entregado'], true);
+
+            if ($esConfirmado && $vendedora && $cierreCampana) {
+                app(PremiosRevendedoraService::class)->registrarMovimientoPuntos(
+                    revendedora: $vendedora,
+                    cierre: $cierreCampana,
+                    puntos: (int) $pedido->total_puntos,
+                    estado: 'confirmado',
+                    origen: 'pedido_confirmado',
+                    motivo: 'Pedido confirmado al registrar carrito',
+                    idempotenciaClave: sprintf('pedido:%d:confirmado', $pedido->id),
+                    datos: [
+                        'pedido_origen_id' => $pedido->id,
+                        'cierre_id' => $cierreCampana->id,
+                        'regla_aplicada' => 'pedido_confirmado',
+                    ],
+                );
             }
 
             DB::commit();

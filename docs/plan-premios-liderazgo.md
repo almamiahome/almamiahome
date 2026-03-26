@@ -123,3 +123,40 @@ Ejemplo resumido de `altas_pagadas_en_cierre` que genera el servicio para 4 alta
 ```
 
 El monto de reparto total se calcula siempre como `(1C×500)+(2C×700)+(3C×1000)` usando las cantidades de compras registradas.
+
+## Dashboard unificado por rol (marzo 2026)
+
+Se unificó la estrategia entre `/dashboard` y `/panel` usando una vista compartida (`panel-dashboard-unificado`) para evitar desvíos funcionales entre ambos accesos.
+
+### KPI para vendedora
+- Saldo de puntos acumulado (`revendedora_puntos`).
+- Racha actual de cierres (`revendedora_rachas`).
+- Progreso hacia objetivo de 3 pedidos confirmados.
+- Lista de premios canjeables por saldo y stock.
+- CTA directo a `/marketplace`.
+
+### KPI para líder
+- Actividad y retención (cumplimiento acumulado por cierres).
+- Altas del período.
+- Cobranzas, crecimiento, reparto, plus y unidades.
+- Fuente: agregados de `metricas_lider_campana` y su JSON `datos`.
+
+### KPI para coordinadora y admin
+- Consolidado por zona/departamento: líderes, actividad promedio, retención promedio y premio total.
+- Alertas de líderes con caída de actividad o retención.
+- Vista enfocada en seguimiento de red y desvíos tempranos.
+
+### Widgets operativos
+Widgets con enlaces directos y visibles por rol:
+- `/marketplace`
+- `/resumen-lideres`
+- `/zona-coordinadora`
+- `/puntaje-reglas`
+- `/mis-pedidos`
+
+### Capturas de referencia
+> Pendiente adjuntar capturas reales del dashboard unificado en el próximo corte visual del tema `anchor`.
+
+- `docs/img/dashboard-unificado-vendedora.png` (pendiente)
+- `docs/img/dashboard-unificado-lider.png` (pendiente)
+- `docs/img/dashboard-unificado-coordinadora.png` (pendiente)
