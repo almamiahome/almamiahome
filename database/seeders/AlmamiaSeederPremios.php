@@ -51,6 +51,7 @@ class AlmamiaSeederPremios extends Seeder
         DB::table('metricas_lider_campana')
             ->where('cierre_campana_id', $cierreBase->id)
             ->delete();
+
         DB::table('premio_reglas')
             ->where('campana_id', $cierreBase->id)
             ->delete();
@@ -72,14 +73,14 @@ class AlmamiaSeederPremios extends Seeder
             $rangoModelo = RangoLider::query()->updateOrCreate(
                 ['nombre' => $rango['nombre']],
                 [
-                'nombre' => $rango['nombre'],
-                'revendedoras_minimas' => $rango['revendedoras_minimas'],
-                'revendedoras_maximas' => $rango['revendedoras_maximas'],
-                'unidades_minimas' => $rango['unidades_minimas'],
-                'premio_actividad' => $rango['premio_actividad'],
-                'premio_unidades' => $rango['premio_unidades'],
-                'premio_cobranzas' => $rango['premio_cobranzas'],
-                'reparto_referencia' => $rango['reparto_referencia'],
+                    'nombre' => $rango['nombre'],
+                    'revendedoras_minimas' => $rango['revendedoras_minimas'],
+                    'revendedoras_maximas' => $rango['revendedoras_maximas'],
+                    'unidades_minimas' => $rango['unidades_minimas'],
+                    'premio_actividad' => $rango['premio_actividad'],
+                    'premio_unidades' => $rango['premio_unidades'],
+                    'premio_cobranzas' => $rango['premio_cobranzas'],
+                    'reparto_referencia' => $rango['reparto_referencia'],
                 ]
             );
 
@@ -88,69 +89,35 @@ class AlmamiaSeederPremios extends Seeder
             ]);
         }
 
-            foreach ($rangosInsertados as $rango) {
-                $componentes = [
-                    'actividad' => [
-                        'umbral_minimo' => $rango['revendedoras_minimas'],
-                        'umbral_maximo' => $rango['revendedoras_maximas'],
-                        'monto' => $rango['premio_actividad'],
+        foreach ($rangosInsertados as $rango) {
+            $componentes = [
+                'actividad' => [
+                    'umbral_minimo' => $rango['revendedoras_minimas'],
+                    'umbral_maximo' => $rango['revendedoras_maximas'],
+                    'monto' => $rango['premio_actividad'],
+                ],
+                'altas' => [
+                    'umbral_minimo' => 3,
+                    'monto' => 2200,
+                    'datos' => [
+                        'monto_por_alta' => 2200,
+                        'cuotas' => 3,
                     ],
-                    'altas' => [
-                        'umbral_minimo' => 3,
-                        'monto' => 2200,
-                        'datos' => [
-                            'monto_por_alta' => 2200,
-                            'cuotas' => 3,
-                        ],
+                ],
+                'unidades' => [
+                    'umbral_minimo' => $rango['unidades_minimas'],
+                    'monto' => $rango['premio_unidades'],
+                ],
+                'cobranzas' => [
+                    'umbral_minimo' => 7,
+                    'monto' => $rango['premio_cobranzas'],
+                    'datos' => [
+                        'dias_limite' => 7,
                     ],
-                    'unidades' => [
-                        'umbral_minimo' => $rango['unidades_minimas'],
-                        'monto' => $rango['premio_unidades'],
-                    ],
-                    'cobranzas' => [
-                        'umbral_minimo' => 7,
-                        'monto' => $rango['premio_cobranzas'],
-                        'datos' => [
-                            'dias_limite' => 7,
-                        ],
-                    ],
-                ];
-
-                foreach ($componentes as $tipo => $config) {
-                    DB::table('premio_reglas')->insert([
-                        'rango_lider_id' => $rango['id'],
-                        'campana_id' => $cierreBaseId,
-                        'tipo' => $tipo,
-                        'umbral_minimo' => $config['umbral_minimo'],
-                        'umbral_maximo' => $config['umbral_maximo'] ?? null,
-                        'monto' => $config['monto'],
-                        'datos' => json_encode($config['datos'] ?? []),
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
-            }
-
-            $crecimientos = [
-                ['desde' => 'Perla', 'hasta' => 'Perla', 'monto' => 25000, 'primer_objetivo' => true],
-                ['desde' => 'Perla', 'hasta' => 'Aguamarina', 'monto' => 25000],
-                ['desde' => 'Aguamarina', 'hasta' => 'Zafiro', 'monto' => 30000],
-                ['desde' => 'Zafiro', 'hasta' => 'Esmeralda', 'monto' => 40000],
-                ['desde' => 'Esmeralda', 'hasta' => 'Rubí', 'monto' => 50000],
-                ['desde' => 'Rubí', 'hasta' => 'Diamante', 'monto' => 60000],
-                ['desde' => 'Diamante', 'hasta' => 'Diamante Rosa', 'monto' => 70000],
-                ['desde' => 'Diamante Rosa', 'hasta' => 'Estrella', 'monto' => 80000],
-                ['desde' => 'Estrella', 'hasta' => 'Ejecutiva', 'monto' => 100000],
+                ],
             ];
 
-            foreach ($crecimientos as $crecimiento) {
-                $rangoOrigen = $rangosInsertados[$crecimiento['desde']] ?? null;
-                $rangoDestino = $rangosInsertados[$crecimiento['hasta']] ?? null;
-
-                if (! $rangoOrigen) {
-                    continue;
-                }
-
+            foreach ($componentes as $tipo => $config) {
                 DB::table('premio_reglas')->insert([
                     'rango_lider_id' => $rango['id'],
                     'campana_id' => $cierreBase->id,
@@ -163,28 +130,26 @@ class AlmamiaSeederPremios extends Seeder
                     'updated_at' => now(),
                 ]);
             }
+        }
 
-            $repartos = [
-                ['tipo_compra' => '1C', 'monto_por_revendedora' => 500],
-                ['tipo_compra' => '2C', 'monto_por_revendedora' => 700],
-                ['tipo_compra' => '3C', 'monto_por_revendedora' => 1000],
-            ];
+        $crecimientos = [
+            ['desde' => 'Perla', 'hasta' => 'Perla', 'monto' => 25000, 'primer_objetivo' => true],
+            ['desde' => 'Perla', 'hasta' => 'Aguamarina', 'monto' => 25000],
+            ['desde' => 'Aguamarina', 'hasta' => 'Zafiro', 'monto' => 30000],
+            ['desde' => 'Zafiro', 'hasta' => 'Esmeralda', 'monto' => 40000],
+            ['desde' => 'Esmeralda', 'hasta' => 'Rubí', 'monto' => 50000],
+            ['desde' => 'Rubí', 'hasta' => 'Diamante', 'monto' => 60000],
+            ['desde' => 'Diamante', 'hasta' => 'Diamante Rosa', 'monto' => 70000],
+            ['desde' => 'Diamante Rosa', 'hasta' => 'Estrella', 'monto' => 80000],
+            ['desde' => 'Estrella', 'hasta' => 'Ejecutiva', 'monto' => 100000],
+        ];
 
-            foreach ($repartos as $reparto) {
-                DB::table('repartos_compras')->updateOrInsert(
-                    ['tipo_compra' => $reparto['tipo_compra']],
-                    [
-                        'monto_por_revendedora' => $reparto['monto_por_revendedora'],
-                        'descripcion' => sprintf('Monto fijo por revendedora en su %s.', strtolower($reparto['tipo_compra'])),
-                        'datos' => json_encode([
-                            'monto_base' => $reparto['monto_por_revendedora'],
-                            'porcentaje_lider' => $reparto['porcentaje_lider'] ?? null,
-                            'porcentaje_revendedora' => $reparto['porcentaje_revendedora'] ?? null,
-                        ]),
-                        'updated_at' => now(),
-                        'created_at' => now(),
-                    ]
-                );
+        foreach ($crecimientos as $crecimiento) {
+            $rangoOrigen = $rangosInsertados[$crecimiento['desde']] ?? null;
+            $rangoDestino = $rangosInsertados[$crecimiento['hasta']] ?? null;
+
+            if (! $rangoOrigen) {
+                continue;
             }
 
             DB::table('premio_reglas')->insert([
@@ -203,35 +168,11 @@ class AlmamiaSeederPremios extends Seeder
             ]);
         }
 
-        $cierre->nombre = 'Campaña Base Premios';
-        $cierre->catalogo_id = $catalogoBaseId;
-        $cierre->numero_cierre = 1;
-        $cierre->estado = CierreCampana::ESTADO_PLANIFICADO;
-        $cierre->datos = [
-            'nota' => 'Cierre referencial para precargar el plan de premios Alma Mia.',
+        $repartos = [
+            ['tipo_compra' => '1C', 'monto_por_revendedora' => 500],
+            ['tipo_compra' => '2C', 'monto_por_revendedora' => 700],
+            ['tipo_compra' => '3C', 'monto_por_revendedora' => 1000],
         ];
-        $cierre->save();
-
-        return $cierre->id;
-    }
-
-    private function yaFueEjecutado(): bool
-    {
-        if (! Schema::hasTable('control_ejecucion_seeders')) {
-            return false;
-        }
-
-        return DB::table('control_ejecucion_seeders')
-            ->where('seeder', static::class)
-            ->where('version', self::VERSION_CONTROL)
-            ->exists();
-    }
-
-    private function registrarEjecucion(int $cierreBaseId): void
-    {
-        if (! Schema::hasTable('control_ejecucion_seeders')) {
-            return;
-        }
 
         foreach ($repartos as $reparto) {
             DB::table('repartos_compras')->updateOrInsert(
