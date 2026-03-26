@@ -185,6 +185,12 @@ class User extends WaveUser
     }
 
 
+    public function movimientosBilletera(): HasMany
+    {
+        return $this->hasMany(BilleteraMovimiento::class);
+    }
+
+
     public function zona()
     {
         return $this->belongsTo(Zona::class);

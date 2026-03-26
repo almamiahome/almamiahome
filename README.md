@@ -131,6 +131,15 @@ Este bloque ya cubre el cálculo base de actividad, altas, cobranzas, crecimient
 
 ---
 
+### 8) Billetera unificada y trazabilidad de movimientos
+
+- Nueva tabla `billetera_movimientos` como ledger auditable para créditos y débitos de dinero/puntos.
+- Servicio `BilleteraService` para centralizar consolidación de saldos, puntaje por período, rango y clasificación a premios.
+- Sincronización automática desde `PremiosRevendedoraService`, `PremiosLiderCalculator` y `LiquidacionCierreService` para evitar duplicación de lógica.
+- Nueva vista operativa `/billetera` en tema `anchor` con tarjetas de saldo y tabla de historial.
+
+---
+
 ## Módulos a desarrollar en V2 (según `sistema.txt`)
 
 ### A) Estructura anual y cierres/campañas

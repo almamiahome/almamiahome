@@ -36,7 +36,11 @@ class LiquidacionCierreService
             ]
         );
 
-        return $liquidacion->refresh();
+        $liquidacion = $liquidacion->refresh();
+
+        app(BilleteraService::class)->sincronizarDesdeLiquidacion($liquidacion);
+
+        return $liquidacion;
     }
 
     public function calcularSaldos(CierreCampana $cierre, User $lider): array
