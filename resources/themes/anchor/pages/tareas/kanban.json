@@ -1,0 +1,2025 @@
+{
+  "columnas": [
+    {
+      "id": "col-backlog",
+      "titulo": "Backlog",
+      "orden": 1,
+      "tareas": []
+    },
+    {
+      "id": "col-en-progreso",
+      "titulo": "En progreso",
+      "orden": 2,
+      "tareas": []
+    },
+    {
+      "id": "col-revision",
+      "titulo": "Revisión",
+      "orden": 3,
+      "tareas": []
+    },
+    {
+      "id": "col-realizadas",
+      "titulo": "Realizadas (histórico)",
+      "orden": 4,
+      "tareas": [
+        {
+          "id": "task-historica-1",
+          "titulo": "Estilo Liquid Glass + Estilo sistema operativo",
+          "descripcion": "Commit 59cf247 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-2",
+          "titulo": "fix: usa fondo local en fixed-wallpaper y documenta lineamiento visual",
+          "descripcion": "Commit b7fb77d · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-3",
+          "titulo": "feat: habilita arrastre de puntos y edición de páginas",
+          "descripcion": "Commit dce0620 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-4",
+          "titulo": "Merge pull request #16 from tiendaweb/codex/convertir-puntos-en-interactivos-arrastrables",
+          "descripcion": "Commit 843e727 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-5",
+          "titulo": "Merge pull request #15 from tiendaweb/codex/update-background-image-in-app.blade.php",
+          "descripcion": "Commit a3e8d93 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-6",
+          "titulo": "feat: agrega hotspots grupales y selección múltiple en catálogo",
+          "descripcion": "Commit aadae4f · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-7",
+          "titulo": "Merge pull request #17 from tiendaweb/codex/crear-migracion-para-extender-hotspots",
+          "descripcion": "Commit 8d565da · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-8",
+          "titulo": "feat: carga departamentos y zonas desde settings en incorporar",
+          "descripcion": "Commit 50a26e0 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-9",
+          "titulo": "Merge pull request #18 from tiendaweb/codex/replicate-settings-loading-in-index.blade.php",
+          "descripcion": "Commit 3d688da · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-10",
+          "titulo": "feat: agrega catálogo público sin acciones de pedido",
+          "descripcion": "Commit 2b38889 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-11",
+          "titulo": "Merge pull request #19 from tiendaweb/codex/crear-pagina-folio-para-catalogo-publico",
+          "descripcion": "Commit ac3ebb7 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-12",
+          "titulo": "feat: mejora navegación móvil y sincroniza líder/vendedora en pedidos",
+          "descripcion": "Commit b39e33d · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-13",
+          "titulo": "Merge pull request #20 from tiendaweb/codex/add-z-index-to-sidebar-and-footer",
+          "descripcion": "Commit 967bef2 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-14",
+          "titulo": "fix: mejora filtros por líder y estados activos del sidebar",
+          "descripcion": "Commit 968a071 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-15",
+          "titulo": "Merge pull request #21 from tiendaweb/codex/fix-product-image-display-styling",
+          "descripcion": "Commit 8c6aa10 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-16",
+          "titulo": "feat: adapta componentes anchor al estilo liquidglass rosa y azul",
+          "descripcion": "Commit 5913530 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-17",
+          "titulo": "Merge pull request #22 from tiendaweb/codex/adapt-components-to-liquidglass-style",
+          "descripcion": "Commit 94bf18d · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-18",
+          "titulo": "feat: agrega página mi red con visualización por rol",
+          "descripcion": "Commit dd27523 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-19",
+          "titulo": "Merge pull request #23 from tiendaweb/codex/create-network-visualization-page-in-php",
+          "descripcion": "Commit 07eb257 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-20",
+          "titulo": "feat: agrega carga y verificacion de comprobantes en pedidos",
+          "descripcion": "Commit 0503b2d · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-21",
+          "titulo": "Merge pull request #24 from tiendaweb/codex/add-payment-proof-for-unpaid-orders",
+          "descripcion": "Commit ad110df · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-22",
+          "titulo": "feat: agrega links del sidebar como activos instalados",
+          "descripcion": "Commit 9d8bf26 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-23",
+          "titulo": "Merge pull request #25 from tiendaweb/codex/add-activos.json-file-and-integrate-in-index.php",
+          "descripcion": "Commit e978558 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-24",
+          "titulo": "fix: corrige carga múltiple en admin de catálogo y revierte catálogo público",
+          "descripcion": "Commit d7de640 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-25",
+          "titulo": "Merge pull request #26 from tiendaweb/codex/fix-image-loading-for-catalog-pages",
+          "descripcion": "Commit 698b817 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-26",
+          "titulo": "feat: agrega tabs operativas de notas, kanban, reportes y tickets en mejoras",
+          "descripcion": "Commit 7d75668 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-27",
+          "titulo": "Merge pull request #27 from tiendaweb/codex/add-additional-features-to-tabs",
+          "descripcion": "Commit 3c506c4 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-28",
+          "titulo": "feat: agrega módulos pendientes al catálogo de mejoras",
+          "descripcion": "Commit 10393fd · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-29",
+          "titulo": "Merge pull request #28 from tiendaweb/codex/add-available-modules-to-mejoras/items",
+          "descripcion": "Commit c639840 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-30",
+          "titulo": "fix: completa sidebar y prioriza menú footer móvil",
+          "descripcion": "Commit 4e8301a · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-31",
+          "titulo": "Merge pull request #29 from tiendaweb/codex/add-missing-sidebar-elements-and-z-index-checks",
+          "descripcion": "Commit a402f44 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-32",
+          "titulo": "fix: ajusta estado visual por clave de hotspot en catálogo",
+          "descripcion": "Commit 0179c53 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-33",
+          "titulo": "Merge pull request #30 from tiendaweb/codex/update-hotspot-state-key-handling",
+          "descripcion": "Commit 9fa45a1 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-34",
+          "titulo": "fix: ajusta selección manual de hotspot grupal en catálogo",
+          "descripcion": "Commit 58c5669 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-35",
+          "titulo": "Merge pull request #31 from tiendaweb/codex/apply-changes-to-catalog-and-logic",
+          "descripcion": "Commit cc6c7c8 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-36",
+          "titulo": "feat: mejora selector de productos en mapeo de catálogo",
+          "descripcion": "Commit 880166e · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-37",
+          "titulo": "Merge pull request #32 from tiendaweb/codex/update-product-selection-in-admin-catalog",
+          "descripcion": "Commit de80c52 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-38",
+          "titulo": "feat: mejora controles visuales de selección en mapa de catálogo",
+          "descripcion": "Commit 8db2869 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-39",
+          "titulo": "Merge pull request #33 from tiendaweb/codex/replace-checkboxes-with-visual-controls",
+          "descripcion": "Commit 0bfed83 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-40",
+          "titulo": "feat: mueve catálogo público a /vercatalogo e integra vista previa en inicio",
+          "descripcion": "Commit 41b8479 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-41",
+          "titulo": "Merge pull request #34 from tiendaweb/codex/adjust-public-catalog-to-/vercatalogo",
+          "descripcion": "Commit 70c6fd3 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-42",
+          "titulo": "fix: unifica navegación y gestos del catálogo privado y público",
+          "descripcion": "Commit 3990237 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-43",
+          "titulo": "Merge pull request #35 from tiendaweb/codex/fix-sync-and-gesture-navigation-in-catalog",
+          "descripcion": "Commit 273edf0 · tiendaweb · 2026-02-28",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-02-28)."
+          ],
+          "fecha_inicio": "2026-02-28",
+          "fecha_fin": "2026-02-28",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-44",
+          "titulo": "feat: agrega animación de paso de página en catálogos",
+          "descripcion": "Commit 9d59147 · tiendaweb · 2026-03-01",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-01)."
+          ],
+          "fecha_inicio": "2026-03-01",
+          "fecha_fin": "2026-03-01",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-45",
+          "titulo": "Merge pull request #36 from tiendaweb/codex/implement-visual-page-transition-animation",
+          "descripcion": "Commit 1e99f18 · tiendaweb · 2026-03-01",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-01)."
+          ],
+          "fecha_inicio": "2026-03-01",
+          "fecha_fin": "2026-03-01",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-46",
+          "titulo": "fix: corrige elemento raíz único en vercatálogo",
+          "descripcion": "Commit f956880 · tiendaweb · 2026-03-01",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-01)."
+          ],
+          "fecha_inicio": "2026-03-01",
+          "fecha_fin": "2026-03-01",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-47",
+          "titulo": "Merge pull request #37 from tiendaweb/codex/fix-error-in-/vercatalogo",
+          "descripcion": "Commit 672bfb1 · tiendaweb · 2026-03-01",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-01)."
+          ],
+          "fecha_inicio": "2026-03-01",
+          "fecha_fin": "2026-03-01",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-48",
+          "titulo": "Increase z-index of sidebar component",
+          "descripcion": "Commit ee237d4 · tiendaweb · 2026-03-03",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-03)."
+          ],
+          "fecha_inicio": "2026-03-03",
+          "fecha_fin": "2026-03-03",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-49",
+          "titulo": "feat: reorganiza premios en json escalable con simulación actual",
+          "descripcion": "Commit 5d79b9f · tiendaweb · 2026-03-04",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-04)."
+          ],
+          "fecha_inicio": "2026-03-04",
+          "fecha_fin": "2026-03-04",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-50",
+          "titulo": "Merge pull request #38 from tiendaweb/codex/create-premios.html-with-tab-structure",
+          "descripcion": "Commit 154a9ff · tiendaweb · 2026-03-04",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-04)."
+          ],
+          "fecha_inicio": "2026-03-04",
+          "fecha_fin": "2026-03-04",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-51",
+          "titulo": "Add sistema.txt with sales structure and rewards",
+          "descripcion": "Commit 28b068b · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-52",
+          "titulo": "docs: agrega roadmap, propuesta, presupuesto y reporte de PRs",
+          "descripcion": "Commit 84d3918 · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-53",
+          "titulo": "Merge pull request #41 from tiendaweb/codex/create-roadmap-and-documentation-files",
+          "descripcion": "Commit bc97de8 · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-54",
+          "titulo": "docs: amplía reporte de PRs y agrega mapa conceptual de BD",
+          "descripcion": "Commit dc7edb4 · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-55",
+          "titulo": "Merge pull request #42 from tiendaweb/codex/create-db.html-for-database-visualization",
+          "descripcion": "Commit 374b162 · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-56",
+          "titulo": "docs: actualiza db.html y README con módulos actuales y roadmap v2",
+          "descripcion": "Commit 3451d41 · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-57",
+          "titulo": "Merge pull request #43 from tiendaweb/codex/verify-db.html-completeness-and-create-readme",
+          "descripcion": "Commit 09f212b · tiendaweb · 2026-03-10",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-10)."
+          ],
+          "fecha_inicio": "2026-03-10",
+          "fecha_fin": "2026-03-10",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-58",
+          "titulo": "docs: agrega maqueta UI V2 en docs/uiejemplos.html",
+          "descripcion": "Commit 5629bec · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-59",
+          "titulo": "Merge pull request #44 from tiendaweb/codex/add-ejemplos.html-with-tailwind-ui-elements",
+          "descripcion": "Commit 442e254 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-60",
+          "titulo": "feat: agrega vistas HTML de ejemplo v2 para paneles y reportes",
+          "descripcion": "Commit 9cd96d4 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-61",
+          "titulo": "Merge pull request #46 from tiendaweb/codex/crear-archivos-html-para-vistas",
+          "descripcion": "Commit 4d56233 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-62",
+          "titulo": "feat: crea plugin unified vcard editor con formulario general y redes dinámicas",
+          "descripcion": "Commit 94761f7 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-63",
+          "titulo": "Merge pull request #47 from tiendaweb/codex/add-missing-fields-and-social-media-repeaters",
+          "descripcion": "Commit dfc3634 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-64",
+          "titulo": "feat: agrega vista HTML escalable de módulos v2 con costos",
+          "descripcion": "Commit e31cfcc · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-65",
+          "titulo": "Merge pull request #53 from tiendaweb/codex/create-html-web-app-with-tailwind-and-json-data",
+          "descripcion": "Commit 1b4306f · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-66",
+          "titulo": "feat: agrega roadmap visual V2 en HTML Tailwind",
+          "descripcion": "Commit c9fc031 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-67",
+          "titulo": "Merge pull request #54 from tiendaweb/codex/create-roadmap-page-with-tailwind-and-html",
+          "descripcion": "Commit ac38d57 · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-68",
+          "titulo": "feat: crea vista HTML escalable de módulos V2 con presupuesto dinámico",
+          "descripcion": "Commit bbd7b0c · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-69",
+          "titulo": "Merge pull request #55 from tiendaweb/codex/create-html-web-with-tailwind-and-shadcdn-style",
+          "descripcion": "Commit 8babcfb · tiendaweb · 2026-03-12",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-12)."
+          ],
+          "fecha_inicio": "2026-03-12",
+          "fecha_fin": "2026-03-12",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-70",
+          "titulo": "docs: agrega dependencias y plan documental de version2",
+          "descripcion": "Commit f315380 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-71",
+          "titulo": "Merge pull request #1 from almamiahome/codex/add-dependencies-section-in-readme.md",
+          "descripcion": "Commit 3fdaefd · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-72",
+          "titulo": "docs: define agentes skills y gates mcp para roadmap v2",
+          "descripcion": "Commit 79a1b0c · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-73",
+          "titulo": "Merge pull request #2 from almamiahome/codex/create-version2-documentation-files",
+          "descripcion": "Commit 97dd48e · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-74",
+          "titulo": "docs: alinea plan v2 por fases y agrega validación final",
+          "descripcion": "Commit ee063d3 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-75",
+          "titulo": "Merge pull request #3 from almamiahome/codex/crear-validacion-final-con-checklist-de-fase-8",
+          "descripcion": "Commit c8f1880 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-76",
+          "titulo": "docs: detalla prerequisitos, validaciones y planificación v2",
+          "descripcion": "Commit e3bf511 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-77",
+          "titulo": "Merge pull request #4 from almamiahome/codex/update-task-documentation-and-planning-details",
+          "descripcion": "Commit a75af4b · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-78",
+          "titulo": "docs: actualiza validacion final v2 con checklist y remediacion",
+          "descripcion": "Commit 645632d · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-79",
+          "titulo": "feat: agrega base de migraciones para version 2",
+          "descripcion": "Commit 08cf8f2 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-80",
+          "titulo": "Merge pull request #6 from almamiahome/codex/refactor-migrations-for-proper-functionality",
+          "descripcion": "Commit 31570b9 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-81",
+          "titulo": "Merge pull request #5 from almamiahome/codex/update-validacion-final.md-with-checklist",
+          "descripcion": "Commit 1d28af1 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-82",
+          "titulo": "feat: inicia etapa 1 de version2 con calendario comercial base",
+          "descripcion": "Commit ccdf5c7 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-83",
+          "titulo": "Merge pull request #7 from almamiahome/codex/verify-requirements-for-stage-one",
+          "descripcion": "Commit 8775a60 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-84",
+          "titulo": "feat: agrega seeder de calendario comercial y preserva cierres productivos",
+          "descripcion": "Commit 34e631e · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-85",
+          "titulo": "Merge pull request #8 from almamiahome/codex/add-new-database-seeder-for-catalogues",
+          "descripcion": "Commit 1bdab47 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-86",
+          "titulo": "feat: agrega trazabilidad de catálogo/cierre y unidades auxiliares en pedidos",
+          "descripcion": "Commit 8b895c3 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-87",
+          "titulo": "Merge pull request #9 from almamiahome/codex/add-migration-and-update-pedido-model",
+          "descripcion": "Commit 58dafc4 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-88",
+          "titulo": "feat: agrega base de etapa 2 para rachas, puntos y canjes",
+          "descripcion": "Commit 2debab2 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-89",
+          "titulo": "Merge pull request #10 from almamiahome/codex/create-migrations-and-models-for-rewards-system",
+          "descripcion": "Commit 3d00bea · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-90",
+          "titulo": "feat: agrega retención y plus crecimiento en métricas de líder",
+          "descripcion": "Commit 29282a6 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-91",
+          "titulo": "Merge pull request #11 from almamiahome/codex/create-migration-for-metricas_lider_campana",
+          "descripcion": "Commit 007dd54 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-92",
+          "titulo": "feat: agrega máquina de estados para cierre de campaña",
+          "descripcion": "Commit fee6adb · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-93",
+          "titulo": "Merge pull request #12 from almamiahome/codex/create-state-machine-service-for-cierrecampana",
+          "descripcion": "Commit 5543e78 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-94",
+          "titulo": "fix: vuelve idempotente el seeder de premios v2",
+          "descripcion": "Commit 4071350 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-95",
+          "titulo": "Merge pull request #13 from almamiahome/codex/update-almamiaseederpremios-for-idempotency",
+          "descripcion": "Commit 9359bdd · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-96",
+          "titulo": "fix: vuelve idempotente el seeder de premios por cierre referencia",
+          "descripcion": "Commit d60fac5 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-97",
+          "titulo": "Merge branch 'LIQUIDGLASS' into codex/update-almamiaseederpremios-and-databaseseeder",
+          "descripcion": "Commit a7ac6ea · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-98",
+          "titulo": "Merge pull request #14 from almamiahome/codex/update-almamiaseederpremios-and-databaseseeder",
+          "descripcion": "Commit e2a24e5 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-99",
+          "titulo": "fix: unifica mensajes y validación de cierres de campaña",
+          "descripcion": "Commit 78a4cf3 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-100",
+          "titulo": "Merge pull request #17 from almamiahome/codex/create-cierrecampanastatemachine-service",
+          "descripcion": "Commit bf762dd · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-101",
+          "titulo": "test: agrega cobertura v2 para rachas, puntos, liderazgo y trazabilidad",
+          "descripcion": "Commit b8b8a19 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-102",
+          "titulo": "Merge pull request #18 from almamiahome/codex/add-unit-tests-and-documentation-roadmap",
+          "descripcion": "Commit e5038fe · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-103",
+          "titulo": "feat: centraliza premios revendedora y modulariza reglas T11-T16",
+          "descripcion": "Commit 9c5d221 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-104",
+          "titulo": "Merge pull request #19 from almamiahome/codex/define-checklist-for-t6t10-in-matrix",
+          "descripcion": "Commit f5b5c17 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-105",
+          "titulo": "feat: implementa liquidaciones de cierre y reportería financiera etapa 4",
+          "descripcion": "Commit 503c40b · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-106",
+          "titulo": "Merge pull request #20 from almamiahome/codex/create-migrations-and-models-for-liquidaciones",
+          "descripcion": "Commit c8f4ccb · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-107",
+          "titulo": "test: amplía cobertura T17-T19 y documenta salida de Etapa 4",
+          "descripcion": "Commit a7610a1 · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-108",
+          "titulo": "Merge pull request #21 from almamiahome/codex/add-tests-and-documentation-for-release-stages",
+          "descripcion": "Commit f9e342b · almamiahome · 2026-03-25",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-25)."
+          ],
+          "fecha_inicio": "2026-03-25",
+          "fecha_fin": "2026-03-25",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-109",
+          "titulo": "feat: inicia etapa 5 v2 con paneles Volt/Folio y checklist operativo",
+          "descripcion": "Commit 580a468 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-110",
+          "titulo": "Merge pull request #24 from almamiahome/codex/verify-stage-4-completion-and-start-stage-5",
+          "descripcion": "Commit 4a288c8 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-111",
+          "titulo": "feat: consolida etapa 5 con filtros operativos y trazabilidad auditable",
+          "descripcion": "Commit 15d539e · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-112",
+          "titulo": "Merge pull request #25 from almamiahome/codex/unify-environment-diagnosis-documentation",
+          "descripcion": "Commit b88f0ca · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-113",
+          "titulo": "docs: agrega matriz maestra CRUD v2",
+          "descripcion": "Commit 2ff5b81 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-114",
+          "titulo": "Merge pull request #26 from almamiahome/codex/create-master-document-for-resource-crud",
+          "descripcion": "Commit fdec47f · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-115",
+          "titulo": "feat: habilita canje operativo en tienda de premios",
+          "descripcion": "Commit 65e7c86 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-116",
+          "titulo": "Merge pull request #27 from almamiahome/codex/edit-marketplace-page-for-real-data-and-features",
+          "descripcion": "Commit 35a2ec8 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-117",
+          "titulo": "feat: unifica dashboard y automatiza premios por cierre",
+          "descripcion": "Commit 8b2c0c7 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-118",
+          "titulo": "Merge pull request #28 from almamiahome/codex/unify-dashboard-and-panel-strategies",
+          "descripcion": "Commit 5f90b55 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-119",
+          "titulo": "feat: refuerza vigencia trimestral y orden de páginas en catálogos",
+          "descripcion": "Commit 9873bdf · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-120",
+          "titulo": "Merge pull request #29 from almamiahome/codex/verifica-creacion-y-edicion-de-catalogos",
+          "descripcion": "Commit a4adcd4 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-121",
+          "titulo": "feat: agrega facturas masivas y filtros extendidos de rotulos",
+          "descripcion": "Commit 6849de7 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-122",
+          "titulo": "Merge pull request #30 from almamiahome/codex/edit-catalogo-index.blade.php-and-fix-methods",
+          "descripcion": "Commit dca918b · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-123",
+          "titulo": "feat: agrega billetera unificada con ledger auditable y vista dedicada",
+          "descripcion": "Commit 9f95f74 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-124",
+          "titulo": "Merge pull request #31 from almamiahome/codex/create-dedicated-wallet-page-with-history",
+          "descripcion": "Commit 0a6689f · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-125",
+          "titulo": "feat: agrega tours guiados con Intro.js en pantallas clave",
+          "descripcion": "Commit 78f0c6d · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-126",
+          "titulo": "Merge pull request #32 from almamiahome/codex/add-intro.js-dependency-and-tours",
+          "descripcion": "Commit f2617be · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-127",
+          "titulo": "Create UI TEMPLATE - V2 - PANELES LIDERES  y COORDINADORA.html",
+          "descripcion": "Commit 1f9529f · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-128",
+          "titulo": "Create UI TEMPLATE - V2 SEGUIMIENTO LIDERES.html",
+          "descripcion": "Commit 2e35cef · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-129",
+          "titulo": "Create UI TEMPLATE V2 PERFIL Y SEGUIMIENTO LIDERES.html",
+          "descripcion": "Commit 598a665 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-130",
+          "titulo": "Create UI TEMPLATE V2 - TEMPLATE ALTERNATIVA 2.html.html",
+          "descripcion": "Commit dd819d6 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-131",
+          "titulo": "Create UI TEMPLATE V2PREMIOS.html",
+          "descripcion": "Commit 805a0c9 · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-132",
+          "titulo": "feat: agrega vistas UI V2 administrativas",
+          "descripcion": "Commit faf554e · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        },
+        {
+          "id": "task-historica-133",
+          "titulo": "Merge pull request #33 from almamiahome/codex/add-5-ui-v2-html-templates-to-sidebar",
+          "descripcion": "Commit f71a1ce · almamiahome · 2026-03-26",
+          "subtareas": [],
+          "comentarios": [
+            "Registro importado automáticamente del historial de commits (2026-03-26)."
+          ],
+          "fecha_inicio": "2026-03-26",
+          "fecha_fin": "2026-03-26",
+          "etiquetas": [
+            "historial",
+            "commit"
+          ]
+        }
+      ]
+    }
+  ],
+  "actualizado_en": "2026-03-26 08:03:09"
+}
