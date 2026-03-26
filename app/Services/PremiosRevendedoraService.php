@@ -119,9 +119,9 @@ class PremiosRevendedoraService
         ];
     }
 
-    public function ejecutarCanje(User $revendedora, TiendaPremio $premio, CierreCampana $cierre): CanjePremio
+    public function ejecutarCanje(User $revendedora, TiendaPremio $premio, CierreCampana $cierre, array $datosCanje = []): CanjePremio
     {
-        return DB::transaction(function () use ($revendedora, $premio, $cierre) {
+        return DB::transaction(function () use ($revendedora, $premio, $cierre, $datosCanje) {
             $premio = TiendaPremio::query()->lockForUpdate()->findOrFail($premio->id);
             $validacion = $this->validarCanje($revendedora, $premio, $cierre);
 
@@ -155,6 +155,11 @@ class PremiosRevendedoraService
                 'origen' => 'servicio',
                 'motivo' => 'Canje aprobado con validación de saldo y stock',
                 'fecha_canje' => now(),
+                'datos' => array_merge([
+                    'tienda_premio_id' => $premio->id,
+                    'catalogo_id' => $cierre->catalogo_id,
+                    'cierre_id' => $cierre->id,
+                ], $datosCanje),
             ]);
         });
     }

@@ -111,8 +111,8 @@ La UI no entra a desarrollo final sin datos estables y dominio validado.
 - **Etapa 1:** en curso (fundaciones y trazabilidad base ya operativas).
 - **Etapa 2:** en curso (motores de revendedora implementados; cierre integral pendiente por validación completa).
 - **Etapa 3:** en curso (premios avanzados implementados con pruebas previas; requiere corrida integral estable).
-- **Etapa 4:** validada parcialmente (T17/T18 cumplidas; T19/T20 siguen abiertas por bloqueo de entorno para instalar dependencias y ejecutar suite integral).
-- **Etapa 5:** iniciada en modo controlado (estructura Folio/Volt base habilitada para vistas avanzadas y filtros de liderazgo).
+- **Etapa 4:** en curso (T17 y T18 con cobertura nueva; T19/T20 abiertos por bloqueo de memoria en suite integral).
+- **Etapa 5:** iniciada en modo controlado (paneles operativos base creados en Folio/Volt; cierre final sujeto a liberar T19/T20).
 
 ## Dependencias desbloqueadas hacia Etapa 5
 
@@ -128,3 +128,12 @@ La UI no entra a desarrollo final sin datos estables y dominio validado.
 - Se puede avanzar en diseño y construcción base de vistas de Etapa 5 en arquitectura clásica (Folio/Volt).
 - Referencia operativa de seguimiento: `version2/categoria-5/checklist-etapa-5.md`.
 - No se recomienda declarar salida productiva de Etapa 5 hasta cerrar T19/T20 con evidencia completa.
+
+## Inicio formal de Etapa 5 (26 de marzo de 2026)
+
+- Se habilitó la ruta de trabajo en arquitectura clásica del tema `anchor`.
+- Se priorizó mantener páginas en `resources/themes/anchor/pages/lideres/...` para respetar estructura URL por carpeta.
+- Se definieron las páginas operativas iniciales:
+  - `/lideres/seguimiento-cierres`
+  - `/lideres/liquidacion`
+- Ambos frentes quedaron condicionados a middleware explícito en cada página Volt/Folio.

@@ -28,3 +28,5 @@ Se mantiene un índice principal (`README.md`) para facilitar acceso a documento
 - 2026-03-10: se incorporan roadmap, propuesta, presupuesto, reporte de PRs y documento de base de datos para implementar `sistema.txt`.
 
 - 2026-03-11: se agregó `db.html` en la raíz del proyecto con mapa conceptual de la base de datos (actual en gris oscuro y versión 2 en naranja), se amplió `revision-reporte.md` con histórico desde PR #15 y se separó el roadmap por etapas en `docs/roadmap-etapas/`.
+
+- 2026-03-26: la tienda de premios de revendedora quedó operativa de extremo a extremo (consulta real, filtros por estado/stock/búsqueda, canje con validaciones y auditoría mínima en `datos`).

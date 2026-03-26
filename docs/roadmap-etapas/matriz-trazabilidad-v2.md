@@ -121,4 +121,26 @@ Actualizar esta matriz cada vez que cambie cualquiera de estos componentes:
 | T17 | Cumple si existen pruebas automatizadas de deuda acumulada, descuentos futuros, balance neto e idempotencia de reproceso sin duplicar impactos. | `tests/Feature/LiquidacionCierreServiceTest.php` + acta técnica de Etapa 4. | **Cumple** |
 | T18 | Cumple si existen pruebas automatizadas de filtros por zona/departamento y comparativas entre cierres con conciliación por líder/coordinadora. | `tests/Unit/ReporteriaFinancieraServiceTest.php` + acta técnica de Etapa 4. | **Cumple** |
 | T19 | Cumple si la suite integral `php artisan test` finaliza sin errores de entorno y con evidencia registrada. | Registro de ejecución integral en acta técnica. | **No cumple** (bloqueo de memoria en entorno actual). |
-| T20 | Cumple si existe checklist operativo de salida, acta final con commit validado y dependencias de Etapa 5 desbloqueadas. | Matriz + `version2/resumen.md` + acta técnica de Etapa 4. | **No cumple** (pendiente cierre integral de QA/T19). |
+| T20 | Cumple si existe checklist operativo de salida, acta final con commit validado y dependencias de Etapa 5 desbloqueadas. | Matriz + `version2/resumen.md` + acta técnica de Etapa 4. | **No cumple** (bloqueado; T20 no cierra mientras T19 siga en testeo o con bloqueo de entorno). |
+
+## 7) Trazabilidad Etapa 5 (T5.1–T5.10)
+
+> Estados normalizados por tarea: **completo**, **parcial** o **faltante**.
+
+| Tarea | Estado | Tipo de cobertura | Evidencia actual | Falta para cierre definitivo Etapa 5 |
+|---|---|---|---|---|
+| T5.1 Crecimiento por cambio de nivel | parcial | Cobertura heredada (Etapa 3) | `app/Services/PremiosLiderCalculator.php` (`moduloCrecimiento`, `persistirHistorialSaltoRango`) | Versionado explícito de regla Etapa 5 + prueba dedicada de salto único por cierre. |
+| T5.2 Reparto por nivel | parcial | Cobertura heredada (Etapa 3) | `moduloReparto()` + `calcularRepartoTotal()` en `PremiosLiderCalculator` con soporte de `RepartoCompra` | Pruebas adicionales por bandas min/max con foco Etapa 5 y validación en panel operativo. |
+| T5.3 Plus de crecimiento | parcial | Cobertura heredada + avance Etapa 5 | `moduloPlusUnidades()` usa `objetivo_proximo_cierre` y `premio_plus_crecimiento` | Evidencia de continuidad histórica del objetivo y pruebas funcionales en rango de cierres. |
+| T5.4 Premio por unidades | completo | Cierre funcional del servicio | `moduloPlusUnidades()` valida `unidades_minimas` y persiste `premio_unidades` en `MetricaLiderCampana` | Mantener regresión automática al cerrar T19. |
+| T5.5 Total consolidado a cobrar | completo | Cierre funcional del servicio | `premio_total` consolidado en `PremiosLiderCalculator` con trazabilidad en `datos.evidencia` | Pendiente solo validación integral de entorno (T19). |
+| T5.6 Filtros zona/departamento/catálogo/cierre | completo | Cierre definitivo Etapa 5 | `resources/themes/anchor/pages/lideres/seguimiento-cierres/index.blade.php` | Añadir prueba de interfaz/integración cuando T19 quede estable. |
+| T5.7 Vista líder avanzada | completo | Cierre definitivo Etapa 5 | Página Volt/Folio de seguimiento con middleware explícito y desglose por cierre seleccionado | Ajustes cosméticos no bloqueantes. |
+| T5.8 Vista liquidación individual | completo | Cierre definitivo Etapa 5 | `resources/themes/anchor/pages/lideres/liquidacion/index.blade.php` con selección explícita de catálogo/rango de cierres | Añadir exportable si se incluye en alcance final. |
+| T5.9 QA E2E reportería + premios | faltante | Sin cobertura integral vigente | Existe intento de `php artisan test`, bloqueado por memoria (ver acta técnica de continuidad 2026-03-26) | Resolver entorno y ejecutar suite completa en verde. |
+| T5.10 Documentación y handoff final | parcial | En construcción | Matriz + checklist + acta de continuidad actualizadas | Acta final con hash validado posterior a T19 exitoso y guía operativa final. |
+
+## 8) Regla de bloqueo T20 por dependencia de T19
+
+- Si **T19** permanece en estado `parcial` o `faltante` por testeo/entorno, **T20** se mantiene bloqueada.
+- El cierre de **T20** requiere evidencia explícita de ejecución completa de `php artisan test` sin bloqueo.

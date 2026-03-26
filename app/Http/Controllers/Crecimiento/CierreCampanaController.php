@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Crecimiento;
 use App\Http\Controllers\Controller;
 use App\Models\CierreCampana;
 use App\Models\MetricaLiderCampana;
+use App\Models\Pedido;
 use App\Models\User;
 use App\Services\CierreCampanaStateMachine;
 use App\Services\PremiosLiderCalculator;
+use App\Services\PremiosRevendedoraService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CierreCampanaController extends Controller
 {
     public function __construct(
-        protected CierreCampanaStateMachine $stateMachine
+        protected CierreCampanaStateMachine $stateMachine,
+        protected PremiosRevendedoraService $premiosRevendedoraService,
     ) {
     }
 
@@ -125,11 +129,97 @@ class CierreCampanaController extends Controller
             abort(403, 'No tiene permiso para cerrar campañas.');
         }
 
-        return $this->cambiarEstadoCampana(
+        $cierreActualizado = $this->cambiarEstadoCampana(
             cierre: $cierre,
             estadoNuevo: CierreCampana::ESTADO_CERRADO,
             usuario: $usuario,
             motivo: $motivo ?? 'Cierre operativo de campaña',
         );
+
+        $this->sincronizarPremiosRevendedoras($cierreActualizado);
+
+        return $cierreActualizado;
+    }
+
+    protected function sincronizarPremiosRevendedoras(CierreCampana $cierre): void
+    {
+        $pedidosPorRevendedora = Pedido::query()
+            ->where('cierre_id', $cierre->id)
+            ->whereNotNull('vendedora_id')
+            ->select(
+                'vendedora_id',
+                DB::raw('GROUP_CONCAT(id) as pedidos_ids'),
+                DB::raw("SUM(CASE WHEN estado IN ('Confirmado', 'Facturado', 'Entregado') THEN 1 ELSE 0 END) as pedidos_confirmados"),
+                DB::raw("SUM(CASE WHEN estado IN ('Confirmado', 'Facturado', 'Entregado') THEN total_puntos ELSE 0 END) as puntos_confirmados")
+            )
+            ->groupBy('vendedora_id')
+            ->get();
+
+        foreach ($pedidosPorRevendedora as $resumen) {
+            $revendedora = User::find($resumen->vendedora_id);
+
+            if (! $revendedora) {
+                continue;
+            }
+
+            $pedidoConfirmado = (int) $resumen->pedidos_confirmados > 0;
+            $pedidosIds = collect(explode(',', (string) $resumen->pedidos_ids))
+                ->filter()
+                ->map(fn ($id) => (int) $id)
+                ->values()
+                ->all();
+
+            $this->premiosRevendedoraService->procesarRacha(
+                revendedora: $revendedora,
+                cierre: $cierre,
+                pedidoConfirmado: $pedidoConfirmado,
+                contexto: [
+                    'cierre_id' => $cierre->id,
+                    'pedido_ids' => $pedidosIds,
+                    'regla' => 'cierre_campana_racha',
+                ],
+            );
+
+            if (! $pedidoConfirmado) {
+                continue;
+            }
+
+            $puntosContinuidad = (int) data_get($cierre->datos, 'reglas_revendedora.continuidad_puntos', 30);
+            $puntosVentas = (int) $resumen->puntos_confirmados;
+
+            $this->premiosRevendedoraService->registrarMovimientoPuntos(
+                revendedora: $revendedora,
+                cierre: $cierre,
+                puntos: $puntosContinuidad,
+                estado: 'confirmado',
+                origen: 'cierre_campana',
+                motivo: 'Bono por continuidad en cierre',
+                idempotenciaClave: sprintf('cierre:%d:revendedora:%d:continuidad', $cierre->id, $revendedora->id),
+                datos: [
+                    'pedido_origen_ids' => $pedidosIds,
+                    'cierre_id' => $cierre->id,
+                    'regla_aplicada' => 'continuidad',
+                ],
+            );
+
+            if ($puntosVentas <= 0) {
+                continue;
+            }
+
+            $this->premiosRevendedoraService->registrarMovimientoPuntos(
+                revendedora: $revendedora,
+                cierre: $cierre,
+                puntos: $puntosVentas,
+                estado: 'confirmado',
+                origen: 'cierre_campana',
+                motivo: 'Puntos por ventas confirmadas del cierre',
+                idempotenciaClave: sprintf('cierre:%d:revendedora:%d:ventas', $cierre->id, $revendedora->id),
+                datos: [
+                    'pedido_origen_ids' => $pedidosIds,
+                    'cierre_id' => $cierre->id,
+                    'regla_aplicada' => 'ventas_confirmadas',
+                ],
+            );
+        }
     }
 }
