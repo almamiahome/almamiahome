@@ -19,14 +19,22 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('billetera')
-        <x-app.container class="space-y-6">
+        <x-app.container class="space-y-6" data-tour-scope="billetera">
             <x-app.heading
                 title="Billetera"
                 description="Panel consolidado de saldos, puntaje y trazabilidad auditable por campaña/cierre."
                 :border="false"
+                data-tour-step="1"
+                data-tour-title="Billetera unificada"
+                data-tour-text="Consultá tu estado económico y de puntos en un único panel para planificar próximos cierres."
             />
 
-            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div
+                class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"
+                data-tour-step="2"
+                data-tour-title="Saldos clave"
+                data-tour-text="Estas tarjetas muestran saldo actual, saldo proyectado y rango para anticipar decisiones comerciales."
+            >
                 <div class="rounded-2xl border border-white/50 bg-white/45 p-4 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
                     <p class="text-xs uppercase tracking-wide text-slate-500">Saldo actual</p>
                     <p class="mt-2 text-2xl font-bold text-slate-800 dark:text-slate-100">${{ number_format($resumen['saldo_actual'] ?? 0, 2, ',', '.') }}</p>
@@ -73,7 +81,12 @@ new class extends Component {
                 </div>
             </div>
 
-            <div class="overflow-hidden rounded-2xl border border-white/50 bg-white/50 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
+            <div
+                class="overflow-hidden rounded-2xl border border-white/50 bg-white/50 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40"
+                data-tour-step="3"
+                data-tour-title="Trazabilidad auditable"
+                data-tour-text="Revisá créditos y débitos por campaña/cierre para validar cada movimiento de la billetera."
+            >
                 <div class="border-b border-slate-200 px-4 py-3 dark:border-slate-700">
                     <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Historial de movimientos (créditos/débitos)</h3>
                 </div>

@@ -36,7 +36,11 @@
         }
     </style>
 </head>
-<body x-data class="flex flex-col lg:min-h-screen bg-zinc-100 dark:bg-zinc-950 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
+<body
+    x-data
+    data-tour-user="{{ auth()->id() ?? 'guest' }}"
+    class="flex flex-col lg:min-h-screen bg-zinc-100 dark:bg-zinc-950 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif"
+>
 
     {{-- Imagen de Fondo Fija Detrás de Todo --}}
     <div class="fixed-wallpaper">
@@ -103,6 +107,14 @@
     @endif
     @include('theme::partials.footer-scripts')
     {{ $javascript ?? '' }}
+
+    <button
+        type="button"
+        data-tour-manual-button
+        class="hidden fixed bottom-24 right-4 z-[1200] rounded-full bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-lg transition hover:bg-indigo-700 lg:bottom-6"
+    >
+        Ver guía
+    </button>
 
 </body>
 </html>

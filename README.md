@@ -30,7 +30,7 @@ Notas de control:
 ## Dependencias
 
 > Fuente de verdad: `composer.json` (backend) y `package.json` (frontend).  
-> Última actualización de dependencias documentada: **25 de marzo de 2026**.
+> Última actualización de dependencias documentada: **26 de marzo de 2026**.
 
 ### Backend (PHP/Laravel)
 
@@ -66,6 +66,7 @@ Notas de control:
 | @tailwindcss/typography | 0.5.16 | Tipografía rica para contenido editorial y documentación. |
 | alpinejs | 3.4.2 | Interactividad ligera en vistas Blade/Livewire. |
 | axios | 1.8.2 | Cliente HTTP para llamadas asíncronas del frontend. |
+| intro.js | 8.3.2 | Tours guiados contextuales para onboarding de pantallas operativas. |
 | postcss | 8.4.38 | Transformación CSS en la cadena de build. |
 | postcss-nesting | 12.1.1 | Soporte de anidado CSS compatible con PostCSS. |
 | autoprefixer | 10.4.19 | Prefijos automáticos para compatibilidad entre navegadores. |

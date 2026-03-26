@@ -69,7 +69,7 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('crearpedido')
-    <x-app.container>
+    <x-app.container data-tour-scope="crear-pedido">
 
         {{-- Styles moved to assets/css/app.css --}}
 
@@ -79,7 +79,12 @@ new class extends Component {
             x-init="init()"
         >
 
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div
+                class="flex flex-wrap items-center justify-between gap-3 mb-4"
+                data-tour-step="1"
+                data-tour-title="Creación de pedido"
+                data-tour-text="Este flujo te guía para armar un pedido completo de Alma Mía, desde selección de productos hasta confirmación."
+            >
             <h1 class="text-xl font-bold">Crear Pedido</h1>
             <a href="{{ url('/catalogo') }}" class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition">
                 Ir a Catálogo
@@ -93,7 +98,12 @@ new class extends Component {
                 <div class="p-3 mt-4 text-red-700 bg-red-100 border border-red-300 rounded" x-text="messages.error"></div>
             </template>
 
-            <section id="seccion-productos">
+            <section
+                id="seccion-productos"
+                data-tour-step="2"
+                data-tour-title="Selección de productos"
+                data-tour-text="Filtrá por categoría o buscá por nombre y SKU para cargar artículos al carrito con rapidez."
+            >
             <!-- Filtros categorías y busqueda -->
             <div class="mt-8 mb-6">
     <div class="flex items-center justify-between mb-3">
@@ -235,7 +245,13 @@ new class extends Component {
             </section>
 
             <!-- Carrito -->
-            <div id="seccion-carrito" class="bg-white shadow rounded-2xl p-4 mb-4">
+            <div
+                id="seccion-carrito"
+                class="bg-white shadow rounded-2xl p-4 mb-4"
+                data-tour-step="3"
+                data-tour-title="Control del carrito"
+                data-tour-text="Revisá cantidades, subtotales y puntos antes de guardar el pedido para evitar diferencias de cierre."
+            >
                 <div class="bg-white dark:bg-slate-950 shadow-sm rounded-3xl p-6 mb-6 border border-slate-200 dark:border-slate-800 transition-all">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>

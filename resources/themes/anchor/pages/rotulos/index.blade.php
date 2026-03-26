@@ -125,11 +125,21 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('rotulos')
-    <x-app.container>
+    <x-app.container data-tour-scope="rotulos-masivos">
 
-        <h1 class="mb-6 text-2xl font-bold">Rótulos de pedidos</h1>
+        <h1
+            class="mb-6 text-2xl font-bold"
+            data-tour-step="1"
+            data-tour-title="Rótulos masivos"
+            data-tour-text="Usá esta pantalla para generar rótulos por período y ordenar la logística de despacho."
+        >Rótulos de pedidos</h1>
 
-        <div class="mb-6 flex flex-wrap items-end gap-4">
+        <div
+            class="mb-6 flex flex-wrap items-end gap-4"
+            data-tour-step="2"
+            data-tour-title="Filtros operativos"
+            data-tour-text="Filtrá por líder, zona y departamento para imprimir sólo los rótulos del equipo o campaña que corresponda."
+        >
             <div>
                 <label class="mb-1 block text-sm font-medium text-gray-700">Mes</label>
                 <select wire:model="mes" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -207,7 +217,12 @@ new class extends Component {
             </div>
         </div>
 
-        <div class="print-area rounded-xl border bg-white p-4 shadow-sm">
+        <div
+            class="print-area rounded-xl border bg-white p-4 shadow-sm"
+            data-tour-step="3"
+            data-tour-title="Vista para impresión"
+            data-tour-text="Validá la grilla antes de exportar PDF o imprimir para evitar errores de entrega."
+        >
             @php
                 $pages = array_chunk($rotulos, $this::CAPACIDAD_PAGINA);
             @endphp
