@@ -5,6 +5,7 @@ use App\Models\Catalogo;
 use App\Models\CatalogoPagina;
 use App\Models\CatalogoPaginaProducto;
 use App\Models\Producto;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
@@ -35,6 +36,10 @@ new class extends Component {
     public $catalogoForm = [
         'nombre'         => '',
         'descripcion'    => '',
+        'anio'           => null,
+        'numero'         => 1,
+        'fecha_inicio'   => null,
+        'fecha_fin'      => null,
         'imagen_portada' => null,
     ];
 
@@ -68,12 +73,15 @@ new class extends Component {
         }
 
         $this->productos = Producto::with('categorias')->orderBy('nombre')->get();
+        $this->resetCatalogoForm();
         $this->loadCatalogos();
     }
 
     public function loadCatalogos(): void
     {
         $this->catalogos = Catalogo::with(['paginas.productos.producto', 'paginas.productos.productosGrupo'])
+            ->orderByDesc('anio')
+            ->orderByDesc('numero')
             ->orderByDesc('id')
             ->get();
 
@@ -116,6 +124,10 @@ new class extends Component {
         $this->catalogoEditingId      = $catalogo->id;
         $this->catalogoForm['nombre'] = $catalogo->nombre;
         $this->catalogoForm['descripcion'] = $catalogo->descripcion;
+        $this->catalogoForm['anio'] = $catalogo->anio;
+        $this->catalogoForm['numero'] = $catalogo->numero;
+        $this->catalogoForm['fecha_inicio'] = optional($catalogo->fecha_inicio)->format('Y-m-d');
+        $this->catalogoForm['fecha_fin'] = optional($catalogo->fecha_fin)->format('Y-m-d');
         $this->catalogoForm['imagen_portada'] = null;
     }
 
@@ -124,10 +136,15 @@ new class extends Component {
         $rules = [
             'catalogoForm.nombre'         => 'required|string|max:255',
             'catalogoForm.descripcion'    => 'nullable|string|max:1000',
+            'catalogoForm.anio'           => 'required|integer|min:2024|max:2100',
+            'catalogoForm.numero'         => 'required|integer|min:1|max:12',
+            'catalogoForm.fecha_inicio'   => 'required|date',
+            'catalogoForm.fecha_fin'      => 'required|date|after_or_equal:catalogoForm.fecha_inicio',
             'catalogoForm.imagen_portada' => 'nullable|image|max:4096',
         ];
 
         $this->validate($rules);
+        $this->validarRangoCatalogo();
 
         $catalogo = $this->catalogoEditingId
             ? Catalogo::findOrFail($this->catalogoEditingId)
@@ -135,6 +152,10 @@ new class extends Component {
 
         $catalogo->nombre      = $this->catalogoForm['nombre'];
         $catalogo->descripcion = $this->catalogoForm['descripcion'];
+        $catalogo->anio = (int) $this->catalogoForm['anio'];
+        $catalogo->numero = (int) $this->catalogoForm['numero'];
+        $catalogo->fecha_inicio = $this->catalogoForm['fecha_inicio'];
+        $catalogo->fecha_fin = $this->catalogoForm['fecha_fin'];
 
         if ($this->catalogoForm['imagen_portada']) {
             if ($catalogo->imagen_portada) {
@@ -149,6 +170,33 @@ new class extends Component {
 
         $this->resetCatalogoForm();
         $this->loadCatalogos();
+    }
+
+    protected function validarRangoCatalogo(): void
+    {
+        $inicio = Carbon::parse($this->catalogoForm['fecha_inicio'])->startOfDay();
+        $fin = Carbon::parse($this->catalogoForm['fecha_fin'])->startOfDay();
+        $finEsperado = $inicio->copy()->addMonthsNoOverflow(3)->subDay();
+
+        if (! $fin->equalTo($finEsperado)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'catalogoForm.fecha_fin' => 'El catálogo debe cubrir exactamente 3 meses (fecha fin esperada: '.$finEsperado->format('Y-m-d').').',
+            ]);
+        }
+
+        $solapado = Catalogo::query()
+            ->when($this->catalogoEditingId, fn ($q) => $q->where('id', '!=', $this->catalogoEditingId))
+            ->whereNotNull('fecha_inicio')
+            ->whereNotNull('fecha_fin')
+            ->whereDate('fecha_inicio', '<=', $fin->toDateString())
+            ->whereDate('fecha_fin', '>=', $inicio->toDateString())
+            ->exists();
+
+        if ($solapado) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'catalogoForm.fecha_inicio' => 'El rango de fechas se superpone con otro catálogo.',
+            ]);
+        }
     }
 
     public function deleteCatalogo(int $catalogoId): void
@@ -261,6 +309,67 @@ new class extends Component {
         }
     }
 
+    public function moverPaginaArriba(int $paginaId): void
+    {
+        $pagina = CatalogoPagina::findOrFail($paginaId);
+        $anterior = CatalogoPagina::query()
+            ->where('catalogo_id', $pagina->catalogo_id)
+            ->where('numero', '<', $pagina->numero)
+            ->orderByDesc('numero')
+            ->first();
+
+        if (! $anterior) {
+            return;
+        }
+
+        $numeroActual = $pagina->numero;
+        $pagina->numero = $anterior->numero;
+        $anterior->numero = $numeroActual;
+        $pagina->save();
+        $anterior->save();
+
+        $this->normalizarNumeracionPaginas($pagina->catalogo_id);
+    }
+
+    public function moverPaginaAbajo(int $paginaId): void
+    {
+        $pagina = CatalogoPagina::findOrFail($paginaId);
+        $siguiente = CatalogoPagina::query()
+            ->where('catalogo_id', $pagina->catalogo_id)
+            ->where('numero', '>', $pagina->numero)
+            ->orderBy('numero')
+            ->first();
+
+        if (! $siguiente) {
+            return;
+        }
+
+        $numeroActual = $pagina->numero;
+        $pagina->numero = $siguiente->numero;
+        $siguiente->numero = $numeroActual;
+        $pagina->save();
+        $siguiente->save();
+
+        $this->normalizarNumeracionPaginas($pagina->catalogo_id);
+    }
+
+    protected function normalizarNumeracionPaginas(int $catalogoId): void
+    {
+        CatalogoPagina::query()
+            ->where('catalogo_id', $catalogoId)
+            ->orderBy('numero')
+            ->orderBy('id')
+            ->get()
+            ->values()
+            ->each(function (CatalogoPagina $pagina, int $indice) {
+                $pagina->numero = $indice + 1;
+                $pagina->save();
+            });
+
+        $this->refreshPaginas();
+        $this->loadCatalogos();
+    }
+
     public function editMap(int $mapId): void
     {
         $pivot                           = CatalogoPaginaProducto::with('productosGrupo')->findOrFail($mapId);
@@ -358,6 +467,10 @@ new class extends Component {
         $this->catalogoForm      = [
             'nombre'         => '',
             'descripcion'    => '',
+            'anio'           => (int) now()->year,
+            'numero'         => 1,
+            'fecha_inicio'   => now()->startOfMonth()->format('Y-m-d'),
+            'fecha_fin'      => now()->startOfMonth()->addMonthsNoOverflow(3)->subDay()->format('Y-m-d'),
             'imagen_portada' => null,
         ];
     }
@@ -429,6 +542,32 @@ new class extends Component {
                             <textarea wire:model="catalogoForm.descripcion" rows="2" class="w-full p-4 bg-white border-slate-200 rounded-2xl font-bold focus:border-pink-500 transition-all shadow-inner"></textarea>
                         </div>
 
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Año</label>
+                                <input type="number" wire:model="catalogoForm.anio" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
+                                @error('catalogoForm.anio') <span class="text-xs font-bold text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Número catálogo</label>
+                                <input type="number" wire:model="catalogoForm.numero" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
+                                @error('catalogoForm.numero') <span class="text-xs font-bold text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Fecha inicio</label>
+                                <input type="date" wire:model="catalogoForm.fecha_inicio" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
+                                @error('catalogoForm.fecha_inicio') <span class="text-xs font-bold text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Fecha fin</label>
+                                <input type="date" wire:model="catalogoForm.fecha_fin" class="w-full h-12 px-4 bg-white border-slate-200 rounded-2xl font-bold">
+                                @error('catalogoForm.fecha_fin') <span class="text-xs font-bold text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
                         <div class="space-y-1">
                             <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Portada</label>
                             <input type="file" wire:model="catalogoForm.imagen_portada" class="w-full text-xs">
@@ -450,7 +589,7 @@ new class extends Component {
                                 <div class="flex items-center justify-between">
                                     <div class="cursor-pointer" wire:click="selectCatalogo({{ $catalogo->id }})">
                                         <p class="font-black text-slate-800">{{ $catalogo->nombre }}</p>
-                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{{ $catalogo->paginas->count() }} Páginas</p>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Cat {{ $catalogo->numero }} / {{ $catalogo->anio }} · {{ $catalogo->paginas->count() }} páginas</p>
                                     </div>
                                     <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button wire:click="editCatalogo({{ $catalogo->id }})" class="p-2 text-slate-400 hover:text-indigo-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
@@ -508,6 +647,12 @@ new class extends Component {
                                     Pág {{ $pagina->numero }}
                                 </div>
                                 <div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button type="button" wire:click.stop="moverPaginaArriba({{ $pagina->id }})" class="p-1.5 rounded-lg bg-white/90 text-slate-600 shadow" title="Mover arriba">
+                                        ↑
+                                    </button>
+                                    <button type="button" wire:click.stop="moverPaginaAbajo({{ $pagina->id }})" class="p-1.5 rounded-lg bg-white/90 text-slate-600 shadow" title="Mover abajo">
+                                        ↓
+                                    </button>
                                     <button type="button" wire:click.stop="editPagina({{ $pagina->id }})" class="p-1.5 rounded-lg bg-white/90 text-indigo-600 shadow">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                     </button>

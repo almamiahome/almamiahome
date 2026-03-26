@@ -300,7 +300,7 @@ new class extends Component {
             
             <div class="px-2">
             <h1 class="text-4xl font-black tracking-tighter text-slate-900">
-                Catálogo <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600">Catálogo</span>
+                Catálogo <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600">Digital</span>
             </h1>
             
         </div>
@@ -326,7 +326,9 @@ new class extends Component {
                 @touchstart="handleTouchStart($event)"
                 @touchend="handleTouchEnd($event)"
                 @mousedown="handleMouseDown($event)"
+                @mousemove="handleMouseMove($event)"
                 @mouseup="handleMouseUp($event)"
+                @mouseleave="handleMouseUp($event)"
                 class="relative flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar rounded-[2rem] bg-slate-100 shadow-xl ring-1 ring-slate-200"
             >
                 <template x-for="(pagina, index) in paginas" :key="pagina.id">
@@ -906,6 +908,7 @@ new class extends Component {
                     mouseDown: false,
                     mouseStartX: null,
                     mouseStartY: null,
+                    mouseSwipeTriggered: false,
                     animandoPasoPagina: false,
                     direccionPasoPagina: null,
                     paginaSaliente: null,
@@ -1037,6 +1040,24 @@ new class extends Component {
                         this.mouseDown = true;
                         this.mouseStartX = event.clientX;
                         this.mouseStartY = event.clientY;
+                        this.mouseSwipeTriggered = false;
+                    },
+
+                    handleMouseMove(event) {
+                        if (!this.mouseDown || this.mouseSwipeTriggered) return;
+
+                        const deltaX = event.clientX - this.mouseStartX;
+                        const deltaY = event.clientY - this.mouseStartY;
+
+                        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                            if (deltaX < 0) {
+                                this.paginaSiguiente();
+                            } else {
+                                this.paginaAnterior();
+                            }
+
+                            this.mouseSwipeTriggered = true;
+                        }
                     },
 
                     handleMouseUp(event) {
@@ -1047,8 +1068,10 @@ new class extends Component {
                         this.mouseDown = false;
                         this.mouseStartX = null;
                         this.mouseStartY = null;
+                        const yaDisparado = this.mouseSwipeTriggered;
+                        this.mouseSwipeTriggered = false;
 
-                        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                        if (!yaDisparado && Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
                             if (deltaX < 0) {
                                 this.paginaSiguiente();
                             } else {
