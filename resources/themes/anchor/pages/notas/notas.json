@@ -1,0 +1,170 @@
+{
+  "notas": [
+    {
+      "id": "nota-clave-1",
+      "titulo": "Estado general del sistema",
+      "contenido": "# Estado general\n\nEl sistema corre sobre Wave + tema Anchor, con foco en operación comercial multinivel.",
+      "etiquetas": [
+        "estado",
+        "arquitectura"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-2",
+      "titulo": "Jerarquía comercial activa",
+      "contenido": "# Jerarquía\n\nSe mantiene el esquema **Vendedora → Líder → Coordinadora** con paneles por rol.",
+      "etiquetas": [
+        "negocio",
+        "roles"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-3",
+      "titulo": "Gestión de pedidos",
+      "contenido": "# Pedidos\n\nEl módulo de pedidos es el eje operativo: creación, seguimiento y facturación.",
+      "etiquetas": [
+        "pedidos",
+        "operacion"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-4",
+      "titulo": "Catálogo y categorías",
+      "contenido": "# Catálogo\n\nProductos y categorías ya tienen gestión dedicada en panel interno.",
+      "etiquetas": [
+        "catalogo",
+        "productos"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-5",
+      "titulo": "Campañas y puntajes",
+      "contenido": "# Campañas\n\nExisten pantallas para campañas, reglas de puntaje y bonos.",
+      "etiquetas": [
+        "campanas",
+        "puntaje"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-6",
+      "titulo": "Tableros de seguimiento",
+      "contenido": "# Tableros\n\nHay vistas de resumen para coordinadoras, líderes y métricas de cierres.",
+      "etiquetas": [
+        "reportes",
+        "seguimiento"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-7",
+      "titulo": "Módulo financiero",
+      "contenido": "# Finanzas\n\nSe administran gastos, cobros y pagos dentro del ecosistema Anchor.",
+      "etiquetas": [
+        "finanzas",
+        "control"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-8",
+      "titulo": "Usuarios y onboarding",
+      "contenido": "# Usuarios\n\nLa alta y edición de usuarios ya contempla perfiles y relaciones.",
+      "etiquetas": [
+        "usuarios",
+        "onboarding"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-9",
+      "titulo": "Notas operativas históricas",
+      "contenido": "# Notas\n\nSe incorpora módulo de notas en pantalla completa con markdown para contexto vivo.",
+      "etiquetas": [
+        "notas",
+        "documentacion"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-10",
+      "titulo": "Kanban de tareas",
+      "contenido": "# Tareas\n\nSe incorpora kanban administrable con columnas y tarjetas arrastrables.",
+      "etiquetas": [
+        "tareas",
+        "kanban"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-11",
+      "titulo": "Base histórica desde commits",
+      "contenido": "# Historial\n\nEl tablero inicia con tareas realizadas extraídas desde el primer commit.",
+      "etiquetas": [
+        "historial",
+        "trazabilidad"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-12",
+      "titulo": "Dependencias críticas",
+      "contenido": "# Dependencias\n\nEl proyecto usa Livewire 3, Volt, Folio, Filament, Spatie Roles y más.",
+      "etiquetas": [
+        "dependencias",
+        "tecnico"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-13",
+      "titulo": "Regla de rutas",
+      "contenido": "# Convención\n\nLas nuevas páginas se agregan en Folio/Volt sin tocar `routes/`.",
+      "etiquetas": [
+        "convenciones",
+        "folio"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-14",
+      "titulo": "Documentación en español",
+      "contenido": "# Documentación\n\nLa documentación y textos internos deben mantenerse en español neutro.",
+      "etiquetas": [
+        "documentacion",
+        "calidad"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    },
+    {
+      "id": "nota-clave-15",
+      "titulo": "Siguiente foco recomendado",
+      "contenido": "# Próximo paso\n\nPriorizar mantenimiento de datos operativos y limpieza periódica del kanban.",
+      "etiquetas": [
+        "roadmap",
+        "operacion"
+      ],
+      "creado_en": "2026-03-26 08:03:09",
+      "actualizado_en": "2026-03-26 08:03:09"
+    }
+  ],
+  "actualizado_en": "2026-03-26 08:03:09"
+}

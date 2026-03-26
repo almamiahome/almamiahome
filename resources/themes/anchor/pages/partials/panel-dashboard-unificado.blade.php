@@ -115,6 +115,8 @@ $widgetsOperativos = [
     ['titulo' => 'Resumen líderes', 'ruta' => '/resumen-lideres', 'roles' => ['coordinadora', 'admin']],
     ['titulo' => 'Zona coordinadora', 'ruta' => '/zona-coordinadora', 'roles' => ['coordinadora', 'admin']],
     ['titulo' => 'Reglas de puntaje', 'ruta' => '/puntaje-reglas', 'roles' => ['admin']],
+    ['titulo' => 'Tareas', 'ruta' => '/tareas', 'roles' => ['admin']],
+    ['titulo' => 'Notas', 'ruta' => '/notas', 'roles' => ['admin']],
     ['titulo' => 'Mis pedidos', 'ruta' => '/mis-pedidos', 'roles' => ['vendedora', 'lider', 'coordinadora', 'admin']],
 ];
 ?>
