@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premios Vigentes - Cosmetics OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #020617;
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+        }
+
+        .rpg-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .price-tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: #ec4899;
+            font-weight: 800;
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .grid-prizes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .rank-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rank-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .glow-pink { box-shadow: 0 0 20px rgba(236, 72, 153, 0.15); }
+        
+        /* Custom colors for ranks */
+        .rank-perla { border-left: 4px solid #f1f5f9; }
+        .rank-aguamarina { border-left: 4px solid #7dd3fc; }
+        .rank-zafiro { border-left: 4px solid #3b82f6; }
+        .rank-esmeralda { border-left: 4px solid #10b981; }
+        .rank-rubi { border-left: 4px solid #ef4444; }
+        .rank-diamante { border-left: 4px solid #e0e7ff; }
+        .rank-rosa { border-left: 4px solid #f472b6; }
+        .rank-estrella { border-left: 4px solid #fbbf24; }
+        .rank-ejecutiva { border-left: 4px solid #8b5cf6; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    </style>
+</head>
+<body class="p-8 lg:p-16">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-pink-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-violet-600/10 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="max-w-7xl mx-auto mb-16 text-center">
+        <div class="inline-block px-4 py-1 glass mb-4">
+            <span class="rpg-label text-pink-500">Programa de Incentivos 2026</span>
+        </div>
+        <h1 class="text-5xl lg:text-7xl font-black italic tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40">
+            SISTEMA DE PREMIOS
+        </h1>
+        <p class="text-white/40 text-lg max-w-2xl mx-auto">
+            Explora las recompensas por cumplimiento de objetivos, crecimiento de equipo y fidelidad de campaña.
+        </p>
+    </header>
+
+    <div class="max-w-7xl mx-auto space-y-24">
+        
+        <!-- SECTION: REVENDEDORAS -->
+        <section>
+            <div class="flex items-center space-x-4 mb-8">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
+                <h2 class="text-2xl font-bold tracking-widest uppercase italic">Premios Revendedoras</h2>
+                <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Premio Consecutivos -->
+                <div class="glass p-8 rank-card border-pink-500/20">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-pink-500/10 rounded-2xl">
+                            <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                        </div>
+                        <span class="badge-info">3 Pedidos</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Pedidos Consecutivos</h3>
+                    <p class="text-sm text-white/50 mb-6">Realiza pedidos de mínimo 10 unidades en 3 campañas seguidas para desbloquear el set de premios.</p>
+                    
+                    <div class="flex items-center space-x-2 text-xs font-mono">
+                        <div class="flex-1 p-2 bg-white/5 rounded text-center border border-white/5">Cat 1<br><span class="text-white">Premio 1</span></div>
+                        <div class="text-pink-500">→</div>
+                        <div class="flex-1 p-2 bg-white/5 rounded text-center border border-white/5">Cat 2<br><span class="text-white">Premio 2</span></div>
+                        <div class="text-pink-500">→</div>
+                        <div class="flex-1 p-2 bg-pink-500/10 rounded text-center border border-pink-500/20">Cat 3<br><span class="text-pink-500">Final</span></div>
+                    </div>
+                </div>
+
+                <!-- Continuidad y Ventas -->
+                <div class="glass p-8 rank-card border-blue-500/20">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-blue-500/10 rounded-2xl">
+                            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <span class="badge-info">Sistema de Puntos</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Continuidad y Ventas</h3>
+                    <p class="text-sm text-white/50 mb-4">Suma puntos con cada pedido consecutivo y cámbialos por productos exclusivos.</p>
+                    
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center p-2 bg-white/5 rounded-lg border border-white/5">
+                            <span class="text-xs">10 Unidades</span>
+                            <span class="font-bold text-blue-400">100 Pts</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-white/5 rounded-lg border border-white/5">
+                            <span class="text-xs">15 Unidades</span>
+                            <span class="font-bold text-blue-400">150 Pts</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-blue-500/20 rounded-lg border border-blue-500/30">
+                            <span class="text-xs font-bold">20 Unidades</span>
+                            <span class="font-bold text-blue-300">250 Pts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-4 justify-center">
+                <div class="badge-info italic">ℹ️ Acumulables para productos</div>
+                <div class="badge-info italic">ℹ️ Se envía en primer cierre del próximo catálogo</div>
+                <div class="badge-info italic">ℹ️ Duración: 3 Campañas</div>
+            </div>
+        </section>
+
+        <!-- SECTION: LIDERES -->
+        <section>
+            <div class="flex items-center space-x-4 mb-8">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
+                <h2 class="text-2xl font-bold tracking-widest uppercase italic">Premios Líderes</h2>
+                <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+            </div>
+
+            <!-- Contexto y Datos Clave -->
+            <div class="grid lg:grid-cols-3 gap-6 mb-12">
+                <div class="glass p-6 border-white/5">
+                    <p class="rpg-label mb-4">Contexto de Pedidos</p>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-3xl font-black text-pink-500">1=1</div>
+                        <p class="text-xs text-white/40 leading-relaxed uppercase">Cada pedido registrado equivale a una revendedora activa realizando compras.</p>
+                    </div>
+                </div>
+                <div class="glass p-6 border-white/5">
+                    <p class="rpg-label mb-4">Datos del Cierre</p>
+                    <div class="grid grid-cols-2 gap-2 text-[10px] font-bold">
+                        <div class="bg-white/5 p-2 rounded">UNIDADES (SUMA TOTAL)</div>
+                        <div class="bg-white/5 p-2 rounded">ALTAS (NUEVAS REV.)</div>
+                        <div class="bg-white/5 p-2 rounded">ACTIVIDAD (PEDIDOS)</div>
+                        <div class="bg-white/5 p-2 rounded text-emerald-400">COBRANZA (TIEMPO Y FORMA)</div>
+                    </div>
+                </div>
+                <div class="glass p-6 border-indigo-500/20 bg-indigo-500/5">
+                    <p class="rpg-label mb-4 text-indigo-400">Objetivo Próximo Cierre</p>
+                    <div class="text-center">
+                        <span class="text-2xl font-black italic">ACTIVIDAD + 3</span>
+                        <p class="text-[10px] text-indigo-300 mt-2 uppercase tracking-widest">Cumplir esto activa el Plus de Crecimiento</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLA DE RANGOS: ACTIVIDAD, COBRANZA, UNIDADES -->
+            <div class="space-y-4">
+                <div class="grid grid-cols-12 px-6 rpg-label mb-2">
+                    <div class="col-span-3">Categoría y Rango</div>
+                    <div class="col-span-2 text-center">Actividad</div>
+                    <div class="col-span-2 text-center">Cobranza</div>
+                    <div class="col-span-2 text-center">Unidades</div>
+                    <div class="col-span-3 text-right">Reparto (Min/Max)</div>
+                </div>
+
+                <!-- Rangos Loop -->
+                <div class="space-y-2">
+                    <!-- Perla -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-perla">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic">🐚 PERLA</span>
+                            <p class="text-[9px] text-white/30 uppercase tracking-tighter">Nivel Inicial</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag">$6.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$4.000</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$5.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold">$1.750 - $2.800</span>
+                            <p class="text-[9px] text-white/20">x $350 por pedido</p>
+                        </div>
+                    </div>
+
+                    <!-- Aguamarina -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-aguamarina">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic">🌊 AGUAMARINA</span>
+                            <p class="text-[9px] text-white/30 uppercase tracking-tighter">Nivel 2</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag">$12.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$7.200</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$10.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold">$3.600 - $4.950</span>
+                            <p class="text-[9px] text-white/20">x $450 por pedido</p>
+                        </div>
+                    </div>
+
+                    <!-- Zafiro -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-zafiro">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic">💧 ZAFIRO</span>
+                            <p class="text-[9px] text-white/30 uppercase tracking-tighter">Nivel 3</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag">$18.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$9.000</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$12.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold">$6.000 - $8.000</span>
+                            <p class="text-[9px] text-white/20">x $500 por pedido</p>
+                        </div>
+                    </div>
+
+                    <!-- Esmeralda -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-esmeralda">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic">🌳 ESMERALDA</span>
+                            <p class="text-[9px] text-white/30 uppercase tracking-tighter">Nivel Senior</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag">$25.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$12.000</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$16.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold">$9.350 - $13.200</span>
+                            <p class="text-[9px] text-white/20">x $550 por pedido</p>
+                        </div>
+                    </div>
+
+                    <!-- Rubí -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-rubi">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic">🌹 RUBÍ</span>
+                            <p class="text-[9px] text-white/30 uppercase tracking-tighter">Nivel Elite</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag">$35.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$15.000</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$20.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold">$15.000 - $20.400</span>
+                            <p class="text-[9px] text-white/20">x $600 por pedido</p>
+                        </div>
+                    </div>
+
+                    <!-- Diamante -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-diamante">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic">💎 DIAMANTE</span>
+                            <p class="text-[9px] text-white/30 uppercase tracking-tighter">Nivel Maestro</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag">$45.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$20.000</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$25.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold">$28.000 - $36.000</span>
+                            <p class="text-[9px] text-white/20">x $800 por pedido</p>
+                        </div>
+                    </div>
+
+                    <!-- Ejecutiva -->
+                    <div class="glass grid grid-cols-12 items-center p-4 rank-card rank-ejecutiva bg-violet-600/5 border-violet-600/20">
+                        <div class="col-span-3">
+                            <span class="text-sm font-black italic text-violet-400">🏆 EJECUTIVA</span>
+                            <p class="text-[9px] text-violet-300/40 uppercase tracking-tighter">Máximo Rango</p>
+                        </div>
+                        <div class="col-span-2 text-center price-tag text-violet-400">$100.000</div>
+                        <div class="col-span-2 text-center text-emerald-400 font-mono text-sm font-bold">$50.000</div>
+                        <div class="col-span-2 text-center text-blue-400 font-mono text-sm font-bold">$65.000</div>
+                        <div class="col-span-3 text-right">
+                            <span class="text-xs font-bold text-violet-200">$89.100 - $110.000</span>
+                            <p class="text-[9px] text-white/20">x $1.100 por pedido</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Otros Premios Líderes -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+                <!-- Retención -->
+                <div class="glass p-8 border-red-500/20">
+                    <h3 class="text-lg font-bold mb-4 italic uppercase">🎁 Retención</h3>
+                    <p class="text-xs text-white/40 mb-4 uppercase leading-relaxed">Se aplica del rango <span class="text-red-400 font-bold">Rubí</span> hacia arriba.</p>
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                        <p class="text-xs italic text-white/60">"Si pedidos actuales ≥ Pedidos cierre anterior"</p>
+                        <p class="text-xl font-bold mt-2 text-emerald-400">MONTO ACTIVIDAD X 2</p>
+                    </div>
+                </div>
+
+                <!-- Altas -->
+                <div class="glass p-8 border-orange-500/20">
+                    <h3 class="text-lg font-bold mb-4 italic uppercase">🎁 Incorporaciones</h3>
+                    <p class="text-xs text-white/40 mb-4 uppercase">Premio por cierres consecutivos incorporando:</p>
+                    <div class="space-y-2 font-mono text-xs">
+                        <div class="flex justify-between"><span>1° Campaña</span> <span class="text-orange-400">$500 c/u</span></div>
+                        <div class="flex justify-between"><span>2° Campaña</span> <span class="text-orange-400">$700 c/u</span></div>
+                        <div class="flex justify-between font-bold"><span>3° Campaña</span> <span class="text-orange-400">$1000 c/u</span></div>
+                        <div class="pt-2 border-t border-white/10 flex justify-between font-black text-white text-sm">
+                            <span>+3 ALTAS</span> <span>$2200 c/u</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crecimiento -->
+                <div class="glass p-8 border-emerald-500/20">
+                    <h3 class="text-lg font-bold mb-4 italic uppercase">🎁 Bono Crecimiento</h3>
+                    <p class="text-xs text-white/40 mb-4 uppercase">Pago único al subir de nivel:</p>
+                    <div class="max-h-40 overflow-y-auto space-y-1 text-[10px] pr-2">
+                        <div class="flex justify-between p-1 hover:bg-white/5"><span>Primer Objetivo</span> <span>$25.000</span></div>
+                        <div class="flex justify-between p-1 hover:bg-white/5"><span>Perla a Aguamarina</span> <span>$25.000</span></div>
+                        <div class="flex justify-between p-1 hover:bg-white/5"><span>Aguamarina a Zafiro</span> <span>$30.000</span></div>
+                        <div class="flex justify-between p-1 hover:bg-white/5 font-bold text-emerald-400"><span>Estrella a Ejecutiva</span> <span>$100.000</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plus de Crecimiento Footer -->
+            <div class="mt-12 glass p-10 bg-gradient-to-r from-pink-600/20 to-violet-600/20 border-pink-500/30 text-center">
+                <p class="rpg-label text-pink-400 mb-2">Multiplicador Final</p>
+                <h3 class="text-3xl font-black italic mb-4">PLUS DE CRECIMIENTO</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <div class="text-left">
+                        <p class="text-xs text-white/60 uppercase">Activación:</p>
+                        <p class="text-lg font-bold">Cumplir Objetivo Próximo Cierre</p>
+                    </div>
+                    <div class="text-4xl font-light text-white/20 hidden md:block">×</div>
+                    <div class="text-left">
+                        <p class="text-xs text-white/60 uppercase">Bono Extra:</p>
+                        <p class="text-3xl font-black text-pink-400">(TOTAL A COBRAR) x 15%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="mt-24 pb-16 text-center">
+        <p class="rpg-label opacity-20">Cosmetics OS - Gestión de Recompensas v2.4</p>
+    </footer>
+
+</body>
+</html>
