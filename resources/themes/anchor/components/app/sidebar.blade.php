@@ -108,6 +108,8 @@
                             :open="Request::is('puntaje-reglas*') || Request::is('rangos*') || Request::is('vendedoras*') || Request::is('lideres*') || Request::is('coordinadoras*') || Request::is('bono-lideres*') || Request::is('bono-coordinadoras*') || Request::is('crecimiento-cierre-general*') ? '1' : '0'">
                             <x-app.sidebar-link href="/puntaje-reglas" icon="phosphor-trophy">Puntaje Reglas</x-app.sidebar-link>
                             <x-app.sidebar-link href="/rangos" icon="phosphor-medal">Rangos</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/crecimiento-cierre-general/actividad-equipo" icon="phosphor-clipboard-text">V2 Etapa 4</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/crecimiento-cierre-general/premios-lideres" icon="phosphor-crown-simple">V2 Etapa 5</x-app.sidebar-link>
                          <!--   <x-app.sidebar-link href="/bono-lideres" icon="phosphor-star">Bono Líderes</x-app.sidebar-link>
                             <x-app.sidebar-link href="/bono-coordinadoras" icon="phosphor-star-half">Bono Coordinadoras</x-app.sidebar-link> -->
                         </x-app.sidebar-dropdown>

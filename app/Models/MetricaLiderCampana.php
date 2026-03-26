@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MetricaLiderCampana extends Model
 {
@@ -80,5 +81,10 @@ class MetricaLiderCampana extends Model
     public function rangoLider(): BelongsTo
     {
         return $this->belongsTo(RangoLider::class);
+    }
+
+    public function premioLiderCierre(): HasOne
+    {
+        return $this->hasOne(PremioLiderCierre::class);
     }
 }

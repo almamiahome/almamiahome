@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Cobro;
 use App\Models\MetricaLiderCampana;
 use App\Models\Pago;
+use App\Models\PremioLiderCierre;
 use App\Models\Producto;
 use App\Models\RangoLider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -150,6 +151,11 @@ class User extends WaveUser
     public function cobrosComoCoordinadora(): HasMany
     {
         return $this->hasMany(Cobro::class, 'coordinadora_id');
+    }
+
+    public function premiosLiderCierre(): HasMany
+    {
+        return $this->hasMany(PremioLiderCierre::class, 'lider_id');
     }
     
     

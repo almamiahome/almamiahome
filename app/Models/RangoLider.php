@@ -44,6 +44,11 @@ class RangoLider extends Model
         return $this->hasMany(MetricaLiderCampana::class);
     }
 
+    public function premiosCierre(): HasMany
+    {
+        return $this->hasMany(PremioLiderCierre::class);
+    }
+
     public function lideres(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'metricas_lider_campana', 'rango_lider_id', 'lider_id')
