@@ -7,5 +7,5 @@ name('panel');
 ?>
 
 <x-layouts.app>
-    @include('themes.anchor.pages.partials.panel-dashboard-unificado')
+    @include('theme::pages.partials.panel-dashboard-unificado')
 </x-layouts.app>
