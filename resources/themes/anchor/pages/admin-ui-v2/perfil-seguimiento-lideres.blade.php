@@ -88,16 +88,16 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('admin-ui-v2.perfil-seguimiento-lideres')
-        <x-app.container class="space-y-6">
+        <x-app.container class="space-y-6 rounded-3xl border border-white/10 bg-slate-950/80 p-6 text-white shadow-2xl">
             <x-app.heading
                 title="UI V2 · Perfil y seguimiento de líderes"
                 description="Vista de perfil individual con métricas históricas reales por líder."
                 :border="false"
             />
 
-            <div class="rounded-3xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
-                <label class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-300">Seleccionar líder</label>
-                <select wire:model.live="liderId" class="mt-2 w-full rounded-xl border border-white/40 bg-white/70 px-3 py-2 text-sm text-slate-700 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-100">
+            <div class="rounded-3xl border border-white/10 bg-black/25 p-4 backdrop-blur-xl">
+                <label class="text-xs uppercase tracking-wider text-white/60">Seleccionar líder</label>
+                <select wire:model.live="liderId" class="mt-2 w-full rounded-xl border border-white/20 bg-black/30 px-3 py-2 text-sm text-white">
                     @foreach($lideres as $lider)
                         <option value="{{ $lider['id'] }}">{{ $lider['name'] }}</option>
                     @endforeach
@@ -106,28 +106,28 @@ new class extends Component {
 
             @if($perfil)
                 <div class="grid gap-4 md:grid-cols-4">
-                    <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                        <p class="text-xs text-slate-500 dark:text-slate-300">Líder</p>
-                        <p class="text-lg font-semibold text-slate-800 dark:text-white">{{ $perfil['nombre'] }}</p>
+                    <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                        <p class="text-xs text-white/50">Líder</p>
+                        <p class="text-lg font-semibold text-white">{{ $perfil['nombre'] }}</p>
                     </div>
-                    <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                        <p class="text-xs text-slate-500 dark:text-slate-300">Zona</p>
-                        <p class="text-lg font-semibold text-slate-800 dark:text-white">{{ $perfil['zona'] }}</p>
+                    <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                        <p class="text-xs text-white/50">Zona</p>
+                        <p class="text-lg font-semibold text-white">{{ $perfil['zona'] }}</p>
                     </div>
-                    <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                        <p class="text-xs text-slate-500 dark:text-slate-300">Pedidos</p>
-                        <p class="text-lg font-semibold text-slate-800 dark:text-white">{{ number_format($perfil['pedidos']) }}</p>
+                    <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                        <p class="text-xs text-white/50">Pedidos</p>
+                        <p class="text-lg font-semibold text-white">{{ number_format($perfil['pedidos']) }}</p>
                     </div>
-                    <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                        <p class="text-xs text-slate-500 dark:text-slate-300">Monto acumulado</p>
-                        <p class="text-lg font-semibold text-slate-800 dark:text-white">${{ number_format($perfil['monto'], 0, ',', '.') }}</p>
+                    <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                        <p class="text-xs text-white/50">Monto acumulado</p>
+                        <p class="text-lg font-semibold text-white">${{ number_format($perfil['monto'], 0, ',', '.') }}</p>
                     </div>
                 </div>
 
-                <div class="overflow-hidden rounded-3xl border border-white/40 bg-white/45 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
+                <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/25 shadow-xl backdrop-blur-xl">
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm">
-                            <thead class="bg-white/50 text-slate-600 dark:bg-slate-800/50 dark:text-slate-200">
+                            <thead class="bg-white/5 text-white/70">
                                 <tr>
                                     <th class="px-4 py-3 text-left">Actividad</th>
                                     <th class="px-4 py-3 text-left">Objetivo siguiente</th>
@@ -137,14 +137,14 @@ new class extends Component {
                             </thead>
                             <tbody>
                                 @forelse($metricas as $m)
-                                    <tr class="border-t border-white/40 text-slate-700 dark:border-white/10 dark:text-slate-200">
+                                    <tr class="border-t border-white/10 text-white/90">
                                         <td class="px-4 py-2">{{ number_format($m['actividad']) }}</td>
                                         <td class="px-4 py-2">{{ number_format($m['objetivo']) }}</td>
                                         <td class="px-4 py-2">${{ number_format($m['premio'], 0, ',', '.') }}</td>
                                         <td class="px-4 py-2 uppercase text-xs">{{ $m['estado'] }}</td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="4" class="px-4 py-5 text-center text-slate-500 dark:text-slate-300">Sin métricas del líder seleccionado.</td></tr>
+                                    <tr><td colspan="4" class="px-4 py-5 text-center text-white/60">Sin métricas del líder seleccionado.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>

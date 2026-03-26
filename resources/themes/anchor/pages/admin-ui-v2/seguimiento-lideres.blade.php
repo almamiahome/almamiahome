@@ -71,42 +71,46 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('admin-ui-v2.seguimiento-lideres')
-        <x-app.container class="space-y-6">
+        <x-app.container class="relative space-y-6 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 p-6 text-white shadow-2xl">
+            <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+                <div class="absolute left-[-10%] top-[-10%] h-72 w-72 rounded-full bg-pink-600/20 blur-[120px]"></div>
+                <div class="absolute bottom-[-10%] right-[-10%] h-72 w-72 rounded-full bg-indigo-600/20 blur-[120px]"></div>
+            </div>
             <x-app.heading
                 title="UI V2 · Seguimiento de líderes"
-                description="Vista operativa basada en actividad real del mes y métricas del cierre vigente."
+                description="Copia funcional de la plantilla de seguimiento: foco en liquidación, actividad y objetivo de cierre."
                 :border="false"
             />
 
-            <div class="rounded-3xl border border-white/40 bg-white/45 p-5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
-                <p class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-300">Campaña en foco</p>
-                <p class="mt-1 text-2xl font-bold text-slate-800 dark:text-white">{{ $campana }}</p>
+            <div class="rounded-3xl border border-white/20 bg-white/5 p-5 shadow-xl backdrop-blur-xl">
+                <p class="text-xs uppercase tracking-[0.2em] text-white/50">Campaña en foco</p>
+                <p class="mt-1 text-2xl font-bold text-pink-300">{{ $campana }}</p>
             </div>
 
             <div class="grid gap-4 md:grid-cols-4">
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Líderes activos</p>
-                    <p class="text-2xl font-bold text-slate-800 dark:text-white">{{ number_format($resumen['lideres_activos']) }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Líderes activos</p>
+                    <p class="text-2xl font-bold text-white">{{ number_format($resumen['lideres_activos']) }}</p>
                 </div>
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Pedidos del mes</p>
-                    <p class="text-2xl font-bold text-slate-800 dark:text-white">{{ number_format($resumen['pedidos_mes']) }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Pedidos del mes</p>
+                    <p class="text-2xl font-bold text-white">{{ number_format($resumen['pedidos_mes']) }}</p>
                 </div>
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Unidades del mes</p>
-                    <p class="text-2xl font-bold text-slate-800 dark:text-white">{{ number_format($resumen['unidades_mes']) }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Unidades del mes</p>
+                    <p class="text-2xl font-bold text-white">{{ number_format($resumen['unidades_mes']) }}</p>
                 </div>
-                <div class="rounded-2xl border border-white/40 bg-white/45 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/40">
-                    <p class="text-xs text-slate-500 dark:text-slate-300">Monto del mes</p>
-                    <p class="text-2xl font-bold text-slate-800 dark:text-white">${{ number_format($resumen['monto_mes'], 0, ',', '.') }}</p>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
+                    <p class="text-xs text-white/50">Monto del mes</p>
+                    <p class="text-2xl font-bold text-white">${{ number_format($resumen['monto_mes'], 0, ',', '.') }}</p>
                 </div>
             </div>
 
-            <div class="overflow-hidden rounded-3xl border border-white/40 bg-white/45 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/45">
+            <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/25 shadow-xl backdrop-blur-xl">
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
-                        <thead class="bg-white/50 dark:bg-slate-800/50">
-                            <tr class="text-left text-slate-600 dark:text-slate-200">
+                        <thead class="bg-white/5">
+                            <tr class="text-left text-white/70">
                                 <th class="px-4 py-3">Líder</th>
                                 <th class="px-4 py-3">Actividad</th>
                                 <th class="px-4 py-3">Meta próximo cierre</th>
@@ -116,20 +120,20 @@ new class extends Component {
                         </thead>
                         <tbody>
                             @forelse($lideres as $fila)
-                                <tr class="border-t border-white/40 text-slate-700 dark:border-white/10 dark:text-slate-200">
+                                <tr class="border-t border-white/10 text-white/90">
                                     <td class="px-4 py-3 font-semibold">{{ $fila['nombre'] }}</td>
                                     <td class="px-4 py-3">{{ number_format($fila['actividad']) }}</td>
                                     <td class="px-4 py-3">{{ number_format($fila['objetivo']) }}</td>
                                     <td class="px-4 py-3">${{ number_format($fila['premio_total'], 0, ',', '.') }}</td>
                                     <td class="px-4 py-3">
-                                        <span class="rounded-full px-2 py-1 text-xs {{ $fila['crecimiento_ok'] ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300' : 'bg-amber-500/20 text-amber-700 dark:text-amber-300' }}">
+                                        <span class="rounded-full px-2 py-1 text-xs {{ $fila['crecimiento_ok'] ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300' }}">
                                             {{ $fila['crecimiento_ok'] ? 'Cumple' : 'Pendiente' }}
                                         </span>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-4 py-6 text-center text-slate-500 dark:text-slate-300">No hay métricas cargadas para el cierre actual.</td>
+                                    <td colspan="5" class="px-4 py-6 text-center text-white/60">No hay métricas cargadas para el cierre actual.</td>
                                 </tr>
                             @endforelse
                         </tbody>

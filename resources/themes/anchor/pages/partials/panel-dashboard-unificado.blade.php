@@ -119,6 +119,14 @@ $widgetsOperativos = [
     ['titulo' => 'Notas', 'ruta' => '/notas', 'roles' => ['admin']],
     ['titulo' => 'Mis pedidos', 'ruta' => '/mis-pedidos', 'roles' => ['vendedora', 'lider', 'coordinadora', 'admin']],
 ];
+
+if ($rolActual === 'admin') {
+    $widgetsOperativos[] = [
+        'titulo' => 'Carga semilla (temporal)',
+        'ruta' => '/admin-utilidades/semillas',
+        'roles' => ['admin'],
+    ];
+}
 ?>
 
 <x-app.container class="space-y-6 pb-12" data-tour-scope="panel-rol">
@@ -130,6 +138,14 @@ $widgetsOperativos = [
     >
         <h1 class="text-2xl font-extrabold text-slate-900">Panel unificado Alma Mía</h1>
         <p class="mt-1 text-sm text-slate-500">Vista consolidada por rol: {{ ucfirst($rolActual) }}.</p>
+
+        @if($rolActual === 'admin')
+            <div class="mt-4">
+                <a href="{{ url('/admin-utilidades/semillas') }}" class="inline-flex items-center rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-rose-700">
+                    Cargar datos semilla (temporal)
+                </a>
+            </div>
+        @endif
     </section>
 
     @if($rolActual === 'vendedora')
