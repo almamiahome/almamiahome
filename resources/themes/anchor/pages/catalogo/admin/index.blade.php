@@ -503,14 +503,19 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('catalogo.admin')
-    <x-app.container class="relative space-y-10 py-8">
+    <x-app.container class="relative space-y-10 py-8" data-tour-scope="catalogo-admin">
         
         <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
             <div class="absolute -top-[10%] left-[15%] w-[40%] h-[40%] rounded-full bg-pink-500/10 blur-[120px]"></div>
             <div class="absolute top-[20%] right-[5%] w-[30%] h-[30%] rounded-full bg-blue-500/10 blur-[100px]"></div>
         </div>
 
-        <div class="px-2">
+        <div
+            class="px-2"
+            data-tour-step="1"
+            data-tour-title="Editor de catálogo"
+            data-tour-text="Desde aquí administrás el catálogo comercial: definí campaña, fechas y portada antes de publicar."
+        >
             <h1 class="text-4xl font-black tracking-tighter text-slate-900">
                 Editor de Catalogos <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600">Catálogo</span>
             </h1>
@@ -522,7 +527,12 @@ new class extends Component {
         <div class="grid grid-cols-1 xl:grid-cols-1 gap-8">
             
             <div class="xl:col-span-4 space-y-6">
-                <section class="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] shadow-xl p-8">
+                <section
+                    class="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] shadow-xl p-8"
+                    data-tour-step="2"
+                    data-tour-title="Alta y edición de catálogos"
+                    data-tour-text="Completá nombre, período y portada. Este formulario impacta en la navegación del catálogo de ventas."
+                >
                     <div class="flex items-center gap-3 mb-6">
                         <div class="h-10 w-10 rounded-xl bg-pink-500 flex items-center justify-center text-white shadow-lg shadow-pink-200">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -604,7 +614,12 @@ new class extends Component {
 
             <div class="xl:col-span-8 space-y-8">
                 
-                <section class="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] shadow-xl p-8">
+                <section
+                    class="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] shadow-xl p-8"
+                    data-tour-step="3"
+                    data-tour-title="Galería de páginas"
+                    data-tour-text="Subí páginas del catálogo y mantené su numeración para que la fuerza de ventas encuentre productos rápido."
+                >
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                         <div class="flex items-center gap-3">
                             <div class="h-10 w-10 rounded-xl bg-violet-500 flex items-center justify-center text-white shadow-lg">
@@ -669,7 +684,12 @@ new class extends Component {
                     </div>
                 </section>
 
-                <section class="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] shadow-xl p-8">
+                <section
+                    class="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] shadow-xl p-8"
+                    data-tour-step="4"
+                    data-tour-title="Mapeo de productos"
+                    data-tour-text="Asociá hotspots individuales o grupales para convertir cada página en un catálogo comprable."
+                >
                     <div class="flex items-center gap-3 mb-8">
                         <div class="h-10 w-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-lg">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>

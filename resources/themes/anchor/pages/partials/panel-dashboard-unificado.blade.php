@@ -119,8 +119,13 @@ $widgetsOperativos = [
 ];
 ?>
 
-<x-app.container class="space-y-6 pb-12">
-    <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+<x-app.container class="space-y-6 pb-12" data-tour-scope="panel-rol">
+    <section
+        class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60"
+        data-tour-step="1"
+        data-tour-title="Panel por rol"
+        data-tour-text="Acá ves indicadores priorizados según tu rol para tomar decisiones diarias sin navegar múltiples pantallas."
+    >
         <h1 class="text-2xl font-extrabold text-slate-900">Panel unificado Alma Mía</h1>
         <p class="mt-1 text-sm text-slate-500">Vista consolidada por rol: {{ ucfirst($rolActual) }}.</p>
     </section>
@@ -198,7 +203,12 @@ $widgetsOperativos = [
         </section>
     @endif
 
-    <section class="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+    <section
+        class="rounded-2xl bg-white p-5 ring-1 ring-slate-200"
+        data-tour-step="2"
+        data-tour-title="Widgets operativos"
+        data-tour-text="Estos accesos directos te llevan a tareas clave: pedidos, marketplace, resumen de líderes y reglas."
+    >
         <h2 class="text-sm font-bold uppercase tracking-wider text-slate-600">Widgets operativos</h2>
         <div class="mt-4 grid gap-3 md:grid-cols-3">
             @foreach($widgetsOperativos as $widget)

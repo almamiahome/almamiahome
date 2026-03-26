@@ -118,10 +118,20 @@ new class extends Component {
 
 <x-layouts.app>
     @volt('pedidos.facturas-masivas')
-    <x-app.container>
-        <h1 class="mb-6 text-2xl font-bold">Facturas masivas</h1>
+    <x-app.container data-tour-scope="facturas-masivas">
+        <h1
+            class="mb-6 text-2xl font-bold"
+            data-tour-step="1"
+            data-tour-title="Facturas masivas"
+            data-tour-text="Desde aquí consolidás pedidos para descargar facturas en lote por campaña o rango de fechas."
+        >Facturas masivas</h1>
 
-        <div class="mb-6 grid gap-4 rounded-xl border bg-white p-4 md:grid-cols-3 lg:grid-cols-6">
+        <div
+            class="mb-6 grid gap-4 rounded-xl border bg-white p-4 md:grid-cols-3 lg:grid-cols-6"
+            data-tour-step="2"
+            data-tour-title="Segmentación de pedidos"
+            data-tour-text="Aplicá filtros por líder, territorio y período para emitir documentación sólo del grupo correcto."
+        >
             <div>
                 <label class="mb-1 block text-sm font-medium text-gray-700">Líder</label>
                 <select wire:model.live="lider_id" class="w-full rounded-md border-gray-300 shadow-sm">
@@ -173,7 +183,12 @@ new class extends Component {
             </div>
         </div>
 
-        <div class="mb-4 flex items-center justify-between gap-3">
+        <div
+            class="mb-4 flex items-center justify-between gap-3"
+            data-tour-step="3"
+            data-tour-title="Exportación en PDF"
+            data-tour-text="Cuando revises la cantidad encontrada, descargá el PDF completo para compartir o archivar."
+        >
             <p class="text-sm text-gray-600">
                 Pedidos encontrados: <span class="font-semibold">{{ $this->pedidos->total() }}</span>
             </p>
