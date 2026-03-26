@@ -42,7 +42,8 @@
 <body>
 
 @php
-    $pages = array_chunk($rotulos, 52); /* 4 columnas × 13 filas */
+    $capacidadPagina = $capacidadPagina ?? 52;
+    $pages = array_chunk($rotulos, $capacidadPagina); /* 4 columnas × 13 filas */
 @endphp
 
 @foreach($pages as $pageIndex => $pageRotulos)
@@ -58,7 +59,7 @@
                 </div>
             @endforeach
 
-            @for ($empty = count($pageRotulos); $empty < 52; $empty++)
+            @for ($empty = count($pageRotulos); $empty < $capacidadPagina; $empty++)
                 <div class="cell"></div>
             @endfor
         </div>
