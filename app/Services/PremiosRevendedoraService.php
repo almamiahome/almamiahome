@@ -81,7 +81,7 @@ class PremiosRevendedoraService
 
         $saldoActual = $this->saldoPuntos($revendedora, Catalogo::find($cierre->catalogo_id));
 
-        return RevendedoraPunto::query()->create([
+        $movimiento = RevendedoraPunto::query()->create([
             'user_id' => $revendedora->id,
             'catalogo_id' => $cierre->catalogo_id,
             'cierre_id' => $cierre->id,
@@ -94,6 +94,10 @@ class PremiosRevendedoraService
                 'idempotencia_clave' => $idempotenciaClave,
             ]),
         ]);
+
+        app(BilleteraService::class)->sincronizarDesdeMovimientoPuntos($movimiento);
+
+        return $movimiento;
     }
 
     public function saldoPuntos(User $revendedora, ?Catalogo $catalogo = null): int

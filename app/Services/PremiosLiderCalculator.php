@@ -91,7 +91,10 @@ class PremiosLiderCalculator
         $this->persistirCuotasAltas($metrica, $lider, $campana, $altas['altas_pagadas_en_cierre']);
         $this->persistirHistorialSaltoRango($lider, $campana, $crecimiento);
 
-        return $metrica->refresh();
+        $metrica = $metrica->refresh();
+        app(BilleteraService::class)->sincronizarDesdeMetricaLider($metrica);
+
+        return $metrica;
     }
 
     protected function moduloActividad(?RangoLider $rango, array $datos): array
