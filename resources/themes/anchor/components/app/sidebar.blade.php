@@ -157,6 +157,13 @@
                             <x-app.sidebar-link href="/admin-ui-v2/perfil-seguimiento-lideres" icon="phosphor-user-focus" :active="Request::is('admin-ui-v2/perfil-seguimiento-lideres')">Perfil Líder V2</x-app.sidebar-link>
                         </x-app.sidebar-dropdown>
 
+                        <x-app.sidebar-dropdown text="Premios" icon="phosphor-gift" id="premios_dropdown"
+                            :active="Request::is('tienda-premios*') || Request::is('admin-ui-v2/premios-vigentes')"
+                            :open="Request::is('tienda-premios*') || Request::is('admin-ui-v2/premios-vigentes') ? '1' : '0'">
+                            <x-app.sidebar-link href="/tienda-premios" icon="phosphor-gift" :active="Request::is('tienda-premios*')">Tienda de Premios</x-app.sidebar-link>
+                            <x-app.sidebar-link href="/admin-ui-v2/premios-vigentes" icon="phosphor-trophy" :active="Request::is('admin-ui-v2/premios-vigentes')">Premios Vigentes V2</x-app.sidebar-link>
+                        </x-app.sidebar-dropdown>
+
                         <x-app.sidebar-dropdown text="Version 2" icon="phosphor-file-html" id="version2_html_dropdown"
                             :active="Request::is('plantillas-v2/*')"
                             :open="Request::is('plantillas-v2/*') ? '1' : '0'">
