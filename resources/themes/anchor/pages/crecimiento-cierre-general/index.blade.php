@@ -1,9 +1,10 @@
 <?php
-use function Laravel\Folio\{middleware, name};
+use function Laravel\Folio\name;
 use App\Http\Controllers\Crecimiento\CierreCampanaController;
 use App\Models\CierreCampana;
 use Livewire\Volt\Component;
 
+\Laravel\Folio\middleware('auth');
 name('crecimiento-cierre-general');
 
 new class extends Component {

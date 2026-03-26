@@ -93,8 +93,8 @@ Construir una versión operativa y auditable que permita:
 1. Diseñar y validar modelo de datos V2 (tablas nuevas + ajustes).
 2. Crear migraciones de calendario catálogo/cierres.
 3. Crear migraciones de objetivos por líder/cierre.
-4. Crear migraciones de actividad de equipo por cierre.
-5. Crear migraciones de premios de líderes por cierre.
+4. Crear migraciones de actividad de equipo por cierre. ✅
+5. Crear migraciones de premios de líderes por cierre. 🚧
 6. Crear migraciones de premios de revendedoras por cierre y puntos.
 7. Crear migraciones de saldos diferidos por pedido/cierre.
 8. Actualizar modelos Eloquent y relaciones (`app/Models`).
@@ -105,6 +105,12 @@ Construir una versión operativa y auditable que permita:
 13. Construir vistas de seguimiento (zonas, departamentos, líder individual).
 14. Añadir pruebas automatizadas críticas (`php artisan test`) para cálculos y cierres.
 15. Actualizar documentación final (README + docs de módulos + notas internas).
+
+### Estado actual de avance Version2
+
+- **Etapa 4 (actividad de equipo por cierre):** cumplida con la base `metricas_lider_campana`, sus ajustes y relaciones de modelo.
+- **Etapa 5 (premios de líderes por cierre):** iniciada con la migración `premio_lider_cierre`, modelo Eloquent y vistas operativas para consolidación inicial desde métricas de etapa 4.
+- **Arquitectura visual/rutas:** la implementación se mantiene dentro del flujo clásico del módulo de crecimiento (`/crecimiento-cierre-general/*`), usando “Version2” como objetivo funcional y no como estructura aislada.
 
 ---
 

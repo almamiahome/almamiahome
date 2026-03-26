@@ -36,4 +36,9 @@ class CierreCampana extends Model
     {
         return $this->hasMany(MetricaLiderCampana::class);
     }
+
+    public function premiosLideresCierre(): HasMany
+    {
+        return $this->hasMany(PremioLiderCierre::class);
+    }
 }
