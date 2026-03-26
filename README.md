@@ -15,16 +15,18 @@ La base tecnológica se mantiene sobre **Laravel + Wave + Filament + Folio + Liv
 
 ## Estado V2 por etapa
 
-> Corte operativo: **25 de marzo de 2026**.
+> Corte operativo: **26 de marzo de 2026**.
 
 - **Etapa 1 (Fundaciones):** en curso.
 - **Etapa 2 (Ejecución comercial):** en curso.
 - **Etapa 3 (Premios avanzados):** en curso.
-- **Etapa 4 (Finanzas, reportería, QA y salida):** en curso.
+- **Etapa 4 (Finanzas, reportería, QA y salida):** validada parcialmente (T17/T18 completos, T19/T20 pendientes por entorno).
+- **Etapa 5 (Líderes avanzados + reportería):** iniciada en modo controlado (estructura Folio/Volt base habilitada).
 
 Notas de control:
 - T17 y T18 cuentan con cobertura de pruebas actualizada.
 - T19/T20 siguen abiertos hasta completar `php artisan test` sin bloqueos de entorno.
+- Seguimiento operativo de Etapa 5 en `version2/categoria-5/checklist-etapa-5.md`.
 
 
 ## Dependencias
