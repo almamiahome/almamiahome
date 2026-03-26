@@ -1,5 +1,7 @@
 # Acta técnica de validación Etapa 4 — 2026-03-25
 
+> **Nota de continuidad (2026-03-26):** el diagnóstico unificado y estado vigente se mantiene en `docs/notas-tecnicas/2026-03-26-acta-continuidad-etapa-5.md`.
+
 ## Alcance validado
 - T17: pruebas financieras de deuda acumulada, descuentos en cierres futuros, balance neto e idempotencia de reproceso.
 - T18: pruebas de reportería para filtros por zona/departamento, comparativas entre cierres y conciliación por líder/coordinadora.
