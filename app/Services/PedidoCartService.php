@@ -189,10 +189,7 @@ class PedidoCartService
 
     public function obtenerPaginasCatalogo(): array
     {
-        $catalogo = Catalogo::with([
-            'paginas.productos.producto.categorias',
-            'paginas.productos.productosGrupo.categorias',
-        ])->latest('id')->first();
+        $catalogo = $this->resolverCatalogoVigente();
 
         if (! $catalogo) {
             return [];
@@ -253,6 +250,45 @@ class PedidoCartService
             })
             ->values()
             ->toArray();
+    }
+
+
+    protected function resolverCatalogoVigente(): ?Catalogo
+    {
+        $hoy = now()->toDateString();
+
+        $baseQuery = Catalogo::with([
+            'paginas.productos.producto.categorias',
+            'paginas.productos.productosGrupo.categorias',
+        ]);
+
+        $catalogoActual = (clone $baseQuery)
+            ->whereNotNull('fecha_inicio')
+            ->whereNotNull('fecha_fin')
+            ->whereDate('fecha_inicio', '<=', $hoy)
+            ->whereDate('fecha_fin', '>=', $hoy)
+            ->orderByDesc('fecha_inicio')
+            ->first();
+
+        if ($catalogoActual) {
+            return $catalogoActual;
+        }
+
+        $catalogoFuturo = (clone $baseQuery)
+            ->whereNotNull('fecha_inicio')
+            ->whereDate('fecha_inicio', '>', $hoy)
+            ->orderBy('fecha_inicio')
+            ->first();
+
+        if ($catalogoFuturo) {
+            return $catalogoFuturo;
+        }
+
+        return (clone $baseQuery)
+            ->orderByDesc('anio')
+            ->orderByDesc('numero')
+            ->orderByDesc('id')
+            ->first();
     }
 
     public function storePedido(array $payload, string $codigoPedido, ?User $usuarioActual = null): array

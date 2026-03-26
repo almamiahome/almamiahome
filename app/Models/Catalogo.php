@@ -16,11 +16,15 @@ class Catalogo extends Model
         'descripcion',
         'anio',
         'numero',
+        'fecha_inicio',
+        'fecha_fin',
     ];
 
     protected $casts = [
         'anio' => 'integer',
         'numero' => 'integer',
+        'fecha_inicio' => 'date',
+        'fecha_fin' => 'date',
     ];
 
     public function paginas(): HasMany
