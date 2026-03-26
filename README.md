@@ -161,7 +161,7 @@ Objetivo:
 
 ### D) Módulos de revendedoras
 
-- Tienda de premios.
+- Tienda de premios **operativa de extremo a extremo**: listado público por estado/stock, búsqueda por nombre o descripción, resolución de catálogo/cierre activo y canje en línea con validaciones de saldo/stock y auditoría mínima en `datos`.
 - Premio por 3 pedidos consecutivos.
 - Premio de continuidad y ventas por puntos acumulables.
 
