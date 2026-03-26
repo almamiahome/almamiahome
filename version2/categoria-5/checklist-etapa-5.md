@@ -1,50 +1,65 @@
 # Checklist ejecutable — Etapa 5 (Versión 2)
 
 ## Objetivo operativo
-Convertir las planillas actuales de liderazgo en un flujo digital completo, intuitivo y auditable, sin romper la arquitectura clásica del proyecto (Folio/Volt + estructura por carpetas URL).
+Digitalizar el flujo de liderazgo en arquitectura Folio/Volt (`anchor`) con trazabilidad por cierre y liquidación auditable.
 
 ## Estado base verificado
 
 - Etapa 4 T17/T18: ✅ cumplidas.
-- Etapa 4 T19/T20: ⚠️ pendientes por entorno de pruebas integral.
-- Etapa 5: ✅ iniciada con páginas base operativas en `lideres/`.
+- Etapa 4 T19: ⚠️ en curso por límite de memoria de entorno.
+- Etapa 4 T20: ⛔ bloqueada hasta cierre de T19.
 
-## Checklist por frente
+## Evidencias concretas por ítem (archivo/servicio/prueba)
 
 ### A) Reglas de negocio (5.1 a 5.5)
-- [ ] Implementar servicio único para crecimiento, reparto, plus y unidades.
-- [ ] Asegurar idempotencia por `(lider_id, cierre_campana_id, version_regla)`.
-- [ ] Registrar traza de cálculo en `datos` para auditoría funcional.
-- [ ] Consolidar `total_a_cobrar` con desglose de componentes.
-- [ ] Cubrir bordes: salto múltiple, objetivo no cumplido, umbral exacto de unidades.
+
+- [x] **Motor único con módulos de cálculo**  
+  Evidencia: `app/Services/PremiosLiderCalculator.php` (módulos actividad, retención, altas, cobranzas, crecimiento, reparto y plus/unidades).
+- [x] **Persistencia auditable del cálculo**  
+  Evidencia: `MetricaLiderCampana::updateOrCreate()` con `datos.evidencia.reglas_aplicadas` en `PremiosLiderCalculator`.
+- [x] **Consolidado de total a cobrar**  
+  Evidencia: campo `premio_total` integrado y almacenado en `metricas_lider_campana`.
+- [~] **Idempotencia con versión de regla para Etapa 5**  
+  Evidencia parcial: `VERSION_CALCULO = 'v3_modular_etapa_3'`; falta versionado explícito de cierre Etapa 5.
+- [~] **Cobertura de bordes Etapa 5 (salto, plus, umbral unidades)**  
+  Evidencia parcial: existe cobertura heredada funcional; falta batería integral de pruebas desbloqueada por T19.
 
 ### B) Vistas operativas (5.6 a 5.8)
-- [ ] Mantener carpetas en `resources/themes/anchor/pages/lideres/...`.
-- [ ] Declarar middleware en cada Blade Volt (`auth` + permiso operativo).
-- [ ] Completar filtros por zona/departamento/catálogo/cierre.
-- [ ] Adaptar visual de tabla al formato de planilla actual (cierres por catálogo, unidades y auxiliares).
-- [ ] Exponer liquidación individual con total final y componentes.
+
+- [x] **Seguimiento de cierres con filtros completos**  
+  Evidencia: `resources/themes/anchor/pages/lideres/seguimiento-cierres/index.blade.php` (zona, departamento, catálogo, cierre y líder).
+- [x] **Desglose por cierre seleccionado (no agregado global)**  
+  Evidencia: consulta `Pedido` filtrada por `catalogo_id` + `cierre_id` + agrupación por `vendedora_id` en la página de seguimiento.
+- [x] **KPIs operativos Etapa 5 desde `MetricaLiderCampana`**  
+  Evidencia: KPIs actividad, crecimiento, plus, unidades y total en páginas de seguimiento/liquidación.
+- [x] **Liquidación auditable por selección explícita**  
+  Evidencia: `resources/themes/anchor/pages/lideres/liquidacion/index.blade.php` con filtros `catalogo`, `cierre desde`, `cierre hasta`.
+- [x] **Página de entrada operativa Etapa 5**  
+  Evidencia: `resources/themes/anchor/pages/lideres/panel-etapa-5/index.blade.php` con enlaces a seguimiento y liquidación.
+- [x] **Middleware explícito en páginas `anchor`**  
+  Evidencia: `middleware(['auth', closure con can('view_backend')])` en las tres páginas de liderazgo.
 
 ### C) Validación integral (5.9)
-- [ ] Ejecutar `php artisan test` completo en entorno sin bloqueo de memoria.
-- [ ] Añadir evidencia de pruebas de integración para paneles de Etapa 5.
-- [ ] Verificar consistencia entre totales de panel y totales de motor.
+
+- [ ] **Suite integral en verde**  
+  Evidencia requerida: ejecución exitosa de `php artisan test` sin errores de memoria.
+- [~] **Ejecución realizada en entorno actual**  
+  Evidencia: comando ejecutado con bloqueo de memoria (registrado en acta técnica de continuidad `2026-03-26`).
 
 ### D) Cierre documental (5.10)
-- [ ] Actualizar `docs/roadmap-etapas/matriz-trazabilidad-v2.md` con estado final.
-- [ ] Actualizar acta técnica de validación con hash del commit final.
-- [ ] Registrar guía operativa para líderes y coordinadoras con ejemplos reales.
 
-## Páginas Folio/Volt creadas en el inicio de Etapa 5
-
-- `resources/themes/anchor/pages/lideres/seguimiento-cierres/index.blade.php`
-- `resources/themes/anchor/pages/lideres/liquidacion/index.blade.php`
+- [x] **Matriz de trazabilidad actualizada por tarea**  
+  Evidencia: `docs/roadmap-etapas/matriz-trazabilidad-v2.md` con estados `completo/parcial/faltante` y separación heredado/definitivo.
+- [x] **Acta técnica de continuidad y fuente única de diagnóstico**  
+  Evidencia: `docs/notas-tecnicas/2026-03-26-acta-continuidad-etapa-5.md`.
+- [ ] **Acta final con hash validado posterior a T19**  
+  Evidencia requerida: acta de cierre final luego de `php artisan test` exitoso.
 
 ## Criterio de “Etapa 5 Cumplida”
 
 Solo se marca como cumplida cuando:
 
-1. Reglas 5.1–5.5 validadas con pruebas,
-2. Vistas 5.6–5.8 operativas con middleware correcto,
-3. QA integral 5.9 en verde,
-4. Documentación 5.10 cerrada con evidencia.
+1. Reglas 5.1–5.5 estén en `completo` sin dependencia heredada pendiente,
+2. Vistas 5.6–5.8 estén operativas y verificadas,
+3. QA integral 5.9 esté en verde,
+4. Documentación 5.10 cierre con hash final validado.

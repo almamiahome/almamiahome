@@ -25,18 +25,18 @@ Ambas páginas deben declarar explícitamente middleware en el bloque PHP de Fol
 
 ## Checklist operativo Etapa 5
 
-| ID | Objetivo | Estado | Evidencia actual | Falta para cerrar |
-|---|---|---|---|---|
-| 5.1 | Crecimiento por cambio de nivel | ⏳ En preparación | Definición funcional en `sistema.txt` y `version2/categoria-5/tarea-1.md` | Motor idempotente + prueba de salto único por cierre |
-| 5.2 | Reparto por nivel | ⏳ En preparación | Tabla de montos y rangos documentada | Implementar cálculo por rango + pruebas de bandas min/max |
-| 5.3 | Plus de crecimiento | ⏳ En preparación | Regla “objetivo próximo cierre” documentada | Persistir objetivo anterior + validación binaria del plus |
-| 5.4 | Premio por unidades | ⏳ En preparación | Mínimos por rango definidos en `sistema.txt` | Regla parametrizable por rango + pruebas de umbral |
-| 5.5 | Total consolidado a cobrar | ⏳ En preparación | Estructura de premios líder ya existe | Integrar 5.1–5.4 en un consolidado auditable |
-| 5.6 | Filtros zona/departamento | 🟡 Parcial | Filtros base ya existen en reportería Etapa 4 | Conectar filtros a paneles de Etapa 5 |
-| 5.7 | Vista líder avanzada | 🟡 Parcial | Página creada: `/lideres/seguimiento-cierres` | Completar KPIs y exportación operacional |
-| 5.8 | Vista líder individual | 🟡 Parcial | Página creada: `/lideres/liquidacion` | Conectar liquidación real por cierre/rango |
-| 5.9 | E2E reportería + premios | ⛔ Bloqueada | Sin suite integral estable por memoria | Resolver T19 y ejecutar suite completa |
-| 5.10 | Documentación y handoff final | ⏳ En preparación | Base documental existente por etapas | Cerrar acta final con evidencia completa |
+| ID | Objetivo | Estado (completo/parcial/faltante) | Cobertura | Evidencia actual | Falta para cerrar |
+|---|---|---|---|---|---|
+| 5.1 | Crecimiento por cambio de nivel | parcial | Heredada Etapa 3 | `PremiosLiderCalculator::moduloCrecimiento()` + `persistirHistorialSaltoRango()` | Versionado de regla Etapa 5 + prueba dedicada de salto único |
+| 5.2 | Reparto por nivel | parcial | Heredada Etapa 3 | `moduloReparto()` + `calcularRepartoTotal()` con `RepartoCompra` | Pruebas por bandas min/max orientadas a Etapa 5 |
+| 5.3 | Plus de crecimiento | parcial | Heredada + avance Etapa 5 | `moduloPlusUnidades()` con `objetivo_proximo_cierre` y `premio_plus_crecimiento` | Evidencia histórica del objetivo y validación integral |
+| 5.4 | Premio por unidades | completo | Cierre definitivo Etapa 5 (servicio) | Validación `unidades_minimas` y persistencia en `MetricaLiderCampana` | Solo mantener regresión en T19 |
+| 5.5 | Total consolidado a cobrar | completo | Cierre definitivo Etapa 5 (servicio) | `premio_total` consolidado con trazabilidad en `datos.evidencia` | Validación final de entorno en T19 |
+| 5.6 | Filtros zona/departamento/catálogo/cierre | completo | Cierre definitivo Etapa 5 (vista) | `/lideres/seguimiento-cierres` con filtros completos | Prueba de integración posterior a desbloqueo T19 |
+| 5.7 | Vista líder avanzada | completo | Cierre definitivo Etapa 5 (vista) | KPIs + desglose por cierre seleccionado en seguimiento | Exportable opcional según alcance |
+| 5.8 | Vista líder individual | completo | Cierre definitivo Etapa 5 (vista) | `/lideres/liquidacion` con selección explícita de catálogo/rango | Ajustes de UX no bloqueantes |
+| 5.9 | E2E reportería + premios | faltante | Sin cierre por entorno | `php artisan test` aún bloqueado por memoria | Resolver T19 y ejecutar suite completa |
+| 5.10 | Documentación y handoff final | parcial | En construcción | Acta continuidad + matriz + checklist actualizados | Acta final con hash posterior a T19 |
 
 ## Instrucciones claras para resolver pendientes
 
